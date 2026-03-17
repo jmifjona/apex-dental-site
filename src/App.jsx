@@ -15,11 +15,11 @@ export default function ApexDentalWebsite() {
 
   const branding = {
     logo: '/images/orislogo.png',
-    hero: '/images/hero.jpg',
+    hero: '/images/treatment.jpeg',
+    treatment: '/images/hero.jpg',
     reception: '/images/hero.jpg',
     wallLogo: '/images/wall-logo.jpeg',
-    teamDesk: '/images/team-desk.jpeg',
-    treatment: '/images/treatment.jpeg',
+    teamDesk: '/images/team-desk.jpeg',    
     scanner: '/images/scanner.jpeg',
     room1: '/images/room1.jpg',
     room2: '/images/room2.jpeg',
