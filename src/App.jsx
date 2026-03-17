@@ -13,22 +13,20 @@ import {
 export default function ApexDentalWebsite() {
   const [page, setPage] = useState('home');
 
-  const branding = {
-    logo: '/images/orislogo.png',
-    hero: '/images/treatment.jpeg',
-    treatment: '/images/hero.jpg',
-    reception: '/images/hero.jpg',
-    wallLogo: '/images/wall-logo.jpeg',
-    teamDesk: '/images/team-desk.jpeg',    
-    scanner: '/images/scanner.jpeg',
-    room1: '/images/room1.jpg',
-    room2: '/images/room2.jpeg',
-    room3: '/images/room3.jpg',
-    corridor: '/images/corridor.jpg',
-    suite: '/images/suite.jpeg',
-    implantHero: '/images/implant-hero.jpg',
-    implantAnatomy: '/images/implant-anatomy.jpg',
-    implantBLX: '/images/implant-blx.jpg',
+ const branding = {
+  logo: '/images/orislogo.png',
+  hero: '/images/trident-park.jpg',
+  reception: '/images/hero.jpg',
+  doorLogo: '/images/door-logo.jpg',
+  wallLogo: '/images/wall-logo.jpeg',
+  teamDesk: '/images/team-desk.jpeg',
+  treatment: '/images/treatment.jpeg',
+  scanner: '/images/scanner.jpeg',
+  room1: '/images/room1.jpg',
+  room2: '/images/room2.jpeg',
+  room3: '/images/room3.jpg',
+  corridor: '/images/corridor.jpg',
+  suite: '/images/suite.jpeg',
   };
 
   const galleryImages = [
@@ -448,10 +446,11 @@ export default function ApexDentalWebsite() {
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.reception}
-              alt="Apex Dental reception"
-              className="h-[360px] w-full rounded-[1.5rem] object-cover"
+           <img
+  src={branding.doorLogo}
+  alt="Apex Dental entrance branding"
+  className="h-[420px] w-full rounded-[1.5rem] object-cover"
+
             />
           </div>
 
