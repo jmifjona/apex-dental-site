@@ -1,4 +1,23 @@
-import React, { useMemo, useState } from 'react';
+const branding = {
+  logo: '/images/orislogo.png',
+  hero: '/images/hero.jpg',
+  wallLogo: '/images/wall-logo.jpeg',
+  teamDesk: '/images/team-desk.jpeg',
+  treatment: '/images/treatment.jpeg',
+  scanner: '/images/scanner.jpeg',
+  room1: '/images/room1.jpg',
+  room2: '/images/room2.jpeg',
+  room3: '/images/room3.jpg',
+  corridor: '/images/corridor.jpg',
+  suite: '/images/suite.jpeg',
+};const galleryImages = [
+  branding.reception || branding.hero,
+  branding.wallLogo,
+  branding.room1,
+  branding.room2,
+  branding.room3,
+  branding.corridor,
+];import React, { useMemo, useState } from 'react';
 import { Phone, MapPin, Sparkles, ChevronRight, CheckCircle2, Smile, ScanLine, ShieldCheck } from 'lucide-react';
 
 export default function ApexDentalWebsite() {
