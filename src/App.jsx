@@ -26,6 +26,9 @@ export default function ApexDentalWebsite() {
     room3: '/images/room3.jpg',
     corridor: '/images/corridor.jpg',
     suite: '/images/suite.jpeg',
+    implantHero: '/images/implant-hero.jpg',
+    implantAnatomy: '/images/implant-anatomy.jpg',
+    implantBLX: '/images/implant-blx.jpg',
   };
 
   const galleryImages = [
@@ -585,15 +588,151 @@ export default function ApexDentalWebsite() {
   function CurrentPage() {
     switch (page) {
       case 'implants':
-        return (
-          <InfoPage
-            title="Implants page"
-            image={branding.treatment}
-            intro="This page is written to position implants as a premium, trustworthy solution for missing teeth. It works for both single implants and larger restorative cases, while keeping the language patient-friendly rather than glorified technical soup."
-            benefits={implantBenefits}
-            closing="The content is designed to reassure patients about stability, aesthetics, planning, and long-term function. In a live site, this page should also include before/after cases, FAQ content, and a strong call to action for consultations."
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+      <div className="mb-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
+            Permanent Tooth Replacement
+          </p>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+            Dental Implants
+          </h2>
+          <p className="mt-6 text-lg leading-8 text-slate-300">
+            From single missing teeth to full-arch rehabilitation, we use digital
+            workflows and premium components for stable, aesthetic long-term outcomes.
+          </p>
+          <a
+            href="https://wa.me/35679854037"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+          >
+            Book a Consultation
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </div>
+
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+          <img
+            src={branding.implantHero}
+            alt="Dental implants"
+            className="h-[420px] w-full rounded-[1.5rem] object-cover"
           />
-        );
+        </div>
+      </div>
+
+      <div className="mb-12 grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+          <h3 className="text-2xl font-semibold">Implants vs. Other Options</h3>
+          <div className="mt-6 space-y-4 text-slate-300">
+            <div className="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-4">
+              <p className="font-semibold text-white">Dental Implant</p>
+              <p className="mt-1 text-sm">Permanent, preserves bone, no impact on other teeth.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="font-semibold text-white">Bridge</p>
+              <p className="mt-1 text-sm">Fixed solution, but requires grinding adjacent teeth.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="font-semibold text-white">Denture</p>
+              <p className="mt-1 text-sm">Removable, affordable, but can slip and accelerate bone loss.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
+            What is a dental implant?
+          </p>
+          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
+            What is a dental implant?
+          </h3>
+          <p className="mt-5 leading-8 text-slate-300">
+            A dental implant is a small titanium post surgically placed into the jawbone
+            to replace a missing tooth root. Once the implant integrates with the bone,
+            a custom-made crown is attached on top.
+          </p>
+          <div className="mt-6 space-y-3">
+            {[
+              'Looks and feels like a natural tooth',
+              'Lasts a long time with proper care',
+              'Preserves jawbone and facial structure',
+              'No impact on adjacent healthy teeth',
+              'Eat anything — no dietary restrictions',
+            ].map((item) => (
+              <div key={item} className="flex gap-3 text-slate-200">
+                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+          <img
+            src={branding.implantAnatomy}
+            alt="Implant anatomy"
+            className="h-[360px] w-full rounded-[1.5rem] object-cover"
+          />
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
+            Anatomy of an implant
+          </p>
+          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
+            Three Components, One Perfect Tooth
+          </h3>
+          <div className="mt-6 space-y-5 text-slate-300">
+            <div>
+              <p className="font-semibold text-white">1. The Implant</p>
+              <p className="mt-1 leading-7">
+                A titanium screw placed into the jawbone, acting as an artificial root.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-white">2. The Abutment</p>
+              <p className="mt-1 leading-7">
+                A connector that links the implant to the final crown.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-white">3. The Crown</p>
+              <p className="mt-1 leading-7">
+                The visible tooth, custom-made to match your smile.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
+            The gold standard
+          </p>
+          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
+            Why We Use Straumann BLX Implants
+          </h3>
+          <p className="mt-6 leading-8 text-slate-300">
+            At Apex Dental, we use high-quality implant systems for excellent stability,
+            fast healing, and predictable long-term outcomes. Straumann BLX implants
+            are designed for strong primary stability and modern immediate-loading protocols.
+          </p>
+        </div>
+
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+          <img
+            src={branding.implantBLX}
+            alt="Straumann BLX implant"
+            className="h-[320px] w-full rounded-[1.5rem] object-cover"
+          />
+        </div>
+      </div>
+    </section>
+  );
+        
       case 'aligners':
         return (
           <InfoPage
