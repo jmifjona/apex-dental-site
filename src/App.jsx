@@ -29,12 +29,12 @@ export default function ApexDentalWebsite() {
   };
 
   const galleryImages = [
-    branding.reception,
-    branding.wallLogo,
-    branding.room1,
-    branding.room2,
-    branding.room3,
-    branding.corridor,
+   branding.wallLogo,
+  branding.room1,
+  branding.room2,
+  branding.room3,
+  branding.corridor,
+  branding.suite,
   ];
 
   const pages = useMemo(
@@ -275,11 +275,11 @@ export default function ApexDentalWebsite() {
         <section className="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-sm">
-              <img
-                src={branding.reception}
-                alt="Apex Dental reception"
-                className="h-[420px] w-full rounded-[1.5rem] object-cover"
-              />
+             <img
+  src={branding.suite}
+  alt="Apex Dental clinic room"
+  className="h-[420px] w-full rounded-[1.5rem] object-cover"
+/>
             </div>
 
             <div className="grid gap-6">
