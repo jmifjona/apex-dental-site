@@ -13,52 +13,52 @@ import {
 export default function ApexDentalWebsite() {
   const [page, setPage] = useState('home');
 
- const branding = {
-  logo: '/images/orislogo.png',
+  const branding = {
+    logo: '/images/orislogo.png',
 
-  H1: '/images/H1.jpg',
-  H2: '/images/H2.jpg',
-  H3: '/images/H3.jpg',
-  H4: '/images/H4.jpg',
-  H5: '/images/H5.jpg',
-  H6: '/images/H6.jpg',
-  H7: '/images/H7.jpg',
-  H8: '/images/H8.jpg',
-  H9: '/images/H9.jpg',
-  H10: '/images/H10.jpg',
+    H1: '/images/H1.jpg',
+    H2: '/images/H2.jpg',
+    H3: '/images/H3.jpg',
+    H4: '/images/H4.jpg',
+    H5: '/images/H5.jpg',
+    H6: '/images/H6.jpg',
+    H7: '/images/H7.jpg',
+    H8: '/images/H8.jpg',
+    H9: '/images/H9.jpg',
+    H10: '/images/H10.jpg',
 
-  I1: '/images/I1.jpg',
-  I2: '/images/I2.jpg',
-  I3: '/images/I3.jpg',
-  I4: '/images/I4.jpg',
+    I1: '/images/I1.jpg',
+    I2: '/images/I2.jpg',
+    I3: '/images/I3.jpg',
+    I4: '/images/I4.jpg',
 
-  A1: '/images/A1.jpg',
-  A2: '/images/A2.jpg',
-  A3: '/images/A3.jpg',
-  A4: '/images/A4.jpg',
+    A1: '/images/A1.jpg',
+    A2: '/images/A2.jpg',
+    A3: '/images/A3.jpg',
+    A4: '/images/A4.jpg',
 
-  C1: '/images/C1.jpg',
-  C2: '/images/C2.jpg',
-  C3: '/images/C3.jpg',
-  C4: '/images/C4.jpg',
+    C1: '/images/C1.jpg',
+    C2: '/images/C2.jpg',
+    C3: '/images/C3.jpg',
+    C4: '/images/C4.jpg',
 
-  AB1: '/images/AB1.jpg',
-  AB2: '/images/AB2.jpg',
-  AB3: '/images/AB3.jpg',
+    AB1: '/images/AB1.jpg',
+    AB2: '/images/AB2.jpg',
+    AB3: '/images/AB3.jpg',
 
-  CT1: '/images/CT1.jpg',
-  CT2: '/images/CT2.jpg',
-  CT3: '/images/CT3.jpg',
-};
+    CT1: '/images/CT1.jpg',
+    CT2: '/images/CT2.jpg',
+    CT3: '/images/CT3.jpg',
+  };
 
-  const galleryImages = [
-  branding.H5,
-  branding.H6,
-  branding.H7,
-  branding.H8,
-  branding.H9,
-  branding.H10,
-];
+  const homeGalleryImages = [
+    branding.H5,
+    branding.H6,
+    branding.H7,
+    branding.H8,
+    branding.H9,
+    branding.H10,
+  ];
 
   const pages = useMemo(
     () => ({
@@ -84,7 +84,7 @@ export default function ApexDentalWebsite() {
         title: 'Cosmetic Dentistry',
         eyebrow: 'Smile design with restraint',
         subtitle:
-          'Veneers, whitening, bonding, and smile enhancement designed to look elegant and natural, not like a piano keyboard in witness protection.',
+          'Veneers, whitening, bonding, and smile enhancement designed to look elegant and natural.',
       },
       about: {
         title: 'About Apex Dental',
@@ -158,12 +158,12 @@ export default function ApexDentalWebsite() {
   ];
 
   function heroImage() {
-    if (page === 'implants') return branding.treatment;
-    if (page === 'aligners') return branding.scanner;
-    if (page === 'cosmetic') return branding.room1;
-    if (page === 'about') return branding.wallLogo;
-    if (page === 'contact') return branding.teamDesk;
-    return branding.hero;
+    if (page === 'implants') return branding.I1;
+    if (page === 'aligners') return branding.A1;
+    if (page === 'cosmetic') return branding.C1;
+    if (page === 'about') return branding.AB1;
+    if (page === 'contact') return branding.CT1;
+    return branding.H1;
   }
 
   function PageHero() {
@@ -298,26 +298,26 @@ export default function ApexDentalWebsite() {
         <section className="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-sm">
-             <img
-  src={branding.suite}
-  alt="Apex Dental clinic room"
-  className="h-[420px] w-full rounded-[1.5rem] object-cover"
-/>
+              <img
+                src={branding.H2}
+                alt="Apex Dental feature image"
+                className="h-[420px] w-full rounded-[1.5rem] object-cover"
+              />
             </div>
 
             <div className="grid gap-6">
               <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
                 <img
-                  src={branding.wallLogo}
-                  alt="Apex Dental branding wall"
+                  src={branding.H3}
+                  alt="Apex Dental feature image"
                   className="h-[198px] w-full rounded-[1.5rem] object-cover"
                 />
               </div>
 
               <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
                 <img
-                  src={branding.teamDesk}
-                  alt="Apex Dental team at work"
+                  src={branding.H4}
+                  alt="Apex Dental feature image"
                   className="h-[198px] w-full rounded-[1.5rem] object-cover"
                 />
               </div>
@@ -363,13 +363,12 @@ export default function ApexDentalWebsite() {
               Clinic Gallery
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              A real clinic. A real environment. No stock-photo teeth orbiting in
-              space.
+              A real clinic. A real environment.
             </h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {galleryImages.map((image, index) => (
+            {homeGalleryImages.map((image, index) => (
               <div
                 key={image + index}
                 className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm"
@@ -416,7 +415,7 @@ export default function ApexDentalWebsite() {
     );
   }
 
-  function InfoPage({ title, intro, benefits, closing, image }) {
+  function InfoPage({ title, intro, benefits, closing, image, secondaryImages = [] }) {
     return (
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
@@ -426,6 +425,23 @@ export default function ApexDentalWebsite() {
             className="h-[340px] w-full rounded-[1.5rem] object-cover"
           />
         </div>
+
+        {secondaryImages.length > 0 && (
+          <div className="mb-10 grid gap-6 md:grid-cols-3">
+            {secondaryImages.map((img, idx) => (
+              <div
+                key={img + idx}
+                className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm"
+              >
+                <img
+                  src={img}
+                  alt={`${title} ${idx + 1}`}
+                  className="h-[220px] w-full rounded-[1.5rem] object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
@@ -468,18 +484,17 @@ export default function ApexDentalWebsite() {
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-           <img
-  src={branding.doorLogo}
-  alt="Apex Dental entrance branding"
-  className="h-[420px] w-full rounded-[1.5rem] object-cover"
-
+            <img
+              src={branding.AB1}
+              alt="About Apex Dental"
+              className="h-[420px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
 
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.wallLogo}
-              alt="Apex Dental logo wall"
+              src={branding.AB2}
+              alt="About Apex Dental"
               className="h-[360px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
@@ -498,8 +513,7 @@ export default function ApexDentalWebsite() {
             <p className="mt-6 leading-8 text-slate-400">
               The clinic approach centres on clear communication, conservative
               judgment where possible, and high-level treatment planning where
-              more advanced care is needed. The goal is simple: dentistry that is
-              predictable, aesthetic, and worth the chair time.
+              more advanced care is needed.
             </p>
           </div>
 
@@ -522,6 +536,14 @@ export default function ApexDentalWebsite() {
             ))}
           </div>
         </div>
+
+        <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+          <img
+            src={branding.AB3}
+            alt="About Apex Dental"
+            className="h-[320px] w-full rounded-[1.5rem] object-cover"
+          />
+        </div>
       </section>
     );
   }
@@ -531,8 +553,8 @@ export default function ApexDentalWebsite() {
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
-            src={branding.teamDesk}
-            alt="Apex Dental team"
+            src={branding.CT1}
+            alt="Contact Apex Dental"
             className="h-[320px] w-full rounded-[1.5rem] object-cover"
           />
         </div>
@@ -602,6 +624,23 @@ export default function ApexDentalWebsite() {
             </div>
           </div>
         </div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+            <img
+              src={branding.CT2}
+              alt="Apex Dental location"
+              className="h-[240px] w-full rounded-[1.5rem] object-cover"
+            />
+          </div>
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
+            <img
+              src={branding.CT3}
+              alt="Apex Dental exterior"
+              className="h-[240px] w-full rounded-[1.5rem] object-cover"
+            />
+          </div>
+        </div>
       </section>
     );
   }
@@ -609,169 +648,36 @@ export default function ApexDentalWebsite() {
   function CurrentPage() {
     switch (page) {
       case 'implants':
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-      <div className="mb-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
-            Permanent Tooth Replacement
-          </p>
-          <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-            Dental Implants
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-slate-300">
-            From single missing teeth to full-arch rehabilitation, we use digital
-            workflows and premium components for stable, aesthetic long-term outcomes.
-          </p>
-          <a
-            href="https://wa.me/35679854037"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-          >
-            Book a Consultation
-            <ChevronRight className="h-4 w-4" />
-          </a>
-        </div>
-
-        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={branding.implantHero}
-            alt="Dental implants"
-            className="h-[420px] w-full rounded-[1.5rem] object-cover"
+        return (
+          <InfoPage
+            title="Dental Implants"
+            image={branding.I1}
+            secondaryImages={[branding.I2, branding.I3, branding.I4]}
+            intro="Dental implants are a stable, aesthetic solution for replacing missing teeth."
+            benefits={implantBenefits}
+            closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
           />
-        </div>
-      </div>
-
-      <div className="mb-12 grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-          <h3 className="text-2xl font-semibold">Implants vs. Other Options</h3>
-          <div className="mt-6 space-y-4 text-slate-300">
-            <div className="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-4">
-              <p className="font-semibold text-white">Dental Implant</p>
-              <p className="mt-1 text-sm">Permanent, preserves bone, no impact on other teeth.</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <p className="font-semibold text-white">Bridge</p>
-              <p className="mt-1 text-sm">Fixed solution, but requires grinding adjacent teeth.</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <p className="font-semibold text-white">Denture</p>
-              <p className="mt-1 text-sm">Removable, affordable, but can slip and accelerate bone loss.</p>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
-            What is a dental implant?
-          </p>
-          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
-            What is a dental implant?
-          </h3>
-          <p className="mt-5 leading-8 text-slate-300">
-            A dental implant is a small titanium post surgically placed into the jawbone
-            to replace a missing tooth root. Once the implant integrates with the bone,
-            a custom-made crown is attached on top.
-          </p>
-          <div className="mt-6 space-y-3">
-            {[
-              'Looks and feels like a natural tooth',
-              'Lasts a long time with proper care',
-              'Preserves jawbone and facial structure',
-              'No impact on adjacent healthy teeth',
-              'Eat anything — no dietary restrictions',
-            ].map((item) => (
-              <div key={item} className="flex gap-3 text-slate-200">
-                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={branding.implantAnatomy}
-            alt="Implant anatomy"
-            className="h-[360px] w-full rounded-[1.5rem] object-cover"
-          />
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
-            Anatomy of an implant
-          </p>
-          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
-            Three Components, One Perfect Tooth
-          </h3>
-          <div className="mt-6 space-y-5 text-slate-300">
-            <div>
-              <p className="font-semibold text-white">1. The Implant</p>
-              <p className="mt-1 leading-7">
-                A titanium screw placed into the jawbone, acting as an artificial root.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold text-white">2. The Abutment</p>
-              <p className="mt-1 leading-7">
-                A connector that links the implant to the final crown.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold text-white">3. The Crown</p>
-              <p className="mt-1 leading-7">
-                The visible tooth, custom-made to match your smile.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">
-            The gold standard
-          </p>
-          <h3 className="mt-3 text-3xl font-semibold tracking-tight">
-            Why We Use Straumann BLX Implants
-          </h3>
-          <p className="mt-6 leading-8 text-slate-300">
-            At Apex Dental, we use high-quality implant systems for excellent stability,
-            fast healing, and predictable long-term outcomes. Straumann BLX implants
-            are designed for strong primary stability and modern immediate-loading protocols.
-          </p>
-        </div>
-
-        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={branding.implantBLX}
-            alt="Straumann BLX implant"
-            className="h-[320px] w-full rounded-[1.5rem] object-cover"
-          />
-        </div>
-      </div>
-    </section>
-  );
-        
+        );
       case 'aligners':
         return (
           <InfoPage
-            title="Aligners page"
-            image={branding.scanner}
-            intro="This page presents clear aligners as a modern and discreet route to straighter teeth. It focuses on comfort, removability, digital planning, and the convenience that adult patients usually care about most."
+            title="Clear Aligners"
+            image={branding.A1}
+            secondaryImages={[branding.A2, branding.A3, branding.A4]}
+            intro="This page presents clear aligners as a modern and discreet route to straighter teeth."
             benefits={alignerBenefits}
-            closing="For a production build, this page should also include suitability notes, expected timelines, common limitations, and a consultation CTA with patient-friendly examples of cases that can be treated."
+            closing="Treatment is planned digitally and monitored carefully for predictable, comfortable progress."
           />
         );
       case 'cosmetic':
         return (
           <InfoPage
-            title="Cosmetic dentistry page"
-            image={branding.room1}
-            intro="This page is positioned around elegant smile enhancement, including veneers, whitening, and bonding. The tone avoids overpromising and instead leans into taste, balance, and natural-looking outcomes."
+            title="Cosmetic Dentistry"
+            image={branding.C1}
+            secondaryImages={[branding.C2, branding.C3, branding.C4]}
+            intro="Cosmetic dentistry focuses on elegant, natural-looking smile enhancement."
             benefits={cosmeticBenefits}
-            closing="On the final site, this page should include a small gallery, treatment combinations, and a section on how smile design is tailored to facial proportions and oral health rather than trend-chasing internet chaos."
+            closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
           />
         );
       case 'about':
