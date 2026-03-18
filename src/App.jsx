@@ -497,7 +497,7 @@ export default function ApexDentalWebsite() {
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.AB1}
+              src={branding.AB2}
               alt="About Apex Dental"
               className="h-[420px] w-full rounded-[1.5rem] object-cover"
             />
@@ -505,7 +505,7 @@ export default function ApexDentalWebsite() {
 
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.AB2}
+              src={branding.AB3}
               alt="About Apex Dental"
               className="h-[360px] w-full rounded-[1.5rem] object-cover"
             />
@@ -548,14 +548,6 @@ export default function ApexDentalWebsite() {
             ))}
           </div>
         </div>
-
-        <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={branding.AB3}
-            alt="About Apex Dental"
-            className="h-[320px] w-full rounded-[1.5rem] object-cover"
-          />
-        </div>
       </section>
     );
   }
@@ -565,7 +557,7 @@ export default function ApexDentalWebsite() {
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
-            src={branding.CT1}
+            src={branding.CT2}
             alt="Contact Apex Dental"
             className="h-[320px] w-full rounded-[1.5rem] object-cover"
           />
@@ -640,14 +632,14 @@ export default function ApexDentalWebsite() {
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.CT2}
+              src={branding.CT3}
               alt="Apex Dental location"
               className="h-[240px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.CT3}
+              src={branding.CT1}
               alt="Apex Dental exterior"
               className="h-[240px] w-full rounded-[1.5rem] object-cover"
             />
@@ -679,7 +671,7 @@ export default function ApexDentalWebsite() {
         <div className="mb-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
-              src={branding.E1}
+              src={branding.E2}
               alt="Dental emergency care"
               className="h-[360px] w-full rounded-[1.5rem] object-cover"
             />
@@ -737,31 +729,6 @@ export default function ApexDentalWebsite() {
             </div>
           </div>
         </div>
-
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              How we help
-            </p>
-            <h3 className="mt-3 text-3xl font-semibold tracking-tight">
-              Fast assessment, pain relief, and a clear plan.
-            </h3>
-            <p className="mt-5 leading-8 text-slate-300">
-              Emergency appointments focus on diagnosing the cause quickly and getting
-              you comfortable. Depending on the problem, this may include x-rays,
-              drainage of infection, temporary stabilisation, repair of a broken tooth,
-              re-cementing a crown, or planning the next stage of care.
-            </p>
-          </div>
-
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.E2}
-              alt="Urgent dental appointment"
-              className="h-[320px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-        </div>
       </section>
     );
   }
@@ -772,8 +739,8 @@ export default function ApexDentalWebsite() {
         return (
           <InfoPage
             title="Dental Implants"
-            image={branding.I1}
-            secondaryImages={[branding.I2, branding.I3, branding.I4]}
+            image={branding.I2}
+            secondaryImages={[branding.I3, branding.I4]}
             intro="Dental implants are a stable, aesthetic solution for replacing missing teeth."
             benefits={implantBenefits}
             closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
@@ -783,8 +750,8 @@ export default function ApexDentalWebsite() {
         return (
           <InfoPage
             title="Clear Aligners"
-            image={branding.A1}
-            secondaryImages={[branding.A2, branding.A4, branding.A5]}
+            image={branding.A2}
+            secondaryImages={[branding.A3, branding.A4, branding.A5]}
             intro="This page presents clear aligners as a modern and discreet route to straighter teeth."
             benefits={alignerBenefits}
             closing="Treatment is planned digitally and monitored carefully for predictable, comfortable progress."
@@ -794,8 +761,8 @@ export default function ApexDentalWebsite() {
         return (
           <InfoPage
             title="Cosmetic Dentistry"
-            image={branding.C1}
-            secondaryImages={[branding.C2, branding.C3, branding.C4]}
+            image={branding.C2}
+            secondaryImages={[branding.C3, branding.C4]}
             intro="Cosmetic dentistry focuses on elegant, natural-looking smile enhancement."
             benefits={cosmeticBenefits}
             closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
