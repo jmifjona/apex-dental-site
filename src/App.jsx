@@ -15,28 +15,50 @@ export default function ApexDentalWebsite() {
 
  const branding = {
   logo: '/images/orislogo.png',
-  hero: '/images/trident-park.jpg',
-  reception: '/images/hero.jpg',
-  doorLogo: '/images/door-logo.jpg',
-  wallLogo: '/images/wall-logo.jpeg',
-  teamDesk: '/images/team-desk.jpeg',
-  treatment: '/images/treatment.jpeg',
-  scanner: '/images/scanner.jpeg',
-  room1: '/images/room1.jpg',
-  room2: '/images/room2.jpeg',
-  room3: '/images/room3.jpg',
-  corridor: '/images/corridor.jpg',
-  suite: '/images/suite.jpeg',
-  };
+
+  H1: '/images/H1.jpg',
+  H2: '/images/H2.jpg',
+  H3: '/images/H3.jpg',
+  H4: '/images/H4.jpg',
+  H5: '/images/H5.jpg',
+  H6: '/images/H6.jpg',
+  H7: '/images/H7.jpg',
+  H8: '/images/H8.jpg',
+  H9: '/images/H9.jpg',
+  H10: '/images/H10.jpg',
+
+  I1: '/images/I1.jpg',
+  I2: '/images/I2.jpg',
+  I3: '/images/I3.jpg',
+  I4: '/images/I4.jpg',
+
+  A1: '/images/A1.jpg',
+  A2: '/images/A2.jpg',
+  A3: '/images/A3.jpg',
+  A4: '/images/A4.jpg',
+
+  C1: '/images/C1.jpg',
+  C2: '/images/C2.jpg',
+  C3: '/images/C3.jpg',
+  C4: '/images/C4.jpg',
+
+  AB1: '/images/AB1.jpg',
+  AB2: '/images/AB2.jpg',
+  AB3: '/images/AB3.jpg',
+
+  CT1: '/images/CT1.jpg',
+  CT2: '/images/CT2.jpg',
+  CT3: '/images/CT3.jpg',
+};
 
   const galleryImages = [
-   branding.wallLogo,
-  branding.room1,
-  branding.room2,
-  branding.room3,
-  branding.corridor,
-  branding.suite,
-  ];
+  branding.H5,
+  branding.H6,
+  branding.H7,
+  branding.H8,
+  branding.H9,
+  branding.H10,
+];
 
   const pages = useMemo(
     () => ({
