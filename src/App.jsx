@@ -4,30 +4,53 @@ import { Phone, MapPin, Sparkles, ChevronRight, CheckCircle2, Smile, ScanLine, S
 export default function ApexDentalWebsite() {
   const [page, setPage] = useState('home');
 
-  const branding = {
+   const branding = {
     logo: '/images/orislogo.png',
-    hero: '/images/258569_1773178967254.jpeg',
-    reception: '/images/258569_1773178967254.jpeg',
-    wallLogo: '/images/258569_1773178687138.jpeg',
-    teamDesk: '/images/258569_1773178672323.jpeg',
-    treatment: '/images/258569_1773178853979.jpeg',
-    scanner: '/images/258569_1773178953638.jpeg',
-    paediatric: '/images/258569_1773178869505.jpeg',
-    room1: '/images/dentrm1.jpg',
-    room2: '/images/dentrm2.jpg',
-    room2b: '/images/dentrm2b.jpg',
-    corridor: '/images/258569_1773178726726.jpeg',
-    suite: '/images/IMG-20260315-WA0006.jpg',
+
+    H1: '/images/H1.jpg',
+    H2: '/images/H2.jpg',
+    H3: '/images/H3.jpg',
+    H4: '/images/H4.jpg',
+    H5: '/images/H5.jpg',
+    H6: '/images/H6.jpg',
+    H7: '/images/H7.jpg',
+    H8: '/images/H8.jpg',
+    H9: '/images/H9.jpg',
+    H10: '/images/H10.jpg',
+
+    I1: '/images/I1.jpg',
+    I2: '/images/I2.jpg',
+    I3: '/images/I3.jpg',
+    I4: '/images/I4.jpg',
+
+    A1: '/images/A1.jpg',
+    A2: '/images/A2.jpg',
+    A3: '/images/A3.jpg',
+    A4: '/images/A4.jpg',
+
+    C1: '/images/C1.jpg',
+    C2: '/images/C2.jpg',
+    C3: '/images/C3.jpg',
+    C4: '/images/C4.jpg',
+
+    AB1: '/images/AB1.jpg',
+    AB2: '/images/AB2.jpg',
+    AB3: '/images/AB3.jpg',
+
+    CT1: '/images/CT1.jpg',
+    CT2: '/images/CT2.jpg',
+    CT3: '/images/CT3.jpg',
   };
 
-  const galleryImages = [
-    branding.reception,
-    branding.wallLogo,
-    branding.room1,
-    branding.room2,
-    branding.room2b,
-    branding.corridor,
+  const homeGalleryImages = [
+    branding.H5,
+    branding.H6,
+    branding.H7,
+    branding.H8,
+    branding.H9,
+    branding.H10,
   ];
+
 
   const pages = useMemo(
     () => ({
