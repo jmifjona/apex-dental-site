@@ -539,6 +539,52 @@ function HomePage({ services }) {
         </div>
       </section>
 
+      <section className="border-t border-white/10 bg-[#0C0C0C]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+          <div className="rounded-[2rem] border border-[#C7A86B]/15 bg-[#141414] p-8 sm:p-10 lg:p-12">
+            <SectionHeading
+              eyebrow="Our Dentists & Team"
+              title="Apex Dental is built around experienced clinicians and a supportive team"
+              text="The clinic is led by Dr Jonathan Mifsud and supported by a growing team of dentists and staff committed to patient care, clear communication, and high clinical standards."
+            />
+
+            <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {[
+                {
+                  name: "Dr Jonathan Mifsud",
+                  text: "Lead clinician at Apex Dental and described on the current website as a renowned dental implantologist with a passion for transforming smiles and restoring confidence.",
+                },
+                {
+                  name: "Dr Massimo Dalessandro",
+                  text: "Listed on the current Apex Dental website as one of the main dental surgeons, contributing to the clinic’s focus on high-quality patient care.",
+                },
+                {
+                  name: "Dr Charlotte Axisa",
+                  text: "Listed on the current Apex Dental website as one of the main dental surgeons and part of the core clinical team at Trident Park.",
+                },
+                {
+                  name: "Dr Martha Lopez",
+                  text: "Part of the Apex Dental dental team, supporting the clinic’s multidisciplinary patient care approach.",
+                },
+                {
+                  name: "Dr Adam Borg",
+                  text: "Part of the Apex Dental dental team, helping deliver patient-focused treatment across the clinic’s services.",
+                },
+                {
+                  name: "Clinical & Support Staff",
+                  text: "Beyond the dentists, Apex Dental is supported by staff focused on creating a comfortable, welcoming, and well-organised patient experience from first contact to follow-up care.",
+                },
+              ].map((member) => (
+                <div key={member.name} className="rounded-[1.75rem] border border-white/10 bg-[#171717] p-6">
+                  <h3 className="text-2xl font-semibold text-white">{member.name}</h3>
+                  <p className="mt-4 text-base leading-8 text-[#D3D3D3]">{member.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="about" className="border-t border-white/10 bg-[#111111]">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:px-10">
           <div className="grid grid-cols-2 gap-4">
