@@ -1,869 +1,428 @@
-import React, { useMemo, useState } from 'react';
-import {
-  Phone,
-  MapPin,
-  Sparkles,
-  ChevronRight,
-  CheckCircle2,
-  Smile,
-  ScanLine,
-  ShieldCheck,
-} from 'lucide-react';
-
-export default function ApexDentalWebsite() {
-  const [page, setPage] = useState('home');
-
-  const branding = {
-    logo: '/images/orislogo.png',
-
-    H1: '/images/H1.jpg',
-    H2: '/images/H2.jpg',
-    H3: '/images/H3.jpg',
-    H4: '/images/H4.jpg',
-    H5: '/images/H5.jpg',
-    H6: '/images/H6.jpg',
-    H7: '/images/H7.jpg',
-    H8: '/images/H8.jpg',
-    H9: '/images/H9.jpg',
-    H10: '/images/H10.jpg',
-
-    I1: '/images/I1.jpg',
-    I2: '/images/I2.jpg',
-    I3: '/images/I3.jpg',
-    I4: '/images/I4.jpg',
-
-    A1: '/images/A1.jpg',
-    A2: '/images/A2.jpg',
-    A3: '/images/A3.jpg',
-    A4: '/images/A4.jpg',
-    A5: '/images/A5.jpg',
-
-    C1: '/images/C1.jpg',
-    C2: '/images/C2.jpg',
-    C3: '/images/C3.jpg',
-    C4: '/images/C4.jpg',
-
-    AB1: '/images/AB1.jpg',
-    AB2: '/images/AB2.jpg',
-    AB3: '/images/AB3.jpg',
-
-    CT1: '/images/CT1.jpg',
-    CT2: '/images/CT2.jpg',
-    CT3: '/images/CT3.jpg',
-
-    E1: '/images/E1.jpg',
-    E2: '/images/E2.jpg',
+export default function ApexDentalLuxuryWebsite() {
+  const heroImages = {
+    home: "/images/H1.jpg",
+    implants: "/images/H4.jpg",
+    veneers: "/images/H7.jpg",
+    whitening: "/images/H8.jpg",
+    orthodontics: "/images/H1.jpg",
+    emergency: "/images/H2.jpg",
   };
-
-  const homeGalleryImages = [
-    branding.H5,
-    branding.H6,
-    branding.H7,
-    branding.H8,
-    branding.H9,
-    branding.H10,
-  ];
-
-  const pages = useMemo(
-    () => ({
-      home: {
-        title: 'Modern Dentistry in Malta',
-        eyebrow: 'Apex Dental · Malta',
-        subtitle:
-          'Advanced implantology, cosmetic dentistry, and clear aligners delivered with precision, digital planning, and a patient-first experience.',
-      },
-      implants: {
-        title: 'Dental Implants',
-        eyebrow: 'Permanent tooth replacement',
-        subtitle:
-          'From single missing teeth to full-arch rehabilitation, we use digital workflows and premium components for stable, aesthetic long-term outcomes.',
-      },
-      aligners: {
-        title: 'Clear Aligners',
-        eyebrow: 'Discreet orthodontics',
-        subtitle:
-          'Straighten teeth with removable, comfortable aligners designed through 3D scans and a carefully planned digital setup.',
-      },
-      cosmetic: {
-        title: 'Cosmetic Dentistry',
-        eyebrow: 'Smile design with restraint',
-        subtitle:
-          'Veneers, whitening, bonding, and smile enhancement designed to look elegant and natural.',
-      },
-      about: {
-        title: 'About Apex Dental',
-        eyebrow: 'Specialist-led digital dentistry',
-        subtitle:
-          'A modern clinic in Malta focused on precision, comfort, premium materials, and transparent communication from consultation to follow-up.',
-      },
-      contact: {
-        title: 'Contact & Book',
-        eyebrow: 'Appointments and enquiries',
-        subtitle:
-          'Reach the clinic directly through WhatsApp or phone and arrange a consultation for implants, aligners, cosmetic dentistry, or a full dental assessment.',
-      },
-      emergency: {
-        title: 'Dental Emergency',
-        eyebrow: 'Urgent same-day care',
-        subtitle:
-          'Fast assessment and treatment for dental pain, swelling, trauma, broken teeth, lost crowns, infections, and other urgent dental problems.',
-      },
-    }),
-    []
-  );
-
-  const navItems = [
-    ['home', 'Home'],
-    ['implants', 'Implants'],
-    ['aligners', 'Aligners'],
-    ['cosmetic', 'Cosmetic'],
-    ['about', 'About'],
-    ['contact', 'Contact'],
-    ['emergency', 'Emergency'],
-  ];
 
   const services = [
     {
-      title: 'Dental Implants',
-      text: 'Single implants, implant bridges, and full-arch solutions using digitally planned workflows and guided surgery where appropriate.',
+      id: "implants",
+      title: "Dental Implants",
+      subtitle: "Fixed. Natural. Long-lasting.",
+      image: "/images/I3.jpg",
+      points: ["Natural aesthetics", "Functional stability", "Long-term reliability"],
+      description:
+        "A precise solution for replacing missing teeth using advanced implant planning and durable restorative materials.",
     },
     {
-      title: 'Clear Aligners',
-      text: 'A discreet orthodontic option for adults and teens looking to improve alignment without fixed metal appliances.',
+      id: "veneers",
+      title: "Veneers",
+      subtitle: "Refined smile enhancement.",
+      image: "/images/I1.jpg",
+      points: ["Shape correction", "Colour enhancement", "Natural finish"],
+      description:
+        "Custom veneers designed to enhance symmetry, brightness, and confidence with a premium aesthetic result.",
     },
     {
-      title: 'Cosmetic Dentistry',
-      text: 'Smile makeovers, veneers, whitening, and aesthetic treatments tailored to facial balance and natural appearance.',
+      id: "whitening",
+      title: "Teeth Whitening",
+      subtitle: "Cleaner. Brighter. More confident.",
+      image: "/images/I2.jpg",
+      points: ["Professional systems", "Even results", "Safe treatment"],
+      description:
+        "Professional whitening options tailored to deliver noticeable brightness while protecting enamel and comfort.",
+    },
+    {
+      id: "orthodontics",
+      title: "Orthodontics & Clear Aligners",
+      subtitle: "Discreet movement. Precise outcomes.",
+      image: "/images/I4.jpg",
+      points: ["Clear planning", "Removable aligners", "Predictable progress"],
+      description:
+        "Advanced orthodontic solutions for patients seeking a straighter smile with comfort, discretion, and control.",
     },
   ];
 
-  const implantBenefits = [
-    'Single-tooth implants for fixed replacement of missing teeth',
-    'Implant bridges for multiple missing teeth',
-    'Full-arch rehabilitation for advanced tooth loss',
-    'Digitally guided planning using scans and imaging',
-    'Temporary teeth possible in selected immediate cases',
+  const treatmentCards = [
+    "Dental Implants",
+    "Veneers",
+    "Teeth Whitening",
+    "Crowns & Bridges",
+    "Root Canal Treatment",
+    "Orthodontics",
+    "Emergency Care",
+    "Smile Design",
   ];
 
-  const alignerBenefits = [
-    '3D digital scans instead of messy impressions',
-    'Removable trays for easier oral hygiene',
-    'Treatment planning tailored to your bite and smile goals',
-    'Suitable for many mild to moderate orthodontic cases',
-    'Clear review process with regular monitoring',
+  const navigation = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Emergency", href: "#emergency" },
+    { label: "Contact", href: "#contact" },
   ];
-
-  const cosmeticBenefits = [
-    'Porcelain veneers for shape, colour, and proportion improvement',
-    'Composite bonding for minimally invasive refinement',
-    'Professional whitening for brighter natural teeth',
-    'Smile design guided by facial and dental proportions',
-    'Focus on natural aesthetics and long-term maintainability',
-  ];
-
-  const whyUs = [
-    'Digital workflows for better planning and communication',
-    'Modern diagnostics and imaging for greater treatment precision',
-    'Comfort-focused appointments in a premium clinical setting',
-    'A clear explanation of options, costs, and treatment stages',
-  ];
-
-  function heroImage() {
-    if (page === 'implants') return branding.I1;
-    if (page === 'aligners') return branding.A1;
-    if (page === 'cosmetic') return branding.C1;
-    if (page === 'about') return branding.AB1;
-    if (page === 'contact') return branding.CT1;
-    if (page === 'emergency') return branding.E1;
-    return branding.H1;
-  }
-
-  function PageHero() {
-    const meta = pages[page];
-    return (
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.22),transparent_26%),radial-gradient(circle_at_left,rgba(255,255,255,0.05),transparent_20%)]" />
-        <div className="absolute inset-y-0 right-0 hidden w-[42%] bg-[linear-gradient(135deg,rgba(34,211,238,0.08),rgba(255,255,255,0.02))] blur-3xl lg:block" />
-
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-24">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100 shadow-lg shadow-cyan-950/20">
-              <Sparkles className="h-4 w-4" />
-              <span className="font-medium uppercase tracking-[0.24em] text-cyan-200">
-                {meta.eyebrow}
-              </span>
-            </div>
-
-            <h1 className="mt-6 max-w-5xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.04]">
-              {meta.title}
-            </h1>
-
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-              {meta.subtitle}
-            </p>
-
-            <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {[
-                ['Digital Planning', 'CBCT, scans, and guided workflows'],
-                ['Premium Care', 'Comfort-first modern dentistry'],
-                ['Fast Booking', 'Direct WhatsApp contact'],
-              ].map(([title, text]) => (
-                <div
-                  key={title}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
-                >
-                  <p className="text-sm font-semibold text-white">{title}</p>
-                  <p className="mt-1 text-sm leading-6 text-slate-400">{text}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="https://wa.me/35679854037"
-                className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-              >
-                Book on WhatsApp
-                <ChevronRight className="h-4 w-4" />
-              </a>
-
-              <button
-                onClick={() => setPage('contact')}
-                className="rounded-full border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white/90 transition hover:border-cyan-300/30 hover:bg-white/10"
-              >
-                Contact Clinic
-              </button>
-            </div>
-          </div>
-
-          <div className="relative hidden lg:block">
-            <div className="absolute -inset-3 rounded-[2rem] bg-cyan-300/10 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/30 backdrop-blur-sm">
-              <img
-                src={heroImage()}
-                alt="Apex Dental clinic"
-                className="h-[560px] w-full rounded-[1.5rem] object-cover"
-              />
-              <div className="absolute inset-x-8 bottom-8 rounded-[1.5rem] border border-white/10 bg-slate-950/55 p-5 backdrop-blur-md">
-                <p className="text-sm uppercase tracking-[0.28em] text-cyan-300">
-                  Apex Dental Malta
-                </p>
-                <p className="mt-2 text-xl font-semibold text-white">
-                  Modern care in a premium clinical environment
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function HomePage() {
-    return (
-      <>
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-          <div className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-              Featured Treatments
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Premium dentistry, presented clearly.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-3">
-            {services.map((service) => (
-              <div
-                key={service.title}
-                className="group rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-7 shadow-2xl shadow-black/20 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-cyan-950/30"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-2xl font-semibold">{service.title}</h3>
-                  <div className="rounded-full border border-cyan-300/20 bg-cyan-300/10 p-2 text-cyan-200">
-                    <Smile className="h-4 w-4" />
-                  </div>
-                </div>
-
-                <p className="mt-4 leading-7 text-slate-300">{service.text}</p>
-
-                <button
-                  onClick={() =>
-                    setPage(
-                      service.title === 'Dental Implants'
-                        ? 'implants'
-                        : service.title === 'Clear Aligners'
-                        ? 'aligners'
-                        : 'cosmetic'
-                    )
-                  }
-                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 px-4 py-2 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-300/10"
-                >
-                  Learn more
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-sm">
-              <img
-                src={branding.H2}
-                alt="Apex Dental feature image"
-                className="h-[420px] w-full rounded-[1.5rem] object-cover"
-              />
-            </div>
-
-            <div className="grid gap-6">
-              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-                <img
-                  src={branding.H3}
-                  alt="Apex Dental feature image"
-                  className="h-[198px] w-full rounded-[1.5rem] object-cover"
-                />
-              </div>
-
-              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-                <img
-                  src={branding.H4}
-                  alt="Apex Dental feature image"
-                  className="h-[198px] w-full rounded-[1.5rem] object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))]">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-                Why patients choose us
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                A clinic experience built properly from start to finish.
-              </h2>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                Good dentistry is not magic. It is careful diagnosis, good planning,
-                skilled execution, and systems that make the patient feel informed
-                instead of mildly haunted.
-              </p>
-            </div>
-
-            <div className="grid gap-4">
-              {whyUs.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-slate-950/60 p-5 text-white/85 backdrop-blur-sm"
-                >
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="mt-0.5 h-5 w-5 text-cyan-300" />
-                    <span>{item}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-          <div className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-              Clinic Gallery
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              A real clinic. A real environment.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {homeGalleryImages.map((image, index) => (
-              <div
-                key={image + index}
-                className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm"
-              >
-                <img
-                  src={image}
-                  alt={`Apex Dental gallery ${index + 1}`}
-                  className="h-[260px] w-full rounded-[1.5rem] object-cover transition duration-500 hover:scale-[1.03]"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-          <div className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-              Patient Journey
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              From first consultation to final result.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-4">
-            {[
-              ['Consultation', 'A clear diagnosis and tailored treatment options.'],
-              ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
-              ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
-              ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ].map(([title, text], idx) => (
-              <div
-                key={title}
-                className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
-              >
-                <p className="text-sm font-semibold text-cyan-300">0{idx + 1}</p>
-                <h3 className="mt-3 text-xl font-semibold">{title}</h3>
-                <p className="mt-4 leading-7 text-slate-300">{text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </>
-    );
-  }
-
-  function InfoPage({ title, intro, benefits, closing, image, secondaryImages = [] }) {
-    return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-        <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={image}
-            alt={title}
-            className="h-[340px] w-full rounded-[1.5rem] object-cover"
-          />
-        </div>
-
-        {secondaryImages.length > 0 && (
-          <div className="mb-10 grid gap-6 md:grid-cols-3">
-            {secondaryImages.map((img, idx) => (
-              <div
-                key={img + idx}
-                className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm"
-              >
-                <img
-                  src={img}
-                  alt={`${title} ${idx + 1}`}
-                  className="h-[220px] w-full rounded-[1.5rem] object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              {title}
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-slate-300">{intro}</p>
-            <p className="mt-6 leading-8 text-slate-400">{closing}</p>
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              What this page covers
-            </p>
-
-            <div className="mt-6 space-y-4">
-              {benefits.map((item) => (
-                <div key={item} className="flex gap-3 text-white/82">
-                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
-                  <span className="leading-7">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setPage('contact')}
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-            >
-              Book a consultation
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function AboutPage() {
-    return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-        <div className="mb-10 grid gap-6 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.AB2}
-              alt="About Apex Dental"
-              className="h-[420px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.AB3}
-              alt="About Apex Dental"
-              className="h-[360px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              A modern dental clinic in Malta focused on quality and clarity.
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-slate-300">
-              Apex Dental is designed around contemporary dentistry: digital
-              diagnostics, precise planning, premium materials, and a smoother
-              patient experience from first consultation to final result.
-            </p>
-            <p className="mt-6 leading-8 text-slate-400">
-              The clinic approach centres on clear communication, conservative
-              judgment where possible, and high-level treatment planning where
-              more advanced care is needed.
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            {[
-              'Advanced digital planning and imaging',
-              'Implant, cosmetic, and aligner-focused workflows',
-              'Patient-friendly communication and treatment guidance',
-              'Convenient location in Trident Park, Birkirkara',
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
-              >
-                <div className="flex items-start gap-3">
-                  <ScanLine className="mt-0.5 h-5 w-5 text-cyan-300" />
-                  <span>{item}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function ContactPage() {
-    return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-        <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-          <img
-            src={branding.CT2}
-            alt="Contact Apex Dental"
-            className="h-[320px] w-full rounded-[1.5rem] object-cover"
-          />
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Book an appointment or ask a question.
-            </h2>
-
-            <div className="mt-8 space-y-5 text-slate-300">
-              <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
-                  Phone / WhatsApp
-                </p>
-                <p className="mt-1 flex items-center gap-2 text-lg text-white">
-                  <Phone className="h-5 w-5 text-cyan-300" /> +356 7985 4037
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
-                  Location
-                </p>
-                <p className="mt-1 flex items-start gap-2 text-lg text-white">
-                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
-                  Trident Park, Imriehel, Birkirkara BKR 4000, Malta
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
-                  Opening Hours
-                </p>
-                <p className="mt-1 text-lg text-white">Monday to Friday 9am–7pm</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
-            <h3 className="text-2xl font-semibold">Contact form</h3>
-
-            <div className="mt-6 grid gap-4">
-              <input
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
-                placeholder="Full name"
-              />
-              <input
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
-                placeholder="Phone or email"
-              />
-              <select className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none focus:border-cyan-300/40">
-                <option>Interested in</option>
-                <option>Dental Implants</option>
-                <option>Clear Aligners</option>
-                <option>Cosmetic Dentistry</option>
-                <option>General Consultation</option>
-              </select>
-              <textarea
-                rows={5}
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none placeholder:text-white/30 focus:border-cyan-300/40"
-                placeholder="How can we help?"
-              />
-              <button className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition hover:scale-[1.01]">
-                Request Appointment <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.CT3}
-              alt="Apex Dental location"
-              className="h-[240px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.CT1}
-              alt="Apex Dental exterior"
-              className="h-[240px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function EmergencyPage() {
-    const emergencyList = [
-      'Severe toothache or throbbing pain',
-      'Facial swelling or gum swelling',
-      'Broken, cracked, or chipped tooth',
-      'Knocked-out tooth after trauma',
-      'Lost filling, crown, or bridge',
-      'Bleeding after dental injury',
-    ];
-
-    const actionSteps = [
-      'Call or WhatsApp the clinic immediately and explain the problem clearly.',
-      'If there is swelling, fever, or spreading pain, seek help urgently the same day.',
-      'For a knocked-out tooth, hold it by the crown, not the root, and keep it moist.',
-      'Avoid chewing on the affected side until you are seen.',
-    ];
-
-    return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-        <div className="mb-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <img
-              src={branding.E2}
-              alt="Dental emergency care"
-              className="h-[360px] w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              Need urgent help?
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Same-day emergency dental care when possible.
-            </h2>
-            <p className="mt-5 leading-8 text-slate-300">
-              If you have severe pain, swelling, trauma, a broken tooth, or a lost
-              restoration, contact Apex Dental as soon as possible.
-            </p>
-            <a
-              href="https://wa.me/35679854037"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-            >
-              WhatsApp Emergency
-              <ChevronRight className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-
-        <div className="mb-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7 backdrop-blur-sm">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              Common emergencies
-            </p>
-            <div className="mt-6 space-y-4">
-              {emergencyList.map((item) => (
-                <div key={item} className="flex gap-3 text-white/85">
-                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
-                  <span className="leading-7">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7 backdrop-blur-sm">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-              What to do first
-            </p>
-            <div className="mt-6 space-y-5 text-slate-300">
-              {actionSteps.map((item, idx) => (
-                <div key={item} className="flex gap-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-300/15 text-sm font-semibold text-cyan-200">
-                    {idx + 1}
-                  </div>
-                  <p className="leading-7">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function CurrentPage() {
-    switch (page) {
-      case 'implants':
-        return (
-          <InfoPage
-            title="Dental Implants"
-            image={branding.I2}
-            secondaryImages={[branding.I3, branding.I4]}
-            intro="Dental implants are a stable, aesthetic solution for replacing missing teeth."
-            benefits={implantBenefits}
-            closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
-          />
-        );
-      case 'aligners':
-        return (
-          <InfoPage
-            title="Clear Aligners"
-            image={branding.A2}
-            secondaryImages={[branding.A3, branding.A4, branding.A5]}
-            intro="This page presents clear aligners as a modern and discreet route to straighter teeth."
-            benefits={alignerBenefits}
-            closing="Treatment is planned digitally and monitored carefully for predictable, comfortable progress."
-          />
-        );
-      case 'cosmetic':
-        return (
-          <InfoPage
-            title="Cosmetic Dentistry"
-            image={branding.C2}
-            secondaryImages={[branding.C3, branding.C4]}
-            intro="Cosmetic dentistry focuses on elegant, natural-looking smile enhancement."
-            benefits={cosmeticBenefits}
-            closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
-          />
-        );
-      case 'about':
-        return <AboutPage />;
-      case 'contact':
-        return <ContactPage />;
-      case 'emergency':
-        return <EmergencyPage />;
-      default:
-        return <HomePage />;
-    }
-  }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#050816_0%,#09101f_38%,#050816_100%)] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <button onClick={() => setPage('home')} className="group flex items-center gap-3 text-left">
-            <img
-              src={branding.logo}
-              alt="Apex Dental logo"
-              className="h-12 w-auto object-contain"
-            />
-            <div>
-              <p className="text-xl font-semibold tracking-[0.08em] text-white">
-                Apex Dental
-              </p>
-              <p className="text-[11px] uppercase tracking-[0.38em] text-cyan-300/90">
-                Digital Dentistry · Malta
-              </p>
-            </div>
-          </button>
+    <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-[#00AEEF]/30 selection:text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+          <a href="#home" className="text-lg font-semibold tracking-[0.35em] uppercase text-white">
+            Apex Dental
+          </a>
 
-          <nav className="hidden gap-5 text-sm md:flex">
-            {navItems.map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setPage(key)}
-                className={`transition ${
-                  page === key ? 'text-white' : 'text-white/70 hover:text-white'
-                }`}
+          <nav className="hidden items-center gap-8 md:flex">
+            {navigation.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-sm uppercase tracking-[0.22em] text-white/70 transition hover:text-white"
               >
-                {label}
-              </button>
+                {item.label}
+              </a>
             ))}
           </nav>
 
           <a
-            href="https://wa.me/35679854037"
-            className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+            href="#contact"
+            className="rounded-full border border-[#00AEEF]/50 px-5 py-2 text-xs font-medium uppercase tracking-[0.22em] text-white transition hover:border-[#00AEEF] hover:bg-[#00AEEF]/10"
           >
-            <Phone className="h-4 w-4" />
-            Book Now
+            Book Consultation
           </a>
         </div>
       </header>
 
-      <PageHero />
-      <CurrentPage />
-
-      <section className="mx-auto max-w-7xl px-6 pb-10 lg:px-8">
-        <div className="rounded-[2rem] border border-cyan-300/20 bg-[linear-gradient(135deg,rgba(34,211,238,0.14),rgba(255,255,255,0.05))] p-8 shadow-2xl shadow-cyan-950/20 backdrop-blur-sm lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-200">
-                Ready to take the next step?
+      <main>
+        <section
+          id="home"
+          className="relative isolate overflow-hidden"
+          style={{
+            backgroundImage: `linear-gradient(rgba(10,10,10,0.70), rgba(10,10,10,0.78)), url(${heroImages.home})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-24 lg:px-10">
+            <div className="max-w-3xl">
+              <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Luxury Dental Experience</p>
+              <h1 className="max-w-2xl text-5xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl">
+                Precision Dentistry. <br /> Redefined.
+              </h1>
+              <p className="mt-8 max-w-xl text-base leading-8 text-white/75 sm:text-lg">
+                Advanced dental care in Malta focused on aesthetics, function, and long-term results. A premium
+                clinical environment with modern digital workflows and a calm, high-trust patient journey.
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-                Book a consultation with Apex Dental.
-              </h2>
-              <p className="mt-4 max-w-2xl text-slate-200 leading-7">
-                The site structure is now set up to convert better, explain services
-                more clearly, and feel more premium than the old version.
+
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <a
+                  href="#contact"
+                  className="rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
+                >
+                  Book Consultation
+                </a>
+                <a
+                  href="#services"
+                  className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
+                >
+                  View Treatments
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="border-t border-white/10 bg-[#0D0D0D]">
+          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:px-10">
+            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+              <img src="/images/I1.jpg" alt="Apex Dental clinic interior" className="h-full w-full object-cover" />
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">About Apex Dental</p>
+              <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">A Higher Standard of Dentistry</h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
+                Apex Dental combines advanced digital workflows with clinical expertise to deliver precise,
+                predictable outcomes. Every detail is designed to feel calm, refined, and clinically excellent.
+              </p>
+              <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
+                From consultation to final restoration, the experience is built around clarity, comfort, and premium
+                patient care. Dentistry should not feel rushed. Teeth are not a takeaway order.
+              </p>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {[
+                  { value: "Digital", label: "Workflow" },
+                  { value: "Premium", label: "Materials" },
+                  { value: "Personal", label: "Care" },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+                    <div className="text-2xl font-semibold text-white">{item.value}</div>
+                    <div className="mt-1 text-sm uppercase tracking-[0.2em] text-white/45">{item.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="border-t border-white/10 bg-[#0A0A0A]">
+          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+            <div className="max-w-2xl">
+              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Treatments</p>
+              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Premium care across every stage of treatment</h2>
+              <p className="mt-6 text-base leading-8 text-white/70">
+                Structured to feel clean, modern, and easy to navigate while still using your existing image assets.
               </p>
             </div>
 
-            <a
-              href="https://wa.me/35679854037"
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-            >
-              <Phone className="h-4 w-4" />
-              WhatsApp +356 7985 4037
-            </a>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+              {treatmentCards.map((item) => (
+                <div
+                  key={item}
+                  className="group rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-[#00AEEF]/40 hover:bg-white/[0.05]"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm uppercase tracking-[0.2em] text-white/45">Treatment</span>
+                    <span className="text-white/25 transition group-hover:text-[#00AEEF]">↗</span>
+                  </div>
+                  <h3 className="mt-8 text-xl font-medium leading-snug text-white">{item}</h3>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer className="border-t border-white/10 px-6 py-8 text-sm text-slate-400 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src={branding.logo}
-              alt="Apex Dental logo"
-              className="h-10 w-auto object-contain"
-            />
-            <p>Apex Dental Malta</p>
+        <section
+          className="relative overflow-hidden border-y border-white/10"
+          style={{
+            backgroundImage: `linear-gradient(rgba(10,10,10,0.65), rgba(10,10,10,0.72)), url(/images/H2.jpg)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="mx-auto max-w-7xl px-6 py-28 text-center lg:px-10">
+            <p className="text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Clinical Philosophy</p>
+            <h2 className="mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+              Designed for Results. Built to Last.
+            </h2>
           </div>
-          <p>Implants · Aligners · Cosmetic Dentistry · Birkirkara</p>
+        </section>
+
+        <section className="bg-[#0D0D0D]">
+          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+            <div className="grid gap-6 lg:grid-cols-3">
+              {[
+                {
+                  title: "Digital Precision",
+                  text: "Modern planning and refined workflows to support accurate, predictable treatment delivery.",
+                },
+                {
+                  title: "Premium Materials",
+                  text: "High-quality restorative materials selected for aesthetics, strength, and long-term confidence.",
+                },
+                {
+                  title: "Personalised Care",
+                  text: "A tailored treatment journey shaped around comfort, clarity, and the right clinical outcome.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
+                  <h3 className="text-2xl font-semibold text-white">{item.title}</h3>
+                  <p className="mt-4 text-base leading-8 text-white/68">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-white/10 bg-[#0A0A0A]">
+          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Featured Services</p>
+                <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Luxury service pages, ready to expand</h2>
+              </div>
+              <p className="max-w-xl text-base leading-8 text-white/70">
+                Each section uses a strong hero, concise authority-driven messaging, and a visual rhythm designed for a
+                premium clinic experience.
+              </p>
+            </div>
+
+            <div className="mt-12 space-y-8">
+              {services.map((service, index) => (
+                <section
+                  key={service.id}
+                  className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]"
+                >
+                  <div className={`grid gap-0 lg:grid-cols-2 ${index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+                    <div className="min-h-[340px]">
+                      <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
+                    </div>
+                    <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
+                      <p className="text-xs uppercase tracking-[0.35em] text-[#00AEEF]">Signature Service</p>
+                      <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">{service.title}</h3>
+                      <p className="mt-3 text-sm uppercase tracking-[0.2em] text-white/45">{service.subtitle}</p>
+                      <p className="mt-6 max-w-xl text-base leading-8 text-white/70">{service.description}</p>
+
+                      <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                        {service.points.map((point) => (
+                          <div key={point} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4 text-sm text-white/80">
+                            {point}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-10 flex flex-wrap gap-4">
+                        <a
+                          href="#contact"
+                          className="rounded-full bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
+                        >
+                          Book Consultation
+                        </a>
+                        <a
+                          href="#contact"
+                          className="rounded-full border border-white/15 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/35 hover:bg-white/5"
+                        >
+                          Enquire Now
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="emergency"
+          className="relative isolate overflow-hidden border-y border-white/10"
+          style={{
+            backgroundImage: `linear-gradient(rgba(10,10,10,0.72), rgba(10,10,10,0.82)), url(${heroImages.emergency})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+            <div className="max-w-3xl rounded-[2rem] border border-white/10 bg-black/25 p-8 backdrop-blur-sm sm:p-10">
+              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Emergency Dentist Malta</p>
+              <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Immediate Care. Fast Relief.</h2>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-white/72">
+                Urgent appointments for pain, swelling, broken teeth, lost restorations, and other dental emergencies.
+                This page is designed to convert fast and keep the next step obvious.
+              </p>
+
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <a
+                  href="tel:79854037"
+                  className="rounded-full bg-[#00AEEF] px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:brightness-110"
+                >
+                  Call 79854037
+                </a>
+                <a
+                  href="#contact"
+                  className="rounded-full border border-white/20 px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
+                >
+                  Request Appointment
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-[#0D0D0D]">
+          <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
+              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Contact</p>
+              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Visit Apex Dental</h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-white/70">
+                A refined clinical environment in Malta designed for comfort, trust, and premium dental care.
+              </p>
+
+              <div className="mt-10 space-y-5 text-base text-white/82">
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
+                  <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
+                    79854037
+                  </a>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Email</div>
+                  <a href="mailto:info@apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
+                    info@apexdental.com.mt
+                  </a>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Location</div>
+                  <p className="mt-1 text-lg text-white">Imrieħel, Malta</p>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Website</div>
+                  <a href="https://apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
+                    apexdental.com.mt
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8 sm:p-10">
+              <div className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Appointment Form</div>
+              <h3 className="mt-4 text-3xl font-semibold">Start Your Treatment Journey</h3>
+              <p className="mt-4 text-base leading-8 text-white/70">
+                Clean, premium form styling ready to connect to your preferred backend or booking workflow.
+              </p>
+
+              <form className="mt-8 space-y-4">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
+                />
+                <select className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white outline-none transition focus:border-[#00AEEF]/60">
+                  <option className="bg-[#0A0A0A]">Select Treatment</option>
+                  <option className="bg-[#0A0A0A]">Dental Implants</option>
+                  <option className="bg-[#0A0A0A]">Veneers</option>
+                  <option className="bg-[#0A0A0A]">Teeth Whitening</option>
+                  <option className="bg-[#0A0A0A]">Orthodontics</option>
+                  <option className="bg-[#0A0A0A]">Emergency Appointment</option>
+                </select>
+                <textarea
+                  rows={5}
+                  placeholder="Tell us how we can help"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
+                />
+                <button
+                  type="button"
+                  className="w-full rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.01]"
+                >
+                  Send Enquiry
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 bg-[#0A0A0A]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-white/45 md:flex-row md:items-center md:justify-between lg:px-10">
+          <p>© {new Date().getFullYear()} Apex Dental. All rights reserved.</p>
+          <div className="flex flex-wrap gap-5 uppercase tracking-[0.2em]">
+            <a href="#home" className="hover:text-white">Home</a>
+            <a href="#services" className="hover:text-white">Services</a>
+            <a href="#contact" className="hover:text-white">Contact</a>
+          </div>
         </div>
       </footer>
     </div>
