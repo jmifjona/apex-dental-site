@@ -49,6 +49,16 @@ function ServicePage({ service }) {
                 text={service.intro}
               />
               <p className="mt-8 text-base leading-8 text-[#D3D3D3]">{service.forWho}</p>
+              {service.slug === "implants" ? (
+                <div className="mt-8 space-y-6">
+                  <p className="text-base leading-8 text-[#D3D3D3]">
+                    Dental implants in Malta are one of the most reliable solutions for replacing missing teeth. At Apex Dental, implant planning is approached with a strong focus on precision, long-term stability, and restorative quality so the final result looks natural and functions confidently.
+                  </p>
+                  <p className="text-base leading-8 text-[#D3D3D3]">
+                    We work with premium implant solutions such as Neodent and Straumann, supported by digital planning and a more personalised consultation process. This helps patients understand the differences between treatment options, materials, and the long-term restorative pathway before making a decision.
+                  </p>
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="overflow-hidden rounded-[2rem] border border-[#C7A86B]/20 bg-[#171717] shadow-2xl shadow-black/40">
@@ -267,6 +277,106 @@ function PriceListPage() {
   );
 }
 
+function SEOManager({ route, currentService }) {
+  useEffect(() => {
+    const meta = {
+      home: {
+        title: "Dentist in Malta | Apex Dental",
+        description:
+          "Private dental clinic in Malta offering implants, cosmetic dentistry, clear aligners, root canal treatment, and emergency dental care.",
+        keywords:
+          "dentist malta, dental clinic malta, private dentist malta, apex dental malta",
+      },
+      implants: {
+        title: "Dental Implants Malta | Apex Dental",
+        description:
+          "Premium dental implants in Malta with digital planning and advanced restorative solutions. Book your consultation at Apex Dental.",
+        keywords:
+          "dental implants malta, implant dentist malta, neodent malta, straumann malta",
+      },
+      cosmetic: {
+        title: "Cosmetic Dentistry Malta | Apex Dental",
+        description:
+          "Cosmetic dentistry in Malta including veneers, smile design, and whitening with a refined private-clinic approach.",
+        keywords:
+          "cosmetic dentistry malta, veneers malta, smile design malta, teeth whitening malta",
+      },
+      aligners: {
+        title: "Clear Aligners Malta | Apex Dental",
+        description:
+          "Clear aligners in Malta for discreet orthodontic treatment with digital planning and a premium patient experience.",
+        keywords:
+          "clear aligners malta, invisalign malta, orthodontics malta, teeth straightening malta",
+      },
+      "crowns-bridges": {
+        title: "Crowns and Bridges Malta | Apex Dental",
+        description:
+          "Crowns and bridges in Malta to restore damaged or missing teeth with functional and aesthetic results.",
+        keywords:
+          "crowns malta, bridges malta, zirconia crowns malta, restorative dentistry malta",
+      },
+      "root-canal": {
+        title: "Root Canal Treatment Malta | Apex Dental",
+        description:
+          "Root canal treatment in Malta focused on relieving pain, removing infection, and preserving the natural tooth.",
+        keywords:
+          "root canal malta, endodontic treatment malta, tooth pain malta",
+      },
+      orthodontics: {
+        title: "Orthodontics Malta | Apex Dental",
+        description:
+          "Orthodontic treatment in Malta for smile alignment, bite improvement, and controlled tooth movement.",
+        keywords:
+          "orthodontics malta, braces malta, aligners malta, smile alignment malta",
+      },
+      emergency: {
+        title: "Emergency Dentist Malta | Apex Dental",
+        description:
+          "Emergency dentist in Malta for urgent appointments, toothache, swelling, trauma, and broken teeth.",
+        keywords:
+          "emergency dentist malta, urgent dental care malta, toothache malta",
+      },
+      "price-list": {
+        title: "Dental Price List Malta | Apex Dental",
+        description:
+          "View the Apex Dental price list in Malta for common treatments including implants, veneers, whitening, and surgery.",
+        keywords:
+          "dental price list malta, implant prices malta, veneers prices malta",
+      },
+      contact: {
+        title: "Contact Apex Dental | Trident Park Malta",
+        description:
+          "Contact Apex Dental at Trident Park, Mrieħel, Malta. Book an appointment or plan your visit to our private clinic.",
+        keywords:
+          "apex dental contact, trident park dentist, dentist mriehel malta",
+      },
+    };
+
+    const key = route === "home" ? "home" : route === "contact" ? "contact" : currentService?.slug || "home";
+    const data = meta[key] || meta.home;
+
+    document.title = data.title;
+
+    const setMeta = (name, content, attribute = "name") => {
+      let tag = document.head.querySelector(`meta[${attribute}="${name}"]`);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute(attribute, name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    };
+
+    setMeta("description", data.description);
+    setMeta("keywords", data.keywords);
+    setMeta("og:title", data.title, "property");
+    setMeta("og:description", data.description, "property");
+    setMeta("og:type", "website", "property");
+  }, [route, currentService]);
+
+  return null;
+}
+
 function HomePage({ services }) {
   return (
     <>
@@ -297,6 +407,26 @@ function HomePage({ services }) {
               <a href="#services-menu" className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-[#C7A86B]/40 hover:bg-white/5">
                 Explore Services
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0C0C0C]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+          <div className="rounded-[2rem] border border-[#C7A86B]/15 bg-[#141414] p-8 sm:p-10">
+            <SectionHeading
+              eyebrow="Private Dental Clinic in Malta"
+              title="Modern dentistry with strong local roots"
+              text="Apex Dental is a private dental clinic in Malta located at Trident Park, Mrieħel. We provide advanced implant dentistry, cosmetic dentistry, clear aligners, restorative treatment, and emergency care for patients seeking a more refined clinical experience."
+            />
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+              <p className="text-base leading-8 text-[#D3D3D3]">
+                Patients visiting Apex Dental benefit from a combination of modern digital workflows, careful treatment planning, and a premium private-practice environment in Malta’s Central Business District. The aim is to deliver treatment that feels calm, well-explained, and clinically precise.
+              </p>
+              <p className="text-base leading-8 text-[#D3D3D3]">
+                Whether you are looking for dental implants in Malta, cosmetic dentistry, clear aligners, or emergency dental treatment, the website is now structured to make each service easier to understand and compare before you book.
+              </p>
             </div>
           </div>
         </div>
@@ -438,6 +568,10 @@ function HomePage({ services }) {
               </div>
 
               <div className="mt-10 space-y-5 text-base text-white/82">
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Clinic</div>
+                  <p className="mt-1 text-lg text-white">Apex Dental</p>
+                </div>
                 <div>
                   <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
                   <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#C7A86B]">79854037</a>
@@ -809,6 +943,8 @@ export default function ApexDentalLuxuryWebsite() {
           </a>
         </div>
       </header>
+
+      <SEOManager route={route} currentService={currentService} />
 
       <main>
         {route === "price-list" ? <PriceListPage /> : currentService ? <ServicePage service={currentService} /> : <HomePage services={services} />}
