@@ -213,6 +213,36 @@ function HomePage({ services }) {
         </div>
       </section>
 
+      <section id="services-menu" className="border-t border-white/10 bg-[#0B0B0B]">
+        <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Services</p>
+                <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Browse our treatment pages</h2>
+                <p className="mt-4 text-base leading-8 text-white/70">
+                  Choose a service below to open a dedicated page with treatment information, benefits, steps, and frequently asked questions.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {services.map((service) => (
+                <a
+                  key={service.slug}
+                  href={`#${service.slug}`}
+                  className="rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-5 transition hover:border-[#00AEEF]/40 hover:bg-white/[0.04]"
+                >
+                  <div className="text-xs uppercase tracking-[0.24em] text-[#00AEEF]">{service.eyebrow}</div>
+                  <div className="mt-3 text-xl font-semibold text-white">{service.title}</div>
+                  <div className="mt-4 text-sm uppercase tracking-[0.18em] text-white/45">Open page</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="services" className="border-t border-white/10 bg-[#0A0A0A]">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
           <SectionHeading
@@ -303,7 +333,58 @@ function HomePage({ services }) {
               <div className="mt-10 space-y-5 text-base text-white/82">
                 <div>
                   <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
-                  <a href="tel:79854037" className="mt-1 block text-lg text-white ho
+                  <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">79854037</a>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Email</div>
+                  <a href="mailto:info@apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">info@apexdental.com.mt</a>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Location</div>
+                  <p className="mt-1 text-lg text-white">Trident Park, Mrieħel, Malta</p>
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Trident Park</div>
+                  <a
+                    href="https://tridentparkmalta.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-1 inline-block text-lg text-white hover:text-[#00AEEF]"
+                  >
+                    Visit Trident Park website
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] shadow-xl shadow-black/20">
+                <img src="/images/CT2.jpg" alt="Trident Park location visual" className="h-56 w-full object-cover" />
+              </div>
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] shadow-xl shadow-black/20">
+                <img src="/images/CT3.jpg" alt="Apex Dental exterior or entrance visual" className="h-56 w-full object-cover" />
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8 sm:p-10">
+            <div className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Appointment Form</div>
+            <h3 className="mt-4 text-3xl font-semibold">Start Your Treatment Journey</h3>
+            <p className="mt-4 text-base leading-8 text-white/70">
+              Contact Apex Dental to book an appointment, ask a question, or plan your visit to the clinic at Trident Park.
+            </p>
+            <form className="mt-8 space-y-4">
+              <input type="text" placeholder="Full Name" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <input type="tel" placeholder="Phone Number" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <input type="email" placeholder="Email Address" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <textarea rows={5} placeholder="Tell us how we can help" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <button type="button" className="w-full rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black">
+                Send Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
@@ -657,18 +738,15 @@ export default function ApexDentalLuxuryWebsite() {
             </div>
           </a>
 
-          <nav className="hidden md:flex flex-1 items-center justify-center gap-8 px-6 xl:gap-10">
+          <nav className="hidden md:flex items-center gap-8 lg:gap-10">
             {navigation.map((item) => (
               <a key={item.label} href={item.href} className="text-xs uppercase tracking-[0.28em] text-white/60 transition hover:text-white">
                 {item.label}
               </a>
             ))}
-            <div className="h-5 w-px bg-white/10" />
-            {services.map((service) => (
-              <a key={service.slug} href={`#${service.slug}`} className="text-xs uppercase tracking-[0.22em] text-white/40 transition hover:text-white">
-                {service.navLabel}
-              </a>
-            ))}
+            <a href="#services-menu" className="text-xs uppercase tracking-[0.28em] text-white/60 transition hover:text-white">
+              Services
+            </a>
           </nav>
 
           <a href="#contact" className="rounded-full border border-[#00AEEF]/60 px-6 py-2 text-xs font-medium uppercase tracking-[0.25em] text-white transition hover:bg-[#00AEEF]/10">
