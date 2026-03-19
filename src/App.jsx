@@ -473,4 +473,359 @@ function HomePage({ services }) {
             <div className="text-[11px] uppercase tracking-[0.42em] text-[#C7A86B]">Appointment Form</div>
             <h3 className="mt-4 text-3xl font-semibold text-white">Start Your Treatment Journey</h3>
             <p className="mt-4 text-base leading-8 text-[#D3D3D3]">
-              Contact Apex Dental to book an appointment
+              Contact Apex Dental to book an appointment, ask a question, or plan your visit to the clinic at Trident Park.
+            </p>
+            <form className="mt-8 space-y-4">
+              <input type="text" placeholder="Full Name" className="w-full rounded-2xl border border-white/10 bg-[#191919] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <input type="tel" placeholder="Phone Number" className="w-full rounded-2xl border border-white/10 bg-[#191919] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <input type="email" placeholder="Email Address" className="w-full rounded-2xl border border-white/10 bg-[#191919] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <textarea rows={5} placeholder="Tell us how we can help" className="w-full rounded-2xl border border-white/10 bg-[#191919] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
+              <button type="button" className="w-full rounded-full bg-[#C7A86B] px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:brightness-110">
+                Send Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default function ApexDentalLuxuryWebsite() {
+  const services = useMemo(
+    () => [
+      {
+        slug: "implants",
+        navLabel: "Implants",
+        title: "Dental Implants",
+        shortTitle: "Implants",
+        cardImage: "/images/I4.jpg",
+        heroImage: "/images/I1.jpg",
+        pageImage: "/images/I2.jpg",
+        sectionImage: "/images/I3.jpg",
+        faqImage: "/images/I4.jpg",
+        eyebrow: "Advanced Tooth Replacement",
+        subtitle: "Fixed, natural-looking solutions designed for strength, function, and long-term confidence.",
+        intro:
+          "Dental implants are artificial tooth roots, usually made from titanium, that are placed into the jawbone to support crowns, bridges, or full-arch restorations. They are one of the most reliable ways to replace missing teeth because they restore both appearance and function while helping preserve the bone underneath.",
+        forWho:
+          "Implants are ideal for patients with one missing tooth, several missing teeth, or those looking for a stable alternative to removable dentures. Suitability depends on bone quality, general oral health, and the overall treatment plan.",
+        benefits: [
+          "Natural appearance and strong biting function",
+          "Does not rely on neighbouring teeth for support",
+          "Helps preserve jawbone volume over time",
+          "Can support single teeth, bridges, or full-arch restorations",
+        ],
+        steps: [
+          "Consultation, scans, and detailed assessment",
+          "Digital planning of implant position and restorative outcome",
+          "Implant placement with a precise surgical approach",
+          "Healing period and preparation of the final restoration",
+          "Delivery of the crown, bridge, or implant-supported prosthesis",
+        ],
+        faqs: [
+          { q: "Are implants painful?", a: "Treatment is carried out with local anaesthesia, and many patients report that implant placement feels easier than expected. Mild soreness afterwards is normal and usually manageable." },
+          { q: "How long do implants last?", a: "With good planning, proper maintenance, and healthy gums, implants can last for many years." },
+          { q: "Can I replace all my teeth with implants?", a: "Yes. In suitable cases, implants can support larger bridges or full-arch restorations." },
+        ],
+      },
+      {
+        slug: "cosmetic",
+        navLabel: "Cosmetic",
+        title: "Cosmetic Dentistry",
+        shortTitle: "Cosmetic Dentistry",
+        cardImage: "/images/C1.jpg",
+        heroImage: "/images/C1.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
+        faqImage: "/images/C4.jpg",
+        eyebrow: "Aesthetic Smile Enhancement",
+        subtitle: "Refined cosmetic treatment for patients who want a brighter, more balanced, more confident smile.",
+        intro:
+          "Cosmetic dentistry focuses on improving colour, shape, symmetry, and overall smile harmony. Treatments may include veneers, whitening, and smile design planning tailored to the patient’s features and aesthetic goals.",
+        forWho:
+          "This treatment pathway is suited to patients seeking a more polished smile, whether through subtle refinement or a more comprehensive aesthetic transformation.",
+        benefits: [
+          "Improves colour, shape, and overall smile symmetry",
+          "Can create a brighter result than whitening alone",
+          "Custom designed to suit facial features and smile line",
+          "Natural-looking finish with durable modern materials",
+        ],
+        steps: [
+          "Clinical consultation and smile assessment",
+          "Planning of shape, proportion, and final aesthetic goals",
+          "Preparation where needed and impression or digital scan",
+          "Creation of bespoke restorations or cosmetic enhancements",
+          "Careful fitting, review, and refinement of the final result",
+        ],
+        faqs: [
+          { q: "Do cosmetic restorations look natural?", a: "Yes. When properly designed, modern cosmetic dentistry can look extremely natural and well-balanced." },
+          { q: "Do all teeth need treatment?", a: "Not always. Some patients need only a few teeth treated, while others choose a broader smile makeover." },
+          { q: "How long do cosmetic results last?", a: "Longevity depends on the treatment type, the bite, maintenance, and general oral habits." },
+        ],
+      },
+      {
+        slug: "aligners",
+        navLabel: "Aligners",
+        title: "Clear Aligners",
+        shortTitle: "Aligners",
+        cardImage: "/images/A1.jpg",
+        heroImage: "/images/A1.jpg",
+        pageImage: "/images/A2.jpg",
+        sectionImage: "/images/A3.jpg",
+        faqImage: "/images/A4.jpg",
+        eyebrow: "Discreet Orthodontics",
+        subtitle: "Modern aligner treatment designed for discreet, comfortable tooth movement.",
+        intro:
+          "Clear aligners straighten teeth using a planned sequence of transparent trays. They offer a removable and discreet orthodontic option for patients seeking a more aesthetic treatment experience.",
+        forWho:
+          "This treatment is suitable for patients with crowding, spacing, mild to moderate bite issues, or those who want a straighter smile with minimal visual impact during treatment.",
+        benefits: [
+          "Discreet appearance during treatment",
+          "Comfortable removable trays",
+          "Digitally planned tooth movement",
+          "Supports a more convenient lifestyle than fixed braces for many patients",
+        ],
+        steps: [
+          "Consultation and orthodontic assessment",
+          "Digital scan and treatment planning",
+          "Approval of the aligner setup",
+          "Progress through each aligner stage",
+          "Retention to maintain the final result",
+        ],
+        faqs: [
+          { q: "Are aligners suitable for everyone?", a: "Not every case is the same. Many patients are suitable, while others may need a different orthodontic approach." },
+          { q: "Do aligners have to be worn all day?", a: "For best results, aligners are usually worn for most of the day and removed mainly for eating and cleaning." },
+          { q: "How long does treatment take?", a: "Treatment time varies depending on complexity, tooth movement goals, and compliance." },
+        ],
+      },
+      {
+        slug: "crowns-bridges",
+        navLabel: "Crowns & Bridges",
+        title: "Crowns and Bridges",
+        shortTitle: "Crowns & Bridges",
+        cardImage: "/images/H9.jpg",
+        heroImage: "/images/H9.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
+        faqImage: "/images/C4.jpg",
+        eyebrow: "Restorative Dentistry",
+        subtitle: "Functional, aesthetic solutions for damaged, weakened, or missing teeth.",
+        intro:
+          "Crowns and bridges are restorative treatments used to rebuild teeth and restore the bite. They can improve function, reinforce weakened teeth, and provide a more complete smile.",
+        forWho:
+          "These treatments are appropriate when teeth are weakened by decay, fracture, large fillings, or root canal treatment, or when fixed replacement of missing teeth is needed.",
+        benefits: [
+          "Restores shape, strength, and appearance",
+          "Protects weakened teeth from further breakdown",
+          "Helps re-establish normal chewing and bite support",
+          "Can replace missing teeth with a fixed restorative option",
+        ],
+        steps: [
+          "Clinical examination and assessment of the affected teeth",
+          "Preparation of the tooth or support structures",
+          "Digital scan or impression for accurate fit",
+          "Fabrication of the final crown or bridge",
+          "Fit check, cementation, and bite refinement",
+        ],
+        faqs: [
+          { q: "When is a crown better than a filling?", a: "A crown is often preferred when a tooth is too weak for a regular filling to last predictably." },
+          { q: "Can a bridge replace a missing tooth without an implant?", a: "Yes. A conventional bridge can use adjacent teeth for support if the overall case is suitable." },
+          { q: "Do crowns look natural?", a: "Modern crowns can be highly aesthetic when designed with the right materials and shade planning." },
+        ],
+      },
+      {
+        slug: "root-canal",
+        navLabel: "Root Canal",
+        title: "Root Canal Treatment",
+        shortTitle: "Root Canal",
+        cardImage: "/images/H10.jpg",
+        heroImage: "/images/H10.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
+        faqImage: "/images/C4.jpg",
+        eyebrow: "Tooth Preservation",
+        subtitle: "Treatment focused on removing infection, relieving pain, and helping save the natural tooth.",
+        intro:
+          "Root canal treatment is performed when the inside of the tooth becomes inflamed or infected. The aim is to remove infection, relieve discomfort, and preserve the tooth where possible.",
+        forWho:
+          "It is commonly recommended for teeth causing severe pain, sensitivity, swelling, infection, or where the nerve has become compromised by decay or trauma.",
+        benefits: [
+          "Relieves pain caused by pulpal inflammation or infection",
+          "Helps save the natural tooth instead of removing it",
+          "Allows the tooth to remain in function after restoration",
+          "Can prevent the spread of dental infection when managed promptly",
+        ],
+        steps: [
+          "Assessment, radiographs, and diagnosis",
+          "Comfortable local anaesthesia and isolation of the tooth",
+          "Cleaning and shaping of the root canal system",
+          "Disinfection and sealing of the canals",
+          "Definitive restoration, often with a crown where indicated",
+        ],
+        faqs: [
+          { q: "Is root canal treatment painful?", a: "Modern root canal treatment is carried out with anaesthesia and is designed to remove pain, not create it." },
+          { q: "Will the tooth need a crown afterwards?", a: "Many root canal treated teeth benefit from a crown, especially back teeth where strength matters more." },
+          { q: "Why not just remove the tooth?", a: "Whenever possible, preserving the natural tooth is often the better biological and functional option." },
+        ],
+      },
+      {
+        slug: "orthodontics",
+        navLabel: "Orthodontics",
+        title: "Orthodontics",
+        shortTitle: "Orthodontics",
+        cardImage: "/images/A4.jpg",
+        heroImage: "/images/A1.jpg",
+        pageImage: "/images/A2.jpg",
+        sectionImage: "/images/A3.jpg",
+        faqImage: "/images/A4.jpg",
+        eyebrow: "Smile Alignment",
+        subtitle: "Straightening treatment planned for balance, function, and aesthetics.",
+        intro:
+          "Orthodontic treatment is used to improve tooth position, bite relationships, and smile alignment. It can support aesthetics, function, and oral hygiene access.",
+        forWho:
+          "This is suitable for patients with crowding, spacing, bite concerns, or those seeking a straighter smile with a more balanced appearance.",
+        benefits: [
+          "Improves smile alignment and visual symmetry",
+          "Can support better cleaning and oral hygiene access",
+          "Multiple treatment options depending on the case",
+          "Treatment is digitally planned for controlled movement",
+        ],
+        steps: [
+          "Initial consultation and orthodontic assessment",
+          "Scans, records, and planning of tooth movement",
+          "Approval of the treatment setup",
+          "Progress through the chosen orthodontic system",
+          "Retention phase to maintain the final result",
+        ],
+        faqs: [
+          { q: "Is orthodontic treatment only cosmetic?", a: "No. Orthodontics can also improve function, spacing, and bite relationships depending on the case." },
+          { q: "How long does orthodontic treatment take?", a: "Timing depends on the complexity of the movement required and the treatment system used." },
+          { q: "Will I need retainers afterwards?", a: "Yes. Retention is a key stage of treatment to help maintain the final result." },
+        ],
+      },
+      {
+        slug: "emergency",
+        navLabel: "Emergency",
+        title: "Emergency Dental Care",
+        shortTitle: "Emergency",
+        cardImage: "/images/CT3.jpg",
+        heroImage: "/images/CT1.jpg",
+        pageImage: "/images/CT2.jpg",
+        sectionImage: "/images/CT3.jpg",
+        faqImage: "/images/CT1.jpg",
+        eyebrow: "Urgent Appointments",
+        subtitle: "Fast access for dental pain, swelling, trauma, and urgent treatment needs.",
+        intro:
+          "Emergency dental care is for situations that need prompt attention, including severe toothache, swelling, infection, broken teeth, lost restorations, and dental trauma.",
+        forWho:
+          "Patients with sudden dental pain, facial swelling, accidents affecting the teeth, or urgent problems that cannot reasonably wait for a routine appointment should seek an assessment as soon as possible.",
+        benefits: [
+          "Rapid assessment of the urgent problem",
+          "Pain relief and infection management where needed",
+          "Fast planning of the next treatment step",
+          "Support for trauma, broken teeth, and failed restorations",
+        ],
+        steps: [
+          "Initial urgent assessment",
+          "Diagnosis of the source of pain or damage",
+          "Immediate relief and stabilisation",
+          "Advice on what happens next",
+          "Follow-up treatment where necessary",
+        ],
+        faqs: [
+          { q: "What counts as a dental emergency?", a: "Severe pain, swelling, infection, broken teeth, knocked teeth, trauma, or significant bleeding can all count as emergencies." },
+          { q: "Should I wait if the pain improves?", a: "Not always. Some infections or tooth problems can flare again or worsen." },
+          { q: "What should I do before I arrive?", a: "Keep the area as clean as possible, avoid chewing on the affected side, and contact the clinic promptly." },
+        ],
+      },
+      {
+        slug: "price-list",
+        navLabel: "Price List",
+        title: "Price List",
+        shortTitle: "Price List",
+        cardImage: "/images/CT1.jpg",
+        heroImage: "/images/CT1.jpg",
+        pageImage: "/images/CT2.jpg",
+        sectionImage: "/images/CT3.jpg",
+        faqImage: "/images/CT1.jpg",
+        eyebrow: "Transparent Fees",
+        subtitle: "A structured overview of common treatment fees at Apex Dental.",
+        intro: "Browse our current treatment fees.",
+        forWho: "A consultation is always recommended for an exact quote.",
+        benefits: [],
+        steps: [],
+        faqs: [],
+      },
+    ],
+    []
+  );
+
+  const [route, setRoute] = useState(() => {
+    if (typeof window === "undefined") return "home";
+    return window.location.hash.replace("#", "") || "home";
+  });
+
+  useEffect(() => {
+    const onHashChange = () => setRoute(window.location.hash.replace("#", "") || "home");
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const currentService = services.find((service) => service.slug === route);
+
+  const navigation = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services-menu" },
+    { label: "Price List", href: "#price-list" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-[#C7A86B]/30 selection:text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+          <a href="#home" className="flex items-center gap-4">
+            <div className="h-12 w-12 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-2">
+              <img src="/images/orislogo.png" alt="Apex Dental logo" className="h-full w-full object-contain" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold tracking-[0.35em] uppercase text-white">Apex Dental</div>
+              <div className="text-[10px] tracking-[0.32em] text-[#C7A86B]">Private Dentistry Malta</div>
+            </div>
+          </a>
+
+          <nav className="hidden items-center gap-8 md:flex lg:gap-10">
+            {navigation.map((item) => (
+              <a key={item.label} href={item.href} className="text-xs uppercase tracking-[0.28em] text-white/65 transition hover:text-white">
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <a href="#contact" className="rounded-full border border-[#C7A86B]/60 px-6 py-2 text-xs font-medium uppercase tracking-[0.25em] text-white transition hover:bg-[#C7A86B]/10">
+            Book Consultation
+          </a>
+        </div>
+      </header>
+
+      <main>
+        {route === "price-list" ? <PriceListPage /> : currentService ? <ServicePage service={currentService} /> : <HomePage services={services} />}
+      </main>
+
+      <footer className="border-t border-white/10 bg-[#0A0A0A]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-white/45 md:flex-row md:items-center md:justify-between lg:px-10">
+          <p>© {new Date().getFullYear()} Apex Dental. All rights reserved.</p>
+          <div className="flex flex-wrap gap-5 uppercase tracking-[0.2em]">
+            {navigation.map((item) => (
+              <a key={item.label} href={item.href} className="hover:text-white">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
