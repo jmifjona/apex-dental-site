@@ -1,70 +1,604 @@
+import { useEffect, useMemo, useState } from "react";
+
 export default function ApexDentalLuxuryWebsite() {
-  const heroImages = {
-    home: "/images/H1.jpg",
-    implants: "/images/H4.jpg",
-    veneers: "/images/H7.jpg",
-    whitening: "/images/H8.jpg",
-    orthodontics: "/images/H1.jpg",
-    emergency: "/images/H2.jpg",
-  };
+  const services = useMemo(
+    () => [
+      {
+        slug: "implants",
+        navLabel: "Implants",
+        title: "Dental Implants",
+        shortTitle: "Implants",
+        heroImage: "/images/H4.jpg",
+        pageImage: "/images/I3.jpg",
+        eyebrow: "Advanced Tooth Replacement",
+        subtitle: "Fixed, natural-looking solutions designed for strength, function, and long-term confidence.",
+        intro:
+          "Dental implants are artificial tooth roots, usually made from titanium, that are placed into the jawbone to support crowns, bridges, or full-arch restorations. They are one of the most reliable ways to replace missing teeth because they restore both appearance and function while helping preserve the bone underneath.",
+        forWho:
+          "Implants are ideal for patients with one missing tooth, several missing teeth, or those looking for a stable alternative to removable dentures. Suitability depends on bone quality, general oral health, and the overall treatment plan.",
+        benefits: [
+          "Natural appearance and strong biting function",
+          "Does not rely on neighbouring teeth for support",
+          "Helps preserve jawbone volume over time",
+          "Can support single teeth, bridges, or full-arch restorations",
+        ],
+        steps: [
+          "Consultation, scans, and detailed assessment",
+          "Digital planning of implant position and restorative outcome",
+          "Implant placement with a precise surgical approach",
+          "Healing period and preparation of the final restoration",
+          "Delivery of the crown, bridge, or implant-supported prosthesis",
+        ],
+        faqs: [
+          {
+            q: "Are implants painful?",
+            a: "Treatment is carried out with local anaesthesia, and many patients report that implant placement feels easier than expected. Mild soreness afterwards is normal and usually manageable.",
+          },
+          {
+            q: "How long do implants last?",
+            a: "With good planning, proper maintenance, and healthy gums, implants can last for many years. The long-term result depends on home care, review visits, and general health factors.",
+          },
+          {
+            q: "Can I replace all my teeth with implants?",
+            a: "Yes. In suitable cases, implants can support larger bridges or full-arch restorations, giving a more stable and comfortable alternative to removable dentures.",
+          },
+        ],
+      },
+      {
+        slug: "veneers",
+        navLabel: "Veneers",
+        title: "Dental Veneers",
+        shortTitle: "Veneers",
+        heroImage: "/images/H7.jpg",
+        pageImage: "/images/I1.jpg",
+        eyebrow: "Aesthetic Smile Enhancement",
+        subtitle: "Refined cosmetic treatment for patients who want a brighter, more balanced, more confident smile.",
+        intro:
+          "Veneers are thin custom-made coverings bonded to the front surface of the teeth. They are commonly used to improve colour, shape, proportion, and the overall harmony of the smile. Veneers can transform teeth that are worn, stained, chipped, slightly misaligned, or uneven in appearance.",
+        forWho:
+          "This treatment is well suited for patients looking for a cosmetic improvement with a natural, elegant finish. It is especially useful when whitening alone cannot achieve the desired result or when the shape of the teeth also needs correction.",
+        benefits: [
+          "Improves colour, shape, and overall smile symmetry",
+          "Can create a brighter result than whitening alone",
+          "Custom designed to suit facial features and smile line",
+          "Natural-looking finish with durable modern materials",
+        ],
+        steps: [
+          "Clinical consultation and smile assessment",
+          "Planning of shape, proportion, and final aesthetic goals",
+          "Preparation where needed and impression or digital scan",
+          "Creation of bespoke veneers in the chosen material",
+          "Careful fitting, bonding, and review of the final result",
+        ],
+        faqs: [
+          {
+            q: "Do veneers look natural?",
+            a: "Yes. When properly designed, veneers can look extremely natural. The aim is not just white teeth, but teeth with the right shape, surface texture, and balance for the individual patient.",
+          },
+          {
+            q: "Do all teeth need veneers?",
+            a: "Not always. Some patients need only a few veneers, while others choose a broader smile makeover depending on how much of the smile shows.",
+          },
+          {
+            q: "Are veneers permanent?",
+            a: "They are considered a long-term treatment. The exact longevity depends on the type of veneer, the bite, oral hygiene, and habits such as grinding or clenching.",
+          },
+        ],
+      },
+      {
+        slug: "whitening",
+        navLabel: "Whitening",
+        title: "Teeth Whitening",
+        shortTitle: "Whitening",
+        heroImage: "/images/H8.jpg",
+        pageImage: "/images/I2.jpg",
+        eyebrow: "Brighter Smile Treatment",
+        subtitle: "Professional whitening designed to lift stains safely and deliver a cleaner, fresher smile.",
+        intro:
+          "Teeth whitening is a cosmetic treatment used to reduce staining and lighten the natural shade of the teeth. It is often chosen by patients who want a fresher, more youthful appearance or who are preparing for an event, photographs, or a wider smile enhancement plan.",
+        forWho:
+          "It is suitable for many patients with healthy teeth and gums, particularly when staining comes from coffee, tea, wine, smoking, or general age-related darkening. A clinical assessment helps determine the safest and most effective approach.",
+        benefits: [
+          "Noticeably brighter smile with a non-invasive treatment",
+          "Safer and more controlled than over-the-counter products",
+          "Evener results using professional-grade systems",
+          "Can be combined with hygiene visits or smile makeovers",
+        ],
+        steps: [
+          "Clinical assessment of tooth shade and suitability",
+          "Selection of the best whitening protocol",
+          "Professional treatment carried out under supervision",
+          "Review of progress and advice on maintenance",
+          "Guidance on how to keep results looking fresh for longer",
+        ],
+        faqs: [
+          {
+            q: "Does whitening damage the teeth?",
+            a: "When properly prescribed and supervised, professional whitening is considered safe. The key is using the right product, the right concentration, and a proper diagnosis first.",
+          },
+          {
+            q: "Will fillings and crowns also whiten?",
+            a: "No. Whitening changes the natural tooth shade but does not alter the colour of existing restorations. This is important when planning cosmetic results.",
+          },
+          {
+            q: "How long do results last?",
+            a: "Results vary depending on diet, habits, and oral hygiene. Many patients maintain brightness with occasional top-ups and good stain control habits.",
+          },
+        ],
+      },
+      {
+        slug: "crowns-bridges",
+        navLabel: "Crowns & Bridges",
+        title: "Crowns and Bridges",
+        shortTitle: "Crowns & Bridges",
+        heroImage: "/images/H9.jpg",
+        pageImage: "/images/A3.jpg",
+        eyebrow: "Restorative Dentistry",
+        subtitle: "Functional, aesthetic solutions for damaged, weakened, or missing teeth.",
+        intro:
+          "Crowns and bridges are restorative treatments used to rebuild teeth and restore the bite. A crown covers and strengthens a damaged tooth, while a bridge replaces one or more missing teeth by spanning the gap and anchoring to supporting teeth or implants.",
+        forWho:
+          "These treatments are appropriate when teeth are weakened by decay, fracture, large fillings, or root canal treatment, and also when a missing tooth needs a fixed replacement option.",
+        benefits: [
+          "Restores shape, strength, and appearance",
+          "Protects weakened teeth from further breakdown",
+          "Helps re-establish normal chewing and bite support",
+          "Can replace missing teeth with a fixed restorative option",
+        ],
+        steps: [
+          "Clinical examination and assessment of the affected teeth",
+          "Preparation of the tooth or support structures",
+          "Digital scan or impression for accurate fit",
+          "Fabrication of the final crown or bridge",
+          "Fit check, cementation, and bite refinement",
+        ],
+        faqs: [
+          {
+            q: "When is a crown better than a filling?",
+            a: "A crown is often preferred when a tooth is too weak, heavily broken down, or structurally compromised for a regular filling to last predictably.",
+          },
+          {
+            q: "Can a bridge replace a missing tooth without an implant?",
+            a: "Yes. A conventional bridge can use adjacent teeth for support, provided those teeth are suitable and the overall plan makes sense.",
+          },
+          {
+            q: "Do crowns look natural?",
+            a: "Modern crowns can be highly aesthetic when designed well, with careful attention to colour, shape, translucency, and gum harmony.",
+          },
+        ],
+      },
+      {
+        slug: "root-canal",
+        navLabel: "Root Canal",
+        title: "Root Canal Treatment",
+        shortTitle: "Root Canal",
+        heroImage: "/images/H10.jpg",
+        pageImage: "/images/A4.jpg",
+        eyebrow: "Tooth Preservation",
+        subtitle: "Treatment focused on removing infection, relieving pain, and helping save the natural tooth.",
+        intro:
+          "Root canal treatment is performed when the inside of the tooth becomes inflamed or infected, often due to deep decay, a crack, trauma, or repeated dental treatment. The goal is to remove the infected tissue, disinfect the root canal space, and seal the tooth so it can remain functional.",
+        forWho:
+          "It is commonly recommended for teeth causing severe pain, sensitivity, swelling, or infection, and for teeth that would otherwise be at risk of extraction.",
+        benefits: [
+          "Relieves pain caused by pulpal inflammation or infection",
+          "Helps save the natural tooth instead of removing it",
+          "Allows the tooth to remain in function after restoration",
+          "Can prevent the spread of dental infection when managed promptly",
+        ],
+        steps: [
+          "Assessment, radiographs, and diagnosis",
+          "Comfortable local anaesthesia and isolation of the tooth",
+          "Cleaning and shaping of the root canal system",
+          "Disinfection and sealing of the canals",
+          "Definitive restoration, often with a crown where indicated",
+        ],
+        faqs: [
+          {
+            q: "Is root canal treatment painful?",
+            a: "Modern root canal treatment is carried out with anaesthesia and is designed to remove pain, not create it. The tooth is treated because it is already diseased or inflamed.",
+          },
+          {
+            q: "Will the tooth need a crown afterwards?",
+            a: "Many root canal treated teeth benefit from a crown, especially back teeth, because they may be more brittle or structurally weakened.",
+          },
+          {
+            q: "Why not just remove the tooth?",
+            a: "Whenever possible, preserving the natural tooth is often the better biological and functional option. Extraction may still be necessary in some cases, but it is not always the first choice.",
+          },
+        ],
+      },
+      {
+        slug: "orthodontics",
+        navLabel: "Orthodontics",
+        title: "Orthodontics and Clear Aligners",
+        shortTitle: "Orthodontics",
+        heroImage: "/images/H1.jpg",
+        pageImage: "/images/I4.jpg",
+        eyebrow: "Smile Alignment",
+        subtitle: "Discreet, carefully planned tooth movement for a straighter, more balanced smile.",
+        intro:
+          "Orthodontic treatment is used to improve tooth position, bite relationships, and smile alignment. Clear aligners offer a removable and discreet way to move teeth gradually using a planned sequence of trays, while other orthodontic options may also be discussed depending on the case.",
+        forWho:
+          "This is suitable for patients with crowding, spacing, mild to moderate bite issues, or those seeking a straighter smile with a more aesthetic treatment approach.",
+        benefits: [
+          "Improves smile alignment and visual symmetry",
+          "Can support better cleaning and oral hygiene access",
+          "Clear aligners are discreet and removable",
+          "Treatment is digitally planned for controlled tooth movement",
+        ],
+        steps: [
+          "Initial consultation and orthodontic assessment",
+          "Scans, records, and planning of tooth movement",
+          "Approval of the treatment setup",
+          "Progress through aligners or the chosen orthodontic system",
+          "Retention phase to maintain the final result",
+        ],
+        faqs: [
+          {
+            q: "Are clear aligners suitable for everyone?",
+            a: "Not every case is the same. Many patients are good candidates, but some bite issues may require a different or more comprehensive orthodontic approach.",
+          },
+          {
+            q: "Do aligners have to be worn all day?",
+            a: "For best results, aligners are usually worn for most of the day and removed mainly for eating, drinking hot beverages, and oral hygiene.",
+          },
+          {
+            q: "How long does treatment take?",
+            a: "Treatment time varies depending on the complexity of the case, the amount of movement required, and how consistently the aligners are worn.",
+          },
+        ],
+      },
+      {
+        slug: "emergency",
+        navLabel: "Emergency",
+        title: "Emergency Dental Care",
+        shortTitle: "Emergency",
+        heroImage: "/images/H2.jpg",
+        pageImage: "/images/A2.jpg",
+        eyebrow: "Urgent Appointments",
+        subtitle: "Fast access for dental pain, swelling, trauma, and urgent treatment needs.",
+        intro:
+          "Emergency dental care is for situations that need prompt attention, including severe toothache, swelling, infection, broken teeth, lost restorations, and dental trauma. The aim is to relieve pain, control the problem, and stabilise the situation as quickly as possible.",
+        forWho:
+          "Patients with sudden dental pain, facial swelling, accidents affecting the teeth, or urgent problems that cannot reasonably wait for a routine appointment should seek an assessment as soon as possible.",
+        benefits: [
+          "Rapid assessment of the urgent problem",
+          "Pain relief and infection management where needed",
+          "Fast planning of the next treatment step",
+          "Support for trauma, broken teeth, and failed restorations",
+        ],
+        steps: [
+          "Initial urgent assessment",
+          "Diagnosis of the source of pain or damage",
+          "Immediate relief and stabilisation",
+          "Advice on what happens next",
+          "Follow-up treatment where necessary",
+        ],
+        faqs: [
+          {
+            q: "What counts as a dental emergency?",
+            a: "Severe pain, swelling, infection, broken teeth, knocked teeth, trauma, or significant bleeding can all count as emergencies depending on the severity and timing.",
+          },
+          {
+            q: "Should I wait if the pain improves?",
+            a: "Not always. Some infections or tooth problems can flare again or worsen. It is usually better to have the cause assessed rather than trust a temporary pause in symptoms.",
+          },
+          {
+            q: "What should I do before I arrive?",
+            a: "Keep the area as clean as possible, avoid chewing on the affected side, and contact the clinic promptly so the team can guide you appropriately.",
+          },
+        ],
+      },
+    ],
+    []
+  );
 
-  const services = [
-    {
-      id: "implants",
-      title: "Dental Implants",
-      subtitle: "Fixed. Natural. Long-lasting.",
-      image: "/images/I3.jpg",
-      points: ["Natural aesthetics", "Functional stability", "Long-term reliability"],
-      description:
-        "A precise solution for replacing missing teeth using advanced implant planning and durable restorative materials.",
-    },
-    {
-      id: "veneers",
-      title: "Veneers",
-      subtitle: "Refined smile enhancement.",
-      image: "/images/I1.jpg",
-      points: ["Shape correction", "Colour enhancement", "Natural finish"],
-      description:
-        "Custom veneers designed to enhance symmetry, brightness, and confidence with a premium aesthetic result.",
-    },
-    {
-      id: "whitening",
-      title: "Teeth Whitening",
-      subtitle: "Cleaner. Brighter. More confident.",
-      image: "/images/I2.jpg",
-      points: ["Professional systems", "Even results", "Safe treatment"],
-      description:
-        "Professional whitening options tailored to deliver noticeable brightness while protecting enamel and comfort.",
-    },
-    {
-      id: "orthodontics",
-      title: "Orthodontics & Clear Aligners",
-      subtitle: "Discreet movement. Precise outcomes.",
-      image: "/images/I4.jpg",
-      points: ["Clear planning", "Removable aligners", "Predictable progress"],
-      description:
-        "Advanced orthodontic solutions for patients seeking a straighter smile with comfort, discretion, and control.",
-    },
-  ];
+  const [route, setRoute] = useState(() => {
+    if (typeof window === "undefined") return "home";
+    return window.location.hash.replace("#", "") || "home";
+  });
 
-  const treatmentCards = [
-    "Dental Implants",
-    "Veneers",
-    "Teeth Whitening",
-    "Crowns & Bridges",
-    "Root Canal Treatment",
-    "Orthodontics",
-    "Emergency Care",
-    "Smile Design",
-  ];
+  useEffect(() => {
+    const onHashChange = () => setRoute(window.location.hash.replace("#", "") || "home");
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const currentService = services.find((service) => service.slug === route);
 
   const navigation = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
-    { label: "Emergency", href: "#emergency" },
     { label: "Contact", href: "#contact" },
   ];
+
+  const SectionHeading = ({ eyebrow, title, text }) => (
+    <div className="max-w-3xl">
+      <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">{eyebrow}</p>
+      <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">{title}</h2>
+      {text ? <p className="mt-6 text-base leading-8 text-white/72">{text}</p> : null}
+    </div>
+  );
+
+  const HomePage = () => (
+    <>
+      <section
+        id="home"
+        className="relative isolate overflow-hidden"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(10,10,10,0.70), rgba(10,10,10,0.80)), url(/images/H1.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-24 lg:px-10">
+          <div className="max-w-3xl">
+            <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Luxury Dental Experience</p>
+            <h1 className="max-w-2xl text-5xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl">
+              Precision Dentistry. <br /> Redefined.
+            </h1>
+            <p className="mt-8 max-w-2xl text-base leading-8 text-white/76 sm:text-lg">
+              Advanced dental care in Malta focused on aesthetics, function, and long-term results. Built as a more
+              premium digital experience, with service pages that explain treatments clearly instead of sending every
+              patient into the same corridor wearing a different hat.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#contact"
+                className="rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
+              >
+                Book Consultation
+              </a>
+              <a
+                href="#services"
+                className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
+              >
+                View Treatments
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="border-t border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:px-10">
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+            <img src="/images/I1.jpg" alt="Apex Dental clinic" className="h-full w-full object-cover" />
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <SectionHeading
+              eyebrow="About Apex Dental"
+              title="A more premium experience from first click to final treatment"
+              text="Apex Dental combines advanced digital workflows with clinical expertise to deliver precise, predictable outcomes. The redesign uses stronger hierarchy, clearer treatment information, and dedicated pages for each service so patients understand what they are choosing and why it matters."
+            />
+            <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
+              The aim is simple: a website that feels refined, builds trust quickly, and explains treatments in a way
+              patients can actually follow. Luxury should feel calm, informed, and clinically serious.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="border-t border-white/10 bg-[#0A0A0A]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+          <SectionHeading
+            eyebrow="Services"
+            title="Explore each treatment in detail"
+            text="Each card below opens a dedicated page with treatment information, benefits, steps, and frequently asked questions."
+          />
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            {services.map((service) => (
+              <a
+                key={service.slug}
+                href={`#${service.slug}`}
+                className="group overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] transition hover:-translate-y-1 hover:border-[#00AEEF]/40 hover:bg-white/[0.05]"
+              >
+                <div className="h-52 overflow-hidden">
+                  <img
+                    src={service.pageImage}
+                    alt={service.title}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-[0.24em] text-[#00AEEF]">{service.eyebrow}</span>
+                    <span className="text-white/25 transition group-hover:text-[#00AEEF]">↗</span>
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold text-white">{service.title}</h3>
+                  <p className="mt-4 text-base leading-7 text-white/70">{service.subtitle}</p>
+                  <div className="mt-6 text-sm uppercase tracking-[0.18em] text-white/45">Open treatment page</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-y border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-3 lg:px-10">
+          {[
+            {
+              title: "Digital Precision",
+              text: "Modern planning and refined workflows to support accurate, predictable treatment delivery.",
+            },
+            {
+              title: "Premium Materials",
+              text: "High-quality restorative materials selected for aesthetics, strength, and long-term confidence.",
+            },
+            {
+              title: "Personalised Care",
+              text: "A treatment journey shaped around comfort, clarity, and the right clinical outcome.",
+            },
+          ].map((item) => (
+            <div key={item.title} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
+              <h3 className="text-2xl font-semibold text-white">{item.title}</h3>
+              <p className="mt-4 text-base leading-8 text-white/68">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="contact" className="bg-[#0A0A0A]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
+            <SectionHeading
+              eyebrow="Contact"
+              title="Visit Apex Dental"
+              text="A refined clinical environment in Malta designed for comfort, trust, and premium dental care."
+            />
+            <div className="mt-10 space-y-5 text-base text-white/82">
+              <div>
+                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
+                <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
+                  79854037
+                </a>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Email</div>
+                <a href="mailto:info@apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
+                  info@apexdental.com.mt
+                </a>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Location</div>
+                <p className="mt-1 text-lg text-white">Imrieħel, Malta</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8 sm:p-10">
+            <div className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Appointment Form</div>
+            <h3 className="mt-4 text-3xl font-semibold">Start Your Treatment Journey</h3>
+            <form className="mt-8 space-y-4">
+              <input type="text" placeholder="Full Name" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60" />
+              <input type="tel" placeholder="Phone Number" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60" />
+              <input type="email" placeholder="Email Address" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60" />
+              <textarea rows={5} placeholder="Tell us how we can help" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60" />
+              <button type="button" className="w-full rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.01]">
+                Send Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  const ServicePage = ({ service }) => (
+    <>
+      <section
+        className="relative isolate overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(rgba(10,10,10,0.68), rgba(10,10,10,0.82)), url(${service.heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="mx-auto flex min-h-[72vh] max-w-7xl items-end px-6 py-20 lg:px-10">
+          <div className="max-w-4xl">
+            <a href="#home" className="inline-flex rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.22em] text-white/70 transition hover:text-white">
+              ← Back to Home
+            </a>
+            <p className="mt-8 text-xs uppercase tracking-[0.42em] text-[#00AEEF]">{service.eyebrow}</p>
+            <h1 className="mt-4 text-5xl font-semibold leading-tight text-white sm:text-6xl">{service.title}</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/76">{service.subtitle}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
+          <div>
+            <SectionHeading eyebrow="Treatment Overview" title={`Understanding ${service.shortTitle}`} text={service.intro} />
+            <p className="mt-8 text-base leading-8 text-white/72">{service.forWho}</p>
+          </div>
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+            <img src={service.pageImage} alt={service.title} className="h-full w-full object-cover" />
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0A0A0A]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+          <SectionHeading
+            eyebrow="Why Patients Choose This Treatment"
+            title={`Benefits of ${service.shortTitle}`}
+            text="A premium treatment page should not only look elegant, it should help the patient understand the value of the procedure and what it can realistically achieve."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {service.benefits.map((benefit) => (
+              <div key={benefit} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 text-base leading-8 text-white/78">
+                {benefit}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+          <SectionHeading
+            eyebrow="Treatment Journey"
+            title={`What to expect with ${service.shortTitle}`}
+            text="Explaining the process helps patients feel more informed and more comfortable before they even book."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+            {service.steps.map((step, index) => (
+              <div key={step} className="rounded-[2rem] border border-white/10 bg-black/20 p-6">
+                <div className="text-xs uppercase tracking-[0.25em] text-[#00AEEF]">Step {index + 1}</div>
+                <p className="mt-4 text-base leading-8 text-white/78">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0A0A0A]">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+          <SectionHeading
+            eyebrow="Frequently Asked Questions"
+            title={`${service.shortTitle} FAQs`}
+            text="Clear answers remove hesitation and make the website feel more useful instead of decorative."
+          />
+          <div className="mt-12 space-y-5">
+            {service.faqs.map((faq) => (
+              <div key={faq.q} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-7">
+                <h3 className="text-xl font-semibold text-white">{faq.q}</h3>
+                <p className="mt-4 max-w-4xl text-base leading-8 text-white/72">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-24 lg:flex-row lg:items-end lg:justify-between lg:px-10">
+          <div className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Book a Consultation</p>
+            <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Discuss your {service.shortTitle.toLowerCase()} treatment with Apex Dental</h2>
+            <p className="mt-6 text-base leading-8 text-white/72">
+              The next step is a consultation, assessment, and tailored treatment plan based on your clinical needs and aesthetic goals.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <a href="tel:79854037" className="rounded-full bg-white px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]">
+              Call 79854037
+            </a>
+            <a href="mailto:info@apexdental.com.mt" className="rounded-full border border-white/20 px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5">
+              Email Clinic
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-[#00AEEF]/30 selection:text-white">
@@ -76,352 +610,36 @@ export default function ApexDentalLuxuryWebsite() {
 
           <nav className="hidden items-center gap-8 md:flex">
             {navigation.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-sm uppercase tracking-[0.22em] text-white/70 transition hover:text-white"
-              >
+              <a key={item.label} href={item.href} className="text-sm uppercase tracking-[0.22em] text-white/70 transition hover:text-white">
                 {item.label}
+              </a>
+            ))}
+            <div className="h-5 w-px bg-white/10" />
+            {services.slice(0, 4).map((service) => (
+              <a key={service.slug} href={`#${service.slug}`} className="text-sm uppercase tracking-[0.18em] text-white/48 transition hover:text-white">
+                {service.navLabel}
               </a>
             ))}
           </nav>
 
-          <a
-            href="#contact"
-            className="rounded-full border border-[#00AEEF]/50 px-5 py-2 text-xs font-medium uppercase tracking-[0.22em] text-white transition hover:border-[#00AEEF] hover:bg-[#00AEEF]/10"
-          >
+          <a href="#contact" className="rounded-full border border-[#00AEEF]/50 px-5 py-2 text-xs font-medium uppercase tracking-[0.22em] text-white transition hover:border-[#00AEEF] hover:bg-[#00AEEF]/10">
             Book Consultation
           </a>
         </div>
       </header>
 
-      <main>
-        <section
-          id="home"
-          className="relative isolate overflow-hidden"
-          style={{
-            backgroundImage: `linear-gradient(rgba(10,10,10,0.70), rgba(10,10,10,0.78)), url(${heroImages.home})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-24 lg:px-10">
-            <div className="max-w-3xl">
-              <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Luxury Dental Experience</p>
-              <h1 className="max-w-2xl text-5xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl">
-                Precision Dentistry. <br /> Redefined.
-              </h1>
-              <p className="mt-8 max-w-xl text-base leading-8 text-white/75 sm:text-lg">
-                Advanced dental care in Malta focused on aesthetics, function, and long-term results. A premium
-                clinical environment with modern digital workflows and a calm, high-trust patient journey.
-              </p>
-
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <a
-                  href="#contact"
-                  className="rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
-                >
-                  Book Consultation
-                </a>
-                <a
-                  href="#services"
-                  className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
-                >
-                  View Treatments
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="about" className="border-t border-white/10 bg-[#0D0D0D]">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:px-10">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
-              <img src="/images/I1.jpg" alt="Apex Dental clinic interior" className="h-full w-full object-cover" />
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">About Apex Dental</p>
-              <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">A Higher Standard of Dentistry</h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
-                Apex Dental combines advanced digital workflows with clinical expertise to deliver precise,
-                predictable outcomes. Every detail is designed to feel calm, refined, and clinically excellent.
-              </p>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
-                From consultation to final restoration, the experience is built around clarity, comfort, and premium
-                patient care. Dentistry should not feel rushed. Teeth are not a takeaway order.
-              </p>
-
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                {[
-                  { value: "Digital", label: "Workflow" },
-                  { value: "Premium", label: "Materials" },
-                  { value: "Personal", label: "Care" },
-                ].map((item) => (
-                  <div key={item.label} className="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
-                    <div className="text-2xl font-semibold text-white">{item.value}</div>
-                    <div className="mt-1 text-sm uppercase tracking-[0.2em] text-white/45">{item.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="border-t border-white/10 bg-[#0A0A0A]">
-          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-            <div className="max-w-2xl">
-              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Treatments</p>
-              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Premium care across every stage of treatment</h2>
-              <p className="mt-6 text-base leading-8 text-white/70">
-                Structured to feel clean, modern, and easy to navigate while still using your existing image assets.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {treatmentCards.map((item) => (
-                <div
-                  key={item}
-                  className="group rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-[#00AEEF]/40 hover:bg-white/[0.05]"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm uppercase tracking-[0.2em] text-white/45">Treatment</span>
-                    <span className="text-white/25 transition group-hover:text-[#00AEEF]">↗</span>
-                  </div>
-                  <h3 className="mt-8 text-xl font-medium leading-snug text-white">{item}</h3>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          className="relative overflow-hidden border-y border-white/10"
-          style={{
-            backgroundImage: `linear-gradient(rgba(10,10,10,0.65), rgba(10,10,10,0.72)), url(/images/H2.jpg)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="mx-auto max-w-7xl px-6 py-28 text-center lg:px-10">
-            <p className="text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Clinical Philosophy</p>
-            <h2 className="mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-              Designed for Results. Built to Last.
-            </h2>
-          </div>
-        </section>
-
-        <section className="bg-[#0D0D0D]">
-          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-            <div className="grid gap-6 lg:grid-cols-3">
-              {[
-                {
-                  title: "Digital Precision",
-                  text: "Modern planning and refined workflows to support accurate, predictable treatment delivery.",
-                },
-                {
-                  title: "Premium Materials",
-                  text: "High-quality restorative materials selected for aesthetics, strength, and long-term confidence.",
-                },
-                {
-                  title: "Personalised Care",
-                  text: "A tailored treatment journey shaped around comfort, clarity, and the right clinical outcome.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
-                  <h3 className="text-2xl font-semibold text-white">{item.title}</h3>
-                  <p className="mt-4 text-base leading-8 text-white/68">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-white/10 bg-[#0A0A0A]">
-          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Featured Services</p>
-                <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Luxury service pages, ready to expand</h2>
-              </div>
-              <p className="max-w-xl text-base leading-8 text-white/70">
-                Each section uses a strong hero, concise authority-driven messaging, and a visual rhythm designed for a
-                premium clinic experience.
-              </p>
-            </div>
-
-            <div className="mt-12 space-y-8">
-              {services.map((service, index) => (
-                <section
-                  key={service.id}
-                  className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]"
-                >
-                  <div className={`grid gap-0 lg:grid-cols-2 ${index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-                    <div className="min-h-[340px]">
-                      <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
-                    </div>
-                    <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
-                      <p className="text-xs uppercase tracking-[0.35em] text-[#00AEEF]">Signature Service</p>
-                      <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">{service.title}</h3>
-                      <p className="mt-3 text-sm uppercase tracking-[0.2em] text-white/45">{service.subtitle}</p>
-                      <p className="mt-6 max-w-xl text-base leading-8 text-white/70">{service.description}</p>
-
-                      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                        {service.points.map((point) => (
-                          <div key={point} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-4 text-sm text-white/80">
-                            {point}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-10 flex flex-wrap gap-4">
-                        <a
-                          href="#contact"
-                          className="rounded-full bg-white px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
-                        >
-                          Book Consultation
-                        </a>
-                        <a
-                          href="#contact"
-                          className="rounded-full border border-white/15 px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/35 hover:bg-white/5"
-                        >
-                          Enquire Now
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="emergency"
-          className="relative isolate overflow-hidden border-y border-white/10"
-          style={{
-            backgroundImage: `linear-gradient(rgba(10,10,10,0.72), rgba(10,10,10,0.82)), url(${heroImages.emergency})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-            <div className="max-w-3xl rounded-[2rem] border border-white/10 bg-black/25 p-8 backdrop-blur-sm sm:p-10">
-              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Emergency Dentist Malta</p>
-              <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Immediate Care. Fast Relief.</h2>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-white/72">
-                Urgent appointments for pain, swelling, broken teeth, lost restorations, and other dental emergencies.
-                This page is designed to convert fast and keep the next step obvious.
-              </p>
-
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <a
-                  href="tel:79854037"
-                  className="rounded-full bg-[#00AEEF] px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:brightness-110"
-                >
-                  Call 79854037
-                </a>
-                <a
-                  href="#contact"
-                  className="rounded-full border border-white/20 px-8 py-4 text-center text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
-                >
-                  Request Appointment
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="bg-[#0D0D0D]">
-          <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
-              <p className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Contact</p>
-              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Visit Apex Dental</h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/70">
-                A refined clinical environment in Malta designed for comfort, trust, and premium dental care.
-              </p>
-
-              <div className="mt-10 space-y-5 text-base text-white/82">
-                <div>
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
-                  <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
-                    79854037
-                  </a>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Email</div>
-                  <a href="mailto:info@apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
-                    info@apexdental.com.mt
-                  </a>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Location</div>
-                  <p className="mt-1 text-lg text-white">Imrieħel, Malta</p>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Website</div>
-                  <a href="https://apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">
-                    apexdental.com.mt
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8 sm:p-10">
-              <div className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Appointment Form</div>
-              <h3 className="mt-4 text-3xl font-semibold">Start Your Treatment Journey</h3>
-              <p className="mt-4 text-base leading-8 text-white/70">
-                Clean, premium form styling ready to connect to your preferred backend or booking workflow.
-              </p>
-
-              <form className="mt-8 space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
-                />
-                <select className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white outline-none transition focus:border-[#00AEEF]/60">
-                  <option className="bg-[#0A0A0A]">Select Treatment</option>
-                  <option className="bg-[#0A0A0A]">Dental Implants</option>
-                  <option className="bg-[#0A0A0A]">Veneers</option>
-                  <option className="bg-[#0A0A0A]">Teeth Whitening</option>
-                  <option className="bg-[#0A0A0A]">Orthodontics</option>
-                  <option className="bg-[#0A0A0A]">Emergency Appointment</option>
-                </select>
-                <textarea
-                  rows={5}
-                  placeholder="Tell us how we can help"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none transition focus:border-[#00AEEF]/60"
-                />
-                <button
-                  type="button"
-                  className="w-full rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.01]"
-                >
-                  Send Enquiry
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
-      </main>
+      <main>{currentService ? <ServicePage service={currentService} /> : <HomePage />}</main>
 
       <footer className="border-t border-white/10 bg-[#0A0A0A]">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-white/45 md:flex-row md:items-center md:justify-between lg:px-10">
           <p>© {new Date().getFullYear()} Apex Dental. All rights reserved.</p>
           <div className="flex flex-wrap gap-5 uppercase tracking-[0.2em]">
             <a href="#home" className="hover:text-white">Home</a>
-            <a href="#services" className="hover:text-white">Services</a>
-            <a href="#contact" className="hover:text-white">Contact</a>
+            {services.map((service) => (
+              <a key={service.slug} href={`#${service.slug}`} className="hover:text-white">
+                {service.navLabel}
+              </a>
+            ))}
           </div>
         </div>
       </footer>
