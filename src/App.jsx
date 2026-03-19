@@ -150,15 +150,7 @@ function ServicePage({ service }) {
 }
 
 function HomePage({ services }) {
-  const cardImages = [
-    "/images/A1.jpg",
-    "/images/A2.jpg",
-    "/images/A3.jpg",
-    "/images/A4.jpg",
-    "/images/C1.jpg",
-    "/images/C2.jpg",
-    "/images/C3.jpg",
-  ];
+  const cardImages = [];
 
   return (
     <>
@@ -198,13 +190,13 @@ function HomePage({ services }) {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:px-10">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
-              <img src="/images/I1.jpg" alt="Apex Dental clinic" className="h-64 w-full object-cover" />
+              <img src="/images/AB1.jpg" alt="Apex Dental about visual" className="h-64 w-full object-cover" />
             </div>
             <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
-              <img src="/images/I2.jpg" alt="Apex Dental team visual" className="h-44 w-full object-cover" />
+              <img src="/images/AB2.jpg" alt="Apex Dental about visual" className="h-44 w-full object-cover" />
             </div>
             <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
-              <img src="/images/I3.jpg" alt="Apex Dental treatment visual" className="h-44 w-full object-cover" />
+              <img src="/images/AB3.jpg" alt="Apex Dental about visual" className="h-56 w-full object-cover" />
             </div>
           </div>
 
@@ -231,7 +223,7 @@ function HomePage({ services }) {
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {services.map((service, index) => {
-              const displayImage = cardImages[index % cardImages.length];
+              const displayImage = service.cardImage;
               return (
                 <a
                   key={service.slug}
@@ -258,68 +250,60 @@ function HomePage({ services }) {
       </section>
 
       <section className="border-t border-white/10 bg-[#0D0D0D]">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-3 lg:px-10">
-          {[
-            {
-              title: "Digital Precision",
-              text: "Modern planning and refined workflows to support accurate, predictable treatment delivery.",
-            },
-            {
-              title: "Premium Materials",
-              text: "High-quality restorative materials selected for aesthetics, strength, and long-term confidence.",
-            },
-            {
-              title: "Personalised Care",
-              text: "A treatment journey shaped around comfort, clarity, and the right clinical outcome.",
-            },
-          ].map((item) => (
-            <div key={item.title} className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
-              <h3 className="text-2xl font-semibold text-white">{item.title}</h3>
-              <p className="mt-4 text-base leading-8 text-white/68">{item.text}</p>
+        <div className="mx-auto grid max-w-7xl gap-6 px-6 py-24 lg:grid-cols-[1.2fr_0.8fr] lg:px-10">
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+            <img src="/images/H2.jpg" alt="Apex Dental featured image" className="h-full min-h-[420px] w-full object-cover" />
+          </div>
+          <div className="grid gap-6">
+            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
+              <img src="/images/H3.jpg" alt="Apex Dental secondary image" className="h-[198px] w-full object-cover" />
+            </div>
+            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
+              <img src="/images/H4.jpg" alt="Apex Dental secondary image" className="h-[198px] w-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0D0D0D]">
+        <div className="mx-auto grid max-w-7xl gap-4 px-6 py-24 sm:grid-cols-2 lg:grid-cols-3 lg:px-10">
+          {['/images/H5.jpg','/images/H6.jpg','/images/H7.jpg','/images/H8.jpg','/images/H9.jpg','/images/H10.jpg'].map((img, index) => (
+            <div key={img} className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] shadow-xl shadow-black/20">
+              <img src={img} alt={`Apex Dental gallery ${index + 1}`} className="h-64 w-full object-cover" />
             </div>
           ))}
         </div>
       </section>
 
       <section id="contact" className="border-t border-white/10 bg-[#0A0A0A]">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
-            <SectionHeading
-              eyebrow="Contact"
-              title="Visit Apex Dental"
-              text="A refined clinical environment in Malta designed for comfort, trust, and premium dental care."
-            />
-            <div className="mt-10 space-y-5 text-base text-white/82">
-              <div>
-                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
-                <a href="tel:79854037" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">79854037</a>
-              </div>
-              <div>
-                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Email</div>
-                <a href="mailto:info@apexdental.com.mt" className="mt-1 block text-lg text-white hover:text-[#00AEEF]">info@apexdental.com.mt</a>
-              </div>
-              <div>
-                <div className="text-xs uppercase tracking-[0.24em] text-white/40">Location</div>
-                <p className="mt-1 text-lg text-white">Imrieħel, Malta</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-black/30 p-8 sm:p-10">
-            <div className="text-xs uppercase tracking-[0.40em] text-[#00AEEF]">Appointment Form</div>
-            <h3 className="mt-4 text-3xl font-semibold">Start Your Treatment Journey</h3>
-            <form className="mt-8 space-y-4">
-              <input type="text" placeholder="Full Name" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
-              <input type="tel" placeholder="Phone Number" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
-              <input type="email" placeholder="Email Address" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
-              <textarea rows={5} placeholder="Tell us how we can help" className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-white placeholder:text-white/35 outline-none" />
-              <button type="button" className="w-full rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black">
-                Send Enquiry
-              </button>
-            </form>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+            <img src="/images/CT1.jpg" alt="Apex Dental at Trident Park" className="h-72 w-full object-cover" />
           </div>
         </div>
-      </section>
+
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 pb-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
+          <div className="space-y-8">
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
+              <SectionHeading
+                eyebrow="Contact Us"
+                title="Visit Apex Dental at Trident Park"
+                text="Apex Dental is located at Trident Park in Mrieħel, one of Malta’s best-known modern business destinations. The setting adds a more refined and professional arrival experience for patients, with a high-quality environment in the Central Business District."
+              />
+
+              <div className="mt-8 space-y-5 text-base leading-8 text-white/78">
+                <p>
+                  Trident Park is known for its premium office campus environment, combining contemporary design with landscaped outdoor areas and a polished business setting. For patients visiting the clinic, this means a location that feels accessible, modern, and professional from the moment they arrive.
+                </p>
+                <p>
+                  The development occupies the site of the historic former Farsons Brewery and has been designed as a green office campus in Malta’s Central Business District. That gives the area a distinctive character, blending heritage, architecture, and a more elevated visitor experience.
+                </p>
+              </div>
+
+              <div className="mt-10 space-y-5 text-base text-white/82">
+                <div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-white/40">Phone</div>
+                  <a href="tel:79854037" className="mt-1 block text-lg text-white ho
     </>
   );
 }
@@ -332,10 +316,11 @@ export default function ApexDentalLuxuryWebsite() {
         navLabel: "Implants",
         title: "Dental Implants",
         shortTitle: "Implants",
-        heroImage: "/images/H4.jpg",
-        pageImage: "/images/I3.jpg",
-        sectionImage: "/images/A3.jpg",
-        faqImage: "/images/C3.jpg",
+        cardImage: "/images/I4.jpg",
+        heroImage: "/images/I1.jpg",
+        pageImage: "/images/I2.jpg",
+        sectionImage: "/images/I3.jpg",
+        faqImage: "/images/I4.jpg",
         eyebrow: "Advanced Tooth Replacement",
         subtitle: "Fixed, natural-looking solutions designed for strength, function, and long-term confidence.",
         intro:
@@ -372,13 +357,14 @@ export default function ApexDentalLuxuryWebsite() {
       },
       {
         slug: "veneers",
-        navLabel: "Veneers",
-        title: "Dental Veneers",
-        shortTitle: "Veneers",
-        heroImage: "/images/H7.jpg",
-        pageImage: "/images/I1.jpg",
-        sectionImage: "/images/A1.jpg",
-        faqImage: "/images/C1.jpg",
+        navLabel: "Cosmetic",
+        title: "Cosmetic Dentistry",
+        shortTitle: "Cosmetic Dentistry",
+        cardImage: "/images/C1.jpg",
+        heroImage: "/images/C1.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
+        faqImage: "/images/C4.jpg",
         eyebrow: "Aesthetic Smile Enhancement",
         subtitle: "Refined cosmetic treatment for patients who want a brighter, more balanced, more confident smile.",
         intro:
@@ -414,14 +400,15 @@ export default function ApexDentalLuxuryWebsite() {
         ],
       },
       {
-        slug: "whitening",
-        navLabel: "Whitening",
-        title: "Teeth Whitening",
-        shortTitle: "Whitening",
-        heroImage: "/images/H8.jpg",
-        pageImage: "/images/I2.jpg",
-        sectionImage: "/images/A2.jpg",
-        faqImage: "/images/C2.jpg",
+        slug: "aligners",
+        navLabel: "Aligners",
+        title: "Clear Aligners",
+        shortTitle: "Aligners",
+        cardImage: "/images/A1.jpg",
+        heroImage: "/images/A1.jpg",
+        pageImage: "/images/A2.jpg",
+        sectionImage: "/images/A3.jpg",
+        faqImage: "/images/A4.jpg",
         eyebrow: "Brighter Smile Treatment",
         subtitle: "Professional whitening designed to lift stains safely and deliver a cleaner, fresher smile.",
         intro:
@@ -461,10 +448,11 @@ export default function ApexDentalLuxuryWebsite() {
         navLabel: "Crowns & Bridges",
         title: "Crowns and Bridges",
         shortTitle: "Crowns & Bridges",
+        cardImage: "/images/H9.jpg",
         heroImage: "/images/H9.jpg",
-        pageImage: "/images/I3.jpg",
-        sectionImage: "/images/A3.jpg",
-        faqImage: "/images/C3.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
+        faqImage: "/images/C4.jpg",
         eyebrow: "Restorative Dentistry",
         subtitle: "Functional, aesthetic solutions for damaged, weakened, or missing teeth.",
         intro:
@@ -504,9 +492,10 @@ export default function ApexDentalLuxuryWebsite() {
         navLabel: "Root Canal",
         title: "Root Canal Treatment",
         shortTitle: "Root Canal",
+        cardImage: "/images/H10.jpg",
         heroImage: "/images/H10.jpg",
-        pageImage: "/images/I4.jpg",
-        sectionImage: "/images/A4.jpg",
+        pageImage: "/images/C2.jpg",
+        sectionImage: "/images/C3.jpg",
         faqImage: "/images/C4.jpg",
         eyebrow: "Tooth Preservation",
         subtitle: "Treatment focused on removing infection, relieving pain, and helping save the natural tooth.",
@@ -545,12 +534,13 @@ export default function ApexDentalLuxuryWebsite() {
       {
         slug: "orthodontics",
         navLabel: "Orthodontics",
-        title: "Orthodontics and Clear Aligners",
+        title: "Orthodontics",
         shortTitle: "Orthodontics",
-        heroImage: "/images/H2.jpg",
-        pageImage: "/images/I2.jpg",
-        sectionImage: "/images/A2.jpg",
-        faqImage: "/images/C2.jpg",
+        cardImage: "/images/A4.jpg",
+        heroImage: "/images/A1.jpg",
+        pageImage: "/images/A2.jpg",
+        sectionImage: "/images/A3.jpg",
+        faqImage: "/images/A4.jpg",
         eyebrow: "Smile Alignment",
         subtitle: "Discreet, carefully planned tooth movement for a straighter, more balanced smile.",
         intro:
@@ -590,10 +580,11 @@ export default function ApexDentalLuxuryWebsite() {
         navLabel: "Emergency",
         title: "Emergency Dental Care",
         shortTitle: "Emergency",
-        heroImage: "/images/H3.jpg",
-        pageImage: "/images/I4.jpg",
-        sectionImage: "/images/A4.jpg",
-        faqImage: "/images/C4.jpg",
+        cardImage: "/images/CT3.jpg",
+        heroImage: "/images/CT1.jpg",
+        pageImage: "/images/CT2.jpg",
+        sectionImage: "/images/CT3.jpg",
+        faqImage: "/images/CT1.jpg",
         eyebrow: "Urgent Appointments",
         subtitle: "Fast access for dental pain, swelling, trauma, and urgent treatment needs.",
         intro:
@@ -666,7 +657,7 @@ export default function ApexDentalLuxuryWebsite() {
             </div>
           </a>
 
-          <nav className="hidden items-center gap-10 md:flex">
+          <nav className="hidden md:flex flex-1 items-center justify-center gap-8 px-6 xl:gap-10">
             {navigation.map((item) => (
               <a key={item.label} href={item.href} className="text-xs uppercase tracking-[0.28em] text-white/60 transition hover:text-white">
                 {item.label}
