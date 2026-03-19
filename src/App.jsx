@@ -343,78 +343,29 @@ export default function ApexDentalLuxuryWebsite() {
         className="relative isolate overflow-hidden"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(10,10,10,0.62), rgba(10,10,10,0.84)), url(/images/H1.jpg)",
+            "linear-gradient(rgba(10,10,10,0.65), rgba(10,10,10,0.85)), url(/images/H1.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="mx-auto grid min-h-[92vh] max-w-7xl items-center gap-10 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
+        <div className="mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-24 lg:px-10">
           <div className="max-w-3xl">
             <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#00AEEF]">Luxury Dental Experience</p>
             <h1 className="max-w-2xl text-5xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl">
               Precision Dentistry. <br /> Redefined.
             </h1>
             <p className="mt-8 max-w-2xl text-base leading-8 text-white/76 sm:text-lg">
-              Advanced dental care in Malta focused on aesthetics, function, and long-term results. Built as a more
-              premium digital experience, with service pages that explain treatments clearly instead of sending every
-              patient into the same corridor wearing a different hat.
+              Advanced dental care in Malta focused on aesthetics, function, and long-term results.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#contact"
-                className="rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:scale-[1.02]"
-              >
+              <a href="#contact" className="rounded-full bg-white px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-black">
                 Book Consultation
               </a>
-              <a
-                href="#services"
-                className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition hover:border-white/40 hover:bg-white/5"
-              >
+              <a href="#services" className="rounded-full border border-white/20 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white">
                 View Treatments
               </a>
             </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {["/images/H2.jpg", "/images/H3.jpg", "/images/H4.jpg", "/images/H5.jpg"].map((img, index) => (
-              <div
-                key={img}
-                className={`overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] shadow-2xl shadow-black/30 ${
-                  index === 0 ? "col-span-2 h-56" : "h-44"
-                }`}
-              >
-                <img src={img} alt="Apex Dental featured visual" className="h-full w-full object-cover" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="border-t border-white/10 bg-[#0D0D0D]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:px-10">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
-              <img src="/images/I1.jpg" alt="Apex Dental clinic" className="h-64 w-full object-cover" />
-            </div>
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
-              <img src="/images/I2.jpg" alt="Apex Dental team visual" className="h-44 w-full object-cover" />
-            </div>
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/20">
-              <img src="/images/I3.jpg" alt="Apex Dental treatment visual" className="h-44 w-full object-cover" />
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center">
-            <SectionHeading
-              eyebrow="About Apex Dental"
-              title="A more premium experience from first click to final treatment"
-              text="Apex Dental combines advanced digital workflows with clinical expertise to deliver precise, predictable outcomes. The redesign uses stronger hierarchy, clearer treatment information, and dedicated pages for each service so patients understand what they are choosing and why it matters."
-            />
-            <p className="mt-6 max-w-xl text-base leading-8 text-white/72">
-              The aim is simple: a website that feels refined, builds trust quickly, and explains treatments in a way
-              patients can actually follow. Luxury should feel calm, informed, and clinically serious.
-            </p>
           </div>
         </div>
       </section>
@@ -424,12 +375,39 @@ export default function ApexDentalLuxuryWebsite() {
           <SectionHeading
             eyebrow="Services"
             title="Explore each treatment in detail"
-            text="Each card below opens a dedicated page with treatment information, benefits, steps, and frequently asked questions."
+            text="Each card below opens a dedicated page with treatment information."
           />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {services.map((service, index) => {
-              const cardImages = ["/images/A1.jpg", "/images/A2.jpg", "/images/A3.jpg", "/images/A4.jpg", "/images/C1.jpg", "/images/C2.jpg", "/images/C3.jpg"];
+              const allImages = [
+                "/images/A1.jpg","/images/A2.jpg","/images/A3.jpg","/images/A4.jpg",
+                "/images/C1.jpg","/images/C2.jpg","/images/C3.jpg","/images/C4.jpg",
+                "/images/I1.jpg","/images/I2.jpg","/images/I3.jpg","/images/I4.jpg"
+              ];
+              const displayImage = allImages[index % allImages.length];
+
+              return (
+                <a key={service.slug} href={`#${service.slug}`} className="group overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]">
+                  <div className="h-56 overflow-hidden">
+                    <img src={displayImage} alt={service.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs uppercase tracking-[0.24em] text-[#00AEEF]">{service.eyebrow}</span>
+                      <span className="text-white/25">↗</span>
+                    </div>
+                    <h3 className="mt-4 text-2xl font-semibold text-white">{service.title}</h3>
+                    <p className="mt-4 text-base leading-7 text-white/70">{service.subtitle}</p>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-[#0D0D0D]"> ["/images/A1.jpg", "/images/A2.jpg", "/images/A3.jpg", "/images/A4.jpg", "/images/C1.jpg", "/images/C2.jpg", "/images/C3.jpg"];
               const displayImage = service.sectionImage || cardImages[index % cardImages.length];
               return (
                 <a
@@ -663,61 +641,33 @@ export default function ApexDentalLuxuryWebsite() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-[#00AEEF]/30 selection:text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/88 backdrop-blur-xl">
-        <div className="border-b border-white/5 bg-gradient-to-r from-[#050505] via-[#0b0b0b] to-[#050505]">
-          <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center lg:justify-between lg:px-10">
-            <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2 shadow-lg shadow-black/30">
-                <img src="/images/orislogo.png" alt="Apex Dental logo" className="h-full w-full object-contain" />
-              </div>
-              <div>
-                <div className="text-lg font-semibold tracking-[0.32em] uppercase text-white">Apex Dental</div>
-                <div className="mt-1 text-xs uppercase tracking-[0.28em] text-[#00AEEF]">Advanced Dentistry in Malta</div>
-              </div>
-            </div>
-
-            <div className="hidden xl:flex items-center gap-3">
-              {["/images/H1.jpg", "/images/H2.jpg", "/images/H3.jpg", "/images/H4.jpg"].map((img) => (
-                <div key={img} className="h-14 w-24 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
-                  <img src={img} alt="Apex Dental preview" className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
-              <a href="tel:79854037" className="rounded-full border border-white/10 px-4 py-2 transition hover:border-white/25 hover:text-white">
-                79854037
-              </a>
-              <a href="mailto:info@apexdental.com.mt" className="rounded-full border border-white/10 px-4 py-2 transition hover:border-white/25 hover:text-white">
-                info@apexdental.com.mt
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-          <a href="#home" className="flex items-center gap-3 text-white">
-            <div className="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-1.5">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/92 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+          <a href="#home" className="flex items-center gap-4">
+            <div className="h-12 w-12 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-2">
               <img src="/images/orislogo.png" alt="Apex Dental logo" className="h-full w-full object-contain" />
             </div>
-            <span className="text-sm font-semibold tracking-[0.30em] uppercase">Apex Dental</span>
+            <div>
+              <div className="text-sm font-semibold tracking-[0.35em] uppercase text-white">Apex Dental</div>
+              <div className="text-[10px] tracking-[0.3em] text-[#00AEEF]">Advanced Dentistry Malta</div>
+            </div>
           </a>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-10 md:flex">
             {navigation.map((item) => (
-              <a key={item.label} href={item.href} className="text-sm uppercase tracking-[0.22em] text-white/70 transition hover:text-white">
+              <a key={item.label} href={item.href} className="text-xs uppercase tracking-[0.28em] text-white/60 transition hover:text-white">
                 {item.label}
               </a>
             ))}
             <div className="h-5 w-px bg-white/10" />
-            {services.slice(0, 6).map((service) => (
-              <a key={service.slug} href={`#${service.slug}`} className="text-sm uppercase tracking-[0.18em] text-white/48 transition hover:text-white">
+            {services.map((service) => (
+              <a key={service.slug} href={`#${service.slug}`} className="text-xs uppercase tracking-[0.22em] text-white/40 transition hover:text-white">
                 {service.navLabel}
               </a>
             ))}
           </nav>
 
-          <a href="#contact" className="rounded-full border border-[#00AEEF]/50 px-5 py-2 text-xs font-medium uppercase tracking-[0.22em] text-white transition hover:border-[#00AEEF] hover:bg-[#00AEEF]/10">
+          <a href="#contact" className="rounded-full border border-[#00AEEF]/60 px-6 py-2 text-xs font-medium uppercase tracking-[0.25em] text-white transition hover:bg-[#00AEEF]/10">
             Book Consultation
           </a>
         </div>
