@@ -213,11 +213,11 @@ export default function ApexDentalWebsite() {
             </p>
 
             <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {[
+              {([
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ].map(([title, text]) => (
+              ]).map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -408,12 +408,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-4">
-            {[
+            {([
               ['Consultation', 'A clear diagnosis and tailored treatment options.'],
               ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
               ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
               ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ].map(([title, text], idx) => (
+            ]).map(([title, text], idx) => (
               <div
                 key={title}
                 className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -532,12 +532,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-4">
-            {[
+            {([
               'Advanced digital planning and imaging',
               'Implant, cosmetic, and aligner-focused workflows',
               'Patient-friendly communication and treatment guidance',
               'Convenient location in Trident Park, Birkirkara',
-            ].map((item) => (
+            ]).map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
@@ -846,7 +846,7 @@ export default function ApexDentalWebsite() {
               <InfoPage
                 title="Clear Aligners"
                 image={branding.A1}
-                secondaryImages={[branding.A2, branding.A4, branding.A5]}
+                secondaryImages={[branding.A2, branding.A3, branding.A4]}
                 intro="This page presents clear aligners as a modern and discreet route to straighter teeth."
                 benefits={alignerBenefits}
                 closing="Treatment is planned digitally and monitored carefully for predictable, comfortable progress."
