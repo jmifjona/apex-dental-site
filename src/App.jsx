@@ -73,19 +73,19 @@ export default function ApexDentalWebsite() {
         subtitle:
           'Advanced implantology, cosmetic dentistry, and clear aligners delivered with precision, digital planning, and a patient-first experience.',
       },
-      '/implants': {
+      '/dental-implants-malta': {
         title: 'Dental Implants',
         eyebrow: 'Permanent tooth replacement',
         subtitle:
           'From single missing teeth to full-arch rehabilitation, we use digital workflows and premium components for stable, aesthetic long-term outcomes.',
       },
-      '/aligners': {
+      '/clear-aligners-malta': {
         title: 'Clear Aligners',
         eyebrow: 'Discreet orthodontics',
         subtitle:
           'Straighten teeth with removable, comfortable aligners designed through 3D scans and a carefully planned digital setup.',
       },
-      '/cosmetic': {
+      '/cosmetic-dentistry-malta': {
         title: 'Cosmetic Dentistry',
         eyebrow: 'Smile design with restraint',
         subtitle:
@@ -103,7 +103,7 @@ export default function ApexDentalWebsite() {
         subtitle:
           'Reach the clinic directly through WhatsApp or phone and arrange a consultation for implants, aligners, cosmetic dentistry, or a full dental assessment.',
       },
-      '/emergency': {
+      '/emergency-dentist-malta': {
         title: 'Dental Emergency',
         eyebrow: 'Urgent same-day care',
         subtitle:
@@ -115,29 +115,29 @@ export default function ApexDentalWebsite() {
 
   const navItems = [
     ['/', 'Home'],
-    ['/implants', 'Implants'],
-    ['/aligners', 'Aligners'],
-    ['/cosmetic', 'Cosmetic'],
+    ['/dental-implants-malta', 'Implants'],
+    ['/clear-aligners-malta', 'Aligners'],
+    ['/cosmetic-dentistry-malta', 'Cosmetic'],
     ['/about', 'About'],
     ['/contact', 'Contact'],
-    ['/emergency', 'Emergency'],
+    ['/emergency-dentist-malta', 'Emergency'],
   ];
 
   const services = [
     {
       title: 'Dental Implants',
       text: 'Single implants, implant bridges, and full-arch solutions using digitally planned workflows and guided surgery where appropriate.',
-      path: '/implants',
+      path: '/dental-implants-malta',
     },
     {
       title: 'Clear Aligners',
       text: 'A discreet orthodontic option for adults and teens looking to improve alignment without fixed metal appliances.',
-      path: '/aligners',
+      path: '/clear-aligners-malta',
     },
     {
       title: 'Cosmetic Dentistry',
       text: 'Smile makeovers, veneers, whitening, and aesthetic treatments tailored to facial balance and natural appearance.',
-      path: '/cosmetic',
+      path: '/cosmetic-dentistry-malta',
     },
   ];
 
@@ -174,12 +174,12 @@ export default function ApexDentalWebsite() {
 
   function getHeroImage(path) {
     const imageMap = {
-      '/implants': branding.I1,
-      '/aligners': branding.A1,
-      '/cosmetic': branding.C1,
+      '/dental-implants-malta': branding.I1,
+      '/clear-aligners-malta': branding.A1,
+      '/cosmetic-dentistry-malta': branding.C1,
       '/about': branding.AB1,
       '/contact': branding.CT1,
-      '/emergency': branding.E1,
+      '/emergency-dentist-malta': branding.E1,
     };
     return imageMap[path] || branding.H1;
   }
@@ -213,11 +213,11 @@ export default function ApexDentalWebsite() {
             </p>
 
             <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {([
+              {[
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ]).map(([title, text]) => (
+              ].map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -408,12 +408,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-4">
-            {([
+            {[
               ['Consultation', 'A clear diagnosis and tailored treatment options.'],
               ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
               ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
               ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ]).map(([title, text], idx) => (
+            ].map(([title, text], idx) => (
               <div
                 key={title}
                 className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -532,12 +532,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-4">
-            {([
+            {[
               'Advanced digital planning and imaging',
               'Implant, cosmetic, and aligner-focused workflows',
               'Patient-friendly communication and treatment guidance',
               'Convenient location in Trident Park, Birkirkara',
-            ]).map((item) => (
+            ].map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
@@ -603,7 +603,7 @@ export default function ApexDentalWebsite() {
                 <p className="text-sm uppercase tracking-[0.2em] text-white/45">
                   Opening Hours
                 </p>
-                <p className="mt-1 text-lg text-white">Monday to Friday 9am–7pm</p>  
+                <p className="mt-1 text-lg text-white">Monday to Friday 9am–7pm</p>
               </div>
             </div>
           </div>
@@ -823,10 +823,10 @@ export default function ApexDentalWebsite() {
           }
         />
         <Route
-          path="/implants"
+          path="/dental-implants-malta"
           element={
             <>
-              <PageHero path="/implants" />
+              <PageHero path="/dental-implants-malta" />
               <InfoPage
                 title="Dental Implants"
                 image={branding.I1}
@@ -839,10 +839,10 @@ export default function ApexDentalWebsite() {
           }
         />
         <Route
-          path="/aligners"
+          path="/clear-aligners-malta"
           element={
             <>
-              <PageHero path="/aligners" />
+              <PageHero path="/clear-aligners-malta" />
               <InfoPage
                 title="Clear Aligners"
                 image={branding.A1}
@@ -855,10 +855,10 @@ export default function ApexDentalWebsite() {
           }
         />
         <Route
-          path="/cosmetic"
+          path="/cosmetic-dentistry-malta"
           element={
             <>
-              <PageHero path="/cosmetic" />
+              <PageHero path="/cosmetic-dentistry-malta" />
               <InfoPage
                 title="Cosmetic Dentistry"
                 image={branding.C1}
@@ -889,10 +889,10 @@ export default function ApexDentalWebsite() {
           }
         />
         <Route
-          path="/emergency"
+          path="/emergency-dentist-malta"
           element={
             <>
-              <PageHero path="/emergency" />
+              <PageHero path="/emergency-dentist-malta" />
               <EmergencyPage />
             </>
           }
