@@ -213,11 +213,11 @@ export default function ApexDentalWebsite() {
             </p>
 
             <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {[
+              {([
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ].map(([title, text]) => (
+              ]).map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -769,8 +769,8 @@ export default function ApexDentalWebsite() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#050816_0%,#09101f_38%,#050816_100%)] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050816]/80 backdrop-blur-xl">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#2b2b2b_0%,#1f1f24_38%,#2b2b2b_100%)] text-white">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <Link to="/" className="group flex items-center gap-3 text-left">
             <img
