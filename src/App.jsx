@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import {
   Phone,
@@ -10,6 +10,12 @@ import {
   ScanLine,
   ShieldCheck,
 } from 'lucide-react';
+
+function usePageTitle(title) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+}
 
 export default function ApexDentalWebsite() {
   const location = useLocation();
@@ -37,7 +43,6 @@ export default function ApexDentalWebsite() {
     A2: '/images/A2.jpg',
     A3: '/images/A3.jpg',
     A4: '/images/A4.jpg',
-    A5: '/images/A5.jpg',
 
     C1: '/images/C1.jpg',
     C2: '/images/C2.jpg',
@@ -109,6 +114,12 @@ export default function ApexDentalWebsite() {
         subtitle:
           'Fast assessment and treatment for dental pain, swelling, trauma, broken teeth, lost crowns, infections, and other urgent dental problems.',
       },
+      '/price-list': {
+        title: 'Dental Price List Malta',
+        eyebrow: 'Transparent pricing',
+        subtitle:
+          'A clear overview of current treatment fees at Apex Dental Malta.',
+      },
     }),
     []
   );
@@ -121,6 +132,7 @@ export default function ApexDentalWebsite() {
     ['/about', 'About'],
     ['/contact', 'Contact'],
     ['/emergency-dentist-malta', 'Emergency'],
+    ['/price-list', 'Prices'],
   ];
 
   const services = [
@@ -180,6 +192,7 @@ export default function ApexDentalWebsite() {
       '/about': branding.AB1,
       '/contact': branding.CT1,
       '/emergency-dentist-malta': branding.E1,
+      '/price-list': branding.CT1,
     };
     return imageMap[path] || branding.H1;
   }
@@ -190,6 +203,7 @@ export default function ApexDentalWebsite() {
 
   function PageHero({ path }) {
     const meta = getPageMeta(path);
+
     return (
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.22),transparent_26%),radial-gradient(circle_at_left,rgba(255,255,255,0.05),transparent_20%)]" />
@@ -213,11 +227,11 @@ export default function ApexDentalWebsite() {
             </p>
 
             <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {([
+              {[
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ]).map(([title, text]) => (
+              ].map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -270,16 +284,24 @@ export default function ApexDentalWebsite() {
   }
 
   function HomePage() {
+    usePageTitle('Dentist in Malta | Apex Dental');
+
     return (
       <>
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
-          <div className="mb-8 max-w-2xl">
+          <div className="mb-8 max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
               Featured Treatments
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
               Premium dentistry, presented clearly.
             </h2>
+            <p className="mt-5 text-lg leading-8 text-slate-300">
+              Apex Dental is a private dental clinic in Malta offering dental implants, clear aligners, cosmetic dentistry, and emergency care from Trident Park.
+            </p>
+            <p className="mt-4 text-slate-400 leading-8">
+              Patients looking for a dentist in Malta often want a clinic that combines modern technology, careful explanation, premium surroundings, and predictable treatment planning from first consultation to final review.
+            </p>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
@@ -314,7 +336,7 @@ export default function ApexDentalWebsite() {
             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-sm">
               <img
                 src={branding.H2}
-                alt="Apex Dental feature image"
+                alt="Apex Dental clinic in Malta"
                 className="h-[420px] w-full rounded-[1.5rem] object-cover"
               />
             </div>
@@ -323,7 +345,7 @@ export default function ApexDentalWebsite() {
               <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
                 <img
                   src={branding.H3}
-                  alt="Apex Dental feature image"
+                  alt="Private dental clinic environment Malta"
                   className="h-[198px] w-full rounded-[1.5rem] object-cover"
                 />
               </div>
@@ -331,7 +353,7 @@ export default function ApexDentalWebsite() {
               <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
                 <img
                   src={branding.H4}
-                  alt="Apex Dental feature image"
+                  alt="Modern dental setting Malta"
                   className="h-[198px] w-full rounded-[1.5rem] object-cover"
                 />
               </div>
@@ -408,12 +430,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-4">
-            {([
+            {[
               ['Consultation', 'A clear diagnosis and tailored treatment options.'],
               ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
               ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
               ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ]).map(([title, text], idx) => (
+            ].map(([title, text], idx) => (
               <div
                 key={title}
                 className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -429,7 +451,9 @@ export default function ApexDentalWebsite() {
     );
   }
 
-  function InfoPage({ title, intro, benefits, closing, image, secondaryImages = [] }) {
+  function InfoPage({ title, intro, benefits, closing, image, secondaryImages = [], seoTitle, seoSlug }) {
+    usePageTitle(seoTitle);
+
     return (
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
@@ -462,7 +486,79 @@ export default function ApexDentalWebsite() {
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
               {title}
             </h2>
+
             <p className="mt-6 text-lg leading-8 text-slate-300">{intro}</p>
+
+            <h3 className="mt-10 text-2xl font-semibold">What is this treatment?</h3>
+            <p className="mt-4 text-slate-300 leading-7">
+              This treatment is designed to improve both function and aesthetics using modern dental techniques and digital workflows. At Apex Dental Malta, every case is carefully planned using scans, imaging, and clinical evaluation to ensure predictable results.
+            </p>
+
+            <h3 className="mt-10 text-2xl font-semibold">Why choose Apex Dental?</h3>
+            <p className="mt-4 text-slate-300 leading-7">
+              Our clinic is based in Trident Park and focuses on premium dentistry with a strong emphasis on accuracy, comfort, and long-term results. Treatments are tailored to each patient, with clear communication and transparent planning at every stage.
+            </p>
+
+            {seoSlug === 'implants' && (
+              <>
+                <h3 className="mt-10 text-2xl font-semibold">Dental implants in Malta</h3>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Dental implants in Malta are one of the most reliable solutions for replacing missing teeth. At Apex Dental, we use digital planning, CBCT imaging, and careful restorative design to improve precision, long-term stability, and natural-looking aesthetics.
+                </p>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Whether replacing one tooth or planning more advanced rehabilitation, implant treatment should be based on diagnosis, bone quality, bite analysis, and long-term maintenance. That is why our workflows focus on predictability rather than guesswork.
+                </p>
+              </>
+            )}
+
+            {seoSlug === 'aligners' && (
+              <>
+                <h3 className="mt-10 text-2xl font-semibold">Clear aligners in Malta</h3>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Clear aligners in Malta are a popular option for patients who want straighter teeth without the appearance of traditional fixed braces. Using digital scans and planned tooth movement, treatment can be designed with a more discreet and comfortable patient experience in mind.
+                </p>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Many mild to moderate alignment issues can be addressed with removable aligners, while still allowing easier cleaning and day-to-day convenience.
+                </p>
+              </>
+            )}
+
+            {seoSlug === 'cosmetic' && (
+              <>
+                <h3 className="mt-10 text-2xl font-semibold">Cosmetic dentistry in Malta</h3>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Cosmetic dentistry in Malta often involves more than simply making teeth whiter. It includes smile proportions, tooth shape, facial harmony, and material choice. Treatments such as veneers, whitening, and bonding should be selected carefully to look polished rather than artificial.
+                </p>
+                <p className="mt-4 text-slate-300 leading-7">
+                  At Apex Dental, cosmetic consultations are structured to help patients compare options clearly and choose a treatment approach that balances aesthetics with long-term maintainability.
+                </p>
+              </>
+            )}
+
+            {seoSlug === 'emergency' && (
+              <>
+                <h3 className="mt-10 text-2xl font-semibold">Emergency dentist in Malta</h3>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Patients searching for an emergency dentist in Malta are often dealing with pain, swelling, trauma, or a failed restoration that needs immediate attention. Prompt diagnosis can make a major difference to comfort, treatment options, and overall recovery.
+                </p>
+                <p className="mt-4 text-slate-300 leading-7">
+                  Emergency dental care is focused on getting you assessed quickly, stabilising the problem, and planning any necessary next steps in a clear and structured way.
+                </p>
+              </>
+            )}
+
+            <h3 className="mt-10 text-2xl font-semibold">Related treatments</h3>
+            <p className="mt-4 text-slate-300 leading-7">
+              You may also be interested in{' '}
+              <Link to="/clear-aligners-malta" className="text-cyan-300 underline">
+                clear aligners
+              </Link>{' '}
+              or{' '}
+              <Link to="/cosmetic-dentistry-malta" className="text-cyan-300 underline">
+                cosmetic dentistry
+              </Link>.
+            </p>
+
             <p className="mt-6 leading-8 text-slate-400">{closing}</p>
           </div>
 
@@ -494,13 +590,15 @@ export default function ApexDentalWebsite() {
   }
 
   function AboutPage() {
+    usePageTitle('About Apex Dental Malta');
+
     return (
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.AB1}
-              alt="About Apex Dental"
+              alt="About Apex Dental Malta"
               className="h-[420px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
@@ -508,7 +606,7 @@ export default function ApexDentalWebsite() {
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.AB2}
-              alt="About Apex Dental"
+              alt="Apex Dental team and clinic"
               className="h-[360px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
@@ -532,12 +630,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-4">
-            {([
+            {[
               'Advanced digital planning and imaging',
               'Implant, cosmetic, and aligner-focused workflows',
               'Patient-friendly communication and treatment guidance',
-              'Convenient location in Trident Park, Birkirkara',
-            ]).map((item) => (
+              'Convenient location in Trident Park, Mrieħel',
+            ].map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
@@ -554,7 +652,7 @@ export default function ApexDentalWebsite() {
         <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
             src={branding.AB3}
-            alt="About Apex Dental"
+            alt="Inside Apex Dental Malta"
             className="h-[320px] w-full rounded-[1.5rem] object-cover"
           />
         </div>
@@ -563,12 +661,14 @@ export default function ApexDentalWebsite() {
   }
 
   function ContactPage() {
+    usePageTitle('Contact Apex Dental Malta');
+
     return (
       <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
             src={branding.CT1}
-            alt="Contact Apex Dental"
+            alt="Contact Apex Dental Malta"
             className="h-[320px] w-full rounded-[1.5rem] object-cover"
           />
         </div>
@@ -580,6 +680,13 @@ export default function ApexDentalWebsite() {
             </h2>
 
             <div className="mt-8 space-y-5 text-slate-300">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
+                  Clinic
+                </p>
+                <p className="mt-1 text-lg text-white">Apex Dental</p>
+              </div>
+
               <div>
                 <p className="text-sm uppercase tracking-[0.2em] text-white/45">
                   Phone / WhatsApp
@@ -595,7 +702,7 @@ export default function ApexDentalWebsite() {
                 </p>
                 <p className="mt-1 flex items-start gap-2 text-lg text-white">
                   <MapPin className="mt-1 h-5 w-5 shrink-0 text-cyan-300" />
-                  Trident Park, Imriehel, Birkirkara BKR 4000, Malta
+                  Trident Park, Imriehel, Malta
                 </p>
               </div>
 
@@ -643,7 +750,7 @@ export default function ApexDentalWebsite() {
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.CT2}
-              alt="Apex Dental location"
+              alt="Apex Dental location in Malta"
               className="h-[240px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
@@ -660,6 +767,8 @@ export default function ApexDentalWebsite() {
   }
 
   function EmergencyPage() {
+    usePageTitle('Emergency Dentist Malta | Apex Dental');
+
     const emergencyList = [
       'Severe toothache or throbbing pain',
       'Facial swelling or gum swelling',
@@ -682,7 +791,7 @@ export default function ApexDentalWebsite() {
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.E1}
-              alt="Dental emergency care"
+              alt="Emergency dentist in Malta"
               className="h-[360px] w-full rounded-[1.5rem] object-cover"
             />
           </div>
@@ -759,9 +868,132 @@ export default function ApexDentalWebsite() {
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.E2}
-              alt="Urgent dental appointment"
+              alt="Urgent dental appointment in Malta"
               className="h-[320px] w-full rounded-[1.5rem] object-cover"
             />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function PricePage() {
+    usePageTitle('Dental Prices Malta | Apex Dental');
+
+    return (
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <h1 className="text-4xl font-semibold">Price List</h1>
+
+        <p className="mt-4 text-slate-300">
+          Transparent pricing for dental treatments at Apex Dental Malta.
+        </p>
+
+        <div className="mt-10 space-y-8">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Consultation</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Routine Checkup — €20</p>
+              <p>Panormic X-Ray — €70</p>
+              <p>Periapical or one side Bitewing X-Ray — €20</p>
+              <p>Implant Consultation — €30</p>
+              <p>CBCT X-Ray — €120</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Hygiene & Whitening</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Routine Hygiene session — €50</p>
+              <p>Perio Laser — €220 per session</p>
+              <p>Fissure sealing — €30 per tooth</p>
+              <p>Whitening home kits — €250</p>
+              <p>Removal of fixed prosthesis and cleaning — €80</p>
+              <p>Fluoride Application — €40</p>
+              <p>In House teeth whitening — €400</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Crowns</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Lab made Temporary crowns — €50</p>
+              <p>Removal of existing Bridgework — €30</p>
+              <p>Full Porcelain crowns/Zirconia — €450</p>
+              <p>Post and Core Build up — €70</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Veneers</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Porcelain Veneers — €450</p>
+              <p>Composite Veneers — €120</p>
+              <p>3D Printed Ceramic Resin Veneers — €220</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Fillings</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Removal of Amalgam Filling Under Rubberdam — €40</p>
+              <p>Restoration of Deciduous Teeth — €40</p>
+              <p>Composite filling — €90</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Implants</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Neodent Implant — €1700</p>
+              <p>Straumann Implant — €1800</p>
+              <p>Toronto Bridge with Neodent implants — €9000</p>
+              <p>Toronto Bridge with Straumann implants — €10000</p>
+              <p>Implant Retained Removable denture with 3 implants and bar — €5500</p>
+              <p>Crown/Pontic on implant — €400</p>
+              <p>Implant retained removable Denture — €3500</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Extraction and Surgery</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Extraction from — €60</p>
+              <p>Wisdom tooth Surgical extraction — €300</p>
+              <p>Surgical Extraction from — €150</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Root Canal Treatment</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Root Canal Anterior Teeth — €250</p>
+              <p>Re Root Canal treatment — €320</p>
+              <p>Root Canal Treatment Posterior Teeth — €280</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Dentures</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Full Upper/ Lower Acrylic dentures — €400</p>
+              <p>Flexible Dentures Partial — €350</p>
+              <p>Chrome Cobalt dentures — €650</p>
+              <p>Partial Acrylic Dentures — €300</p>
+              <p>Flexible dentures more than 3 teeth — €650</p>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <h2 className="text-2xl font-semibold">Orthodontic Treatment & Miscellaneous</h2>
+            <div className="mt-4 space-y-2 text-slate-300">
+              <p>Soft Splint 2mm — €100</p>
+              <p>Michigan Splint — €300</p>
+              <p>Clear Correct Treatment from — €2900</p>
+              <p>Bionator — €600</p>
+              <p>Soft Splint 4mm — €120</p>
+              <p>Invisalign Treatment from — €3500</p>
+              <p>Fixed Upper and lower orthodontic appliance from — €2500</p>
+            </div>
           </div>
         </div>
       </section>
@@ -822,6 +1054,7 @@ export default function ApexDentalWebsite() {
             </>
           }
         />
+
         <Route
           path="/dental-implants-malta"
           element={
@@ -829,15 +1062,18 @@ export default function ApexDentalWebsite() {
               <PageHero path="/dental-implants-malta" />
               <InfoPage
                 title="Dental Implants"
+                seoTitle="Dental Implants Malta | Apex Dental"
+                seoSlug="implants"
                 image={branding.I1}
                 secondaryImages={[branding.I2, branding.I3, branding.I4]}
-                intro="Dental implants are a stable, aesthetic solution for replacing missing teeth."
+                intro="Dental implants in Malta are a stable, aesthetic solution for replacing missing teeth. At Apex Dental, we use digital planning, CBCT imaging, and guided workflows to improve precision, long-term stability, and restorative quality."
                 benefits={implantBenefits}
                 closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
               />
             </>
           }
         />
+
         <Route
           path="/clear-aligners-malta"
           element={
@@ -845,15 +1081,18 @@ export default function ApexDentalWebsite() {
               <PageHero path="/clear-aligners-malta" />
               <InfoPage
                 title="Clear Aligners"
+                seoTitle="Clear Aligners Malta | Apex Dental"
+                seoSlug="aligners"
                 image={branding.A1}
                 secondaryImages={[branding.A2, branding.A3, branding.A4]}
-                intro="This page presents clear aligners as a modern and discreet route to straighter teeth."
+                intro="Clear aligners in Malta offer a discreet way to straighten teeth using removable transparent trays designed through digital scanning and planning."
                 benefits={alignerBenefits}
                 closing="Treatment is planned digitally and monitored carefully for predictable, comfortable progress."
               />
             </>
           }
         />
+
         <Route
           path="/cosmetic-dentistry-malta"
           element={
@@ -861,15 +1100,18 @@ export default function ApexDentalWebsite() {
               <PageHero path="/cosmetic-dentistry-malta" />
               <InfoPage
                 title="Cosmetic Dentistry"
+                seoTitle="Cosmetic Dentistry Malta | Apex Dental"
+                seoSlug="cosmetic"
                 image={branding.C1}
                 secondaryImages={[branding.C2, branding.C3, branding.C4]}
-                intro="Cosmetic dentistry focuses on elegant, natural-looking smile enhancement."
+                intro="Cosmetic dentistry in Malta focuses on improving smile aesthetics using veneers, whitening, bonding, and conservative smile design techniques."
                 benefits={cosmeticBenefits}
                 closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
               />
             </>
           }
         />
+
         <Route
           path="/about"
           element={
@@ -879,6 +1121,7 @@ export default function ApexDentalWebsite() {
             </>
           }
         />
+
         <Route
           path="/contact"
           element={
@@ -888,6 +1131,7 @@ export default function ApexDentalWebsite() {
             </>
           }
         />
+
         <Route
           path="/emergency-dentist-malta"
           element={
@@ -897,6 +1141,17 @@ export default function ApexDentalWebsite() {
             </>
           }
         />
+
+        <Route
+          path="/price-list"
+          element={
+            <>
+              <PageHero path="/price-list" />
+              <PricePage />
+            </>
+          }
+        />
+
         <Route
           path="*"
           element={
@@ -945,7 +1200,7 @@ export default function ApexDentalWebsite() {
             />
             <p>Apex Dental Malta</p>
           </div>
-          <p>Implants · Aligners · Cosmetic Dentistry · Birkirkara</p>
+          <p>Implants · Aligners · Cosmetic Dentistry · Trident Park, Malta</p>
         </div>
       </footer>
     </div>
