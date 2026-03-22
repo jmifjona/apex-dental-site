@@ -1242,6 +1242,15 @@ export default function ApexDentalWebsite() {
                 benefits={implantBenefits}
                 closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
               />
+              <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+                <div className="max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                  <div className="text-yellow-400 text-lg">★★★★★</div>
+                  <p className="mt-3 text-slate-300 leading-7">
+                    “I had dental implants done and the whole process was smooth from start to finish. The results are excellent and feel completely natural.”
+                  </p>
+                  <p className="mt-3 text-sm text-slate-400">— Mark Borg · Google Reviews</p>
+                </div>
+              </section>
               <AftercareSection />
             </>
           }
@@ -1281,6 +1290,15 @@ export default function ApexDentalWebsite() {
                 benefits={cosmeticBenefits}
                 closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
               />
+              <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+                <div className="max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                  <div className="text-yellow-400 text-lg">★★★★★</div>
+                  <p className="mt-3 text-slate-300 leading-7">
+                    “I’m extremely happy with my new smile. The team is very attentive and the results look natural and beautiful.”
+                  </p>
+                  <p className="mt-3 text-sm text-slate-400">— Sarah Attard · Google Reviews</p>
+                </div>
+              </section>
             </>
           }
         />
