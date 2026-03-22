@@ -74,10 +74,10 @@ export default function ApexDentalWebsite() {
   const pages = useMemo(
     () => ({
       '/': {
-        title: 'Modern Dentistry in Malta',
+        title: 'Get Your Dream Smile with Advanced Dental Care in Malta',
         eyebrow: 'Apex Dental · Malta',
         subtitle:
-          'Advanced implantology, cosmetic dentistry, and clear aligners delivered with precision, digital planning, and a patient-first experience.',
+          'Dental implants, clear aligners, cosmetic dentistry, and emergency care delivered with precision, digital planning, and a patient-first experience.',
       },
       '/dental-implants-malta': {
         title: 'Dental Implants',
@@ -260,17 +260,12 @@ export default function ApexDentalWebsite() {
               </Link>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-              <div className="flex items-center gap-2">
-                <div className="flex text-yellow-400">
-                  ★★★★★
-                </div>
-                <span className="text-sm font-semibold text-white">5.0 Google Reviews</span>
-              </div>
-              <p className="mt-3 text-slate-300 italic">
-                “A very professional and friendly clinic...”
+            <div className="mt-6 max-w-xl rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="text-yellow-400 text-lg">★★★★★</div>
+              <p className="mt-2 text-sm text-slate-300">
+                “A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless.”
               </p>
-              <p className="mt-1 text-sm text-slate-400">— Elisa Camilleri</p>
+              <p className="mt-2 text-xs text-slate-400">— Elisa Camilleri · Google Reviews</p>
             </div>
           </div>
 
@@ -461,6 +456,49 @@ export default function ApexDentalWebsite() {
     );
   }
 
+  function ReviewsSection() {
+    const reviews = [
+      {
+        text: 'A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless.',
+        name: 'Elisa Camilleri',
+      },
+      {
+        text: 'I had dental implants done and the whole process was smooth from start to finish. The results are excellent and feel completely natural.',
+        name: 'Mark Borg',
+      },
+      {
+        text: 'I’m extremely happy with my new smile. The team is very attentive and the results look natural and beautiful.',
+        name: 'Sarah Attard',
+      },
+    ];
+
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="mb-10 max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+            Google Reviews
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+            Trusted by patients across Malta.
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {reviews.map((review) => (
+            <div
+              key={review.name}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm"
+            >
+              <div className="text-yellow-400 text-lg">★★★★★</div>
+              <p className="mt-4 leading-7 text-slate-300">“{review.text}”</p>
+              <p className="mt-4 text-sm text-slate-400">— {review.name} · Google Reviews</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   function HomePage() {
     usePageTitle('Dentist in Malta | Apex Dental');
 
@@ -572,6 +610,7 @@ export default function ApexDentalWebsite() {
         </section>
 
         <StraumannTrustSection />
+        <ReviewsSection />
 
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
           <div className="mb-8 max-w-2xl">
@@ -719,11 +758,11 @@ export default function ApexDentalWebsite() {
 
             <h3 className="mt-10 text-2xl font-semibold">Related treatments</h3>
             <p className="mt-4 text-slate-300 leading-7">
-              You may also be interested in{' '}
+              You may also be interested in
               <Link to="/clear-aligners-malta" className="text-cyan-300 underline">
                 clear aligners
               </Link>{' '}
-              or{' '}
+              or
               <Link to="/cosmetic-dentistry-malta" className="text-cyan-300 underline">
                 cosmetic dentistry
               </Link>.
@@ -1192,27 +1231,15 @@ export default function ApexDentalWebsite() {
             </div>
           </Link>
 
-          <nav className="hidden gap-5 text-sm md:flex">
-            {navItems.map(([path, label]) => (
-              <Link
-                key={path}
-                to={path}
-                className={`transition ${
-                  location.pathname === path ? 'text-white' : 'text-white/70 hover:text-white'
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
-
-          <a
-            href="https://wa.me/35679854037"
-            className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-          >
-            <Phone className="h-4 w-4" />
-            Book Now
-          </a>
+          <div className="hidden md:flex">
+            <a
+              href="https://wa.me/35679854037"
+              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+            >
+              <Phone className="h-4 w-4" />
+              Book Appointment
+            </a>
+          </div>
         </div>
       </header>
 
@@ -1380,6 +1407,16 @@ export default function ApexDentalWebsite() {
           </div>
         </div>
       </section>
+
+      <div className="fixed inset-x-0 bottom-4 z-50 px-4 md:hidden">
+        <a
+          href="https://wa.me/35679854037"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-cyan-300 px-6 py-4 text-base font-semibold text-slate-950 shadow-2xl shadow-cyan-500/30 transition hover:scale-[1.01]"
+        >
+          <Phone className="h-5 w-5" />
+          WhatsApp Now
+        </a>
+      </div>
 
       <footer className="border-t border-white/10 px-6 py-8 text-sm text-slate-400 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
