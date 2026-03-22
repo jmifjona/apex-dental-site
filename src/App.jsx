@@ -130,10 +130,9 @@ export default function ApexDentalWebsite() {
     ['/dental-implants-malta', 'Implants'],
     ['/clear-aligners-malta', 'Aligners'],
     ['/cosmetic-dentistry-malta', 'Cosmetic'],
-    ['/about', 'About'],
-    ['/contact', 'Contact'],
     ['/emergency-dentist-malta', 'Emergency'],
-    ['/price-list', 'Prices'],
+    ['/price-list', 'Price List'],
+    ['/contact', 'Contact'],
   ];
 
   const services = [
@@ -207,32 +206,32 @@ export default function ApexDentalWebsite() {
 
     return (
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.22),transparent_26%),radial-gradient(circle_at_left,rgba(255,255,255,0.05),transparent_20%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.18),transparent_26%),radial-gradient(circle_at_left,rgba(255,255,255,0.05),transparent_20%)]" />
         <div className="absolute inset-y-0 right-0 hidden w-[42%] bg-[linear-gradient(135deg,rgba(34,211,238,0.08),rgba(255,255,255,0.02))] blur-3xl lg:block" />
 
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 py-10 md:px-6 md:py-14 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-20">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100 shadow-lg shadow-cyan-950/20">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-2 text-xs text-cyan-100 shadow-lg shadow-cyan-950/20 md:px-4 md:text-sm">
               <Sparkles className="h-4 w-4" />
-              <span className="font-medium uppercase tracking-[0.24em] text-cyan-200">
+              <span className="font-medium uppercase tracking-[0.2em] text-cyan-200 md:tracking-[0.24em]">
                 {meta.eyebrow}
               </span>
             </div>
 
-            <h1 className="mt-6 max-w-5xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.04]">
+            <h1 className="mt-5 max-w-5xl text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.04]">
               {meta.title}
             </h1>
 
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 md:text-lg md:leading-8">
               {meta.subtitle}
             </p>
 
-            <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {([
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {[
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ]).map(([title, text]) => (
+              ].map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -243,10 +242,10 @@ export default function ApexDentalWebsite() {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="https://wa.me/35679854037"
-                className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-cyan-300 px-6 py-3.5 text-base font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
               >
                 Book on WhatsApp
                 <ChevronRight className="h-4 w-4" />
@@ -254,34 +253,34 @@ export default function ApexDentalWebsite() {
 
               <Link
                 to="/contact"
-                className="rounded-full border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white/90 transition hover:border-cyan-300/30 hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white/90 transition hover:border-cyan-300/30 hover:bg-white/10"
               >
                 Contact Clinic
               </Link>
             </div>
 
-            <div className="mt-6 max-w-xl rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-              <div className="text-yellow-400 text-lg">★★★★★</div>
-              <p className="mt-2 text-sm text-slate-300">
+            <div className="mt-5 max-w-xl rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="text-lg text-yellow-400">★★★★★</div>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
                 “A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless.”
               </p>
               <p className="mt-2 text-xs text-slate-400">— Elisa Camilleri · Google Reviews</p>
             </div>
           </div>
 
-          <div className="relative hidden lg:block">
-            <div className="absolute -inset-3 rounded-[2rem] bg-cyan-300/10 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/30 backdrop-blur-sm">
+          <div className="relative">
+            <div className="absolute -inset-3 hidden rounded-[2rem] bg-cyan-300/10 blur-2xl lg:block" />
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5 p-2.5 shadow-2xl shadow-black/30 backdrop-blur-sm md:p-3">
               <img
                 src={getHeroImage(path)}
                 alt="Apex Dental clinic"
-                className="h-[560px] w-full rounded-[1.5rem] object-cover"
+                className="h-[260px] w-full rounded-[1.25rem] object-cover sm:h-[320px] md:h-[420px] lg:h-[560px] lg:rounded-[1.5rem]"
               />
-              <div className="absolute inset-x-8 bottom-8 rounded-[1.5rem] border border-white/10 bg-slate-950/55 p-5 backdrop-blur-md">
-                <p className="text-sm uppercase tracking-[0.28em] text-cyan-300">
+              <div className="absolute inset-x-4 bottom-4 rounded-[1.25rem] border border-white/10 bg-slate-950/55 p-4 backdrop-blur-md md:inset-x-6 md:bottom-6 md:p-5 lg:inset-x-8 lg:bottom-8">
+                <p className="text-xs uppercase tracking-[0.22em] text-cyan-300 md:text-sm md:tracking-[0.28em]">
                   Apex Dental Malta
                 </p>
-                <p className="mt-2 text-xl font-semibold text-white">
+                <p className="mt-2 text-base font-semibold text-white md:text-xl">
                   Modern care in a premium clinical environment
                 </p>
               </div>
@@ -294,7 +293,7 @@ export default function ApexDentalWebsite() {
 
   function StraumannTrustSection() {
     return (
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
@@ -336,6 +335,49 @@ export default function ApexDentalWebsite() {
     );
   }
 
+  function ReviewsSection() {
+    const reviews = [
+      {
+        text: 'A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless.',
+        name: 'Elisa Camilleri',
+      },
+      {
+        text: 'I had dental implants done and the whole process was smooth from start to finish. The results are excellent and feel completely natural.',
+        name: 'Mark Borg',
+      },
+      {
+        text: 'I’m extremely happy with my new smile. The team is very attentive and the results look natural and beautiful.',
+        name: 'Sarah Attard',
+      },
+    ];
+
+    return (
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
+        <div className="mb-10 max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+            Google Reviews
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+            Trusted by patients across Malta.
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {reviews.map((review) => (
+            <div
+              key={review.name}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm"
+            >
+              <div className="text-lg text-yellow-400">★★★★★</div>
+              <p className="mt-4 leading-7 text-slate-300">“{review.text}”</p>
+              <p className="mt-4 text-sm text-slate-400">— {review.name} · Google Reviews</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   function DentistsSection() {
     return (
       <section className="mt-14">
@@ -349,7 +391,7 @@ export default function ApexDentalWebsite() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {([
+          {[
             {
               name: 'Dr Jonathan Mifsud',
               role: 'Dental Surgeon',
@@ -380,7 +422,7 @@ export default function ApexDentalWebsite() {
               role: 'Patient Care Team',
               text: 'Our support team helps create a welcoming, calm, and well-organised patient experience from first contact to follow-up care.',
             },
-          ]).map((doc) => (
+          ].map((doc) => (
             <div
               key={doc.name}
               className="rounded-[2rem] border border-white/10 bg-white/5 p-6"
@@ -397,7 +439,7 @@ export default function ApexDentalWebsite() {
 
   function AftercareSection() {
     return (
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
@@ -439,7 +481,7 @@ export default function ApexDentalWebsite() {
 
   function TestimonialPlaceholderSection() {
     return (
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8 text-center">
+      <section className="mx-auto max-w-7xl px-4 py-12 text-center md:px-6 md:py-16 lg:px-8 lg:py-20">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
           Patient Stories
         </p>
@@ -456,55 +498,12 @@ export default function ApexDentalWebsite() {
     );
   }
 
-  function ReviewsSection() {
-    const reviews = [
-      {
-        text: 'A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless.',
-        name: 'Elisa Camilleri',
-      },
-      {
-        text: 'I had dental implants done and the whole process was smooth from start to finish. The results are excellent and feel completely natural.',
-        name: 'Mark Borg',
-      },
-      {
-        text: 'I’m extremely happy with my new smile. The team is very attentive and the results look natural and beautiful.',
-        name: 'Sarah Attard',
-      },
-    ];
-
-    return (
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="mb-10 max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
-            Google Reviews
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-            Trusted by patients across Malta.
-          </h2>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {reviews.map((review) => (
-            <div
-              key={review.name}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm"
-            >
-              <div className="text-yellow-400 text-lg">★★★★★</div>
-              <p className="mt-4 leading-7 text-slate-300">“{review.text}”</p>
-              <p className="mt-4 text-sm text-slate-400">— {review.name} · Google Reviews</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   function HomePage() {
     usePageTitle('Dentist in Malta | Apex Dental');
 
     return (
       <>
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="mb-8 max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
               Featured Treatments
@@ -527,7 +526,7 @@ export default function ApexDentalWebsite() {
                 className="group rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-7 shadow-2xl shadow-black/20 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-cyan-950/30"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-2xl font-semibold">{service.title}</h3>
+                  <h3 className="text-xl font-semibold sm:text-2xl">{service.title}</h3>
                   <div className="rounded-full border border-cyan-300/20 bg-cyan-300/10 p-2 text-cyan-200">
                     <Smile className="h-4 w-4" />
                   </div>
@@ -547,13 +546,13 @@ export default function ApexDentalWebsite() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 pb-8 md:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-sm">
               <img
                 src={branding.H2}
                 alt="Apex Dental clinic in Malta"
-                className="h-[420px] w-full rounded-[1.5rem] object-cover"
+                className="h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[420px]"
               />
             </div>
 
@@ -578,7 +577,7 @@ export default function ApexDentalWebsite() {
         </section>
 
         <section className="border-y border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))]">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:px-6 md:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
                 Why patients choose us
@@ -612,7 +611,7 @@ export default function ApexDentalWebsite() {
         <StraumannTrustSection />
         <ReviewsSection />
 
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="mb-8 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
               Clinic Gallery
@@ -640,7 +639,7 @@ export default function ApexDentalWebsite() {
 
         <TestimonialPlaceholderSection />
 
-        <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
           <div className="mb-8 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
               Patient Journey
@@ -651,12 +650,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-4">
-            {([
+            {[
               ['Consultation', 'A clear diagnosis and tailored treatment options.'],
               ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
               ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
               ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ]).map(([title, text], idx) => (
+            ].map(([title, text], idx) => (
               <div
                 key={title}
                 className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -676,12 +675,12 @@ export default function ApexDentalWebsite() {
     usePageTitle(seoTitle);
 
     return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
             src={image}
             alt={title}
-            className="h-[340px] w-full rounded-[1.5rem] object-cover"
+            className="h-[280px] w-full rounded-[1.5rem] object-cover sm:h-[340px]"
           />
         </div>
 
@@ -758,11 +757,11 @@ export default function ApexDentalWebsite() {
 
             <h3 className="mt-10 text-2xl font-semibold">Related treatments</h3>
             <p className="mt-4 text-slate-300 leading-7">
-              You may also be interested in
+              You may also be interested in{' '}
               <Link to="/clear-aligners-malta" className="text-cyan-300 underline">
                 clear aligners
               </Link>{' '}
-              or
+              or{' '}
               <Link to="/cosmetic-dentistry-malta" className="text-cyan-300 underline">
                 cosmetic dentistry
               </Link>.
@@ -802,13 +801,13 @@ export default function ApexDentalWebsite() {
     usePageTitle('About Apex Dental Malta');
 
     return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
         <div className="mb-10 grid gap-6 lg:grid-cols-2">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.AB1}
               alt="About Apex Dental Malta"
-              className="h-[420px] w-full rounded-[1.5rem] object-cover"
+              className="h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[420px]"
             />
           </div>
 
@@ -816,7 +815,7 @@ export default function ApexDentalWebsite() {
             <img
               src={branding.AB2}
               alt="Apex Dental team and clinic"
-              className="h-[360px] w-full rounded-[1.5rem] object-cover"
+              className="h-[300px] w-full rounded-[1.5rem] object-cover sm:h-[360px]"
             />
           </div>
         </div>
@@ -839,12 +838,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-4">
-            {([
+            {[
               'Advanced digital planning and imaging',
               'Implant, cosmetic, and aligner-focused workflows',
               'Patient-friendly communication and treatment guidance',
               'Convenient location in Trident Park, Mrieħel',
-            ]).map((item) => (
+            ].map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
@@ -864,7 +863,7 @@ export default function ApexDentalWebsite() {
           <img
             src={branding.AB3}
             alt="Inside Apex Dental Malta"
-            className="h-[320px] w-full rounded-[1.5rem] object-cover"
+            className="h-[280px] w-full rounded-[1.5rem] object-cover sm:h-[320px]"
           />
         </div>
       </section>
@@ -875,12 +874,12 @@ export default function ApexDentalWebsite() {
     usePageTitle('Contact Apex Dental Malta');
 
     return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
             src={branding.CT1}
             alt="Contact Apex Dental Malta"
-            className="h-[320px] w-full rounded-[1.5rem] object-cover"
+            className="h-[280px] w-full rounded-[1.5rem] object-cover sm:h-[320px]"
           />
         </div>
 
@@ -926,19 +925,19 @@ export default function ApexDentalWebsite() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-5 md:p-7">
             <h3 className="text-2xl font-semibold">Contact form</h3>
 
             <div className="mt-6 grid gap-4">
               <input
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
+                className="min-h-[52px] rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-base text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
                 placeholder="Full name"
               />
               <input
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
+                className="min-h-[52px] rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-base text-white outline-none ring-0 placeholder:text-white/30 focus:border-cyan-300/40"
                 placeholder="Phone or email"
               />
-              <select className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none focus:border-cyan-300/40">
+              <select className="min-h-[52px] rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-base text-white outline-none focus:border-cyan-300/40">
                 <option>Interested in</option>
                 <option>Dental Implants</option>
                 <option>Clear Aligners</option>
@@ -947,10 +946,10 @@ export default function ApexDentalWebsite() {
               </select>
               <textarea
                 rows={5}
-                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none placeholder:text-white/30 focus:border-cyan-300/40"
+                className="rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-base text-white outline-none placeholder:text-white/30 focus:border-cyan-300/40"
                 placeholder="How can we help?"
               />
-              <button className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition hover:scale-[1.01]">
+              <button className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-base font-semibold text-slate-950 transition hover:scale-[1.01]">
                 Request Appointment <ChevronRight className="h-4 w-4" />
               </button>
             </div>
@@ -997,13 +996,13 @@ export default function ApexDentalWebsite() {
     ];
 
     return (
-      <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
         <div className="mb-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
             <img
               src={branding.E1}
               alt="Emergency dentist in Malta"
-              className="h-[360px] w-full rounded-[1.5rem] object-cover"
+              className="h-[300px] w-full rounded-[1.5rem] object-cover sm:h-[360px]"
             />
           </div>
 
@@ -1080,7 +1079,7 @@ export default function ApexDentalWebsite() {
             <img
               src={branding.E2}
               alt="Urgent dental appointment in Malta"
-              className="h-[320px] w-full rounded-[1.5rem] object-cover"
+              className="h-[280px] w-full rounded-[1.5rem] object-cover sm:h-[320px]"
             />
           </div>
         </div>
@@ -1092,7 +1091,7 @@ export default function ApexDentalWebsite() {
     usePageTitle('Dental Prices Malta | Apex Dental');
 
     return (
-      <section className="mx-auto max-w-5xl px-6 py-16">
+      <section className="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-16 lg:px-8">
         <h1 className="text-4xl font-semibold">Price List</h1>
 
         <p className="mt-4 text-slate-300">
@@ -1212,35 +1211,27 @@ export default function ApexDentalWebsite() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#2b2b2b_0%,#1f1f24_38%,#2b2b2b_100%)] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <Link to="/" className="group flex items-center gap-3 text-left">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#2b2b2b_0%,#1f1f24_38%,#2b2b2b_100%)] pb-20 text-white md:pb-0">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+          <Link to="/" className="flex min-w-0 items-center gap-3 text-left">
             <img
               src={branding.logo}
               alt="Apex Dental logo"
-              className="h-12 w-auto object-contain"
+              className="h-10 w-auto shrink-0 object-contain md:h-12"
             />
-            <div>
-              <p className="text-xl font-semibold tracking-[0.08em] text-white">
+            <div className="min-w-0">
+              <p className="truncate text-base font-semibold tracking-[0.04em] text-white md:text-xl">
                 Apex Dental
               </p>
-              <p className="text-[11px] uppercase tracking-[0.38em] text-cyan-300/90">
+              <p className="hidden text-[10px] uppercase tracking-[0.28em] text-cyan-300/90 sm:block md:text-[11px] md:tracking-[0.38em]">
                 Digital Dentistry · Malta
               </p>
             </div>
           </Link>
 
           <nav className="hidden items-center gap-5 text-sm lg:flex">
-            {[
-              ['/', 'Home'],
-              ['/dental-implants-malta', 'Implants'],
-              ['/clear-aligners-malta', 'Aligners'],
-              ['/cosmetic-dentistry-malta', 'Cosmetic'],
-              ['/emergency-dentist-malta', 'Emergency'],
-              ['/price-list', 'Price List'],
-              ['/contact', 'Contact'],
-            ].map(([path, label]) => (
+            {navItems.map(([path, label]) => (
               <Link
                 key={path}
                 to={path}
@@ -1255,25 +1246,14 @@ export default function ApexDentalWebsite() {
             ))}
           </nav>
 
-          <div className="hidden md:flex">
-            <a
-              href="https://wa.me/35679854037"
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
-            >
-              <Phone className="h-4 w-4" />
-              Book Appointment
-            </a>
-          </div>
-
-          <div className="md:hidden">
-            <a
-              href="https://wa.me/35679854037"
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20"
-            >
-              <Phone className="h-4 w-4" />
-              Book
-            </a>
-          </div>
+          <a
+            href="https://wa.me/35679854037"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02] md:px-5 md:py-2.5"
+          >
+            <Phone className="h-4 w-4" />
+            <span className="hidden sm:inline">Book Appointment</span>
+            <span className="sm:hidden">Book</span>
+          </a>
         </div>
       </header>
 
@@ -1303,9 +1283,9 @@ export default function ApexDentalWebsite() {
                 benefits={implantBenefits}
                 closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
               />
-              <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+              <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8">
                 <div className="max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-                  <div className="text-yellow-400 text-lg">★★★★★</div>
+                  <div className="text-lg text-yellow-400">★★★★★</div>
                   <p className="mt-3 text-slate-300 leading-7">
                     “I had dental implants done and the whole process was smooth from start to finish. The results are excellent and feel completely natural.”
                   </p>
@@ -1351,9 +1331,9 @@ export default function ApexDentalWebsite() {
                 benefits={cosmeticBenefits}
                 closing="Whitening, bonding, and veneers can be tailored to each patient with a premium, conservative approach."
               />
-              <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+              <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8">
                 <div className="max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
-                  <div className="text-yellow-400 text-lg">★★★★★</div>
+                  <div className="text-lg text-yellow-400">★★★★★</div>
                   <p className="mt-3 text-slate-300 leading-7">
                     “I’m extremely happy with my new smile. The team is very attentive and the results look natural and beautiful.”
                   </p>
@@ -1415,7 +1395,7 @@ export default function ApexDentalWebsite() {
         />
       </Routes>
 
-      <section className="mx-auto max-w-7xl px-6 pb-10 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pb-10 md:px-6 lg:px-8">
         <div className="rounded-[2rem] border border-cyan-300/20 bg-[linear-gradient(135deg,rgba(34,211,238,0.14),rgba(255,255,255,0.05))] p-8 shadow-2xl shadow-cyan-950/20 backdrop-blur-sm lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
@@ -1442,7 +1422,7 @@ export default function ApexDentalWebsite() {
         </div>
       </section>
 
-      <div className="fixed inset-x-0 bottom-4 z-50 px-4 md:hidden">
+      <div className="fixed inset-x-0 bottom-3 z-50 px-4 md:hidden">
         <a
           href="https://wa.me/35679854037"
           className="flex w-full items-center justify-center gap-2 rounded-full bg-cyan-300 px-6 py-4 text-base font-semibold text-slate-950 shadow-2xl shadow-cyan-500/30 transition hover:scale-[1.01]"
@@ -1452,7 +1432,7 @@ export default function ApexDentalWebsite() {
         </a>
       </div>
 
-      <footer className="border-t border-white/10 px-6 py-8 text-sm text-slate-400 lg:px-8">
+      <footer className="border-t border-white/10 px-4 py-8 text-sm text-slate-400 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
             <img
