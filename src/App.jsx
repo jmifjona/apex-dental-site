@@ -22,6 +22,7 @@ export default function ApexDentalWebsite() {
 
   const branding = {
     logo: '/images/orislogo.png',
+    straumann: '/images/straumann.jpg',
 
     H1: '/images/H1.jpg',
     H2: '/images/H2.jpg',
@@ -283,6 +284,170 @@ export default function ApexDentalWebsite() {
     );
   }
 
+  function StraumannTrustSection() {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+              Clinical Standards
+            </p>
+
+            <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+              Precision dentistry backed by premium systems.
+            </h2>
+
+            <p className="mt-6 text-lg text-slate-300 leading-8">
+              Apex Dental is a <span className="text-white font-semibold">Straumann Partner Clinic</span>,
+              reflecting our commitment to advanced implant workflows, premium implant systems,
+              and predictable long-term results.
+            </p>
+
+            <p className="mt-6 text-slate-400 leading-8">
+              Every treatment is planned digitally using scans, imaging, and structured workflows
+              designed to improve accuracy, aesthetics, and long-term stability.
+            </p>
+
+            <ul className="mt-8 space-y-3 text-slate-300">
+              <li>• Straumann and Neodent implant systems</li>
+              <li>• Fully digital planning and guided workflows</li>
+              <li>• High-end materials and aesthetic focus</li>
+              <li>• Clear communication and treatment planning</li>
+            </ul>
+          </div>
+
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-4 shadow-xl">
+            <img
+              src={branding.straumann}
+              alt="Straumann Partner Clinic"
+              className="rounded-[1.5rem] w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function DentistsSection() {
+    return (
+      <section className="mt-14">
+        <div className="mb-12 max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+            Our Team
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
+            Experienced dentists focused on quality care.
+          </h2>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              name: 'Dr Jonathan Mifsud',
+              role: 'Dental Surgeon',
+              text: 'Focused on implantology, digital workflows, and full-arch rehabilitation using modern guided techniques.',
+            },
+            {
+              name: 'Dr Massimi D Alessandro',
+              role: 'Dental Surgeon',
+              text: 'Experienced in restorative and aesthetic dentistry with a focus on precision and long-term outcomes.',
+            },
+            {
+              name: 'Dr Charlotte Axisa',
+              role: 'Dental Surgeon',
+              text: 'General and cosmetic dentistry with attention to patient comfort and natural aesthetics.',
+            },
+            {
+              name: 'Dr Martha Lopez',
+              role: 'Dental Surgeon',
+              text: 'Patient-focused dentistry with a strong emphasis on prevention and minimally invasive care.',
+            },
+            {
+              name: 'Dr Adam Borg',
+              role: 'Dental Surgeon',
+              text: 'General dentistry and restorative treatments with a structured and patient-friendly approach.',
+            },
+            {
+              name: 'Clinical & Support Staff',
+              role: 'Patient Care Team',
+              text: 'Our support team helps create a welcoming, calm, and well-organised patient experience from first contact to follow-up care.',
+            },
+          ].map((doc) => (
+            <div
+              key={doc.name}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6"
+            >
+              <h3 className="text-xl font-semibold text-white">{doc.name}</h3>
+              <p className="text-cyan-300 text-sm mt-1">{doc.role}</p>
+              <p className="mt-4 text-slate-300 leading-7">{doc.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  function AftercareSection() {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+              Long-Term Care
+            </p>
+
+            <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+              Treatment does not end when you leave the clinic.
+            </h2>
+
+            <p className="mt-6 text-lg text-slate-300 leading-8">
+              High-quality dentistry requires structured follow-up, maintenance, and
+              clear patient guidance to support long-term success.
+            </p>
+
+            <p className="mt-6 text-slate-400 leading-8">
+              We provide clear aftercare protocols and review schedules for implants,
+              restorations, and cosmetic treatments.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
+            <ul className="space-y-4 text-slate-300">
+              <li>• Structured follow-up appointments</li>
+              <li>• Implant and restoration maintenance guidance</li>
+              <li>• Clear expectations before treatment</li>
+              <li>• Support in case of complications</li>
+              <li>• Long-term monitoring of results</li>
+            </ul>
+
+            <p className="mt-6 text-sm text-slate-400">
+              Warranty and maintenance conditions are explained clearly during consultation.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function TestimonialPlaceholderSection() {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8 text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+          Patient Stories
+        </p>
+
+        <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
+          Real patients. Real results.
+        </h2>
+
+        <p className="mt-6 text-slate-300 max-w-2xl mx-auto leading-8">
+          We focus on delivering predictable results and a comfortable experience.
+          Video testimonials from patients can be added here as the next trust-building upgrade.
+        </p>
+      </section>
+    );
+  }
+
   function HomePage() {
     usePageTitle('Dentist in Malta | Apex Dental');
 
@@ -393,6 +558,8 @@ export default function ApexDentalWebsite() {
           </div>
         </section>
 
+        <StraumannTrustSection />
+
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
           <div className="mb-8 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
@@ -418,6 +585,8 @@ export default function ApexDentalWebsite() {
             ))}
           </div>
         </section>
+
+        <TestimonialPlaceholderSection />
 
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
           <div className="mb-8 max-w-2xl">
@@ -535,18 +704,6 @@ export default function ApexDentalWebsite() {
               </>
             )}
 
-            {seoSlug === 'emergency' && (
-              <>
-                <h3 className="mt-10 text-2xl font-semibold">Emergency dentist in Malta</h3>
-                <p className="mt-4 text-slate-300 leading-7">
-                  Patients searching for an emergency dentist in Malta are often dealing with pain, swelling, trauma, or a failed restoration that needs immediate attention. Prompt diagnosis can make a major difference to comfort, treatment options, and overall recovery.
-                </p>
-                <p className="mt-4 text-slate-300 leading-7">
-                  Emergency dental care is focused on getting you assessed quickly, stabilising the problem, and planning any necessary next steps in a clear and structured way.
-                </p>
-              </>
-            )}
-
             <h3 className="mt-10 text-2xl font-semibold">Related treatments</h3>
             <p className="mt-4 text-slate-300 leading-7">
               You may also be interested in{' '}
@@ -648,6 +805,8 @@ export default function ApexDentalWebsite() {
             ))}
           </div>
         </div>
+
+        <DentistsSection />
 
         <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-xl shadow-black/20 backdrop-blur-sm">
           <img
@@ -1070,6 +1229,7 @@ export default function ApexDentalWebsite() {
                 benefits={implantBenefits}
                 closing="We use careful diagnosis, imaging, and planning to improve predictability and long-term outcomes."
               />
+              <AftercareSection />
             </>
           }
         />
