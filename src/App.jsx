@@ -1213,7 +1213,7 @@ export default function ApexDentalWebsite() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#2b2b2b_0%,#1f1f24_38%,#2b2b2b_100%)] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <Link to="/" className="group flex items-center gap-3 text-left">
             <img
@@ -1231,6 +1231,30 @@ export default function ApexDentalWebsite() {
             </div>
           </Link>
 
+          <nav className="hidden items-center gap-5 text-sm lg:flex">
+            {[
+              ['/', 'Home'],
+              ['/dental-implants-malta', 'Implants'],
+              ['/clear-aligners-malta', 'Aligners'],
+              ['/cosmetic-dentistry-malta', 'Cosmetic'],
+              ['/emergency-dentist-malta', 'Emergency'],
+              ['/price-list', 'Price List'],
+              ['/contact', 'Contact'],
+            ].map(([path, label]) => (
+              <Link
+                key={path}
+                to={path}
+                className={`transition ${
+                  location.pathname === path
+                    ? 'text-white'
+                    : 'text-white/70 hover:text-white'
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
           <div className="hidden md:flex">
             <a
               href="https://wa.me/35679854037"
@@ -1238,6 +1262,16 @@ export default function ApexDentalWebsite() {
             >
               <Phone className="h-4 w-4" />
               Book Appointment
+            </a>
+          </div>
+
+          <div className="md:hidden">
+            <a
+              href="https://wa.me/35679854037"
+              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20"
+            >
+              <Phone className="h-4 w-4" />
+              Book
             </a>
           </div>
         </div>
