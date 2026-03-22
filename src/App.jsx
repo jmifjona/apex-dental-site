@@ -228,11 +228,11 @@ export default function ApexDentalWebsite() {
             </p>
 
             <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-              {[
+              {([
                 ['Digital Planning', 'CBCT, scans, and guided workflows'],
                 ['Premium Care', 'Comfort-first modern dentistry'],
                 ['Fast Booking', 'Direct WhatsApp contact'],
-              ].map(([title, text]) => (
+              ]).map(([title, text]) => (
                 <div
                   key={title}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-sm"
@@ -258,6 +258,19 @@ export default function ApexDentalWebsite() {
               >
                 Contact Clinic
               </Link>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <div className="flex items-center gap-2">
+                <div className="flex text-yellow-400">
+                  ★★★★★
+                </div>
+                <span className="text-sm font-semibold text-white">5.0 Google Reviews</span>
+              </div>
+              <p className="mt-3 text-slate-300 italic">
+                “A very professional and friendly clinic...”
+              </p>
+              <p className="mt-1 text-sm text-slate-400">— Elisa Camilleri</p>
             </div>
           </div>
 
@@ -341,7 +354,7 @@ export default function ApexDentalWebsite() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {[
+          {([
             {
               name: 'Dr Jonathan Mifsud',
               role: 'Dental Surgeon',
@@ -372,7 +385,7 @@ export default function ApexDentalWebsite() {
               role: 'Patient Care Team',
               text: 'Our support team helps create a welcoming, calm, and well-organised patient experience from first contact to follow-up care.',
             },
-          ].map((doc) => (
+          ]).map((doc) => (
             <div
               key={doc.name}
               className="rounded-[2rem] border border-white/10 bg-white/5 p-6"
@@ -599,12 +612,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-4">
-            {[
+            {([
               ['Consultation', 'A clear diagnosis and tailored treatment options.'],
               ['Digital Planning', 'Scans, photos, and imaging guide the workflow.'],
               ['Treatment', 'Delivered with precision, comfort, and modern materials.'],
               ['Follow-Up', 'Maintenance and review for long-term stability.'],
-            ].map(([title, text], idx) => (
+            ]).map(([title, text], idx) => (
               <div
                 key={title}
                 className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
@@ -787,12 +800,12 @@ export default function ApexDentalWebsite() {
           </div>
 
           <div className="grid gap-4">
-            {[
+            {([
               'Advanced digital planning and imaging',
               'Implant, cosmetic, and aligner-focused workflows',
               'Patient-friendly communication and treatment guidance',
               'Convenient location in Trident Park, Mrieħel',
-            ].map((item) => (
+            ]).map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/85 backdrop-blur-sm"
