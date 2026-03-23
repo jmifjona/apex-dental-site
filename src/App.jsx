@@ -164,6 +164,7 @@ function FloatingHeader() {
   const mainNav = [
     { to: '/', label: 'Home' },
     { to: '/about', label: 'About' },
+    { to: '/services', label: 'Services' },
     { to: '/price-list', label: 'Prices' },
     { to: '/blog', label: 'Blog' },
     { to: '/contact', label: 'Contact' },
@@ -218,31 +219,44 @@ function FloatingHeader() {
             </Link>
 
             <nav className="hidden xl:flex items-center gap-7">
-              {mainNav.slice(0, 2).map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="text-sm font-medium text-slate-200 hover:text-white transition"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <Link
+                to="/"
+                className="text-sm font-medium text-slate-200 hover:text-white transition"
+              >
+                Home
+              </Link>
+
+              <Link
+                to="/about"
+                className="text-sm font-medium text-slate-200 hover:text-white transition"
+              >
+                About
+              </Link>
 
               <div
                 className="relative"
                 onClick={(e) => e.stopPropagation()}
               >
-                <button
-                  type="button"
-                  onClick={() => setServicesOpen((prev) => !prev)}
-                  className="text-sm font-medium text-slate-200 hover:text-white transition inline-flex items-center gap-2"
-                >
-                  Services
-                  <ChevronRight
-                    size={16}
-                    className={`transition ${servicesOpen ? 'rotate-90' : ''}`}
-                  />
-                </button>
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/services"
+                    className="text-sm font-medium text-slate-200 hover:text-white transition"
+                  >
+                    Services
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => setServicesOpen((prev) => !prev)}
+                    className="text-slate-200 hover:text-white transition"
+                    aria-label="Open services menu"
+                  >
+                    <ChevronRight
+                      size={16}
+                      className={`transition ${servicesOpen ? 'rotate-90' : ''}`}
+                    />
+                  </button>
+                </div>
 
                 {servicesOpen && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[820px] rounded-[2rem] border border-white/10 bg-slate-950/95 backdrop-blur-2xl p-6 shadow-2xl">
@@ -262,15 +276,26 @@ function FloatingHeader() {
                 )}
               </div>
 
-              {mainNav.slice(2).map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="text-sm font-medium text-slate-200 hover:text-white transition"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <Link
+                to="/price-list"
+                className="text-sm font-medium text-slate-200 hover:text-white transition"
+              >
+                Prices
+              </Link>
+
+              <Link
+                to="/blog"
+                className="text-sm font-medium text-slate-200 hover:text-white transition"
+              >
+                Blog
+              </Link>
+
+              <Link
+                to="/contact"
+                className="text-sm font-medium text-slate-200 hover:text-white transition"
+              >
+                Contact
+              </Link>
             </nav>
 
             <div className="hidden xl:flex items-center gap-4">
