@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { useForm, ValidationError } from '@formspree/react';
 import {
   Phone,
   MapPin,
@@ -1033,6 +1034,190 @@ function TextPanel({ title, text }) {
         {title}
       </h2>
       <p className="mt-5 text-slate-600 text-lg leading-8">{text}</p>
+    </div>
+  );
+}
+
+function ContactFormCard() {
+  const [state, handleSubmit] = useForm('YOUR_CONTACT_FORMSPREE_ID');
+
+  if (state.succeeded) {
+    return (
+      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+        <h2 className="text-3xl font-semibold">Thank you</h2>
+        <p className="mt-4 text-slate-300 leading-7">
+          Your message has been sent successfully. We\'ll get back to you shortly.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+      <h2 className="text-3xl font-semibold">Appointment Request</h2>
+      <p className="mt-4 text-slate-300 leading-7">
+        Send us your details and we\'ll get back to you as soon as possible.
+      </p>
+
+      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Email" field="email" errors={state.errors} />
+
+        <select
+          name="reason"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+        >
+          <option className="text-slate-900">Reason for Visit</option>
+          <option className="text-slate-900">General Check-up</option>
+          <option className="text-slate-900">Dental Implants</option>
+          <option className="text-slate-900">Clear Aligners</option>
+          <option className="text-slate-900">Cosmetic Dentistry</option>
+          <option className="text-slate-900">Emergency Appointment</option>
+        </select>
+
+        <textarea
+          rows="5"
+          name="message"
+          placeholder="Message"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+        <button
+          type="submit"
+          disabled={state.submitting}
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition disabled:opacity-60"
+        >
+          {state.submitting ? 'Sending...' : 'Send Request'}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function BookingFormCard() {
+  const [state, handleSubmit] = useForm('YOUR_BOOKING_FORMSPREE_ID');
+
+  const serviceOptions = [
+    'Cosmetic Dentistry',
+    'Crowns and Bridgework',
+    'Dental Implants',
+    'Dental Prosthetics',
+    'Removable Prosthesis',
+    'Orthodontics',
+    'Periodontology',
+    'Root Canal Treatment',
+    'Teeth Whitening',
+    'Veneers',
+  ];
+
+  if (state.succeeded) {
+    return (
+      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+        <h2 className="text-3xl font-semibold">Booking request sent</h2>
+        <p className="mt-4 text-slate-300 leading-7">
+          Thanks - we received your booking request and will contact you shortly.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+      <h2 className="text-3xl font-semibold">Request an Appointment</h2>
+      <p className="mt-4 text-slate-300 leading-7">
+        Fill in your details and we\'ll confirm the most suitable appointment.
+      </p>
+
+      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Email" field="email" errors={state.errors} />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="date"
+          name="preferred_date"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+        />
+
+        <select
+          name="service"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+        >
+          <option className="text-slate-900">Select Service</option>
+          {serviceOptions.map((service) => (
+            <option key={service} className="text-slate-900">
+              {service}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          name="subject"
+          placeholder="Subject"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <textarea
+          rows="5"
+          name="message"
+          placeholder="Message"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+        <button
+          type="submit"
+          disabled={state.submitting}
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition disabled:opacity-60"
+        >
+          {state.submitting ? 'Sending...' : 'Send Booking Request'}
+        </button>
+      </form>
     </div>
   );
 }
