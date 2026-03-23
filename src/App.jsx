@@ -134,8 +134,17 @@ function FloatingHeader() {
     { to: '/dental-implants', label: 'Implants' },
     { to: '/clear-aligners-malta', label: 'Aligners' },
     { to: '/cosmetic-dentistry-malta', label: 'Cosmetic' },
+    { to: '/veneers-malta', label: 'Veneers' },
+    { to: '/teeth-whitening-malta', label: 'Whitening' },
+    { to: '/crowns-and-bridgework-malta', label: 'Crowns' },
+    { to: '/periodontology-malta', label: 'Gum Care' },
+    { to: '/orthodontic-malta', label: 'Orthodontics' },
+    { to: '/dental-prosthetics-malta', label: 'Prosthetics' },
+    { to: '/removable-prosthesis-malta', label: 'Dentures' },
+    { to: '/root-canal-treatment-malta', label: 'Root Canal' },
     { to: '/emergency-dentist-malta', label: 'Emergency' },
     { to: '/price-list', label: 'Prices' },
+    { to: '/appointment-booking', label: 'Book' },
     { to: '/contact', label: 'Contact' },
   ];
 
@@ -988,37 +997,148 @@ function AboutPage() {
 }
 
 function PriceListPage() {
-  usePageTitle('Price List | Apex Dental Malta');
+  usePageTitle('Dental Services Price List Malta | Apex Dental');
 
-  const prices = [
-    ['Routine Check-up', 'From €20'],
-    ['Panoramic X-Ray', 'From €25'],
-    ['Dental Hygiene', 'From €45'],
-    ['Implant Consultation', 'From €50'],
-    ['CBCT Scan', 'From €75'],
-    ['Teeth Whitening', 'From €180'],
-    ['Emergency Assessment', 'Contact us'],
+  const priceSections = [
+    {
+      title: 'Examination / Diagnosis',
+      items: [
+        { name: 'Routine Checkup', price: '€10.00' },
+        { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
+        { name: 'Periapical or one side Bitewing X-Ray', price: '€20.00', note: 'For a set of bitewings, 2 are required.' },
+        { name: 'Implant Consultation', price: '€30.00', note: 'Free if implant treatment is done, or deducted later from the implant bill if treatment proceeds.' },
+        { name: 'CBCT X-Ray', price: '€120.00', note: '3D X-ray of the mouth; copy available on request. Important for implant planning and free if implant surgery is done.' },
+      ],
+    },
+    {
+      title: 'Hygiene / Cleaning and Teeth Whitening',
+      items: [
+        { name: 'Routine Hygiene Session', price: '€50.00', note: 'Scaling and polishing; ideally every 6 months.' },
+        { name: 'Perio Laser', price: '€220.00', note: 'Usually done in 4 sessions; price is per session.' },
+        { name: 'Fissure Sealing', price: '€30.00', note: 'Preventive measure, mostly for molars; price per tooth.' },
+        { name: 'Whitening Home Kits', price: '€250.00', note: 'Custom trays included.' },
+        { name: 'Removal of Fixed Prosthesis and Cleaning', price: '€80.00', note: 'Recommended every 6 months for full-arch / Toronto bridge cases.' },
+        { name: 'Fluoride Application', price: '€40.00' },
+        { name: 'In House Teeth Whitening', price: '€350.00', note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.' },
+      ],
+    },
+    {
+      title: 'Crowns and Bridgework',
+      items: [
+        { name: 'Crowns, Metal/Porcelain', price: '€350.00', note: 'Porcelain outer shell with metal inside.' },
+        { name: 'Lab Made Temporary Crowns', price: '€50.00' },
+        { name: 'Removal of Existing Bridgework', price: '€30.00', note: 'Depends on the state of the bridge and work involved.' },
+        { name: 'Full Porcelain Crowns / Zirconia', price: '€450.00', note: 'Variable full porcelain crowns available at the same price.' },
+        { name: 'Post and Core Build Up', price: '€70.00' },
+      ],
+    },
+    {
+      title: 'Cosmetic Veneers',
+      items: [
+        { name: 'Porcelain Veneers', price: '€450.00' },
+        { name: 'Composite Veneers (Lab Wax-Up Replica)', price: '€130.00', note: 'Includes a lab-made wax-up.' },
+        { name: 'Composite Veneers (Freehand)', price: '€90.00', note: 'Done with highly aesthetic composite.' },
+      ],
+    },
+    {
+      title: 'Fillings',
+      items: [
+        { name: 'Removal of Amalgam Filling Under Rubberdam', price: '€40.00' },
+        { name: 'Restoration of Deciduous Teeth', price: '€40.00', note: 'Material choice depends on cooperation and cavity size.' },
+        { name: 'Composite Filling', price: '€90.00', note: 'Does not include posts if required.' },
+      ],
+    },
+    {
+      title: 'Implants',
+      items: [
+        { name: 'Implant Complete with Crown', price: '€1500.00', note: 'Depends on implant type, abutment type, and crown type.' },
+        { name: 'Toronto Bridge All on 4', price: '€9999.99', note: 'Full-arch bridge prosthesis on 4 implants.' },
+        { name: 'Implant Retained Removable Denture with 3 Implants and Bar', price: '€5500.00', note: 'Best removable option for upper arch.' },
+        { name: 'Crown / Pontic on Implant', price: '€400.00' },
+        { name: 'Implant Retained Removable Denture', price: '€3500.00', note: 'Locator-based, with 2 implants included; suitable for lower arch only.' },
+      ],
+    },
+    {
+      title: 'Extraction and Surgery',
+      items: [
+        { name: 'Extraction', price: 'From €60.00', note: 'Does not include radiographs if required.' },
+        { name: 'Wisdom Tooth Surgical Extraction', price: '€250.00', note: 'Does not include radiographs if required.' },
+        { name: 'Surgical Extraction', price: 'From €150.00', note: 'Includes retained roots and heavily broken teeth; radiographs not included.' },
+      ],
+    },
+    {
+      title: 'Root Canal Treatment',
+      items: [
+        { name: 'Root Canal Anterior Teeth', price: '€250.00', note: 'Includes filling but not the post if required.' },
+        { name: 'Re Root Canal Treatment', price: '€320.00', note: 'For teeth that already had root canal treatment previously.' },
+        { name: 'Root Canal Treatment Posterior Teeth', price: '€280.00', note: 'Includes filling but not the post if required.' },
+      ],
+    },
+    {
+      title: 'Dentures',
+      items: [
+        { name: 'Full Upper / Lower Acrylic Dentures', price: '€400.00' },
+        { name: 'Flexible Dentures Partial', price: '€350.00', note: 'Meaning 3 teeth and less.' },
+        { name: 'Chrome Cobalt Dentures', price: '€650.00' },
+        { name: 'Partial Acrylic Dentures', price: '€300.00', note: 'More than 3 teeth is considered a full denture.' },
+        { name: 'Flexible Dentures More Than 3 Teeth', price: '€650.00' },
+      ],
+    },
+    {
+      title: 'Orthodontic Treatment & Miscellaneous',
+      items: [
+        { name: 'Soft Splint 2mm', price: '€100.00' },
+        { name: 'Michigan Splint', price: '€300.00' },
+        { name: 'Clear Correct Treatment', price: 'From €2900.00', note: 'Invisible aligners.' },
+        { name: 'Bionator', price: '€600.00' },
+        { name: 'Soft Splint 4mm', price: '€120.00' },
+        { name: 'Invisalign Treatment', price: 'From €3500.00', note: 'Invisible aligners.' },
+        { name: 'Fixed Upper and Lower Orthodontic Appliance', price: 'From €2500.00' },
+      ],
+    },
   ];
 
   return (
     <>
       <PageHero
         image={images.contact.CT1}
-        eyebrow="Price List"
-        title="Transparent pricing presented in a cleaner, more premium format"
-        subtitle="Below are example starting prices for selected treatments. Final fees may vary depending on complexity, materials, and treatment requirements."
+        eyebrow="Dental Services Price List"
+        title="A detailed treatment price list presented properly"
+        subtitle="This restores the broader price structure from the live site in a cleaner premium layout. Final fees may still vary depending on complexity, materials, and case requirements."
       />
 
       <section className="bg-[#f7f4ef] py-20">
         <Section>
-          <div className="max-w-4xl rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl">
-            {prices.map(([item, price], index) => (
+          <div className="space-y-10">
+            {priceSections.map((section) => (
               <div
-                key={item}
-                className={`grid grid-cols-2 gap-4 p-6 md:p-7 ${index !== prices.length - 1 ? 'border-b border-slate-200' : ''}`}
+                key={section.title}
+                className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl"
               >
-                <div className="font-medium text-slate-800">{item}</div>
-                <div className="text-right font-semibold text-slate-900">{price}</div>
+                <div className="bg-slate-950 text-white px-8 py-6">
+                  <h2 className="text-2xl md:text-3xl font-semibold">{section.title}</h2>
+                </div>
+
+                <div>
+                  {section.items.map((item, idx) => (
+                    <div
+                      key={`${section.title}-${item.name}`}
+                      className={`px-8 py-6 ${idx !== section.items.length - 1 ? 'border-b border-slate-200' : ''}`}
+                    >
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+                        <div className="md:max-w-[75%]">
+                          <h3 className="text-lg font-semibold text-slate-900">{item.name}</h3>
+                          {item.note && (
+                            <p className="mt-2 text-slate-600 leading-7">{item.note}</p>
+                          )}
+                        </div>
+                        <div className="text-xl font-bold text-slate-900 md:text-right">
+                          {item.price}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -1026,8 +1146,8 @@ function PriceListPage() {
       </section>
 
       <CTASection
-        title="Need a personalised treatment estimate?"
-        text="Book a consultation so we can assess your case properly and guide you through the most suitable treatment options."
+        title="Need a personalised estimate?"
+        text="Use the price list as a guide, then book a consultation so Apex Dental can assess your case properly and confirm the most suitable treatment plan."
       />
     </>
   );
@@ -1140,6 +1260,18 @@ function ContactPage() {
                   Send Request
                 </button>
               </form>
+
+              <div className="mt-8 text-sm text-slate-400">
+                Prefer speaking to us directly? Call{' '}
+                <a href={`tel:${brand.phone}`} className="text-white">
+                  {brand.phone}
+                </a>{' '}
+                or WhatsApp{' '}
+                <a href={`https://wa.me/356${brand.whatsapp}`} className="text-white">
+                  {brand.mobile}
+                </a>
+                .
+              </div>
             </div>
           </div>
         </Section>
@@ -1168,14 +1300,18 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/dental-implants" element={<ImplantsPage />} />
         <Route path="/clear-aligners-malta" element={<AlignersPage />} />
         <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
-        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
-        <Route path="/general-dentistry-malta" element={<GeneralDentistryPage />} />
-        <Route path="/dental-hygiene-malta" element={<HygienePage />} />
-        <Route path="/crowns-and-bridges-malta" element={<CrownsBridgesPage />} />
+        <Route path="/veneers-malta" element={<VeneersPage />} />
+        <Route path="/teeth-whitening-malta" element={<TeethWhiteningPage />} />
+        <Route path="/crowns-and-bridgework-malta" element={<CrownsBridgeworkPage />} />
+        <Route path="/periodontology-malta" element={<PeriodontologyPage />} />
+        <Route path="/orthodontic-malta" element={<OrthodonticPage />} />
+        <Route path="/dental-prosthetics-malta" element={<DentalProstheticsPage />} />
+        <Route path="/removable-prosthesis-malta" element={<RemovableProsthesisPage />} />
         <Route path="/root-canal-treatment-malta" element={<RootCanalPage />} />
+        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
+        <Route path="/price-list" element={<PriceListPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
-        <Route path="/price-list" element={<PriceListPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
 
