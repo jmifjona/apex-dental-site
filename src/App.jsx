@@ -300,7 +300,8 @@ function DarkHero({
             </div>
 
             <div className="mt-10 grid sm:grid-cols-3 gap-4 max-w-3xl">
-              {['Trident Park', 'Convenient Malta location'],
+              {[
+                ['Trident Park', 'Convenient Malta location'],
                 ['Modern Care', 'Digital dentistry approach'],
                 ['Patient First', 'Comfort, clarity, and quality'],
               ].map(([head, text]) => (
