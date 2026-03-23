@@ -162,6 +162,20 @@ function FloatingHeader() {
     { to: '/emergency-dentist-malta', label: 'Emergency Dentist' },
   ];
 
+  useEffect(() => {
+    function handleClickOutside() {
+      setServicesOpen(false);
+    }
+
+    if (servicesOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [servicesOpen]);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
@@ -192,11 +206,11 @@ function FloatingHeader() {
 
               <div
                 className="relative"
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
+                onClick={(e) => e.stopPropagation()}
               >
                 <button
                   type="button"
+                  onClick={() => setServicesOpen((prev) => !prev)}
                   className="text-sm font-medium text-slate-200 hover:text-white transition inline-flex items-center gap-2"
                 >
                   Services
@@ -213,6 +227,7 @@ function FloatingHeader() {
                         <Link
                           key={item.to}
                           to={item.to}
+                          onClick={() => setServicesOpen(false)}
                           className="text-sm text-slate-200 hover:text-white transition py-1"
                         >
                           {item.label}
@@ -259,10 +274,18 @@ function FloatingHeader() {
         {open && (
           <div className="xl:hidden mt-3 rounded-3xl border border-white/10 bg-slate-950/95 backdrop-blur-2xl text-white p-5 shadow-2xl">
             <div className="flex flex-col gap-4">
-              <Link to="/" onClick={() => setOpen(false)} className="text-slate-200 hover:text-white">
+              <Link
+                to="/"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
                 Home
               </Link>
-              <Link to="/about" onClick={() => setOpen(false)} className="text-slate-200 hover:text-white">
+              <Link
+                to="/about"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
                 About
               </Link>
 
@@ -296,13 +319,25 @@ function FloatingHeader() {
                 </div>
               )}
 
-              <Link to="/price-list" onClick={() => setOpen(false)} className="text-slate-200 hover:text-white">
+              <Link
+                to="/price-list"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
                 Prices
               </Link>
-              <Link to="/blog" onClick={() => setOpen(false)} className="text-slate-200 hover:text-white">
+              <Link
+                to="/blog"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
                 Blog
               </Link>
-              <Link to="/contact" onClick={() => setOpen(false)} className="text-slate-200 hover:text-white">
+              <Link
+                to="/contact"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
                 Contact
               </Link>
 
