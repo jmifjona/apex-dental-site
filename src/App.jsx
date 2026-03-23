@@ -1420,7 +1420,7 @@ export default function ApexDentalWebsite() {
               ['/price-list', 'Prices'],
               ['/about', 'About'],
               ['/contact', 'Contact'],
-            ].map(([path, label]) => (
+            ]).map(([path, label]) => (
               <Link
                 key={path}
                 to={path}
@@ -1432,7 +1432,7 @@ export default function ApexDentalWebsite() {
               >
                 {label}
               </Link>
-            )))
+            ))}
           </nav>
 
           <nav className="hidden items-center gap-5 pt-3 text-sm lg:flex">
@@ -1445,7 +1445,7 @@ export default function ApexDentalWebsite() {
               ['/price-list', 'Prices'],
               ['/about', 'About'],
               ['/contact', 'Contact'],
-            ].map(([path, label]) => (
+            ]).map(([path, label]) => (
               <Link
                 key={path}
                 to={path}
