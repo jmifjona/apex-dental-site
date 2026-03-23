@@ -33,6 +33,30 @@ function ScrollToTop() {
   return null;
 }
 
+function GoogleAdsPageTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      if (typeof window.gtag !== 'function') {
+        return;
+      }
+
+      const pagePath = `${location.pathname}${location.search}${location.hash}`;
+
+      window.gtag('config', 'AW-11413798917', {
+        page_path: pagePath,
+        page_title: document.title,
+        page_location: window.location.href,
+      });
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [location.pathname, location.search, location.hash]);
+
+  return null;
+}
+
 const brand = {
   name: 'Apex Dental',
   tagline: 'Advanced Dentistry in Malta',
@@ -2451,6 +2475,7 @@ export default function ApexDentalWebsitePremium() {
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
       <ScrollToTop />
+      <GoogleAdsPageTracker />
       <FloatingHeader />
 
       <Routes>
