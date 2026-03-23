@@ -161,30 +161,44 @@ function FloatingHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
-  const mainNav = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/services', label: 'Services' },
-    { to: '/price-list', label: 'Prices' },
-    { to: '/blog', label: 'Blog' },
-    { to: '/contact', label: 'Contact' },
-  ];
-
-  const serviceLinks = [
-    { to: '/dental-implants', label: 'Dental Implants' },
-    { to: '/clear-aligners-malta', label: 'Clear Aligners' },
-    { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
-    { to: '/general-dentistry-malta', label: 'General Dentistry' },
-    { to: '/dental-hygiene-malta', label: 'Dental Hygiene' },
-    { to: '/veneers-malta', label: 'Veneers' },
-    { to: '/teeth-whitening-malta', label: 'Teeth Whitening' },
-    { to: '/crowns-and-bridgework-malta', label: 'Crowns & Bridgework' },
-    { to: '/periodontology-malta', label: 'Periodontology' },
-    { to: '/orthodontic-malta', label: 'Orthodontic Treatment' },
-    { to: '/dental-prosthetics-malta', label: 'Dental Prosthetics' },
-    { to: '/removable-prosthesis-malta', label: 'Removable Prosthesis' },
-    { to: '/root-canal-treatment-malta', label: 'Root Canal Treatment' },
-    { to: '/emergency-dentist-malta', label: 'Emergency Dentist' },
+  const serviceGroups = [
+    {
+      title: 'Implant & Restorative',
+      items: [
+        { to: '/dental-implants', label: 'Dental Implants' },
+        { to: '/crowns-and-bridgework-malta', label: 'Crowns & Bridgework' },
+        { to: '/dental-prosthetics-malta', label: 'Dental Prosthetics' },
+        { to: '/removable-prosthesis-malta', label: 'Removable Prosthesis' },
+        { to: '/root-canal-treatment-malta', label: 'Root Canal Treatment' },
+      ],
+    },
+    {
+      title: 'Cosmetic',
+      items: [
+        { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
+        { to: '/veneers-malta', label: 'Veneers' },
+        { to: '/teeth-whitening-malta', label: 'Teeth Whitening' },
+      ],
+    },
+    {
+      title: 'Orthodontic',
+      items: [
+        { to: '/clear-aligners-malta', label: 'Clear Aligners' },
+        { to: '/orthodontic-malta', label: 'Orthodontic Treatment' },
+      ],
+    },
+    {
+      title: 'Preventive',
+      items: [
+        { to: '/general-dentistry-malta', label: 'General Dentistry' },
+        { to: '/dental-hygiene-malta', label: 'Dental Hygiene' },
+        { to: '/periodontology-malta', label: 'Periodontology' },
+      ],
+    },
+    {
+      title: 'Urgent Care',
+      items: [{ to: '/emergency-dentist-malta', label: 'Emergency Dentist' }],
+    },
   ];
 
   useEffect(() => {
@@ -233,10 +247,7 @@ function FloatingHeader() {
                 About
               </Link>
 
-              <div
-                className="relative"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className="relative" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center gap-2">
                   <Link
                     to="/services"
@@ -259,17 +270,26 @@ function FloatingHeader() {
                 </div>
 
                 {servicesOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[820px] rounded-[2rem] border border-white/10 bg-slate-950/95 backdrop-blur-2xl p-6 shadow-2xl">
-                    <div className="grid grid-cols-2 gap-x-10 gap-y-3">
-                      {serviceLinks.map((item) => (
-                        <Link
-                          key={item.to}
-                          to={item.to}
-                          onClick={() => setServicesOpen(false)}
-                          className="text-sm text-slate-200 hover:text-white transition py-1"
-                        >
-                          {item.label}
-                        </Link>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[960px] rounded-[2rem] border border-white/10 bg-slate-950/95 backdrop-blur-2xl p-8 shadow-2xl">
+                    <div className="grid grid-cols-5 gap-8">
+                      {serviceGroups.map((group) => (
+                        <div key={group.title}>
+                          <div className="text-xs uppercase tracking-[0.22em] text-amber-300 mb-4">
+                            {group.title}
+                          </div>
+                          <div className="flex flex-col gap-3">
+                            {group.items.map((item) => (
+                              <Link
+                                key={item.to}
+                                to={item.to}
+                                onClick={() => setServicesOpen(false)}
+                                className="text-sm text-slate-200 hover:text-white transition leading-6"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -351,7 +371,7 @@ function FloatingHeader() {
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                 className="text-left text-slate-200 hover:text-white flex items-center justify-between"
               >
-                <span>Services</span>
+                <span>Browse Services</span>
                 <ChevronRight
                   size={18}
                   className={`transition ${mobileServicesOpen ? 'rotate-90' : ''}`}
@@ -359,19 +379,28 @@ function FloatingHeader() {
               </button>
 
               {mobileServicesOpen && (
-                <div className="pl-4 flex flex-col gap-3 border-l border-white/10">
-                  {serviceLinks.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => {
-                        setOpen(false);
-                        setMobileServicesOpen(false);
-                      }}
-                      className="text-slate-300 hover:text-white text-sm"
-                    >
-                      {item.label}
-                    </Link>
+                <div className="pl-4 flex flex-col gap-5 border-l border-white/10">
+                  {serviceGroups.map((group) => (
+                    <div key={group.title}>
+                      <div className="text-xs uppercase tracking-[0.22em] text-amber-300 mb-3">
+                        {group.title}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        {group.items.map((item) => (
+                          <Link
+                            key={item.to}
+                            to={item.to}
+                            onClick={() => {
+                              setOpen(false);
+                              setMobileServicesOpen(false);
+                            }}
+                            className="text-slate-300 hover:text-white text-sm"
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
