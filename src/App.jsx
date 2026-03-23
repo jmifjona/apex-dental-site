@@ -1457,7 +1457,7 @@ export default function ApexDentalWebsite() {
               >
                 {label}
               </Link>
-            )))
+            ))}
           </nav>
         </div>
       </header>
