@@ -110,6 +110,9 @@ const images = {
     CT2: '/images/CT2.jpg',
     CT3: '/images/CT3.jpg',
   },
+  trust: {
+    compliance: '/images/COMPLIANCE.jpg',
+  },
 };
 
 function Section({ children, className = '' }) {
@@ -1261,6 +1264,8 @@ function AboutPage() {
 
   return (
     <>
+      <ComplianceTrustSection />
+
       <PageHero
         image={images.about.AB1}
         eyebrow="About Apex Dental"
@@ -1355,6 +1360,8 @@ function AboutPage() {
           </div>
         </Section>
       </section>
+
+      <ComplianceTrustSection />
 
       <CTASection
         title="Would you like to visit Apex Dental?"
@@ -2743,6 +2750,61 @@ function ServicesPage() {
         text="Book a consultation with Apex Dental and we'll guide you toward the most suitable option based on your oral health, goals, and priorities."
       />
     </>
+  );
+}
+
+function ComplianceTrustSection() {
+  return (
+    <section className="bg-white py-20">
+      <Section>
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+          <div className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl">
+            <img
+              src={images.trust.compliance}
+              alt="Apex Dental compliance certificate"
+              className="w-full h-[620px] object-cover object-top"
+            />
+          </div>
+
+          <div>
+            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
+              Compliance & Standards
+            </div>
+
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+              Recognition that supports patient trust
+            </h2>
+
+            <p className="mt-6 text-lg text-slate-600 leading-8">
+              Apex Dental has been recognised for achieving a high-level standard
+              of compliance with legal obligations for 2025. This adds another
+              layer of reassurance for patients looking for a clinic that values
+              professionalism, structure, and responsible practice standards.
+            </p>
+
+            <div className="mt-8 grid gap-4">
+              {[
+                'Supports credibility and patient confidence',
+                'Strong fit for a premium clinic positioning',
+                'Useful trust signal for new visitors',
+                'Best presented as a dedicated credibility section',
+              ].map((point) => (
+                <div key={point} className="flex items-start gap-3">
+                  <BadgeCheck className="text-sky-600 mt-1 shrink-0" size={20} />
+                  <p className="text-slate-700 leading-7">{point}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8">
+              <Button to="/contact" variant="dark">
+                Book Appointment
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Section>
+    </section>
   );
 }
 
