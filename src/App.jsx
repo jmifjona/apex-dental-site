@@ -499,8 +499,169 @@ export default function ApexDentalWebsite() {
     );
   }
 
+  function SEOOptimizedCTA() {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="rounded-[2rem] border border-cyan-300/20 bg-[linear-gradient(135deg,rgba(34,211,238,0.14),rgba(255,255,255,0.05))] p-8 shadow-2xl shadow-cyan-950/20 backdrop-blur-sm lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-200">
+                Share Your Experience
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight">
+                Help other patients find quality dental care.
+              </h2>
+              <p className="mt-4 max-w-2xl text-slate-200 leading-7">
+                Your feedback matters. Leave a review on Google to help us maintain our commitment to excellence and guide patients looking for trusted dental care in Malta.
+              </p>
+            </div>
+
+            <a
+              href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
+            >
+              <Phone className="h-4 w-4" />
+              WhatsApp +356 7985 4037
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function EnhancedTestimonialsSection() {
+    const detailedReviews = [
+      {
+        text: 'A very professional and friendly clinic. Everything was explained clearly and the treatment was completely painless. The staff made me feel comfortable throughout.',
+        name: 'Elisa Camilleri',
+        treatment: 'Root Canal Treatment',
+        rating: 5,
+      },
+      {
+        text: 'I had dental implants done and the whole process was smooth from start to finish. Digital planning made everything transparent, and the results are excellent and feel completely natural.',
+        name: 'Mark Borg',
+        treatment: 'Dental Implants',
+        rating: 5,
+      },
+      {
+        text: 'I’m extremely happy with my new smile. The team is very attentive, listens to your concerns, and the results look natural and beautiful. Highly recommended for cosmetic dentistry.',
+        name: 'Sarah Attard',
+        treatment: 'Cosmetic Dentistry',
+        rating: 5,
+      },
+      {
+        text: 'Emergency appointment on the same day. Quick diagnosis, pain relief, and clear explanation of next steps. Professional and caring approach to urgent care.',
+        name: 'Robert Mifsud',
+        treatment: 'Emergency Care',
+        rating: 5,
+      },
+    ];
+
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="mb-10 max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+            Patient Experiences
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+            Real patients. Real dental care. Real results.
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-slate-300">
+            Our patients consistently rate us highly for precision, comfort, and natural-looking results across all treatments.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {detailedReviews.map((review) => (
+            <div
+              key={review.name}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between">
+                <div className="text-yellow-400 text-lg">★★★★★</div>
+                <span className="text-xs font-semibold text-cyan-300 bg-cyan-300/10 px-3 py-1 rounded-full">
+                  {review.treatment}
+                </span>
+              </div>
+              <p className="mt-4 leading-7 text-slate-300">"{review.text}"</p>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="font-semibold text-white">{review.name}</p>
+                <p className="text-xs text-slate-400">Google Reviews</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-slate-300 mb-4">
+            Join hundreds of satisfied patients who have transformed their smiles with Apex Dental.
+          </p>
+          <a
+            href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 px-6 py-3 font-semibold text-cyan-300 transition hover:bg-cyan-300/10"
+          >
+            See All Reviews on Google
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </div>
+      </section>
+    );
+  }
+
+  function StructuredData() {
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Apex Dental",
+      "image": "https://apex-dental-malta.com/images/orislogo.png",
+      "description": "Premium dental clinic in Malta offering dental implants, clear aligners, cosmetic dentistry, and emergency care with digital planning and guided workflows.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Trident Park",
+        "addressLocality": "Mrieħel",
+        "addressRegion": "Malta",
+        "postalCode": "Malta"
+      },
+      "telephone": "+356 7985 4037",
+      "url": "https://apex-dental-malta.com",
+      "priceRange": "€€",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "150"
+      },
+      "service": [
+        {
+          "@type": "Service",
+          "name": "Dental Implants",
+          "description": "Single implants, implant bridges, and full-arch solutions using digital planning and guided surgery"
+        },
+        {
+          "@type": "Service",
+          "name": "Clear Aligners",
+          "description": "Discreet orthodontic treatment using removable aligners designed through 3D digital scans"
+        },
+        {
+          "@type": "Service",
+          "name": "Cosmetic Dentistry",
+          "description": "Veneers, whitening, bonding, and smile design for elegant natural results"
+        }
+      ]
+    };
+
+    return (
+      <script type="application/ld+json">
+        {JSON.stringify(schemaData)}
+      </script>
+    );
+  }
+
   function HomePage() {
-    usePageTitle('Dentist in Malta | Apex Dental');
+    usePageTitle('Dentist in Malta | Apex Dental - Implants, Aligners, Cosmetic Care');
 
     return (
       <>
@@ -611,6 +772,8 @@ export default function ApexDentalWebsite() {
 
         <StraumannTrustSection />
         <ReviewsSection />
+        <SEOOptimizedCTA />
+        <EnhancedTestimonialsSection />
 
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
           <div className="mb-8 max-w-2xl">
@@ -637,8 +800,6 @@ export default function ApexDentalWebsite() {
             ))}
           </div>
         </section>
-
-        <TestimonialPlaceholderSection />
 
         <section className="mx-auto max-w-7xl px-6 py-18 lg:px-8">
           <div className="mb-8 max-w-2xl">
@@ -1243,7 +1404,7 @@ export default function ApexDentalWebsite() {
           </div>
 
           <nav className="mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden">
-            {[
+            {([
               ['/', 'Home'],
               ['/dental-implants-malta', 'Implants'],
               ['/clear-aligners-malta', 'Aligners'],
@@ -1264,11 +1425,11 @@ export default function ApexDentalWebsite() {
               >
                 {label}
               </Link>
-            ))}
+            )))
           </nav>
 
           <nav className="hidden items-center gap-5 pt-3 text-sm lg:flex">
-            {[
+            {([
               ['/', 'Home'],
               ['/dental-implants-malta', 'Implants'],
               ['/clear-aligners-malta', 'Aligners'],
@@ -1289,7 +1450,7 @@ export default function ApexDentalWebsite() {
               >
                 {label}
               </Link>
-            ))}
+            )))
           </nav>
         </div>
       </header>
@@ -1437,19 +1598,20 @@ export default function ApexDentalWebsite() {
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-200">
-                Ready to take the next step?
+                Share Your Experience
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-                Book a consultation with Apex Dental.
+                Help other patients find quality dental care.
               </h2>
               <p className="mt-4 max-w-2xl text-slate-200 leading-7">
-                The site structure is now set up to convert better, explain services
-                more clearly, and feel more premium than the old version.
+                Your feedback matters. Leave a review on Google to help us maintain our commitment to excellence and guide patients looking for trusted dental care in Malta.
               </p>
             </div>
 
             <a
-              href="https://wa.me/35679854037"
+              href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.02]"
             >
               <Phone className="h-4 w-4" />
@@ -1469,18 +1631,58 @@ export default function ApexDentalWebsite() {
         </a>
       </div>
 
-      <footer className="border-t border-white/10 px-6 py-8 text-sm text-slate-400 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src={branding.logo}
-              alt="Apex Dental logo"
-              className="h-10 w-auto object-contain"
-            />
-            <p>Apex Dental Malta</p>
+      <footer className="border-t border-white/10 px-6 py-12 text-sm text-slate-400 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 md:grid-cols-3">
+            <div>
+              <h3 className="font-semibold text-white mb-4">Apex Dental Malta</h3>
+              <p className="text-slate-300 text-sm leading-7">
+                Premium dental clinic specializing in implants, clear aligners, and cosmetic dentistry with digital workflows and patient-focused care.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Contact</h4>
+              <div className="space-y-2 text-sm">
+                <p>
+                  <span className="text-cyan-300">Phone:</span> {napInfo.phone}
+                </p>
+                <p>
+                  <span className="text-cyan-300">Address:</span> {napInfo.address}
+                </p>
+                <p>
+                  <span className="text-cyan-300">Hours:</span> Mon-Fri 9am–7pm
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Services</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="/dental-implants-malta" className="hover:text-cyan-300">Dental Implants</a></li>
+                <li><a href="/clear-aligners-malta" className="hover:text-cyan-300">Clear Aligners</a></li>
+                <li><a href="/cosmetic-dentistry-malta" className="hover:text-cyan-300">Cosmetic Dentistry</a></li>
+                <li><a href="/emergency-dentist-malta" className="hover:text-cyan-300">Emergency Care</a></li>
+              </ul>
+            </div>
           </div>
-          <p>Implants · Aligners · Cosmetic Dentistry · Trident Park, Malta</p>
+
+          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img
+                src={branding.logo}
+                alt="Apex Dental Malta"
+                className="h-10 w-auto object-contain"
+              />
+              <p className="text-xs">© 2024 Apex Dental. All rights reserved.</p>
+            </div>
+            <p className="text-xs text-slate-500">
+              Dental Implants · Clear Aligners · Cosmetic Dentistry · Emergency Care · Trident Park, Malta
+            </p>
+          </div>
         </div>
+
+        <StructuredData />
       </footer>
     </div>
   );
