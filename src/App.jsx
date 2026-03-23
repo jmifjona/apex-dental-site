@@ -134,6 +134,7 @@ function FloatingHeader() {
     { to: '/dental-implants', label: 'Implants' },
     { to: '/clear-aligners-malta', label: 'Aligners' },
     { to: '/cosmetic-dentistry-malta', label: 'Cosmetic' },
+    { to: '/emergency-dentist-malta', label: 'Emergency' },
     { to: '/price-list', label: 'Prices' },
     { to: '/contact', label: 'Contact' },
   ];
@@ -290,8 +291,7 @@ function DarkHero({
             </div>
 
             <div className="mt-10 grid sm:grid-cols-3 gap-4 max-w-3xl">
-              {[
-                ['Trident Park', 'Convenient Malta location'],
+              {['Trident Park', 'Convenient Malta location'],
                 ['Modern Care', 'Digital dentistry approach'],
                 ['Patient First', 'Comfort, clarity, and quality'],
               ].map(([head, text]) => (
@@ -470,29 +470,15 @@ function HomeFeatureGrid() {
         </div>
 
         <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: <ScanLine size={20} />,
-              title: 'Digital Workflows',
-              text: 'Modern diagnostics and planning designed for precision and predictability.',
-            },
-            {
-              icon: <HeartHandshake size={20} />,
-              title: 'Patient Comfort',
-              text: 'A calm, welcoming environment with careful attention to communication and reassurance.',
-            },
-            {
-              icon: <Sparkles size={20} />,
-              title: 'Premium Results',
-              text: 'Functional and aesthetic dentistry designed to look polished, natural, and refined.',
-            },
-          ].map((item) => (
-            <div key={item.title} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
+          {['Digital Workflows', 'Patient Comfort', 'Premium Results'].map((item) => (
+            <div key={item} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
               <div className="inline-flex items-center justify-center rounded-full bg-slate-950 text-white h-11 w-11">
-                {item.icon}
+                {item === 'Digital Workflows' && <ScanLine size={20} />}
+                {item === 'Patient Comfort' && <HeartHandshake size={20} />}
+                {item === 'Premium Results' && <Sparkles size={20} />}
               </div>
-              <h3 className="mt-5 text-xl font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
+              <h3 className="mt-5 text-xl font-semibold text-slate-900">{item}</h3>
+              <p className="mt-3 text-slate-600 leading-7">{item === 'Digital Workflows' ? 'Modern diagnostics and planning designed for precision and predictability.' : item === 'Patient Comfort' ? 'A calm, welcoming environment with careful attention to communication and reassurance.' : 'Functional and aesthetic dentistry designed to look polished, natural, and refined.'}</p>
             </div>
           ))}
         </div>
@@ -630,6 +616,13 @@ function Footer() {
             <Link to="/dental-implants">Dental Implants</Link>
             <Link to="/clear-aligners-malta">Clear Aligners</Link>
             <Link to="/cosmetic-dentistry-malta">Cosmetic Dentistry</Link>
+            <Link to="/general-dentistry-malta">General Dentistry</Link>
+            <Link to="/dental-hygiene-malta">Dental Hygiene</Link>
+            <Link to="/crowns-and-bridges-malta">Crowns & Bridges</Link>
+            <Link to="/root-canal-treatment-malta">Root Canal Treatment</Link>
+            <Link to="/emergency-dentist-malta">Emergency Dentist</Link>
+            <Link to="/blog">Blog</Link>
+            <Link to="/appointment-booking">Appointment Booking</Link>
             <Link to="/price-list">Price List</Link>
             <Link to="/contact">Contact</Link>
           </div>
@@ -956,23 +949,10 @@ function AboutPage() {
           </div>
 
           <div className="mt-12 grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Professionalism',
-                text: 'A high standard of communication, planning, and patient support.',
-              },
-              {
-                title: 'Modern Approach',
-                text: 'Digital workflows and up-to-date treatment presentation.',
-              },
-              {
-                title: 'Patient Trust',
-                text: 'Clear guidance, transparency, and careful attention to comfort.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
-                <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-                <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
+            {['Professionalism', 'Modern Approach', 'Patient Trust'].map((item) => (
+              <div key={item} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-slate-900">{item}</h3>
+                <p className="mt-3 text-slate-600 leading-7">{item === 'Professionalism' ? 'A high standard of communication, planning, and patient support.' : item === 'Modern Approach' ? 'Digital workflows and up-to-date treatment presentation.' : 'Clear guidance, transparency, and careful attention to comfort.'}</p>
               </div>
             ))}
           </div>
@@ -1188,6 +1168,13 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/dental-implants" element={<ImplantsPage />} />
         <Route path="/clear-aligners-malta" element={<AlignersPage />} />
         <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
+        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
+        <Route path="/general-dentistry-malta" element={<GeneralDentistryPage />} />
+        <Route path="/dental-hygiene-malta" element={<HygienePage />} />
+        <Route path="/crowns-and-bridges-malta" element={<CrownsBridgesPage />} />
+        <Route path="/root-canal-treatment-malta" element={<RootCanalPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
         <Route path="/price-list" element={<PriceListPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
@@ -1195,5 +1182,424 @@ export default function ApexDentalWebsitePremium() {
       <Footer />
       <MobileStickyBar />
     </div>
+  );
+}
+
+function EmergencyPage() {
+  usePageTitle('Emergency Dentist Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.contact.CT1}
+        eyebrow="Emergency Dentist Malta"
+        title="Urgent dental care when you need fast help, not a philosophical lecture from your tooth"
+        subtitle="Apex Dental provides urgent assessment for dental pain, swelling, broken teeth, trauma, lost restorations, and other unexpected dental problems."
+      />
+
+      <SplitEditorial
+        imageLeft={images.contact.CT2}
+        title="When should you seek emergency dental care?"
+        text="You may need urgent dental treatment if you are experiencing severe toothache, swelling, facial pain, trauma, bleeding, a broken tooth, or a lost filling, crown, or bridge causing pain or functional difficulty."
+        points={[
+          'Severe tooth pain',
+          'Swelling or infection',
+          'Broken or knocked teeth',
+          'Lost crowns, bridges, or fillings',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.contact.CT3}
+        title="Fast guidance and prompt assessment"
+        text="If you are unsure whether your problem is an emergency, the safest step is to contact Apex Dental directly. Early assessment can reduce complications, improve comfort, and sometimes save a tooth that would otherwise worsen."
+        points={[
+          'Prompt communication matters',
+          'Fast assessment can reduce complications',
+          'Clear next-step guidance',
+          'Support for urgent dental situations',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        dark
+        title="Need urgent dental care now?"
+        text="Call or WhatsApp Apex Dental directly so our team can guide you as quickly as possible."
+      />
+    </>
+  );
+}
+
+function GeneralDentistryPage() {
+  usePageTitle('General Dentistry Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H5}
+        eyebrow="General Dentistry Malta"
+        title="Modern everyday dental care delivered with the same attention to quality as advanced treatment"
+        subtitle="General dentistry at Apex Dental focuses on oral health, prevention, function, and maintaining a smile that stays healthy and stable over time."
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H6}
+        title="Routine care that protects long-term oral health"
+        text="General dentistry includes examinations, fillings, maintenance care, diagnosis of dental problems, and monitoring of the teeth and gums. The goal is to identify concerns early and treat them before they become more complex."
+        points={[
+          'Routine dental check-ups',
+          'Fillings and restorative care',
+          'Assessment of teeth and gums',
+          'Early diagnosis of dental issues',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H7}
+        title="A better standard of everyday dental care"
+        text="At Apex Dental, routine dentistry is approached with the same professionalism and detail as cosmetic and implant treatment. Preventive and restorative care should still feel thorough, clear, and well-managed."
+        points={[
+          'Professional, patient-focused approach',
+          'Clear communication and guidance',
+          'Careful diagnosis and treatment planning',
+          'Long-term oral health mindset',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        title="Looking for a trusted dentist in Malta?"
+        text="Book a routine visit at Apex Dental for examination, diagnosis, preventive care, or treatment planning."
+      />
+    </>
+  );
+}
+
+function HygienePage() {
+  usePageTitle('Dental Hygiene Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H8}
+        eyebrow="Dental Hygiene Malta"
+        title="Preventive dentistry and hygiene care that keeps your smile healthy, fresh, and easier to maintain"
+        subtitle="Dental hygiene is one of the most important parts of long-term oral health. It helps reduce plaque, tartar buildup, gum inflammation, and future treatment needs."
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H9}
+        title="Why hygiene visits matter"
+        text="Professional hygiene appointments help remove deposits that regular brushing and flossing cannot always manage effectively. They also support gum health, fresher breath, cleaner teeth, and early identification of potential problems."
+        points={[
+          'Plaque and tartar removal',
+          'Improved gum health',
+          'Fresher breath and cleaner teeth',
+          'Support for long-term oral stability',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H10}
+        title="Preventive care is smarter care"
+        text="Patients often focus on treatment only when something hurts, but preventive dentistry is what helps avoid larger problems. Regular hygiene visits are one of the best ways to protect both oral health and future treatment costs."
+        points={[
+          'Helps reduce future dental problems',
+          'Supports maintenance after treatment',
+          'Useful before cosmetic work',
+          'Important for implant and restorative care',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        title="Time for a hygiene visit?"
+        text="Book a preventive dental hygiene appointment at Apex Dental and keep your smile in better long-term condition."
+      />
+    </>
+  );
+}
+
+function CrownsBridgesPage() {
+  usePageTitle('Crowns and Bridges Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H4}
+        eyebrow="Crowns & Bridges Malta"
+        title="Restore strength, function, and smile aesthetics with carefully planned restorative dentistry"
+        subtitle="Crowns and bridges can help repair damaged teeth, support weakened structures, and replace missing teeth in a way that improves both appearance and function."
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H3}
+        title="What are crowns and bridges?"
+        text="Crowns are restorations that cover and protect damaged or heavily restored teeth. Bridges are used to replace missing teeth by anchoring to neighbouring teeth or implants. Both play an important role in restoring stability and chewing function."
+        points={[
+          'Protection for weakened teeth',
+          'Replacement for missing teeth',
+          'Improved function and aesthetics',
+          'Restorative solutions tailored to the case',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H2}
+        title="Designed for function and longevity"
+        text="A successful restorative result depends on accurate diagnosis, proper planning, good materials, and attention to bite, fit, and aesthetics. At Apex Dental, the goal is not only to repair teeth, but to do so in a way that feels durable and well integrated."
+        points={[
+          'Functional bite planning',
+          'Aesthetic and structural balance',
+          'Natural-looking restorations',
+          'Patient-specific treatment decisions',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        dark
+        title="Need to restore a damaged or missing tooth?"
+        text="Book a consultation at Apex Dental to discuss crowns, bridges, and the most appropriate restorative option for your smile."
+      />
+    </>
+  );
+}
+
+function RootCanalPage() {
+  usePageTitle('Root Canal Treatment Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H6}
+        eyebrow="Root Canal Treatment Malta"
+        title="Endodontic treatment focused on relieving pain and helping save natural teeth"
+        subtitle="Root canal treatment may be needed when the nerve inside a tooth becomes inflamed or infected. The goal is to treat the problem, reduce discomfort, and preserve the tooth where possible."
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H7}
+        title="When is root canal treatment needed?"
+        text="Root canal treatment may be recommended when a tooth has deep decay, infection, trauma, or persistent pain related to the pulp tissue inside the tooth. Symptoms may include prolonged sensitivity, pain on biting, swelling, or spontaneous toothache."
+        points={[
+          'Tooth pain or sensitivity',
+          'Deep decay or infection',
+          'Swelling or inflammation',
+          'An option to help save the natural tooth',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.home.H8}
+        title="A treatment patients often fear more than they should"
+        text="Root canal treatment has a dramatic reputation, mostly because teeth have good publicists and bad behaviour. In reality, modern endodontic treatment is designed to manage infection and discomfort carefully while preserving the tooth when possible."
+        points={[
+          'Focus on removing infection',
+          'Designed to preserve the tooth',
+          'Modern treatment approach',
+          'Clear explanation throughout the process',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        title="Worried you may need root canal treatment?"
+        text="Book an assessment at Apex Dental so we can examine the tooth, explain the problem clearly, and guide you through the most suitable next step."
+      />
+    </>
+  );
+}
+
+function BlogPage() {
+  usePageTitle('Dental Blog Malta | Apex Dental');
+
+  const posts = [
+    {
+      title: 'How much do dental implants cost in Malta?',
+      excerpt:
+        'A clear guide to what influences implant costs, from planning and surgery to restorative stages and complexity.',
+      category: 'Implants',
+    },
+    {
+      title: 'What is the difference between veneers and whitening?',
+      excerpt:
+        'Two very different treatments with different goals. One changes colour, the other can change shape, symmetry, and overall smile design.',
+      category: 'Cosmetic Dentistry',
+    },
+    {
+      title: 'When is a dental problem an emergency?',
+      excerpt:
+        'A practical guide to pain, swelling, trauma, bleeding, and when it is worth contacting a dentist urgently.',
+      category: 'Emergency Care',
+    },
+    {
+      title: 'Are clear aligners suitable for adults?',
+      excerpt:
+        'Why more adults are choosing discreet orthodontic treatment and what to expect from the aligner process.',
+      category: 'Aligners',
+    },
+    {
+      title: 'Why regular hygiene appointments matter',
+      excerpt:
+        'Prevention is usually cheaper, easier, and less dramatic than repair. Your gums would like a word.',
+      category: 'Preventive Dentistry',
+    },
+    {
+      title: 'How do crowns protect damaged teeth?',
+      excerpt:
+        'A closer look at when crowns are used and how they help restore function and strength.',
+      category: 'Restorative Dentistry',
+    },
+  ];
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H5}
+        eyebrow="Apex Dental Blog"
+        title="Helpful dental articles designed to support treatment pages and answer real patient questions"
+        subtitle="Use this section to publish educational, SEO-friendly articles that build trust and guide patients toward the right treatment pages."
+      />
+
+      <section className="bg-[#f7f4ef] py-20">
+        <Section>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <article
+                key={post.title}
+                className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm hover:shadow-md transition"
+              >
+                <div className="text-xs uppercase tracking-[0.25em] text-slate-500">
+                  {post.category}
+                </div>
+                <h2 className="mt-4 text-2xl font-semibold text-slate-900 leading-tight">
+                  {post.title}
+                </h2>
+                <p className="mt-4 text-slate-600 leading-7">
+                  {post.excerpt}
+                </p>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 mt-6 text-slate-900 font-semibold hover:text-slate-600"
+                >
+                  Read more <ChevronRight size={18} />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </Section>
+      </section>
+
+      <CTASection
+        title="Want content that ranks and converts better?"
+        text="Apex Dental’s blog should support your implants, aligners, cosmetic, and emergency pages with stronger educational content and internal linking."
+      />
+    </>
+  );
+}
+
+function AppointmentBookingPage() {
+  usePageTitle('Appointment Booking | Apex Dental Malta');
+
+  return (
+    <>
+      <PageHero
+        image={images.contact.CT2}
+        eyebrow="Appointment Booking"
+        title="Book your visit at Apex Dental with a cleaner, more conversion-focused booking page"
+        subtitle="Use this page for routine appointments, cosmetic consultations, implant assessments, aligner consultations, and urgent dental concerns."
+      />
+
+      <section className="bg-white py-20">
+        <Section>
+          <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
+            <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+              <img
+                src={images.contact.CT3}
+                alt="Apex Dental clinic entrance"
+                className="w-full h-[560px] object-cover"
+              />
+            </div>
+
+            <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+              <h2 className="text-3xl font-semibold">Request an Appointment</h2>
+              <p className="mt-4 text-slate-300 leading-7">
+                This page is designed to convert better than a generic contact form. You still need to connect it to your backend or email service.
+              </p>
+
+              <form className="mt-8 space-y-4">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
+                    <option className="text-slate-900">Reason for Visit</option>
+                    <option className="text-slate-900">Routine Check-up</option>
+                    <option className="text-slate-900">Dental Implants</option>
+                    <option className="text-slate-900">Clear Aligners</option>
+                    <option className="text-slate-900">Cosmetic Dentistry</option>
+                    <option className="text-slate-900">Dental Hygiene</option>
+                    <option className="text-slate-900">Root Canal Treatment</option>
+                    <option className="text-slate-900">Emergency Appointment</option>
+                  </select>
+
+                  <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
+                    <option className="text-slate-900">Preferred Time</option>
+                    <option className="text-slate-900">Morning</option>
+                    <option className="text-slate-900">Afternoon</option>
+                    <option className="text-slate-900">Any Time</option>
+                  </select>
+                </div>
+
+                <textarea
+                  rows="5"
+                  placeholder="Tell us briefly how we can help"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+
+                <button
+                  type="submit"
+                  className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
+                >
+                  Send Booking Request
+                </button>
+              </form>
+
+              <div className="mt-8 text-sm text-slate-400">
+                Prefer speaking to us directly? Call{' '}
+                <a href={`tel:${brand.phone}`} className="text-white">
+                  {brand.phone}
+                </a>{' '}
+                or WhatsApp{' '}
+                <a href={`https://wa.me/356${brand.whatsapp}`} className="text-white">
+                  {brand.mobile}
+                </a>
+                .
+              </div>
+            </div>
+          </div>
+        </Section>
+      </section>
+    </>
   );
 }
