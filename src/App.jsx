@@ -338,6 +338,14 @@ function FloatingHeader() {
                 About
               </Link>
 
+              <Link
+                to="/services"
+                onClick={() => setOpen(false)}
+                className="text-slate-200 hover:text-white"
+              >
+                Services
+              </Link>
+
               <button
                 type="button"
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
