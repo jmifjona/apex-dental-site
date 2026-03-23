@@ -2496,6 +2496,219 @@ function ContactPage() {
   );
 }
 
+function ServicesPage() {
+  usePageTitle('Dental Services Malta | Apex Dental');
+
+  const serviceGroups = [
+    {
+      title: 'Implant & Restorative Dentistry',
+      description:
+        'Advanced restorative solutions designed to replace missing teeth, rebuild damaged teeth, and restore function with stability and aesthetics in mind.',
+      items: [
+        {
+          title: 'Dental Implants',
+          to: '/dental-implants',
+          text: 'Single-tooth to advanced implant solutions for long-term replacement of missing teeth.',
+          image: images.implants.I1,
+        },
+        {
+          title: 'Crowns & Bridgework',
+          to: '/crowns-and-bridgework-malta',
+          text: 'Carefully planned restorations to rebuild damaged teeth and replace missing spaces.',
+          image: images.home.H4,
+        },
+        {
+          title: 'Dental Prosthetics',
+          to: '/dental-prosthetics-malta',
+          text: 'Restorative prosthetic options tailored for function, comfort, and daily usability.',
+          image: images.home.H5,
+        },
+        {
+          title: 'Removable Prosthesis',
+          to: '/removable-prosthesis-malta',
+          text: 'Practical removable tooth replacement solutions planned around support and fit.',
+          image: images.home.H8,
+        },
+        {
+          title: 'Root Canal Treatment',
+          to: '/root-canal-treatment-malta',
+          text: 'Treatment focused on relieving pain and helping preserve natural teeth where possible.',
+          image: images.home.H6,
+        },
+      ],
+    },
+    {
+      title: 'Cosmetic & Smile Enhancement',
+      description:
+        'Aesthetic treatments designed to improve colour, harmony, shape, and confidence while keeping results elegant and natural-looking.',
+      items: [
+        {
+          title: 'Cosmetic Dentistry',
+          to: '/cosmetic-dentistry-malta',
+          text: 'Smile enhancement planned with attention to proportion, harmony, and refined results.',
+          image: images.cosmetic.C1,
+        },
+        {
+          title: 'Veneers',
+          to: '/veneers-malta',
+          text: 'Porcelain or composite veneer options for shape, symmetry, and aesthetic refinement.',
+          image: images.cosmetic.C2,
+        },
+        {
+          title: 'Teeth Whitening',
+          to: '/teeth-whitening-malta',
+          text: 'Professional whitening options for a brighter, cleaner, more confident smile.',
+          image: images.cosmetic.C3,
+        },
+      ],
+    },
+    {
+      title: 'Orthodontic & Alignment Treatments',
+      description:
+        'Tooth alignment and bite improvement options for patients looking for a straighter, more balanced smile.',
+      items: [
+        {
+          title: 'Clear Aligners',
+          to: '/clear-aligners-malta',
+          text: 'Discreet modern aligner treatment designed for comfort and adult-friendly lifestyles.',
+          image: images.aligners.A1,
+        },
+        {
+          title: 'Orthodontic Treatment',
+          to: '/orthodontic-malta',
+          text: 'Orthodontic care for spacing, crowding, bite improvement, and smile positioning.',
+          image: images.aligners.A3,
+        },
+      ],
+    },
+    {
+      title: 'Preventive & Gum Care',
+      description:
+        'Preventive dentistry helps protect long-term oral health and reduce the need for more complex treatment later on.',
+      items: [
+        {
+          title: 'General Dentistry',
+          to: '/general-dentistry-malta',
+          text: 'Routine examinations, diagnosis, maintenance, and everyday dental care.',
+          image: images.home.H5,
+        },
+        {
+          title: 'Dental Hygiene',
+          to: '/dental-hygiene-malta',
+          text: 'Professional hygiene care to support gum health, fresh breath, and long-term maintenance.',
+          image: images.home.H9,
+        },
+        {
+          title: 'Periodontology',
+          to: '/periodontology-malta',
+          text: 'Gum-focused care supporting the health of the tissues around teeth and implants.',
+          image: images.home.H10,
+        },
+      ],
+    },
+    {
+      title: 'Urgent Dental Care',
+      description:
+        'Fast support for pain, swelling, trauma, and unexpected dental issues that need prompt attention.',
+      items: [
+        {
+          title: 'Emergency Dentist',
+          to: '/emergency-dentist-malta',
+          text: 'Urgent assessment and guidance for dental pain, swelling, broken teeth, and trauma.',
+          image: images.contact.CT1,
+        },
+      ],
+    },
+  ];
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H2}
+        eyebrow="Dental Services Malta"
+        title="Comprehensive dental care in Malta, presented clearly and organised properly"
+        subtitle="Explore Apex Dental's treatment range across implants, cosmetic dentistry, aligners, preventive care, restorative treatment, prosthetics, and emergency dental services."
+      />
+
+      <section className="bg-white py-20">
+        <Section>
+          <div className="max-w-4xl">
+            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
+              Apex Dental Services
+            </div>
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+              A cleaner service structure for patients and a much smarter one for the website
+            </h2>
+            <p className="mt-6 text-lg text-slate-600 leading-8">
+              This page acts as the main service hub for the clinic. It gives patients a clear
+              overview of treatment options and helps search engines understand the relationship
+              between your key treatment pages.
+            </p>
+          </div>
+        </Section>
+      </section>
+
+      {serviceGroups.map((group, groupIndex) => (
+        <section
+          key={group.title}
+          className={groupIndex % 2 === 0 ? 'bg-[#f7f4ef] py-20' : 'bg-white py-20'}
+        >
+          <Section>
+            <div className="max-w-4xl mb-12">
+              <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
+                Service Category
+              </div>
+              <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+                {group.title}
+              </h2>
+              <p className="mt-5 text-lg text-slate-600 leading-8">
+                {group.description}
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {group.items.map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.to}
+                  className="group rounded-[2rem] overflow-hidden bg-slate-950 text-white relative min-h-[460px] shadow-xl"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-transparent" />
+
+                  <div className="relative p-8 h-full flex flex-col justify-end">
+                    <div className="text-sm uppercase tracking-[0.25em] text-slate-300">
+                      Apex Dental
+                    </div>
+                    <h3 className="mt-3 text-2xl md:text-3xl font-semibold">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 text-slate-200 leading-7">
+                      {item.text}
+                    </p>
+                    <div className="mt-6 inline-flex items-center gap-2 text-amber-300 font-medium">
+                      Explore service <ChevronRight size={18} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </Section>
+        </section>
+      ))}
+
+      <CTASection
+        title="Not sure which treatment is right for you?"
+        text="Book a consultation with Apex Dental and we'll guide you toward the most suitable option based on your oral health, goals, and priorities."
+      />
+    </>
+  );
+}
+
 export default function ApexDentalWebsitePremium() {
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
@@ -2535,6 +2748,7 @@ export default function ApexDentalWebsitePremium() {
           path="/appointment-booking"
           element={<AppointmentBookingPage />}
         />
+        <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
 
