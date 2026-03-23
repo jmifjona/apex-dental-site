@@ -1372,6 +1372,13 @@ export default function ApexDentalWebsite() {
     );
   }
 
+  const napInfo = {
+    name: 'Apex Dental',
+    address: 'Trident Park, Mrieħel, Malta',
+    phone: '+356 7985 4037',
+    website: 'https://apex-dental-malta.com',
+  };
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_22%),linear-gradient(180deg,#2b2b2b_0%,#1f1f24_38%,#2b2b2b_100%)] text-white">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/90 backdrop-blur-xl">
@@ -1659,10 +1666,10 @@ export default function ApexDentalWebsite() {
             <div>
               <h4 className="font-semibold text-white mb-4">Services</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="/dental-implants-malta" className="hover:text-cyan-300">Dental Implants</a></li>
-                <li><a href="/clear-aligners-malta" className="hover:text-cyan-300">Clear Aligners</a></li>
-                <li><a href="/cosmetic-dentistry-malta" className="hover:text-cyan-300">Cosmetic Dentistry</a></li>
-                <li><a href="/emergency-dentist-malta" className="hover:text-cyan-300">Emergency Care</a></li>
+                <li><Link to="/dental-implants-malta" className="hover:text-cyan-300">Dental Implants</Link></li>
+                <li><Link to="/clear-aligners-malta" className="hover:text-cyan-300">Clear Aligners</Link></li>
+                <li><Link to="/cosmetic-dentistry-malta" className="hover:text-cyan-300">Cosmetic Dentistry</Link></li>
+                <li><Link to="/emergency-dentist-malta" className="hover:text-cyan-300">Emergency Care</Link></li>
               </ul>
             </div>
           </div>
