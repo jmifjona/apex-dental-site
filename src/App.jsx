@@ -10,7 +10,6 @@ import {
   Star,
   ShieldCheck,
   Sparkles,
-  Smile,
   Clock3,
   ArrowUpRight,
   ScanLine,
@@ -41,7 +40,8 @@ const brand = {
   mobile: '79854037',
   whatsapp: '79854037',
   email: 'info@apexdental.com.mt',
-  address: 'Trident Park, Imdina Road, Central Business District, Imrieħel, CBD 2010, Malta',
+  address:
+    'Trident Park, Imdina Road, Central Business District, Imrieħel, CBD 2010, Malta',
   logo: '/images/orislogo.png',
 };
 
@@ -96,7 +96,13 @@ function Section({ children, className = '' }) {
   );
 }
 
-function Button({ to, children, variant = 'dark', external = false, className = '' }) {
+function Button({
+  to,
+  children,
+  variant = 'dark',
+  external = false,
+  className = '',
+}) {
   const base =
     'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300';
 
@@ -104,7 +110,8 @@ function Button({ to, children, variant = 'dark', external = false, className = 
     dark: 'bg-slate-950 text-white hover:bg-slate-800',
     light: 'bg-white text-slate-900 hover:bg-slate-100',
     outline: 'border border-slate-300 text-slate-900 hover:bg-slate-100',
-    glass: 'border border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white/15',
+    glass:
+      'border border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white/15',
     gold: 'bg-amber-400 text-slate-950 hover:bg-amber-300',
   };
 
@@ -154,7 +161,11 @@ function FloatingHeader() {
         <div className="rounded-full border border-white/15 bg-slate-950/70 backdrop-blur-2xl text-white px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
           <div className="flex items-center justify-between gap-4">
             <Link to="/" className="flex items-center gap-3 min-w-0">
-              <img src={brand.logo} alt="Apex Dental logo" className="h-11 w-auto shrink-0" />
+              <img
+                src={brand.logo}
+                alt="Apex Dental logo"
+                className="h-11 w-auto shrink-0"
+              />
               <div className="hidden md:block min-w-0">
                 <div className="font-semibold tracking-wide">{brand.name}</div>
                 <div className="text-xs text-slate-300">{brand.tagline}</div>
@@ -268,7 +279,7 @@ function DarkHero({
     <section className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
       <img
         src={image}
-        alt={title}
+        alt={typeof title === 'string' ? title : 'Apex Dental'}
         className="absolute inset-0 h-full w-full object-cover opacity-35"
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.14),transparent_30%)]" />
@@ -294,7 +305,11 @@ function DarkHero({
               <Button to="/contact" variant="gold">
                 {primaryCta}
               </Button>
-              <Button to={`https://wa.me/356${brand.whatsapp}`} variant="glass" external>
+              <Button
+                to={`https://wa.me/356${brand.whatsapp}`}
+                variant="glass"
+                external
+              >
                 {secondaryCta}
               </Button>
             </div>
@@ -318,7 +333,11 @@ function DarkHero({
 
           <div className="relative">
             <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-              <img src={image} alt={title} className="w-full h-[560px] object-cover" />
+              <img
+                src={image}
+                alt={typeof title === 'string' ? title : 'Apex Dental'}
+                className="w-full h-[560px] object-cover"
+              />
             </div>
 
             <div className="absolute -bottom-6 -left-4 md:-left-6 rounded-[2rem] bg-white text-slate-900 p-6 shadow-2xl max-w-xs">
@@ -330,7 +349,8 @@ function DarkHero({
                 <Star size={16} fill="currentColor" />
               </div>
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Replace this with a real Google review to add instant trust and make the hero feel authentic.
+                Replace this with a real Google review to add instant trust and
+                make the hero feel authentic.
               </p>
             </div>
           </div>
@@ -355,29 +375,46 @@ function SplitEditorial({
   return (
     <section className={wrapper}>
       <Section className="py-20">
-        <div className={`grid lg:grid-cols-2 gap-12 items-center ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+        <div
+          className={`grid lg:grid-cols-2 gap-12 items-center ${
+            reverse ? 'lg:[&>*:first-child]:order-2' : ''
+          }`}
+        >
           <div className="relative">
-            <div className={`rounded-[2.5rem] overflow-hidden ${dark ? 'border border-white/10' : 'border border-slate-200'} shadow-xl`}>
+            <div
+              className={`rounded-[2.5rem] overflow-hidden ${
+                dark ? 'border border-white/10' : 'border border-slate-200'
+              } shadow-xl`}
+            >
               <img src={imageLeft} alt={title} className="w-full h-[520px] object-cover" />
             </div>
           </div>
 
           <div>
-            <div className={`text-sm uppercase tracking-[0.25em] ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+            <div
+              className={`text-sm uppercase tracking-[0.25em] ${
+                dark ? 'text-slate-400' : 'text-slate-500'
+              }`}
+            >
               Apex Dental
             </div>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight">
               {title}
             </h2>
-            <p className={`mt-6 text-lg leading-8 ${textClass}`}>
-              {text}
-            </p>
+            <p className={`mt-6 text-lg leading-8 ${textClass}`}>{text}</p>
 
             {points.length > 0 && (
               <div className="mt-8 grid gap-4">
                 {points.map((point) => (
                   <div key={point} className="flex items-start gap-3">
-                    <BadgeCheck className={dark ? 'text-amber-300 mt-1 shrink-0' : 'text-sky-600 mt-1 shrink-0'} size={20} />
+                    <BadgeCheck
+                      className={
+                        dark
+                          ? 'text-amber-300 mt-1 shrink-0'
+                          : 'text-sky-600 mt-1 shrink-0'
+                      }
+                      size={20}
+                    />
                     <p className={`${pointClass} leading-7`}>{point}</p>
                   </div>
                 ))}
@@ -417,7 +454,9 @@ function ServiceTiles() {
       <Section>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
-            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">Signature Treatments</div>
+            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
+              Signature Treatments
+            </div>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900">
               Precision-led care with a stronger visual identity
             </h2>
@@ -445,7 +484,9 @@ function ServiceTiles() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
               <div className="relative p-8 h-full flex flex-col justify-end">
-                <div className="text-sm uppercase tracking-[0.25em] text-slate-300">Apex Dental</div>
+                <div className="text-sm uppercase tracking-[0.25em] text-slate-300">
+                  Apex Dental
+                </div>
                 <h3 className="mt-3 text-3xl font-semibold">{service.title}</h3>
                 <p className="mt-4 text-slate-200 leading-7">{service.text}</p>
                 <div className="mt-6 inline-flex items-center gap-2 text-amber-300 font-medium">
@@ -461,34 +502,67 @@ function ServiceTiles() {
 }
 
 function HomeFeatureGrid() {
+  const features = [
+    {
+      title: 'Digital Workflows',
+      text: 'Modern diagnostics and planning designed for precision and predictability.',
+      icon: <ScanLine size={20} />,
+    },
+    {
+      title: 'Patient Comfort',
+      text: 'A calm, welcoming environment with careful attention to communication and reassurance.',
+      icon: <HeartHandshake size={20} />,
+    },
+    {
+      title: 'Premium Results',
+      text: 'Functional and aesthetic dentistry designed to look polished, natural, and refined.',
+      icon: <Sparkles size={20} />,
+    },
+  ];
+
   return (
     <section className="bg-[#f7f4ef]">
       <Section className="py-20">
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
           <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-            <img src={images.home.H2} alt="Apex Dental clinic interior" className="w-full h-[560px] object-cover" />
+            <img
+              src={images.home.H2}
+              alt="Apex Dental clinic interior"
+              className="w-full h-[560px] object-cover"
+            />
           </div>
 
           <div className="grid gap-8">
             <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <img src={images.home.H3} alt="Apex Dental logo detail" className="w-full h-[265px] object-cover" />
+              <img
+                src={images.home.H3}
+                alt="Apex Dental logo detail"
+                className="w-full h-[265px] object-cover"
+              />
             </div>
             <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <img src={images.home.H4} alt="Apex Dental reception or team desk" className="w-full h-[265px] object-cover" />
+              <img
+                src={images.home.H4}
+                alt="Apex Dental reception or team desk"
+                className="w-full h-[265px] object-cover"
+              />
             </div>
           </div>
         </div>
 
         <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {['Digital Workflows', 'Patient Comfort', 'Premium Results'].map((item) => (
-            <div key={item} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
+          {features.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm"
+            >
               <div className="inline-flex items-center justify-center rounded-full bg-slate-950 text-white h-11 w-11">
-                {item === 'Digital Workflows' && <ScanLine size={20} />}
-                {item === 'Patient Comfort' && <HeartHandshake size={20} />}
-                {item === 'Premium Results' && <Sparkles size={20} />}
+                {item.icon}
               </div>
-              <h3 className="mt-5 text-xl font-semibold text-slate-900">{item}</h3>
-              <p className="mt-3 text-slate-600 leading-7">{item === 'Digital Workflows' ? 'Modern diagnostics and planning designed for precision and predictability.' : item === 'Patient Comfort' ? 'A calm, welcoming environment with careful attention to communication and reassurance.' : 'Functional and aesthetic dentistry designed to look polished, natural, and refined.'}</p>
+              <h3 className="mt-5 text-xl font-semibold text-slate-900">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
             </div>
           ))}
         </div>
@@ -512,13 +586,16 @@ function HomeGallery() {
       <Section>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
-            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">Clinic Gallery</div>
+            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
+              Clinic Gallery
+            </div>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900">
               A practice that looks as polished as the care it provides
             </h2>
           </div>
           <p className="max-w-xl text-slate-600 leading-8 text-lg">
-            Use this section to showcase the clinic, treatment rooms, scanner, reception, and key branded details.
+            Use this section to showcase the clinic, treatment rooms, scanner,
+            reception, and key branded details.
           </p>
         </div>
 
@@ -545,18 +622,24 @@ function ReviewStrip() {
         <div className="rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-12">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
             <div>
-              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">Patient Reviews</div>
+              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">
+                Patient Reviews
+              </div>
               <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight">
                 Real trust is better than decorative fluff
               </h2>
               <p className="mt-6 text-slate-300 leading-8 text-lg">
-                Replace these placeholders with three real Google reviews. Real local feedback will improve both trust and conversion.
+                Replace these placeholders with three real Google reviews. Real
+                local feedback will improve both trust and conversion.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
               {[1, 2, 3].map((item) => (
-                <div key={item} className="rounded-[2rem] bg-white text-slate-900 p-6 shadow-xl">
+                <div
+                  key={item}
+                  className="rounded-[2rem] bg-white text-slate-900 p-6 shadow-xl"
+                >
                   <div className="flex items-center gap-1 text-amber-500">
                     <Star size={16} fill="currentColor" />
                     <Star size={16} fill="currentColor" />
@@ -565,9 +648,12 @@ function ReviewStrip() {
                     <Star size={16} fill="currentColor" />
                   </div>
                   <p className="mt-4 text-sm leading-7 text-slate-600">
-                    Add a real Google review here. Patients trust actual experiences far more than generic stock praise.
+                    Add a real Google review here. Patients trust actual
+                    experiences far more than generic stock praise.
                   </p>
-                  <div className="mt-4 font-semibold text-slate-900">Google Review</div>
+                  <div className="mt-4 font-semibold text-slate-900">
+                    Google Review
+                  </div>
                 </div>
               ))}
             </div>
@@ -580,13 +666,31 @@ function ReviewStrip() {
 
 function CTASection({ dark = false, title, text }) {
   return (
-    <section className={dark ? 'bg-slate-950 text-white py-20' : 'bg-[#f7f4ef] text-slate-900 py-20'}>
+    <section
+      className={
+        dark
+          ? 'bg-slate-950 text-white py-20'
+          : 'bg-[#f7f4ef] text-slate-900 py-20'
+      }
+    >
       <Section>
-        <div className={`rounded-[2.5rem] p-8 md:p-12 ${dark ? 'bg-white/5 border border-white/10' : 'bg-white border border-slate-200 shadow-sm'}`}>
+        <div
+          className={`rounded-[2.5rem] p-8 md:p-12 ${
+            dark
+              ? 'bg-white/5 border border-white/10'
+              : 'bg-white border border-slate-200 shadow-sm'
+          }`}
+        >
           <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
             <div>
-              <h2 className="text-3xl md:text-5xl font-semibold leading-tight">{title}</h2>
-              <p className={`mt-5 text-lg leading-8 ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
+              <h2 className="text-3xl md:text-5xl font-semibold leading-tight">
+                {title}
+              </h2>
+              <p
+                className={`mt-5 text-lg leading-8 ${
+                  dark ? 'text-slate-300' : 'text-slate-600'
+                }`}
+              >
                 {text}
               </p>
             </div>
@@ -595,7 +699,11 @@ function CTASection({ dark = false, title, text }) {
               <Button to="/contact" variant={dark ? 'gold' : 'dark'}>
                 Book Appointment
               </Button>
-              <Button to={`tel:${brand.phone}`} variant={dark ? 'glass' : 'outline'} external>
+              <Button
+                to={`tel:${brand.phone}`}
+                variant={dark ? 'glass' : 'outline'}
+                external
+              >
                 Call {brand.phone}
               </Button>
             </div>
@@ -613,8 +721,9 @@ function Footer() {
         <div>
           <h3 className="text-2xl font-semibold">{brand.name}</h3>
           <p className="mt-4 text-slate-300 leading-7">
-            Premium dental care in Malta with a focus on advanced restorative treatment, clear aligners,
-            cosmetic dentistry, and a modern patient experience.
+            Premium dental care in Malta with a focus on advanced restorative
+            treatment, clear aligners, cosmetic dentistry, and a modern patient
+            experience.
           </p>
         </div>
 
@@ -628,7 +737,13 @@ function Footer() {
             <Link to="/cosmetic-dentistry-malta">Cosmetic Dentistry</Link>
             <Link to="/general-dentistry-malta">General Dentistry</Link>
             <Link to="/dental-hygiene-malta">Dental Hygiene</Link>
-            <Link to="/crowns-and-bridges-malta">Crowns & Bridges</Link>
+            <Link to="/veneers-malta">Veneers</Link>
+            <Link to="/teeth-whitening-malta">Teeth Whitening</Link>
+            <Link to="/crowns-and-bridgework-malta">Crowns & Bridgework</Link>
+            <Link to="/periodontology-malta">Periodontology</Link>
+            <Link to="/orthodontic-malta">Orthodontic Treatment</Link>
+            <Link to="/dental-prosthetics-malta">Dental Prosthetics</Link>
+            <Link to="/removable-prosthesis-malta">Removable Prosthesis</Link>
             <Link to="/root-canal-treatment-malta">Root Canal Treatment</Link>
             <Link to="/emergency-dentist-malta">Emergency Dentist</Link>
             <Link to="/blog">Blog</Link>
@@ -648,7 +763,10 @@ function Footer() {
               </a>
             </p>
             <p>
-              <a href={`https://wa.me/356${brand.whatsapp}`} className="hover:text-white">
+              <a
+                href={`https://wa.me/356${brand.whatsapp}`}
+                className="hover:text-white"
+              >
                 WhatsApp: {brand.mobile}
               </a>
             </p>
@@ -673,7 +791,11 @@ function Footer() {
 function PageHero({ image, eyebrow, title, subtitle }) {
   return (
     <section className="relative overflow-hidden bg-slate-950 text-white pt-32 pb-20">
-      <img src={image} alt={title} className="absolute inset-0 h-full w-full object-cover opacity-35" />
+      <img
+        src={image}
+        alt={title}
+        className="absolute inset-0 h-full w-full object-cover opacity-35"
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950" />
       <Section className="relative">
         <div className="max-w-4xl">
@@ -696,7 +818,9 @@ function PageHero({ image, eyebrow, title, subtitle }) {
 function TextPanel({ title, text }) {
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl font-semibold text-slate-900 leading-tight">{title}</h2>
+      <h2 className="text-2xl md:text-4xl font-semibold text-slate-900 leading-tight">
+        {title}
+      </h2>
       <p className="mt-5 text-slate-600 text-lg leading-8">{text}</p>
     </div>
   );
@@ -940,10 +1064,18 @@ function AboutPage() {
         <Section>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-8">
             <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-              <img src={images.about.AB1} alt="Apex Dental team or clinic image" className="w-full h-[520px] object-cover" />
+              <img
+                src={images.about.AB1}
+                alt="Apex Dental team or clinic image"
+                className="w-full h-[520px] object-cover"
+              />
             </div>
             <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-              <img src={images.about.AB2} alt="Apex Dental interior image" className="w-full h-[520px] object-cover" />
+              <img
+                src={images.about.AB2}
+                alt="Apex Dental interior image"
+                className="w-full h-[520px] object-cover"
+              />
             </div>
           </div>
         </Section>
@@ -959,10 +1091,28 @@ function AboutPage() {
           </div>
 
           <div className="mt-12 grid md:grid-cols-3 gap-6">
-            {['Professionalism', 'Modern Approach', 'Patient Trust'].map((item) => (
-              <div key={item} className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
-                <h3 className="text-xl font-semibold text-slate-900">{item}</h3>
-                <p className="mt-3 text-slate-600 leading-7">{item === 'Professionalism' ? 'A high standard of communication, planning, and patient support.' : item === 'Modern Approach' ? 'Digital workflows and up-to-date treatment presentation.' : 'Clear guidance, transparency, and careful attention to comfort.'}</p>
+            {[
+              {
+                title: 'Professionalism',
+                text: 'A high standard of communication, planning, and patient support.',
+              },
+              {
+                title: 'Modern Approach',
+                text: 'Digital workflows and up-to-date treatment presentation.',
+              },
+              {
+                title: 'Patient Trust',
+                text: 'Clear guidance, transparency, and careful attention to comfort.',
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm"
+              >
+                <h3 className="text-xl font-semibold text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
               </div>
             ))}
           </div>
@@ -973,17 +1123,26 @@ function AboutPage() {
         <Section>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">Apex Dental</div>
+              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">
+                Apex Dental
+              </div>
               <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight">
                 Built for patients who value quality care and a better overall experience
               </h2>
               <p className="mt-6 text-slate-300 text-lg leading-8">
-                Use this page to add your team details, doctor bios, qualifications, and a stronger explanation of your clinical philosophy. It already has the premium layout. Now it just needs your story.
+                Use this page to add your team details, doctor bios,
+                qualifications, and a stronger explanation of your clinical
+                philosophy. It already has the premium layout. Now it just needs
+                your story.
               </p>
             </div>
 
             <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
-              <img src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[520px] object-cover" />
+              <img
+                src={images.about.AB3}
+                alt="Apex Dental clinic detail"
+                className="w-full h-[520px] object-cover"
+              />
             </div>
           </div>
         </Section>
@@ -992,378 +1151,6 @@ function AboutPage() {
       <CTASection
         title="Would you like to visit Apex Dental?"
         text="Contact us to arrange an appointment, discuss treatment options, or ask about emergency availability."
-      />
-    </>
-  );
-}
-
-function PriceListPage() {
-  usePageTitle('Dental Services Price List Malta | Apex Dental');
-
-  const priceSections = [
-    {
-      title: 'Examination / Diagnosis',
-      items: [
-        { name: 'Routine Checkup', price: '€10.00' },
-        { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
-        { name: 'Periapical or one side Bitewing X-Ray', price: '€20.00', note: 'For a set of bitewings, 2 are required.' },
-        { name: 'Implant Consultation', price: '€30.00', note: 'Free if implant treatment is done, or deducted later from the implant bill if treatment proceeds.' },
-        { name: 'CBCT X-Ray', price: '€120.00', note: '3D X-ray of the mouth; copy available on request. Important for implant planning and free if implant surgery is done.' },
-      ],
-    },
-    {
-      title: 'Hygiene / Cleaning and Teeth Whitening',
-      items: [
-        { name: 'Routine Hygiene Session', price: '€50.00', note: 'Scaling and polishing; ideally every 6 months.' },
-        { name: 'Perio Laser', price: '€220.00', note: 'Usually done in 4 sessions; price is per session.' },
-        { name: 'Fissure Sealing', price: '€30.00', note: 'Preventive measure, mostly for molars; price per tooth.' },
-        { name: 'Whitening Home Kits', price: '€250.00', note: 'Custom trays included.' },
-        { name: 'Removal of Fixed Prosthesis and Cleaning', price: '€80.00', note: 'Recommended every 6 months for full-arch / Toronto bridge cases.' },
-        { name: 'Fluoride Application', price: '€40.00' },
-        { name: 'In House Teeth Whitening', price: '€350.00', note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.' },
-      ],
-    },
-    {
-      title: 'Crowns and Bridgework',
-      items: [
-        { name: 'Crowns, Metal/Porcelain', price: '€350.00', note: 'Porcelain outer shell with metal inside.' },
-        { name: 'Lab Made Temporary Crowns', price: '€50.00' },
-        { name: 'Removal of Existing Bridgework', price: '€30.00', note: 'Depends on the state of the bridge and work involved.' },
-        { name: 'Full Porcelain Crowns / Zirconia', price: '€450.00', note: 'Variable full porcelain crowns available at the same price.' },
-        { name: 'Post and Core Build Up', price: '€70.00' },
-      ],
-    },
-    {
-      title: 'Cosmetic Veneers',
-      items: [
-        { name: 'Porcelain Veneers', price: '€450.00' },
-        { name: 'Composite Veneers (Lab Wax-Up Replica)', price: '€130.00', note: 'Includes a lab-made wax-up.' },
-        { name: 'Composite Veneers (Freehand)', price: '€90.00', note: 'Done with highly aesthetic composite.' },
-      ],
-    },
-    {
-      title: 'Fillings',
-      items: [
-        { name: 'Removal of Amalgam Filling Under Rubberdam', price: '€40.00' },
-        { name: 'Restoration of Deciduous Teeth', price: '€40.00', note: 'Material choice depends on cooperation and cavity size.' },
-        { name: 'Composite Filling', price: '€90.00', note: 'Does not include posts if required.' },
-      ],
-    },
-    {
-      title: 'Implants',
-      items: [
-        { name: 'Implant Complete with Crown', price: '€1500.00', note: 'Depends on implant type, abutment type, and crown type.' },
-        { name: 'Toronto Bridge All on 4', price: '€9999.99', note: 'Full-arch bridge prosthesis on 4 implants.' },
-        { name: 'Implant Retained Removable Denture with 3 Implants and Bar', price: '€5500.00', note: 'Best removable option for upper arch.' },
-        { name: 'Crown / Pontic on Implant', price: '€400.00' },
-        { name: 'Implant Retained Removable Denture', price: '€3500.00', note: 'Locator-based, with 2 implants included; suitable for lower arch only.' },
-      ],
-    },
-    {
-      title: 'Extraction and Surgery',
-      items: [
-        { name: 'Extraction', price: 'From €60.00', note: 'Does not include radiographs if required.' },
-        { name: 'Wisdom Tooth Surgical Extraction', price: '€250.00', note: 'Does not include radiographs if required.' },
-        { name: 'Surgical Extraction', price: 'From €150.00', note: 'Includes retained roots and heavily broken teeth; radiographs not included.' },
-      ],
-    },
-    {
-      title: 'Root Canal Treatment',
-      items: [
-        { name: 'Root Canal Anterior Teeth', price: '€250.00', note: 'Includes filling but not the post if required.' },
-        { name: 'Re Root Canal Treatment', price: '€320.00', note: 'For teeth that already had root canal treatment previously.' },
-        { name: 'Root Canal Treatment Posterior Teeth', price: '€280.00', note: 'Includes filling but not the post if required.' },
-      ],
-    },
-    {
-      title: 'Dentures',
-      items: [
-        { name: 'Full Upper / Lower Acrylic Dentures', price: '€400.00' },
-        { name: 'Flexible Dentures Partial', price: '€350.00', note: 'Meaning 3 teeth and less.' },
-        { name: 'Chrome Cobalt Dentures', price: '€650.00' },
-        { name: 'Partial Acrylic Dentures', price: '€300.00', note: 'More than 3 teeth is considered a full denture.' },
-        { name: 'Flexible Dentures More Than 3 Teeth', price: '€650.00' },
-      ],
-    },
-    {
-      title: 'Orthodontic Treatment & Miscellaneous',
-      items: [
-        { name: 'Soft Splint 2mm', price: '€100.00' },
-        { name: 'Michigan Splint', price: '€300.00' },
-        { name: 'Clear Correct Treatment', price: 'From €2900.00', note: 'Invisible aligners.' },
-        { name: 'Bionator', price: '€600.00' },
-        { name: 'Soft Splint 4mm', price: '€120.00' },
-        { name: 'Invisalign Treatment', price: 'From €3500.00', note: 'Invisible aligners.' },
-        { name: 'Fixed Upper and Lower Orthodontic Appliance', price: 'From €2500.00' },
-      ],
-    },
-  ];
-
-  return (
-    <>
-      <PageHero
-        image={images.contact.CT1}
-        eyebrow="Dental Services Price List"
-        title="A detailed treatment price list presented properly"
-        subtitle="This restores the broader price structure from the live site in a cleaner premium layout. Final fees may still vary depending on complexity, materials, and case requirements."
-      />
-
-      <section className="bg-[#f7f4ef] py-20">
-        <Section>
-          <div className="space-y-10">
-            {priceSections.map((section) => (
-              <div
-                key={section.title}
-                className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl"
-              >
-                <div className="bg-slate-950 text-white px-8 py-6">
-                  <h2 className="text-2xl md:text-3xl font-semibold">{section.title}</h2>
-                </div>
-
-                <div>
-                  {section.items.map((item, idx) => (
-                    <div
-                      key={`${section.title}-${item.name}`}
-                      className={`px-8 py-6 ${idx !== section.items.length - 1 ? 'border-b border-slate-200' : ''}`}
-                    >
-                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-                        <div className="md:max-w-[75%]">
-                          <h3 className="text-lg font-semibold text-slate-900">{item.name}</h3>
-                          {item.note && (
-                            <p className="mt-2 text-slate-600 leading-7">{item.note}</p>
-                          )}
-                        </div>
-                        <div className="text-xl font-bold text-slate-900 md:text-right">
-                          {item.price}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-      </section>
-
-      <CTASection
-        title="Need a personalised estimate?"
-        text="Use the price list as a guide, then book a consultation so Apex Dental can assess your case properly and confirm the most suitable treatment plan."
-      />
-    </>
-  );
-}
-
-function ContactPage() {
-  usePageTitle('Contact Apex Dental Malta');
-
-  return (
-    <>
-      <PageHero
-        image={images.contact.CT1}
-        eyebrow="Contact Apex Dental"
-        title="Book your visit at Apex Dental Malta"
-        subtitle="Get in touch for routine care, cosmetic treatment, clear aligners, implant consultations, or urgent dental care."
-      />
-
-      <section className="bg-white py-20">
-        <Section>
-          <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 items-start">
-            <div>
-              <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                <img src={images.contact.CT2} alt="Apex Dental location or reception" className="w-full h-[520px] object-cover" />
-              </div>
-
-              <div className="mt-8 rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-8">
-                <h2 className="text-2xl font-semibold text-slate-900">Contact Details</h2>
-                <div className="mt-6 space-y-5">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
-                    <div>
-                      <div className="font-medium text-slate-900">Address</div>
-                      <div className="text-slate-600 mt-1">{brand.address}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <Phone className="text-sky-600 mt-1 shrink-0" size={20} />
-                    <div>
-                      <div className="font-medium text-slate-900">Phone</div>
-                      <a href={`tel:${brand.phone}`} className="text-slate-600 mt-1 block hover:text-sky-700">
-                        {brand.phone}
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <MessageCircle className="text-sky-600 mt-1 shrink-0" size={20} />
-                    <div>
-                      <div className="font-medium text-slate-900">WhatsApp</div>
-                      <a
-                        href={`https://wa.me/356${brand.whatsapp}`}
-                        className="text-slate-600 mt-1 block hover:text-sky-700"
-                      >
-                        {brand.mobile}
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
-                    <div>
-                      <div className="font-medium text-slate-900">Appointments</div>
-                      <div className="text-slate-600 mt-1">Contact us for available times and emergency guidance.</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-              <h2 className="text-3xl font-semibold">Appointment Request</h2>
-              <p className="mt-4 text-slate-300 leading-7">
-                This form is styled and ready, but you still need to connect it to your backend or email handler.
-              </p>
-
-              <form className="mt-8 space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
-                  <option className="text-slate-900">Reason for Visit</option>
-                  <option className="text-slate-900">General Check-up</option>
-                  <option className="text-slate-900">Dental Implants</option>
-                  <option className="text-slate-900">Clear Aligners</option>
-                  <option className="text-slate-900">Cosmetic Dentistry</option>
-                  <option className="text-slate-900">Emergency Appointment</option>
-                </select>
-                <textarea
-                  rows="5"
-                  placeholder="Message"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
-                >
-                  Send Request
-                </button>
-              </form>
-
-              <div className="mt-8 text-sm text-slate-400">
-                Prefer speaking to us directly? Call{' '}
-                <a href={`tel:${brand.phone}`} className="text-white">
-                  {brand.phone}
-                </a>{' '}
-                or WhatsApp{' '}
-                <a href={`https://wa.me/356${brand.whatsapp}`} className="text-white">
-                  {brand.mobile}
-                </a>
-                .
-              </div>
-            </div>
-          </div>
-        </Section>
-      </section>
-
-      <section className="bg-[#f7f4ef] py-20">
-        <Section>
-          <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-            <img src={images.contact.CT3} alt="Apex Dental exterior or entrance" className="w-full h-[480px] object-cover" />
-          </div>
-        </Section>
-      </section>
-    </>
-  );
-}
-
-export default function ApexDentalWebsitePremium() {
-  return (
-    <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
-      <ScrollToTop />
-      <FloatingHeader />
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/dental-implants" element={<ImplantsPage />} />
-        <Route path="/clear-aligners-malta" element={<AlignersPage />} />
-        <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
-        <Route path="/veneers-malta" element={<VeneersPage />} />
-        <Route path="/teeth-whitening-malta" element={<TeethWhiteningPage />} />
-        <Route path="/crowns-and-bridgework-malta" element={<CrownsBridgeworkPage />} />
-        <Route path="/periodontology-malta" element={<PeriodontologyPage />} />
-        <Route path="/orthodontic-malta" element={<OrthodonticPage />} />
-        <Route path="/dental-prosthetics-malta" element={<DentalProstheticsPage />} />
-        <Route path="/removable-prosthesis-malta" element={<RemovableProsthesisPage />} />
-        <Route path="/root-canal-treatment-malta" element={<RootCanalPage />} />
-        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
-        <Route path="/price-list" element={<PriceListPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/appointment-booking" element={<AppointmentBookingPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-
-      <Footer />
-      <MobileStickyBar />
-    </div>
-  );
-}
-
-function EmergencyPage() {
-  usePageTitle('Emergency Dentist Malta | Apex Dental');
-
-  return (
-    <>
-      <PageHero
-        image={images.contact.CT1}
-        eyebrow="Emergency Dentist Malta"
-        title="Urgent dental care when you need fast help, not a philosophical lecture from your tooth"
-        subtitle="Apex Dental provides urgent assessment for dental pain, swelling, broken teeth, trauma, lost restorations, and other unexpected dental problems."
-      />
-
-      <SplitEditorial
-        imageLeft={images.contact.CT2}
-        title="When should you seek emergency dental care?"
-        text="You may need urgent dental treatment if you are experiencing severe toothache, swelling, facial pain, trauma, bleeding, a broken tooth, or a lost filling, crown, or bridge causing pain or functional difficulty."
-        points={[
-          'Severe tooth pain',
-          'Swelling or infection',
-          'Broken or knocked teeth',
-          'Lost crowns, bridges, or fillings',
-        ]}
-      />
-
-      <SplitEditorial
-        imageLeft={images.contact.CT3}
-        title="Fast guidance and prompt assessment"
-        text="If you are unsure whether your problem is an emergency, the safest step is to contact Apex Dental directly. Early assessment can reduce complications, improve comfort, and sometimes save a tooth that would otherwise worsen."
-        points={[
-          'Prompt communication matters',
-          'Fast assessment can reduce complications',
-          'Clear next-step guidance',
-          'Support for urgent dental situations',
-        ]}
-        dark
-        reverse
-      />
-
-      <CTASection
-        dark
-        title="Need urgent dental care now?"
-        text="Call or WhatsApp Apex Dental directly so our team can guide you as quickly as possible."
       />
     </>
   );
@@ -1461,48 +1248,306 @@ function HygienePage() {
   );
 }
 
-function CrownsBridgesPage() {
-  usePageTitle('Crowns and Bridges Malta | Apex Dental');
+function VeneersPage() {
+  usePageTitle('Veneers Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.cosmetic.C1}
+        eyebrow="Veneers Malta"
+        title="Smile enhancement with veneers designed for elegance, balance, and natural-looking results"
+        subtitle="Veneers can help improve colour, shape, symmetry, and overall smile harmony for patients seeking a more refined aesthetic result."
+      />
+      <SplitEditorial
+        imageLeft={images.cosmetic.C2}
+        title="A premium cosmetic option"
+        text="Veneers are thin aesthetic restorations placed on the front surfaces of teeth to improve their appearance. They can be used to enhance shape, colour, proportion, and smile consistency."
+        points={[
+          'Porcelain and composite options',
+          'Smile refinement and symmetry',
+          'Natural-looking enhancement',
+          'Careful cosmetic planning',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.cosmetic.C4}
+        title="Cosmetic results should look polished, not artificial"
+        text="At Apex Dental, cosmetic treatment is planned to feel elegant and believable. Good veneers improve the smile without making it look overdone."
+        points={[
+          'Balanced smile design',
+          'Attention to facial harmony',
+          'Refined cosmetic workflow',
+          'Premium consultation process',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        dark
+        title="Thinking about veneers?"
+        text="Book a cosmetic consultation to discuss whether veneers are the right fit for your smile goals."
+      />
+    </>
+  );
+}
+
+function TeethWhiteningPage() {
+  usePageTitle('Teeth Whitening Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.cosmetic.C2}
+        eyebrow="Teeth Whitening Malta"
+        title="Professional whitening options for a brighter, cleaner, more confident smile"
+        subtitle="Apex Dental offers whitening solutions designed to improve tooth colour in a safer and more controlled way than over-the-counter shortcuts."
+      />
+      <SplitEditorial
+        imageLeft={images.cosmetic.C3}
+        title="Home kits and in-clinic whitening"
+        text="Professional teeth whitening may include custom home trays or an in-house whitening session depending on the patient’s needs, goals, and suitability."
+        points={[
+          'Custom tray home whitening',
+          'In-clinic whitening sessions',
+          'Professional supervision',
+          'More predictable aesthetic improvement',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.cosmetic.C4}
+        title="A cosmetic boost with minimal disruption"
+        text="Whitening is often one of the simplest ways to freshen a smile and improve confidence, whether used on its own or before other cosmetic treatment."
+        points={[
+          'Popular aesthetic treatment',
+          'Useful before smile makeovers',
+          'Designed for cleaner brighter colour',
+          'Quick confidence upgrade',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        title="Interested in professional whitening?"
+        text="Book a consultation and Apex Dental can guide you toward the most suitable whitening option."
+      />
+    </>
+  );
+}
+
+function CrownsBridgeworkPage() {
+  usePageTitle('Crowns and Bridgework Malta | Apex Dental');
 
   return (
     <>
       <PageHero
         image={images.home.H4}
-        eyebrow="Crowns & Bridges Malta"
-        title="Restore strength, function, and smile aesthetics with carefully planned restorative dentistry"
-        subtitle="Crowns and bridges can help repair damaged teeth, support weakened structures, and replace missing teeth in a way that improves both appearance and function."
+        eyebrow="Crowns and Bridgework Malta"
+        title="Restorative dentistry designed to rebuild strength, function, and aesthetics"
+        subtitle="Crowns and bridges can help protect weakened teeth, restore damaged structures, and replace missing teeth in a stable and aesthetic way."
       />
-
       <SplitEditorial
         imageLeft={images.home.H3}
-        title="What are crowns and bridges?"
-        text="Crowns are restorations that cover and protect damaged or heavily restored teeth. Bridges are used to replace missing teeth by anchoring to neighbouring teeth or implants. Both play an important role in restoring stability and chewing function."
+        title="Restoring teeth properly matters"
+        text="Crowns are used to cover and protect teeth that are weakened, heavily restored, or structurally compromised. Bridges help replace missing teeth and restore continuity to the smile."
         points={[
-          'Protection for weakened teeth',
+          'Protection for compromised teeth',
           'Replacement for missing teeth',
-          'Improved function and aesthetics',
-          'Restorative solutions tailored to the case',
+          'Improved chewing function',
+          'Better structural stability',
         ]}
       />
-
       <SplitEditorial
         imageLeft={images.home.H2}
-        title="Designed for function and longevity"
-        text="A successful restorative result depends on accurate diagnosis, proper planning, good materials, and attention to bite, fit, and aesthetics. At Apex Dental, the goal is not only to repair teeth, but to do so in a way that feels durable and well integrated."
+        title="Built for fit, bite, and longevity"
+        text="A strong restorative result depends on diagnosis, fit, bite planning, materials, and overall balance. The goal is not just to fill space, but to restore confidence and function properly."
         points={[
           'Functional bite planning',
-          'Aesthetic and structural balance',
           'Natural-looking restorations',
-          'Patient-specific treatment decisions',
+          'Material choice matched to the case',
+          'Careful restorative workflow',
         ]}
         dark
         reverse
       />
-
       <CTASection
         dark
-        title="Need to restore a damaged or missing tooth?"
-        text="Book a consultation at Apex Dental to discuss crowns, bridges, and the most appropriate restorative option for your smile."
+        title="Need a crown or bridge?"
+        text="Book a consultation to discuss the most suitable restorative option for your tooth or missing space."
+      />
+    </>
+  );
+}
+
+function PeriodontologyPage() {
+  usePageTitle('Periodontology Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H8}
+        eyebrow="Periodontology Malta"
+        title="Gum care and periodontal treatment to support the foundation of a healthy smile"
+        subtitle="Periodontology focuses on the gums and supporting tissues around the teeth. Healthy gums are essential for long-term oral stability."
+      />
+      <SplitEditorial
+        imageLeft={images.home.H9}
+        title="Why gum health matters"
+        text="Periodontal problems can affect the gums, bone support, and the long-term stability of teeth. Early diagnosis and maintenance can make a major difference."
+        points={[
+          'Gum health monitoring',
+          'Periodontal treatment where needed',
+          'Support for long-term tooth stability',
+          'Important before and after advanced treatment',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.home.H10}
+        title="Prevention, treatment, and maintenance"
+        text="At Apex Dental, gum care is part of the wider long-term health strategy. Healthy supporting tissues are critical for natural teeth, restorations, and implants alike."
+        points={[
+          'Prevention-focused care',
+          'Maintenance for ongoing stability',
+          'Useful for implant patients too',
+          'Long-term oral health mindset',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        title="Concerned about your gums?"
+        text="Book an assessment so Apex Dental can evaluate gum health and guide you clearly on next steps."
+      />
+    </>
+  );
+}
+
+function OrthodonticPage() {
+  usePageTitle('Orthodontic Treatment Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.aligners.A3}
+        eyebrow="Orthodontic Treatment Malta"
+        title="Orthodontic care for alignment, bite improvement, and a better-balanced smile"
+        subtitle="Orthodontic treatment can help improve crowding, spacing, bite issues, and overall smile positioning for both function and aesthetics."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A4}
+        title="More than just straight teeth"
+        text="Orthodontics helps improve alignment and bite relationships, which can influence oral health, smile aesthetics, and how comfortably the teeth function together."
+        points={[
+          'Crowding and spacing correction',
+          'Bite improvement',
+          'Smile and facial balance',
+          'Treatment options for different needs',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A2}
+        title="Fixed appliances and modern aligner options"
+        text="Apex Dental can present orthodontic options ranging from more traditional approaches to discreet aligner-based treatment, depending on the case."
+        points={[
+          'Traditional orthodontic options',
+          'Clear aligner alternatives',
+          'Assessment-led treatment planning',
+          'Tailored recommendations',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        dark
+        title="Interested in orthodontic treatment?"
+        text="Book a consultation to find out which type of treatment best fits your case and lifestyle."
+      />
+    </>
+  );
+}
+
+function DentalProstheticsPage() {
+  usePageTitle('Dental Prosthetics Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H5}
+        eyebrow="Dental Prosthetics Malta"
+        title="Prosthetic solutions designed to restore missing teeth, function, and confidence"
+        subtitle="Dental prosthetics include a range of restorative options used to replace missing teeth and improve daily comfort, support, and smile aesthetics."
+      />
+      <SplitEditorial
+        imageLeft={images.home.H6}
+        title="Restorative solutions tailored to the patient"
+        text="Prosthetic treatment may include fixed or removable options depending on the number of missing teeth, bone support, comfort needs, and long-term goals."
+        points={[
+          'Fixed and removable solutions',
+          'Replacement of missing teeth',
+          'Functional and aesthetic planning',
+          'Patient-specific treatment selection',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.home.H7}
+        title="Designed for comfort and usability"
+        text="Good prosthetic treatment should not only fill a space, but also feel practical, stable, and manageable in everyday life."
+        points={[
+          'Focus on fit and function',
+          'Comfort in daily use',
+          'Clear treatment explanation',
+          'Long-term maintenance guidance',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        title="Need advice on prosthetic options?"
+        text="Book a consultation and Apex Dental can guide you through the restorative solutions most suitable for your case."
+      />
+    </>
+  );
+}
+
+function RemovableProsthesisPage() {
+  usePageTitle('Removable Prosthesis Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.home.H8}
+        eyebrow="Removable Prosthesis Malta"
+        title="Removable tooth replacement options designed for support, comfort, and function"
+        subtitle="Removable prostheses can help patients replace missing teeth in a practical and often cost-effective way, with options depending on support, fit, and case complexity."
+      />
+      <SplitEditorial
+        imageLeft={images.home.H9}
+        title="A practical restorative option"
+        text="Removable prostheses can be used for partial or full tooth replacement and may be appropriate where fixed alternatives are not preferred or not indicated."
+        points={[
+          'Partial and full removable options',
+          'Different material choices',
+          'Practical restorative pathway',
+          'Adapted to individual needs',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.home.H10}
+        title="Support, maintenance, and realistic planning"
+        text="A good removable solution balances fit, support, ease of use, maintenance needs, and patient expectations. Proper planning makes a major difference."
+        points={[
+          'Focus on fit and support',
+          'Ease of cleaning and use',
+          'Expectation management',
+          'Long-term maintenance advice',
+        ]}
+        dark
+        reverse
+      />
+      <CTASection
+        dark
+        title="Considering denture options?"
+        text="Book a consultation to discuss removable prosthesis solutions and which option may suit you best."
       />
     </>
   );
@@ -1549,6 +1594,53 @@ function RootCanalPage() {
       <CTASection
         title="Worried you may need root canal treatment?"
         text="Book an assessment at Apex Dental so we can examine the tooth, explain the problem clearly, and guide you through the most suitable next step."
+      />
+    </>
+  );
+}
+
+function EmergencyPage() {
+  usePageTitle('Emergency Dentist Malta | Apex Dental');
+
+  return (
+    <>
+      <PageHero
+        image={images.contact.CT1}
+        eyebrow="Emergency Dentist Malta"
+        title="Urgent dental care when you need fast help, not a philosophical lecture from your tooth"
+        subtitle="Apex Dental provides urgent assessment for dental pain, swelling, broken teeth, trauma, lost restorations, and other unexpected dental problems."
+      />
+
+      <SplitEditorial
+        imageLeft={images.contact.CT2}
+        title="When should you seek emergency dental care?"
+        text="You may need urgent dental treatment if you are experiencing severe toothache, swelling, facial pain, trauma, bleeding, a broken tooth, or a lost filling, crown, or bridge causing pain or functional difficulty."
+        points={[
+          'Severe tooth pain',
+          'Swelling or infection',
+          'Broken or knocked teeth',
+          'Lost crowns, bridges, or fillings',
+        ]}
+      />
+
+      <SplitEditorial
+        imageLeft={images.contact.CT3}
+        title="Fast guidance and prompt assessment"
+        text="If you are unsure whether your problem is an emergency, the safest step is to contact Apex Dental directly. Early assessment can reduce complications, improve comfort, and sometimes save a tooth that would otherwise worsen."
+        points={[
+          'Prompt communication matters',
+          'Fast assessment can reduce complications',
+          'Clear next-step guidance',
+          'Support for urgent dental situations',
+        ]}
+        dark
+        reverse
+      />
+
+      <CTASection
+        dark
+        title="Need urgent dental care now?"
+        text="Call or WhatsApp Apex Dental directly so our team can guide you as quickly as possible."
       />
     </>
   );
@@ -1619,9 +1711,7 @@ function BlogPage() {
                 <h2 className="mt-4 text-2xl font-semibold text-slate-900 leading-tight">
                   {post.title}
                 </h2>
-                <p className="mt-4 text-slate-600 leading-7">
-                  {post.excerpt}
-                </p>
+                <p className="mt-4 text-slate-600 leading-7">{post.excerpt}</p>
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 mt-6 text-slate-900 font-semibold hover:text-slate-600"
@@ -1642,33 +1732,526 @@ function BlogPage() {
   );
 }
 
+function PriceListPage() {
+  usePageTitle('Dental Services Price List Malta | Apex Dental');
+
+  const priceSections = [
+    {
+      title: 'Examination / Diagnosis',
+      items: [
+        { name: 'Routine Checkup', price: '€10.00' },
+        { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
+        {
+          name: 'Periapical or one side Bitewing X-Ray',
+          price: '€20.00',
+          note: 'For a set of bitewings, 2 are required.',
+        },
+        {
+          name: 'Implant Consultation',
+          price: '€30.00',
+          note: 'Free if implant treatment is done, or deducted later from the implant bill if treatment proceeds.',
+        },
+        {
+          name: 'CBCT X-Ray',
+          price: '€120.00',
+          note: '3D X-ray of the mouth; copy available on request. Important for implant planning and free if implant surgery is done.',
+        },
+      ],
+    },
+    {
+      title: 'Hygiene / Cleaning and Teeth Whitening',
+      items: [
+        {
+          name: 'Routine Hygiene Session',
+          price: '€50.00',
+          note: 'Scaling and polishing; ideally every 6 months.',
+        },
+        {
+          name: 'Perio Laser',
+          price: '€220.00',
+          note: 'Usually done in 4 sessions; price is per session.',
+        },
+        {
+          name: 'Fissure Sealing',
+          price: '€30.00',
+          note: 'Preventive measure, mostly for molars; price per tooth.',
+        },
+        {
+          name: 'Whitening Home Kits',
+          price: '€250.00',
+          note: 'Custom trays included.',
+        },
+        {
+          name: 'Removal of Fixed Prosthesis and Cleaning',
+          price: '€80.00',
+          note: 'Recommended every 6 months for full-arch / Toronto bridge cases.',
+        },
+        { name: 'Fluoride Application', price: '€40.00' },
+        {
+          name: 'In House Teeth Whitening',
+          price: '€350.00',
+          note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.',
+        },
+      ],
+    },
+    {
+      title: 'Crowns and Bridgework',
+      items: [
+        {
+          name: 'Crowns, Metal/Porcelain',
+          price: '€350.00',
+          note: 'Porcelain outer shell with metal inside.',
+        },
+        { name: 'Lab Made Temporary Crowns', price: '€50.00' },
+        {
+          name: 'Removal of Existing Bridgework',
+          price: '€30.00',
+          note: 'Depends on the state of the bridge and work involved.',
+        },
+        {
+          name: 'Full Porcelain Crowns / Zirconia',
+          price: '€450.00',
+          note: 'Variable full porcelain crowns available at the same price.',
+        },
+        { name: 'Post and Core Build Up', price: '€70.00' },
+      ],
+    },
+    {
+      title: 'Cosmetic Veneers',
+      items: [
+        { name: 'Porcelain Veneers', price: '€450.00' },
+        {
+          name: 'Composite Veneers (Lab Wax-Up Replica)',
+          price: '€130.00',
+          note: 'Includes a lab-made wax-up.',
+        },
+        {
+          name: 'Composite Veneers (Freehand)',
+          price: '€90.00',
+          note: 'Done with highly aesthetic composite.',
+        },
+      ],
+    },
+    {
+      title: 'Fillings',
+      items: [
+        {
+          name: 'Removal of Amalgam Filling Under Rubberdam',
+          price: '€40.00',
+        },
+        {
+          name: 'Restoration of Deciduous Teeth',
+          price: '€40.00',
+          note: 'Material choice depends on cooperation and cavity size.',
+        },
+        {
+          name: 'Composite Filling',
+          price: '€90.00',
+          note: 'Does not include posts if required.',
+        },
+      ],
+    },
+    {
+      title: 'Implants',
+      items: [
+        {
+          name: 'Implant Complete with Crown',
+          price: '€1500.00',
+          note: 'Depends on implant type, abutment type, and crown type.',
+        },
+        {
+          name: 'Toronto Bridge All on 4',
+          price: '€9999.99',
+          note: 'Full-arch bridge prosthesis on 4 implants.',
+        },
+        {
+          name: 'Implant Retained Removable Denture with 3 Implants and Bar',
+          price: '€5500.00',
+          note: 'Best removable option for upper arch.',
+        },
+        { name: 'Crown / Pontic on Implant', price: '€400.00' },
+        {
+          name: 'Implant Retained Removable Denture',
+          price: '€3500.00',
+          note: 'Locator-based, with 2 implants included; suitable for lower arch only.',
+        },
+      ],
+    },
+    {
+      title: 'Extraction and Surgery',
+      items: [
+        {
+          name: 'Extraction',
+          price: 'From €60.00',
+          note: 'Does not include radiographs if required.',
+        },
+        {
+          name: 'Wisdom Tooth Surgical Extraction',
+          price: '€250.00',
+          note: 'Does not include radiographs if required.',
+        },
+        {
+          name: 'Surgical Extraction',
+          price: 'From €150.00',
+          note: 'Includes retained roots and heavily broken teeth; radiographs not included.',
+        },
+      ],
+    },
+    {
+      title: 'Root Canal Treatment',
+      items: [
+        {
+          name: 'Root Canal Anterior Teeth',
+          price: '€250.00',
+          note: 'Includes filling but not the post if required.',
+        },
+        {
+          name: 'Re Root Canal Treatment',
+          price: '€320.00',
+          note: 'For teeth that already had root canal treatment previously.',
+        },
+        {
+          name: 'Root Canal Treatment Posterior Teeth',
+          price: '€280.00',
+          note: 'Includes filling but not the post if required.',
+        },
+      ],
+    },
+    {
+      title: 'Dentures',
+      items: [
+        { name: 'Full Upper / Lower Acrylic Dentures', price: '€400.00' },
+        {
+          name: 'Flexible Dentures Partial',
+          price: '€350.00',
+          note: 'Meaning 3 teeth and less.',
+        },
+        { name: 'Chrome Cobalt Dentures', price: '€650.00' },
+        {
+          name: 'Partial Acrylic Dentures',
+          price: '€300.00',
+          note: 'More than 3 teeth is considered a full denture.',
+        },
+        {
+          name: 'Flexible Dentures More Than 3 Teeth',
+          price: '€650.00',
+        },
+      ],
+    },
+    {
+      title: 'Orthodontic Treatment & Miscellaneous',
+      items: [
+        { name: 'Soft Splint 2mm', price: '€100.00' },
+        { name: 'Michigan Splint', price: '€300.00' },
+        {
+          name: 'Clear Correct Treatment',
+          price: 'From €2900.00',
+          note: 'Invisible aligners.',
+        },
+        { name: 'Bionator', price: '€600.00' },
+        { name: 'Soft Splint 4mm', price: '€120.00' },
+        {
+          name: 'Invisalign Treatment',
+          price: 'From €3500.00',
+          note: 'Invisible aligners.',
+        },
+        {
+          name: 'Fixed Upper and Lower Orthodontic Appliance',
+          price: 'From €2500.00',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <>
+      <PageHero
+        image={images.contact.CT1}
+        eyebrow="Dental Services Price List"
+        title="A detailed treatment price list presented properly"
+        subtitle="This restores the broader price structure from the live site in a cleaner premium layout. Final fees may still vary depending on complexity, materials, and case requirements."
+      />
+
+      <section className="bg-[#f7f4ef] py-20">
+        <Section>
+          <div className="space-y-10">
+            {priceSections.map((section) => (
+              <div
+                key={section.title}
+                className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl"
+              >
+                <div className="bg-slate-950 text-white px-8 py-6">
+                  <h2 className="text-2xl md:text-3xl font-semibold">
+                    {section.title}
+                  </h2>
+                </div>
+
+                <div>
+                  {section.items.map((item, idx) => (
+                    <div
+                      key={`${section.title}-${item.name}`}
+                      className={`px-8 py-6 ${
+                        idx !== section.items.length - 1
+                          ? 'border-b border-slate-200'
+                          : ''
+                      }`}
+                    >
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+                        <div className="md:max-w-[75%]">
+                          <h3 className="text-lg font-semibold text-slate-900">
+                            {item.name}
+                          </h3>
+                          {item.note && (
+                            <p className="mt-2 text-slate-600 leading-7">
+                              {item.note}
+                            </p>
+                          )}
+                        </div>
+                        <div className="text-xl font-bold text-slate-900 md:text-right">
+                          {item.price}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+      </section>
+
+      <CTASection
+        title="Need a personalised estimate?"
+        text="Use the price list as a guide, then book a consultation so Apex Dental can assess your case properly and confirm the most suitable treatment plan."
+      />
+    </>
+  );
+}
+
 function AppointmentBookingPage() {
   usePageTitle('Appointment Booking | Apex Dental Malta');
+
+  const serviceOptions = [
+    'Cosmetic Dentistry',
+    'Crowns and Bridgework',
+    'Dental Implants',
+    'Dental Prosthetics',
+    'Removable Prosthesis',
+    'Orthodontics',
+    'Periodontology',
+    'Root Canal Treatment',
+    'Teeth Whitening',
+    'Veneers',
+  ];
 
   return (
     <>
       <PageHero
         image={images.contact.CT2}
         eyebrow="Appointment Booking"
-        title="Book your visit at Apex Dental with a cleaner, more conversion-focused booking page"
-        subtitle="Use this page for routine appointments, cosmetic consultations, implant assessments, aligner consultations, and urgent dental concerns."
+        title="Book your dental appointment online"
+        subtitle="Use this page for general visits, cosmetic consultations, implant assessments, prosthetic care, aligners, whitening, and urgent dental needs."
       />
 
       <section className="bg-white py-20">
         <Section>
-          <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
-            <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-              <img
-                src={images.contact.CT3}
-                alt="Apex Dental clinic entrance"
-                className="w-full h-[560px] object-cover"
-              />
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
+            <div className="rounded-[2.5rem] bg-[#f7f4ef] border border-slate-200 p-8">
+              <h2 className="text-2xl font-semibold text-slate-900">
+                Clinic Details
+              </h2>
+              <div className="mt-6 space-y-5 text-slate-700">
+                <div>
+                  <div className="font-semibold text-slate-900">Address</div>
+                  <div className="mt-1">{brand.address}</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Phone</div>
+                  <a
+                    href={`tel:${brand.phone}`}
+                    className="mt-1 block hover:text-sky-700"
+                  >
+                    {brand.phone}
+                  </a>
+                  <a
+                    href={`tel:${brand.mobile}`}
+                    className="mt-1 block hover:text-sky-700"
+                  >
+                    {brand.mobile}
+                  </a>
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Email</div>
+                  <a
+                    href={`mailto:${brand.email}`}
+                    className="mt-1 block hover:text-sky-700"
+                  >
+                    {brand.email}
+                  </a>
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Working Hours</div>
+                  <div className="mt-1">Monday - Friday: 9 am - 7 pm</div>
+                  <div>Saturday: 9 am - 12:30 pm</div>
+                  <div>Sunday: Closed</div>
+                </div>
+              </div>
+
+              <div className="mt-8 rounded-[2rem] overflow-hidden shadow-lg">
+                <img
+                  src={images.contact.CT3}
+                  alt="Apex Dental clinic entrance"
+                  className="w-full h-[260px] object-cover"
+                />
+              </div>
             </div>
 
             <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
               <h2 className="text-3xl font-semibold">Request an Appointment</h2>
               <p className="mt-4 text-slate-300 leading-7">
-                This page is designed to convert better than a generic contact form. You still need to connect it to your backend or email service.
+                Styled to convert better, but still needs your form backend or
+                email integration.
+              </p>
+
+              <form className="mt-8 space-y-4">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <input
+                  type="date"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+                />
+                <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
+                  <option className="text-slate-900">Select Service</option>
+                  {serviceOptions.map((service) => (
+                    <option key={service} className="text-slate-900">
+                      {service}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  placeholder="Subject"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <textarea
+                  rows="5"
+                  placeholder="Message"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+                />
+                <button
+                  type="submit"
+                  className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
+                >
+                  Send Booking Request
+                </button>
+              </form>
+            </div>
+          </div>
+        </Section>
+      </section>
+    </>
+  );
+}
+
+function ContactPage() {
+  usePageTitle('Contact Apex Dental Malta');
+
+  return (
+    <>
+      <PageHero
+        image={images.contact.CT1}
+        eyebrow="Contact Apex Dental"
+        title="Book your visit at Apex Dental Malta"
+        subtitle="Get in touch for routine care, cosmetic treatment, clear aligners, implant consultations, or urgent dental care."
+      />
+
+      <section className="bg-white py-20">
+        <Section>
+          <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 items-start">
+            <div>
+              <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+                <img
+                  src={images.contact.CT2}
+                  alt="Apex Dental location or reception"
+                  className="w-full h-[520px] object-cover"
+                />
+              </div>
+
+              <div className="mt-8 rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-8">
+                <h2 className="text-2xl font-semibold text-slate-900">
+                  Contact Details
+                </h2>
+                <div className="mt-6 space-y-5">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <div className="font-medium text-slate-900">Address</div>
+                      <div className="text-slate-600 mt-1">{brand.address}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Phone className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <div className="font-medium text-slate-900">Phone</div>
+                      <a
+                        href={`tel:${brand.phone}`}
+                        className="text-slate-600 mt-1 block hover:text-sky-700"
+                      >
+                        {brand.phone}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <MessageCircle
+                      className="text-sky-600 mt-1 shrink-0"
+                      size={20}
+                    />
+                    <div>
+                      <div className="font-medium text-slate-900">WhatsApp</div>
+                      <a
+                        href={`https://wa.me/356${brand.whatsapp}`}
+                        className="text-slate-600 mt-1 block hover:text-sky-700"
+                      >
+                        {brand.mobile}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <div className="font-medium text-slate-900">
+                        Appointments
+                      </div>
+                      <div className="text-slate-600 mt-1">
+                        Contact us for available times and emergency guidance.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+              <h2 className="text-3xl font-semibold">Appointment Request</h2>
+              <p className="mt-4 text-slate-300 leading-7">
+                This form is styled and ready, but you still need to connect it
+                to your backend or email handler.
               </p>
 
               <form className="mt-8 space-y-4">
@@ -1687,38 +2270,24 @@ function AppointmentBookingPage() {
                   placeholder="Email Address"
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
                 />
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
-                    <option className="text-slate-900">Reason for Visit</option>
-                    <option className="text-slate-900">Routine Check-up</option>
-                    <option className="text-slate-900">Dental Implants</option>
-                    <option className="text-slate-900">Clear Aligners</option>
-                    <option className="text-slate-900">Cosmetic Dentistry</option>
-                    <option className="text-slate-900">Dental Hygiene</option>
-                    <option className="text-slate-900">Root Canal Treatment</option>
-                    <option className="text-slate-900">Emergency Appointment</option>
-                  </select>
-
-                  <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
-                    <option className="text-slate-900">Preferred Time</option>
-                    <option className="text-slate-900">Morning</option>
-                    <option className="text-slate-900">Afternoon</option>
-                    <option className="text-slate-900">Any Time</option>
-                  </select>
-                </div>
-
+                <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
+                  <option className="text-slate-900">Reason for Visit</option>
+                  <option className="text-slate-900">General Check-up</option>
+                  <option className="text-slate-900">Dental Implants</option>
+                  <option className="text-slate-900">Clear Aligners</option>
+                  <option className="text-slate-900">Cosmetic Dentistry</option>
+                  <option className="text-slate-900">Emergency Appointment</option>
+                </select>
                 <textarea
                   rows="5"
-                  placeholder="Tell us briefly how we can help"
+                  placeholder="Message"
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
                 />
-
                 <button
                   type="submit"
                   className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
                 >
-                  Send Booking Request
+                  Send Request
                 </button>
               </form>
 
@@ -1728,7 +2297,10 @@ function AppointmentBookingPage() {
                   {brand.phone}
                 </a>{' '}
                 or WhatsApp{' '}
-                <a href={`https://wa.me/356${brand.whatsapp}`} className="text-white">
+                <a
+                  href={`https://wa.me/356${brand.whatsapp}`}
+                  className="text-white"
+                >
                   {brand.mobile}
                 </a>
                 .
@@ -1737,6 +2309,65 @@ function AppointmentBookingPage() {
           </div>
         </Section>
       </section>
+
+      <section className="bg-[#f7f4ef] py-20">
+        <Section>
+          <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+            <img
+              src={images.contact.CT3}
+              alt="Apex Dental exterior or entrance"
+              className="w-full h-[480px] object-cover"
+            />
+          </div>
+        </Section>
+      </section>
     </>
+  );
+}
+
+export default function ApexDentalWebsitePremium() {
+  return (
+    <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
+      <ScrollToTop />
+      <FloatingHeader />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/dental-implants" element={<ImplantsPage />} />
+        <Route path="/clear-aligners-malta" element={<AlignersPage />} />
+        <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
+        <Route path="/general-dentistry-malta" element={<GeneralDentistryPage />} />
+        <Route path="/dental-hygiene-malta" element={<HygienePage />} />
+        <Route path="/veneers-malta" element={<VeneersPage />} />
+        <Route path="/teeth-whitening-malta" element={<TeethWhiteningPage />} />
+        <Route
+          path="/crowns-and-bridgework-malta"
+          element={<CrownsBridgeworkPage />}
+        />
+        <Route path="/periodontology-malta" element={<PeriodontologyPage />} />
+        <Route path="/orthodontic-malta" element={<OrthodonticPage />} />
+        <Route
+          path="/dental-prosthetics-malta"
+          element={<DentalProstheticsPage />}
+        />
+        <Route
+          path="/removable-prosthesis-malta"
+          element={<RemovableProsthesisPage />}
+        />
+        <Route path="/root-canal-treatment-malta" element={<RootCanalPage />} />
+        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
+        <Route path="/price-list" element={<PriceListPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route
+          path="/appointment-booking"
+          element={<AppointmentBookingPage />}
+        />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+
+      <Footer />
+      <MobileStickyBar />
+    </div>
   );
 }
