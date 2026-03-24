@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { useForm, ValidationError } from '@formspree/react';
 import {
   Phone,
   MapPin,
@@ -55,6 +56,70 @@ function GoogleAdsPageTracker() {
   }, [location.pathname, location.search, location.hash]);
 
   return null;
+}
+
+function ContactFormCard() {
+  const [state, handleSubmit] = useForm('mwvrgyay');
+
+  if (state.succeeded) {
+    return (
+      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+        <h2 className="text-3xl font-semibold">Thank you</h2>
+        <p className="mt-4 text-slate-300 leading-7">
+          Your message has been sent successfully. We’ll get back to you shortly.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+      <h2 className="text-3xl font-semibold">Contact Us</h2>
+
+      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+        />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+        />
+        <ValidationError prefix="Email" field="email" errors={state.errors} />
+
+        <textarea
+          rows="5"
+          name="message"
+          placeholder="Message"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+        />
+        <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+        <button
+          type="submit"
+          disabled={state.submitting}
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold"
+        >
+          {state.submitting ? 'Sending...' : 'Send Request'}
+        </button>
+      </form>
+    </div>
+  );
 }
 
 const brand = {
@@ -2462,65 +2527,7 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-              <h2 className="text-3xl font-semibold">Appointment Request</h2>
-              <p className="mt-4 text-slate-300 leading-7">
-                This form is styled and ready, but you still need to connect it
-                to your backend or email handler.
-              </p>
-
-              <form className="mt-8 space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
-                  <option className="text-slate-900">Reason for Visit</option>
-                  <option className="text-slate-900">General Check-up</option>
-                  <option className="text-slate-900">Dental Implants</option>
-                  <option className="text-slate-900">Clear Aligners</option>
-                  <option className="text-slate-900">Cosmetic Dentistry</option>
-                  <option className="text-slate-900">Emergency Appointment</option>
-                </select>
-                <textarea
-                  rows="5"
-                  placeholder="Message"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
-                >
-                  Send Request
-                </button>
-              </form>
-
-              <div className="mt-8 text-sm text-slate-400">
-                Prefer speaking to us directly? Call{' '}
-                <a href={`tel:${brand.phone}`} className="text-white">
-                  {brand.phone}
-                </a>{' '}
-                or WhatsApp{' '}
-                <a
-                  href={`https://wa.me/356${brand.whatsapp}`}
-                  className="text-white"
-                >
-                  {brand.mobile}
-                </a>
-                .
-              </div>
-            </div>
+            <ContactFormCard />
           </div>
         </Section>
       </section>
