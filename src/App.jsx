@@ -122,18 +122,11 @@ function ContactFormCard() {
   );
 }
 
-function BookingFormCard({ serviceOptions = [] }) {
+function BookingFormCard({ serviceOptions }) {
   const [state, handleSubmit] = useForm('myknrvqq');
 
   if (state.succeeded) {
-    return (
-      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-        <h2 className="text-3xl font-semibold">Thank you</h2>
-        <p className="mt-4 text-slate-300 leading-7">
-          Your booking request has been sent successfully. We will contact you shortly.
-        </p>
-      </div>
-    );
+    return <div>Booking request sent</div>;
   }
 
   return (
