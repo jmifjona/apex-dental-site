@@ -122,6 +122,95 @@ function ContactFormCard() {
   );
 }
 
+function BookingFormCard({ serviceOptions = [] }) {
+  const [state, handleSubmit] = useForm('myknrvqq');
+
+  if (state.succeeded) {
+    return (
+      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+        <h2 className="text-3xl font-semibold">Thank you</h2>
+        <p className="mt-4 text-slate-300 leading-7">
+          Your booking request has been sent successfully. We will contact you shortly.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+      <h2 className="text-3xl font-semibold">Request an Appointment</h2>
+
+      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Email" field="email" errors={state.errors} />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <input
+          type="date"
+          name="preferredDate"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+        />
+
+        <select
+          name="service"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
+        >
+          <option className="text-slate-900">Select Service</option>
+          {serviceOptions.map((service) => (
+            <option key={service} className="text-slate-900">
+              {service}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          name="subject"
+          placeholder="Subject"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+
+        <textarea
+          rows="5"
+          name="message"
+          placeholder="Message"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+        <button
+          type="submit"
+          disabled={state.submitting}
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
+        >
+          {state.submitting ? 'Sending...' : 'Send Booking Request'}
+        </button>
+      </form>
+    </div>
+  );
+}
+
 const brand = {
   name: 'Apex Dental',
   tagline: 'Advanced Dentistry in Malta',
@@ -2386,59 +2475,7 @@ function AppointmentBookingPage() {
               </div>
             </div>
 
-            <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-              <h2 className="text-3xl font-semibold">Request an Appointment</h2>
-              <p className="mt-4 text-slate-300 leading-7">
-                Styled to convert better, but still needs your form backend or
-                email integration.
-              </p>
-
-              <form className="mt-8 space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <input
-                  type="date"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
-                />
-                <select className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300">
-                  <option className="text-slate-900">Select Service</option>
-                  {serviceOptions.map((service) => (
-                    <option key={service} className="text-slate-900">
-                      {service}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <textarea
-                  rows="5"
-                  placeholder="Message"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
-                >
-                  Send Booking Request
-                </button>
-              </form>
-            </div>
+            <BookingFormCard serviceOptions={serviceOptions} />
           </div>
         </Section>
       </section>
