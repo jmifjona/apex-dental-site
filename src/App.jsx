@@ -3047,38 +3047,26 @@ export default function ApexDentalWebsitePremium() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/dental-implants" element={<ImplantsPage />} />
-        <Route path="/clear-aligners-malta" element={<AlignersPage />} />
+        <Route path="/about-us/" element={<AboutPage />} />
+        <Route path="/dental-implants/" element={<ImplantsPage />} />
+        <Route path="/invisalign-malta/" element={<AlignersPage />} />
         <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
-        <Route path="/general-dentistry-malta" element={<GeneralDentistryPage />} />
-        <Route path="/dental-hygiene-malta" element={<HygienePage />} />
-        <Route path="/veneers-malta" element={<VeneersPage />} />
-        <Route path="/teeth-whitening-malta" element={<TeethWhiteningPage />} />
-        <Route
-          path="/crowns-and-bridgework-malta"
-          element={<CrownsBridgeworkPage />}
-        />
-        <Route path="/periodontology-malta" element={<PeriodontologyPage />} />
-        <Route path="/orthodontic-malta" element={<OrthodonticPage />} />
-        <Route
-          path="/dental-prosthetics-malta"
-          element={<DentalProstheticsPage />}
-        />
-        <Route
-          path="/removable-prosthesis-malta"
-          element={<RemovableProsthesisPage />}
-        />
-        <Route path="/root-canal-treatment-malta" element={<RootCanalPage />} />
-        <Route path="/emergency-dentist-malta" element={<EmergencyPage />} />
-        <Route path="/price-list" element={<PriceListPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route
-          path="/appointment-booking"
-          element={<AppointmentBookingPage />}
-        />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/general-dentistry/" element={<GeneralDentistryPage />} />
+        <Route path="/dental-hygiene/" element={<HygienePage />} />
+        <Route path="/veneers/" element={<VeneersPage />} />
+        <Route path="/teeth-whitening/" element={<TeethWhiteningPage />} />
+        <Route path="/crowns-and-bridgework/" element={<CrownsBridgeworkPage />} />
+        <Route path="/periodontology/" element={<PeriodontologyPage />} />
+        <Route path="/orthodontics/" element={<OrthodonticPage />} />
+        <Route path="/dental-prosthetics/" element={<DentalProstheticsPage />} />
+        <Route path="/removable-prosthesis/" element={<RemovableProsthesisPage />} />
+        <Route path="/root-canal-treatment/" element={<RootCanalPage />} />
+        <Route path="/emergency-dental-service-malta/" element={<EmergencyPage />} />
+        <Route path="/price-list/" element={<PriceListPage />} />
+        <Route path="/blog/" element={<BlogPage />} />
+        <Route path="/appointment-booking/" element={<AppointmentBookingPage />} />
+        <Route path="/services/" element={<ServicesPage />} />
+        <Route path="/contact-us/" element={<ContactPage />} />
       </Routes>
 
       <Footer />
