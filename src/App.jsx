@@ -216,6 +216,51 @@ const brand = {
   logo: '/images/orislogo.png',
 };
 
+const siteUrl = 'https://apexdentalmalta.com';
+
+function localBusinessSchema(pageUrl) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dentist',
+    name: 'Apex Dental',
+    url: siteUrl,
+    image: `${siteUrl}/images/H1.jpg`,
+    telephone: brand.phone,
+    email: brand.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Trident Park, Imdina Road, Central Business District',
+      addressLocality: 'Imrieħel',
+      postalCode: 'CBD 2010',
+      addressCountry: 'MT',
+    },
+    areaServed: 'Malta',
+    sameAs: [],
+    mainEntityOfPage: pageUrl,
+  };
+}
+
+function serviceSchema(name, description, pageUrl) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: name,
+    name,
+    description,
+    provider: {
+      '@type': 'Dentist',
+      name: 'Apex Dental',
+      url: siteUrl,
+      telephone: brand.phone,
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Malta',
+    },
+    url: pageUrl,
+  };
+}
+
 const images = {
   home: {
     H1: '/images/H1.jpg',
@@ -1189,6 +1234,12 @@ function HomePage() {
 
   return (
     <>
+      <SEO
+        title="Apex Dental Malta | Dental Implants, Invisalign, Veneers & Emergency Dentist"
+        description="Apex Dental Malta offers dental implants, Invisalign, veneers, cosmetic dentistry, emergency dental care, hygiene, and restorative treatments in Malta."
+        canonical={`${siteUrl}/`}
+        schema={localBusinessSchema(`${siteUrl}/`)}
+      />
       <DarkHero
         image={images.home.H1}
         eyebrow="Premium dental care in Malta"
@@ -1235,6 +1286,16 @@ function ImplantsPage() {
 
   return (
     <>
+      <SEO
+        title="Dental Implants Malta | Apex Dental"
+        description="Apex Dental provides dental implants in Malta for single missing teeth, multiple teeth, and advanced restorative treatment with a premium patient experience."
+        canonical={`${siteUrl}/dental-implants/`}
+        schema={serviceSchema(
+          'Dental Implants',
+          'Dental implant treatment in Malta for missing teeth replacement with function, aesthetics, and long-term stability in mind.',
+          `${siteUrl}/dental-implants/`
+        )}
+      />
       <PageHero
         image={images.implants.I1}
         eyebrow="Dental Implants Malta"
@@ -1294,6 +1355,16 @@ function AlignersPage() {
 
   return (
     <>
+      <SEO
+        title="Clear Aligners Malta | Apex Dental"
+        description="Discover clear aligners in Malta at Apex Dental. Discreet orthodontic treatment for adults and teens with modern planning and a premium experience."
+        canonical={`${siteUrl}/invisalign-malta/`}
+        schema={serviceSchema(
+          'Clear Aligners',
+          'Clear aligner treatment in Malta for discreet orthodontic smile improvement.',
+          `${siteUrl}/invisalign-malta/`
+        )}
+      />
       <PageHero
         image={images.aligners.A1}
         eyebrow="Clear Aligners Malta"
@@ -1659,6 +1730,16 @@ function TeethWhiteningPage() {
 
   return (
     <>
+      <SEO
+        title="Teeth Whitening Malta | Apex Dental"
+        description="Professional teeth whitening in Malta with home kits and in-clinic whitening options designed for brighter, cleaner smiles."
+        canonical={`${siteUrl}/teeth-whitening/`}
+        schema={serviceSchema(
+          'Teeth Whitening',
+          'Professional teeth whitening in Malta with home and in-clinic options.',
+          `${siteUrl}/teeth-whitening/`
+        )}
+      />
       <PageHero
         image={images.cosmetic.C2}
         eyebrow="Teeth Whitening Malta"
@@ -1966,6 +2047,16 @@ function EmergencyPage() {
 
   return (
     <>
+      <SEO
+        title="Emergency Dentist Malta | Apex Dental"
+        description="Need an emergency dentist in Malta? Apex Dental provides urgent assessment for toothache, swelling, broken teeth, trauma, and lost restorations."
+        canonical={`${siteUrl}/emergency-dental-service-malta/`}
+        schema={serviceSchema(
+          'Emergency Dentist',
+          'Emergency dental care in Malta for tooth pain, swelling, broken teeth, trauma, and urgent dental problems.',
+          `${siteUrl}/emergency-dental-service-malta/`
+        )}
+      />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Emergency Dentist Malta"
@@ -2327,6 +2418,16 @@ function PriceListPage() {
 
   return (
     <>
+      <SEO
+        title="Dental Price List Malta | Apex Dental"
+        description="View Apex Dental's price list in Malta for checkups, hygiene, whitening, crowns, veneers, implants, root canal treatment, dentures, and orthodontics."
+        canonical={`${siteUrl}/price-list/`}
+        schema={serviceSchema(
+          'Dental Price List',
+          'Dental treatment price list in Malta for common consultations and procedures.',
+          `${siteUrl}/price-list/`
+        )}
+      />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Dental Services Price List"
@@ -2704,6 +2805,16 @@ function ServicesPage() {
 
   return (
     <>
+      <SEO
+        title="Dental Services Malta | Apex Dental"
+        description="Explore Apex Dental's services in Malta including dental implants, Invisalign, veneers, whitening, crowns, root canal treatment, prosthetics, hygiene, and emergency dentistry."
+        canonical={`${siteUrl}/services/`}
+        schema={serviceSchema(
+          'Dental Services',
+          'Comprehensive dental services in Malta including implants, cosmetic dentistry, aligners, restorative care, and emergency treatment.',
+          `${siteUrl}/services/`
+        )}
+      />
       <PageHero
         image={images.home.H2}
         eyebrow="Dental Services Malta"
@@ -2843,6 +2954,66 @@ function ComplianceTrustSection() {
       </Section>
     </section>
   );
+}
+
+function SEO({
+  title,
+  description,
+  canonical,
+  type = 'website',
+  schema = null,
+}) {
+  useEffect(() => {
+    document.title = title;
+
+    const ensureMeta = (attr, key, value) => {
+      let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, key);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', value);
+    };
+
+    const ensureLink = (rel, href) => {
+      let el = document.head.querySelector(`link[rel="${rel}"]`);
+      if (!el) {
+        el = document.createElement('link');
+        el.setAttribute('rel', rel);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('href', href);
+    };
+
+    ensureMeta('name', 'description', description);
+    ensureMeta('property', 'og:title', title);
+    ensureMeta('property', 'og:description', description);
+    ensureMeta('property', 'og:type', type);
+    ensureMeta('property', 'og:url', canonical);
+    ensureMeta('name', 'twitter:card', 'summary_large_image');
+    ensureMeta('name', 'twitter:title', title);
+    ensureMeta('name', 'twitter:description', description);
+
+    ensureLink('canonical', canonical);
+
+    let schemaTag = document.head.querySelector('#seo-schema');
+    if (schema) {
+      if (!schemaTag) {
+        schemaTag = document.createElement('script');
+        schemaTag.type = 'application/ld+json';
+        schemaTag.id = 'seo-schema';
+        document.head.appendChild(schemaTag);
+      }
+      schemaTag.textContent = JSON.stringify(schema);
+    } else if (schemaTag) {
+      schemaTag.remove();
+    }
+
+    return () => {};
+  }, [title, description, canonical, type, schema]);
+
+  return null;
 }
 
 export default function ApexDentalWebsitePremium() {
