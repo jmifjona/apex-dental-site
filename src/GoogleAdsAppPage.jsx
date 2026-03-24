@@ -2,8 +2,8 @@ import React from "react";
 
 export default function GoogleAdsAppPage() {
   return (
-    <main className="min-h-screen bg-white text-slate-800">
-      <section className="max-w-4xl mx-auto px-6 py-16">
+    <main className="min-h-screen bg-white text-slate-800 pt-32 pb-20">
+      <section className="max-w-4xl mx-auto px-6">
         <h1 className="text-4xl font-bold mb-6">Apex Dental Google Ads App</h1>
 
         <p className="text-lg leading-8 mb-6">
@@ -24,8 +24,7 @@ export default function GoogleAdsAppPage() {
             className="text-blue-600 underline"
           >
             jon@apexdental.com.mt
-          </a>
-          .
+          </a>.
         </p>
       </section>
     </main>
