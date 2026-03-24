@@ -1482,12 +1482,18 @@ function AboutPage() {
 
   return (
     <>
+      <SEO
+        title="About Apex Dental Malta"
+        description="Learn more about Apex Dental Malta, a modern dental clinic focused on quality care, digital dentistry, patient confidence, and a premium experience."
+        canonical={`${siteUrl}/about-us/`}
+        schema={localBusinessSchema(`${siteUrl}/about-us/`)}
+      />
       <ComplianceTrustSection />
 
       <PageHero
         image={images.about.AB1}
         eyebrow="About Apex Dental"
-        title="A modern dental clinic in Malta built around quality, precision, and patient confidence"
+        title="A modern dental clinic in Malta built around quaality, precision, and patient confidence"
         subtitle="Apex Dental combines professional care, modern technology, and a welcoming clinic atmosphere to create a better patient experience from the moment you walk in."
       />
 
@@ -2509,6 +2515,16 @@ function AppointmentBookingPage() {
 
   return (
     <>
+      <SEO
+        title="Book a Dentist Appointment Malta | Apex Dental"
+        description="Book a dental appointment at Apex Dental Malta for implants, Invisalign, veneers, hygiene, restorative treatment, and emergency dental care."
+        canonical={`${siteUrl}/appointment-booking/`}
+        schema={serviceSchema(
+          'Dental Appointment Booking',
+          'Book a dentist appointment in Malta for consultations, emergency care, cosmetic dentistry, implants, and aligners.',
+          `${siteUrl}/appointment-booking/`
+        )}
+      />
       <PageHero
         image={images.contact.CT2}
         eyebrow="Appointment Booking"
@@ -2582,6 +2598,12 @@ function ContactPage() {
 
   return (
     <>
+      <SEO
+        title="Contact Apex Dental Malta"
+        description="Contact Apex Dental Malta to book appointments for dental implants, Invisalign, veneers, emergency dental care, hygiene, and general dentistry."
+        canonical={`${siteUrl}/contact-us/`}
+        schema={localBusinessSchema(`${siteUrl}/contact-us/`)}
+      />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Contact Apex Dental"
