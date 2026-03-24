@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
+import GoogleAdsAppPage from './GoogleAdsAppPage';
+import PrivacyPolicy from './PrivacyPolicy';
+import Terms from './Terms';
 import {
   Phone,
   MapPin,
@@ -1128,31 +1131,42 @@ function Footer() {
             treatment, clear aligners, cosmetic dentistry, and a modern patient
             experience.
           </p>
+          <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-300">
+            <Link to="/google-ads-app" className="hover:text-white">
+              Google Ads App
+            </Link>
+            <Link to="/privacy-policy" className="hover:text-white">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-white">
+              Terms of Service
+            </Link>
+          </div>
         </div>
 
         <div>
           <h4 className="font-semibold text-lg">Quick Links</h4>
           <div className="mt-4 flex flex-col gap-3 text-slate-300">
             <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/dental-implants">Dental Implants</Link>
-            <Link to="/clear-aligners-malta">Clear Aligners</Link>
+            <Link to="/about-us/">About</Link>
+            <Link to="/dental-implants/">Dental Implants</Link>
+            <Link to="/invisalign-malta/">Clear Aligners</Link>
             <Link to="/cosmetic-dentistry-malta">Cosmetic Dentistry</Link>
-            <Link to="/general-dentistry-malta">General Dentistry</Link>
-            <Link to="/dental-hygiene-malta">Dental Hygiene</Link>
-            <Link to="/veneers-malta">Veneers</Link>
-            <Link to="/teeth-whitening-malta">Teeth Whitening</Link>
-            <Link to="/crowns-and-bridgework-malta">Crowns & Bridgework</Link>
-            <Link to="/periodontology-malta">Periodontology</Link>
-            <Link to="/orthodontic-malta">Orthodontic Treatment</Link>
-            <Link to="/dental-prosthetics-malta">Dental Prosthetics</Link>
-            <Link to="/removable-prosthesis-malta">Removable Prosthesis</Link>
-            <Link to="/root-canal-treatment-malta">Root Canal Treatment</Link>
-            <Link to="/emergency-dentist-malta">Emergency Dentist</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/appointment-booking">Appointment Booking</Link>
-            <Link to="/price-list">Price List</Link>
-            <Link to="/contact">Contact</Link>
+            <Link to="/general-dentistry/">General Dentistry</Link>
+            <Link to="/dental-hygiene/">Dental Hygiene</Link>
+            <Link to="/veneers/">Veneers</Link>
+            <Link to="/teeth-whitening/">Teeth Whitening</Link>
+            <Link to="/crowns-and-bridgework/">Crowns & Bridgework</Link>
+            <Link to="/periodontology/">Periodontology</Link>
+            <Link to="/orthodontics/">Orthodontic Treatment</Link>
+            <Link to="/dental-prosthetics/">Dental Prosthetics</Link>
+            <Link to="/removable-prosthesis/">Removable Prosthesis</Link>
+            <Link to="/root-canal-treatment/">Root Canal Treatment</Link>
+            <Link to="/emergency-dental-service-malta/">Emergency Dentist</Link>
+            <Link to="/blog/">Blog</Link>
+            <Link to="/appointment-booking/">Appointment Booking</Link>
+            <Link to="/price-list/">Price List</Link>
+            <Link to="/contact-us/">Contact</Link>
           </div>
         </div>
 
@@ -3067,6 +3081,9 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/appointment-booking/" element={<AppointmentBookingPage />} />
         <Route path="/services/" element={<ServicesPage />} />
         <Route path="/contact-us/" element={<ContactPage />} />
+        <Route path="/google-ads-app" element={<GoogleAdsAppPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
 
       <Footer />
