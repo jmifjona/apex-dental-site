@@ -18,7 +18,9 @@ export default function Terms() {
           prohibited.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-3">Third-Party Services</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-3">
+          Third-Party Services
+        </h2>
         <p className="mb-4 leading-8">
           This application may connect to Google services, including Google Ads,
           through approved APIs. Use of those services may also be subject to
@@ -32,7 +34,9 @@ export default function Terms() {
           law.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-3">Limitation of Liability</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-3">
+          Limitation of Liability
+        </h2>
         <p className="mb-4 leading-8">
           Apex Dental shall not be liable for any indirect, incidental, or
           consequential damages arising from use of the application, to the

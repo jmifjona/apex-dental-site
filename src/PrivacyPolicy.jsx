@@ -12,7 +12,9 @@ export default function PrivacyPolicy() {
           Ads application and related services.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-3">Information We Collect</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-3">
+          Information We Collect
+        </h2>
         <p className="mb-4 leading-8">
           We may collect limited account information required for authentication
           and access to Google Ads services, including account identifiers,
@@ -20,7 +22,9 @@ export default function PrivacyPolicy() {
           Google through authorized API access.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-3">How We Use Information</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-3">
+          How We Use Information
+        </h2>
         <p className="mb-4 leading-8">
           We use this information solely to authenticate authorized users,
           access Google Ads account data, review campaign performance, and
