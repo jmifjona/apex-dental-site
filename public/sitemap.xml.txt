@@ -1,7 +1,0 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://maltadentalclinic.com/</loc></url>
-  <url><loc>https://maltadentalclinic.com/dental-implants-malta</loc></url>
-  <url><loc>https://maltadentalclinic.com/clear-aligners-malta</loc></url>
-  <url><loc>https://maltadentalclinic.com/cosmetic-dentistry-malta</loc></url>
-  <url><loc>https://maltadentalclinic.com/emergency-dentist-malta</loc></url>
-</urlset>
