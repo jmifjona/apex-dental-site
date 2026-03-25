@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
+import GoogleAdsDashboard from './GoogleAdsDashboard';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import {
@@ -3082,6 +3083,7 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/services/" element={<ServicesPage />} />
         <Route path="/contact-us/" element={<ContactPage />} />
         <Route path="/google-ads-app" element={<GoogleAdsAppPage />} />
+        <Route path="/google-ads-dashboard" element={<GoogleAdsDashboard />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
       </Routes>
