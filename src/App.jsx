@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
-import GoogleAdsDashboard from './GoogleAdsDashboard';
+import GoogleAdsDashboard from './GoogleAdsDashboard.jsx';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import {
