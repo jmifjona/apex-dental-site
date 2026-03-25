@@ -23,6 +23,12 @@ function formatMoney(value) {
 
 export default function GoogleAdsDashboard() {
   const [campaigns, setCampaigns] = useState([]);
+  const [summary, setSummary] = useState({
+    impressions: 0,
+    clicks: 0,
+    cost: 0,
+    conversions: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -40,6 +46,14 @@ export default function GoogleAdsDashboard() {
         }
 
         setCampaigns(data.campaigns || []);
+        setSummary(
+          data.summary || {
+            impressions: 0,
+            clicks: 0,
+            cost: 0,
+            conversions: 0,
+          }
+        );
       } catch (err) {
         setError(err.message || 'Something went wrong');
       } finally {
@@ -61,6 +75,38 @@ export default function GoogleAdsDashboard() {
             Live campaign performance from the last 30 days.
           </p>
         </div>
+
+        {!loading && !error && (
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Impressions</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.impressions)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Clicks</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.clicks)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Cost</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatMoney(summary.cost)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Conversions</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.conversions)}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-8">
           {loading && (
