@@ -32,7 +32,7 @@ export default function GoogleAdsCampaignCreator() {
     setResult(null);
 
     try {
-      const response = await fetch('http://localhost:3001/campaign-builder-preview', {
+      const response = await fetch('http://localhost:3001/campaigns/create-search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -200,10 +200,13 @@ export default function GoogleAdsCampaignCreator() {
         )}
 
         {result && (
-          <div className="mt-6 rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
-            <h2 className="text-2xl font-semibold text-slate-900">Draft Preview</h2>
-            <pre className="mt-4 whitespace-pre-wrap text-sm text-slate-700 overflow-auto">
-              {JSON.stringify(result.preview, null, 2)}
+          <div className="mt-6 rounded-[2rem] bg-green-50 border border-green-200 p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold text-green-800">
+              Campaign Created
+            </h2>
+            <p className="mt-3 text-green-700">{result.message}</p>
+            <pre className="mt-4 whitespace-pre-wrap text-sm text-green-900 overflow-auto">
+              {JSON.stringify(result.result, null, 2)}
             </pre>
           </div>
         )}
