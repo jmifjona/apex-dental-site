@@ -13,6 +13,14 @@ function statusLabel(status) {
   }
 }
 
+function formatNumber(value) {
+  return new Intl.NumberFormat().format(value || 0);
+}
+
+function formatMoney(value) {
+  return `€${Number(value || 0).toFixed(2)}`;
+}
+
 export default function GoogleAdsDashboard() {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +58,7 @@ export default function GoogleAdsDashboard() {
             Google Ads Dashboard
           </h1>
           <p className="mt-3 text-slate-300 leading-7">
-            Live campaigns from your Google Ads account.
+            Live campaign performance from the last 30 days.
           </p>
         </div>
 
@@ -80,7 +88,7 @@ export default function GoogleAdsDashboard() {
                   key={campaign.id}
                   className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
                       <h2 className="text-xl font-semibold text-slate-900">
                         {campaign.name}
@@ -92,6 +100,36 @@ export default function GoogleAdsDashboard() {
 
                     <div className="inline-flex items-center rounded-full bg-slate-950 text-white px-4 py-2 text-sm font-semibold">
                       {statusLabel(campaign.status)}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Impressions</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.impressions)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Clicks</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.clicks)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Cost</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatMoney(campaign.cost)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Conversions</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.conversions)}
+                      </div>
                     </div>
                   </div>
                 </div>
