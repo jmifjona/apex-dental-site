@@ -11,7 +11,7 @@ export function trackAppointmentBookingConversion(url) {
   };
 
   window.gtag('event', 'conversion', {
-    send_to: 'AW-11413798917/PSShCIDpxpEcEIWAw8Iq',
+    send_to: 'AW-11413798917/GaMJCP_rx5EcEIWAw8Iq',
     event_callback: callback,
   });
 }
