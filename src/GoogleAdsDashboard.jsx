@@ -38,7 +38,7 @@ export default function GoogleAdsDashboard() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/test-google-ads`);
+        const response = await fetch('https://google-ads-backend-production-2319.up.railway.app/test-google-ads');
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
