@@ -4,6 +4,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
 import GoogleAdsDashboard from './GoogleAdsDashboard.jsx';
 import GoogleAdsCampaignCreator from './GoogleAdsCampaignCreator';
+import GoogleAdsCampaignBuilder from './GoogleAdsCampaignBuilder';
 import GoogleAdsCampaignManager from './GoogleAdsCampaignManager';
 import GoogleAdsStrategyEngine from './GoogleAdsStrategyEngine';
 import { trackAppointmentBookingConversion } from './lib/googleAds';
@@ -3095,6 +3096,7 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/google-ads-app" element={<GoogleAdsAppPage />} />
         <Route path="/google-ads-dashboard" element={<GoogleAdsDashboard />} />
         <Route path="/google-ads-campaign-creator" element={<GoogleAdsCampaignCreator />} />
+        <Route path="/google-ads-builder" element={<GoogleAdsCampaignBuilder />} />
         <Route path="/google-ads-manager" element={<GoogleAdsCampaignManager />} />
         <Route path="/google-ads-strategy" element={<GoogleAdsStrategyEngine />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
