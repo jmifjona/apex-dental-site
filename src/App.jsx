@@ -4,6 +4,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
 import GoogleAdsDashboard from './GoogleAdsDashboard.jsx';
 import GoogleAdsCampaignCreator from './GoogleAdsCampaignCreator';
+import { trackAppointmentBookingConversion } from './lib/googleAds';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import {
@@ -64,9 +65,9 @@ function GoogleAdsPageTracker() {
 }
 
 function ContactFormCard() {
-  const [state, handleSubmit] = useForm('mwvrgyay');
+  const [contactState, handleContactSubmit] = useForm('myknrvqq');
 
-  if (state.succeeded) {
+  if (contactState.succeeded) {
     return (
       <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
         <h2 className="text-3xl font-semibold">Thank you</h2>
@@ -81,7 +82,7 @@ function ContactFormCard() {
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Contact Us</h2>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+      <form onSubmit={handleContactSubmit} className="mt-8 space-y-4">
         <input
           type="text"
           name="name"
@@ -105,7 +106,7 @@ function ContactFormCard() {
           required
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
         />
-        <ValidationError prefix="Email" field="email" errors={state.errors} />
+        <ValidationError prefix="Email" field="email" errors={contactState.errors} />
 
         <textarea
           rows="5"
@@ -113,14 +114,14 @@ function ContactFormCard() {
           placeholder="Message"
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
         />
-        <ValidationError prefix="Message" field="message" errors={state.errors} />
+        <ValidationError prefix="Message" field="message" errors={contactState.errors} />
 
         <button
           type="submit"
-          disabled={state.submitting}
+          disabled={contactState.submitting}
           className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold"
         >
-          {state.submitting ? 'Sending...' : 'Send Request'}
+          {contactState.submitting ? 'Sending...' : 'Send Request'}
         </button>
       </form>
     </div>
@@ -128,9 +129,15 @@ function ContactFormCard() {
 }
 
 function BookingFormCard({ serviceOptions }) {
-  const [state, handleSubmit] = useForm('myknrvqq');
+  const [appointmentState, handleAppointmentSubmit] = useForm('mwvrgyay');
 
-  if (state.succeeded) {
+  useEffect(() => {
+    if (appointmentState.succeeded) {
+      trackAppointmentBookingConversion();
+    }
+  }, [appointmentState.succeeded]);
+
+  if (appointmentState.succeeded) {
     return <div>Booking request sent</div>;
   }
 
@@ -138,7 +145,7 @@ function BookingFormCard({ serviceOptions }) {
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Request an Appointment</h2>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+      <form onSubmit={handleAppointmentSubmit} className="mt-8 space-y-4">
         <input
           type="text"
           name="name"
@@ -154,7 +161,7 @@ function BookingFormCard({ serviceOptions }) {
           required
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
         />
-        <ValidationError prefix="Email" field="email" errors={state.errors} />
+        <ValidationError prefix="Email" field="email" errors={appointmentState.errors} />
 
         <input
           type="tel"
@@ -195,14 +202,14 @@ function BookingFormCard({ serviceOptions }) {
           placeholder="Message"
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
         />
-        <ValidationError prefix="Message" field="message" errors={state.errors} />
+        <ValidationError prefix="Message" field="message" errors={appointmentState.errors} />
 
         <button
           type="submit"
-          disabled={state.submitting}
+          disabled={appointmentState.submitting}
           className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
         >
-          {state.submitting ? 'Sending...' : 'Send Booking Request'}
+          {appointmentState.submitting ? 'Sending...' : 'Send Booking Request'}
         </button>
       </form>
     </div>
