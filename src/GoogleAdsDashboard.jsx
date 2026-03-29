@@ -1,0 +1,189 @@
+import React, { useEffect, useState } from 'react';
+
+function statusLabel(status) {
+  switch (Number(status)) {
+    case 2:
+      return 'Paused';
+    case 3:
+      return 'Enabled';
+    case 4:
+      return 'Removed';
+    default:
+      return `Status ${status}`;
+  }
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat().format(value || 0);
+}
+
+function formatMoney(value) {
+  return `€${Number(value || 0).toFixed(2)}`;
+}
+
+export default function GoogleAdsDashboard() {
+  const [campaigns, setCampaigns] = useState([]);
+  const [summary, setSummary] = useState({
+    impressions: 0,
+    clicks: 0,
+    cost: 0,
+    conversions: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function loadCampaigns() {
+      try {
+        setLoading(true);
+        setError('');
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/test-google-ads`);
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+          throw new Error(data.message || 'Failed to load campaigns');
+        }
+
+        setCampaigns(data.campaigns || []);
+        setSummary(
+          data.summary || {
+            impressions: 0,
+            clicks: 0,
+            cost: 0,
+            conversions: 0,
+          }
+        );
+      } catch (err) {
+        setError(err.message || 'Something went wrong');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadCampaigns();
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-slate-100 pt-32 pb-20">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-[2rem] bg-slate-950 text-white p-8 md:p-10 shadow-xl">
+          <h1 className="text-3xl md:text-4xl font-semibold">
+            Google Ads Dashboard
+          </h1>
+          <p className="mt-3 text-slate-300 leading-7">
+            Live campaign performance from the last 30 days.
+          </p>
+        </div>
+
+        {!loading && !error && (
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Impressions</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.impressions)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Clicks</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.clicks)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Cost</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatMoney(summary.cost)}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="text-sm text-slate-500">Conversions</div>
+              <div className="mt-2 text-3xl font-semibold text-slate-900">
+                {formatNumber(summary.conversions)}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8">
+          {loading && (
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
+              Loading campaigns...
+            </div>
+          )}
+
+          {error && (
+            <div className="rounded-[2rem] bg-red-50 border border-red-200 p-8 shadow-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          {!loading && !error && campaigns.length === 0 && (
+            <div className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm">
+              No campaigns found.
+            </div>
+          )}
+
+          {!loading && !error && campaigns.length > 0 && (
+            <div className="grid gap-6">
+              {campaigns.map((campaign) => (
+                <div
+                  key={campaign.id}
+                  className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-sm"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div>
+                      <h2 className="text-xl font-semibold text-slate-900">
+                        {campaign.name}
+                      </h2>
+                      <p className="mt-2 text-slate-600">
+                        Campaign ID: {campaign.id}
+                      </p>
+                    </div>
+
+                    <div className="inline-flex items-center rounded-full bg-slate-950 text-white px-4 py-2 text-sm font-semibold">
+                      {statusLabel(campaign.status)}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Impressions</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.impressions)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Clicks</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.clicks)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Cost</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatMoney(campaign.cost)}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <div className="text-sm text-slate-500">Conversions</div>
+                      <div className="mt-2 text-2xl font-semibold text-slate-900">
+                        {formatNumber(campaign.conversions)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}
