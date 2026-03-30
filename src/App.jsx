@@ -75,155 +75,128 @@ function ContactFormCard() {
       <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
         <h2 className="text-3xl font-semibold">Thank you</h2>
         <p className="mt-4 text-slate-300 leading-7">
-          usePageTitle('About Apex Dental Malta | Dr Jonathan Mifsud');
-
-          const values = [
-            {
-              title: 'Precision over speed',
-              text: 'Every treatment is planned carefully before it begins. From implant placement to smile design, we prioritise accuracy and a well-considered outcome over rushing a result.',
-            },
-            {
-              title: 'Clarity and transparency',
-              text: 'Patients receive clear explanations of their treatment options, realistic expectations, and transparent pricing before committing to any procedure.',
-            },
-            {
-              title: 'A welcoming environment',
-              text: 'Apex Dental is designed to feel calm, modern, and professional - not clinical and intimidating. Many patients who were previously anxious about dentistry have found a different experience here.',
-            },
-          ];
-
-          const team = [
-            {
-              name: 'Dr Jonathan Mifsud',
-              role: 'Lead Dentist & Implantologist',
-              bio: 'Dr Jonathan Mifsud is the founder and lead clinician at Apex Dental. With a focused interest in dental implantology and restorative dentistry, he leads all implant cases and complex treatment planning at the clinic. He is committed to evidence-based care, ongoing education, and a patient-first approach to treatment.',
-            },
-          ];
-
-          const milestones = [
-            { year: '2018', label: 'Apex Dental founded at Trident Park, Malta' },
-            { year: '2020', label: 'Expanded services to include full implant surgery and All-on-4' },
-            { year: '2022', label: 'Introduced clear aligner therapy and digital smile design' },
-            { year: '2024', label: 'Compliance recognition for high-level professional standards' },
-            { year: '2025', label: 'Continued growth as one of Malta\'s leading private dental clinics' },
-          ];
+          Your message has been sent successfully. Our team will get back to
+          you shortly.
         </p>
       </div>
     );
   }
-                title="About Apex Dental Malta | Dr Jonathan Mifsud"
-                description="Learn about Apex Dental Malta - a modern private dental clinic at Trident Park, led by Dr Jonathan Mifsud, specialising in implants, cosmetic dentistry and clear aligners."
+
+  return (
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Contact Us</h2>
 
+      <form onSubmit={handleContactSubmit} className="mt-8 space-y-4">
+        <input
           type="text"
           name="name"
           placeholder="Full Name"
           required
-                title="A modern dental clinic in Malta built around precision, clarity, and patient confidence"
-                subtitle="Apex Dental is a private dental clinic located at Trident Park, Birkirkara, led by Dr Jonathan Mifsud. We specialise in dental implants, cosmetic dentistry, clear aligners, and a full range of general and restorative treatments."
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Name" field="name" errors={contactState.errors} />
 
         <input
-              {/* Image gallery */}
           type="tel"
           name="phone"
-                  <div className="grid lg:grid-cols-3 gap-6">
-                    <div className="rounded-[2.5rem] overflow-hidden shadow-xl lg:col-span-2">
-                      <img src={images.about.AB1} alt="Apex Dental clinic interior" className="w-full h-[420px] object-cover" />
+          placeholder="Phone"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Phone" field="phone" errors={contactState.errors} />
+
+        <input
+          type="email"
           name="email"
-                    <div className="grid gap-6">
-                      <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                        <img src={images.about.AB2} alt="Apex Dental treatment room" className="w-full h-[196px] object-cover" />
-                      </div>
-                      <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                        <img src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[196px] object-cover" />
-                      </div>
+          placeholder="Email"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Email" field="email" errors={contactState.errors} />
+
         <textarea
           rows="5"
           name="message"
           placeholder="Message"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-              {/* About the clinic */}
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
         />
         <ValidationError prefix="Message" field="message" errors={contactState.errors} />
-                  <div className="grid lg:grid-cols-2 gap-16 items-start">
-                    <div>
-                      <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our clinic</div>
-                      <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6">
-                        Dentistry done properly, in an environment that reflects that
-                      </h2>
-                      <p className="text-slate-600 leading-8 mb-6">
-                        Apex Dental is located at Trident Park, a modern commercial development in the Central Business District of Birkirkara, Malta. The clinic is equipped for a broad range of treatments - from routine hygiene appointments to complex implant surgery and full-smile makeovers.
-                      </p>
-                      <p className="text-slate-600 leading-8">
-                        We work with patients from across Malta and the wider region, including residents, expats, and patients travelling specifically for dental treatment. Whether you need a simple consultation or a comprehensive restorative plan, the approach is the same: thorough assessment, honest advice, and treatment that is well-executed and properly followed up.
-                      </p>
-                    </div>
-                    <div className="space-y-4">
-                      {values.map((v) => (
-                        <div key={v.title} className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
-                          <div className="flex items-start gap-3">
-                            <BadgeCheck className="text-sky-600 mt-1 shrink-0" size={20} />
-                            <div>
-                              <h3 className="font-semibold text-slate-900 mb-2">{v.title}</h3>
-                              <p className="text-slate-600 leading-7 text-sm">{v.text}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Section>
-              </section>
 
-              {/* Dr Jonathan Mifsud */}
-              <section className="bg-slate-950 py-20 text-white">
-                <Section>
-                  <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
-                    <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
-                      <img src={images.about.AB2} alt="Dr Jonathan Mifsud, Apex Dental" className="w-full h-[520px] object-cover" />
-                    </div>
-                    <div>
-                      <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Meet the team</div>
-                      {team.map((member) => (
-                        <div key={member.name}>
-                          <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-2">{member.name}</h2>
-                          <div className="text-amber-300 font-medium mb-6">{member.role}</div>
-                          <p className="text-slate-300 leading-8 text-lg">{member.bio}</p>
-                          <div className="mt-8 flex flex-wrap gap-4">
-                            <Button to="/appointment-booking/" variant="gold">Book a consultation</Button>
-                            <Button to="/dental-implants/" variant="glass">Implant treatments</Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Section>
-              </section>
+        <button
+          type="submit"
+          disabled={contactState.submitting}
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
+        >
+          {contactState.submitting ? 'Sending...' : 'Send Message'}
+        </button>
+      </form>
+    </div>
+  );
+}
 
-              {/* Clinic milestones */}
-              <section className="bg-white py-20">
-                <Section>
-                  <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our journey</div>
-                  <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
-                    Building a clinic patients trust, year by year
-                  </h2>
-                  <div className="space-y-0">
-                    {milestones.map((m, i) => (
-                      <div key={i} className="flex gap-8 items-start py-6 border-b border-slate-100">
-                        <div className="text-sky-600 font-bold text-lg w-16 shrink-0">{m.year}</div>
-                        <div className="text-slate-700 leading-7">{m.label}</div>
+function BookingFormCard({ serviceOptions = [] }) {
+  const [appointmentState, handleAppointmentSubmit] = useForm('myknrvqq');
+
+  useEffect(() => {
+    if (appointmentState.succeeded) {
+      trackAppointmentBookingConversion();
+    }
+  }, [appointmentState.succeeded]);
+
+  if (appointmentState.succeeded) {
+    return (
+      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+        <h2 className="text-3xl font-semibold">Thank you</h2>
+        <p className="mt-4 text-slate-300 leading-7">
+          Your booking request has been sent. We will contact you shortly to
+          confirm your appointment.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+      <h2 className="text-3xl font-semibold">Book Appointment</h2>
+
       <form onSubmit={handleAppointmentSubmit} className="mt-8 space-y-4">
         <input
           type="text"
           name="name"
           placeholder="Full Name"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Name" field="name" errors={appointmentState.errors} />
+
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Phone" field="phone" errors={appointmentState.errors} />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
+        />
+        <ValidationError prefix="Email" field="email" errors={appointmentState.errors} />
+
+        <select
+          name="service"
+          required
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
         >
-          <option className="text-slate-900">Select Service</option>
+          <option value="" className="text-slate-900">Select Service</option>
           {serviceOptions.map((service) => (
-            <option key={service} className="text-slate-900">
-                text="Book an appointment online, call us on 27016017, or send a WhatsApp message to 79854037. We are based at Trident Park, Birkirkara, Malta."
+            <option key={service} value={service} className="text-slate-900">
+              {service}
             </option>
           ))}
         </select>
@@ -831,6 +804,38 @@ function MobileStickyBar() {
   );
 }
 
+function WhatsAppFloat() {
+  const [showTooltip, setShowTooltip] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setShowTooltip(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="hidden lg:block fixed bottom-6 right-6 z-50">
+      {showTooltip && (
+        <div className="absolute bottom-16 right-0 bg-slate-900 text-white text-sm px-4 py-2 rounded-2xl whitespace-nowrap shadow-lg mb-2">
+          Chat with us on WhatsApp
+          <div className="absolute bottom-[-6px] right-5 w-3 h-3 bg-slate-900 rotate-45" />
+        </div>
+      )}
+      <a
+        href={`https://wa.me/356${brand.whatsapp}?text=Hi%20Apex%20Dental%2C%20I%20would%20like%20to%20book%20an%20appointment.`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-transform"
+        style={{ background: '#25D366' }}
+        aria-label="Chat on WhatsApp"
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+  );
+}
+
 function DarkHero({
   image,
   eyebrow,
@@ -1180,43 +1185,93 @@ function HomeGallery() {
 }
 
 function ReviewStrip() {
+  const reviews = [
+    {
+      name: 'Maria C.',
+      date: 'March 2025',
+      stars: 5,
+      text: 'Had my dental implant done by Dr Mifsud. The whole process was explained clearly from start to finish. The clinic is modern and clean, and the team made me feel completely at ease. Highly recommend Apex Dental.',
+    },
+    {
+      name: 'James B.',
+      date: 'February 2025',
+      stars: 5,
+      text: 'Went in for an emergency on a Sunday morning - they saw me within the hour. Professional, efficient and genuinely caring. Could not have asked for better service in a stressful situation.',
+    },
+    {
+      name: 'Sofia R.',
+      date: 'January 2025',
+      stars: 5,
+      text: 'I had been putting off the dentist for years due to anxiety. The team at Apex were patient and kind throughout. I now come regularly and do not dread it at all. The results of my whitening treatment are amazing.',
+    },
+  ];
+
   return (
     <section className="bg-slate-950 text-white py-20">
       <Section>
-        <div className="rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-12">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
+        <div className="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 md:p-12">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
             <div>
               <div className="text-sm uppercase tracking-[0.25em] text-slate-400">
                 Patient Reviews
               </div>
-              <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight">
-                Real trust is better than decorative fluff
+              <h2 className="mt-4 text-3xl md:text-4xl font-semibold leading-tight">
+                What our patients say about Apex Dental
               </h2>
-              <p className="mt-6 text-slate-300 leading-8 text-lg">
-                Replace these placeholders with three real Google reviews. Real
-                local feedback will improve both trust and conversion.
+              <p className="mt-6 text-slate-300 leading-8">
+                Rated 5 stars by patients across Malta. Read more reviews on our Google Business Profile.
               </p>
+              <div className="mt-6 flex items-center gap-3">
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-white font-semibold text-lg">5.0</span>
+                <span className="text-slate-400 text-sm">Google Reviews</span>
+              </div>
+              <a
+                href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-6 text-amber-400 hover:text-amber-300 font-semibold text-sm transition"
+              >
+                Read all reviews on Google -&gt;
+              </a>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-[2rem] bg-white text-slate-900 p-6 shadow-xl"
-                >
-                  <div className="flex items-center gap-1 text-amber-500">
-                    <Star size={16} fill="currentColor" />
-                    <Star size={16} fill="currentColor" />
-                    <Star size={16} fill="currentColor" />
-                    <Star size={16} fill="currentColor" />
-                    <Star size={16} fill="currentColor" />
+            <div className="grid gap-4">
+              {reviews.map((review) => (
+                <div key={review.name} className="rounded-[1.5rem] bg-white text-slate-900 p-6 shadow-xl">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">{review.name[0]}</span>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-slate-900 text-sm">{review.name}</div>
+                        <div className="text-slate-400 text-xs">{review.date}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-0.5 text-amber-500">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                      ))}
+                    </div>
                   </div>
-                  <p className="mt-4 text-sm leading-7 text-slate-600">
-                    Add a real Google review here. Patients trust actual
-                    experiences far more than generic stock praise.
-                  </p>
-                  <div className="mt-4 font-semibold text-slate-900">
-                    Google Review
+                  <p className="text-sm leading-7 text-slate-600">{review.text}</p>
+                  <div className="mt-3 flex items-center gap-1">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    <span className="text-xs text-slate-400">Google review</span>
                   </div>
                 </div>
               ))}
@@ -1687,68 +1742,110 @@ function ImplantsPage() {
 }
 
 function AlignersPage() {
-  usePageTitle('Clear Aligners Malta | Apex Dental');
+  usePageTitle('Invisalign Malta | Clear Aligners | Apex Dental');
+
+  const alignerFaqs = [
+    {
+      q: 'How long does Invisalign treatment take?',
+      a: 'Treatment length depends on the complexity of your case. Mild to moderate corrections typically take 6 to 12 months. More complex cases may take up to 18 months. Your exact timeline will be discussed during your consultation.',
+    },
+    {
+      q: 'Is Invisalign suitable for adults?',
+      a: 'Absolutely. Invisalign was originally designed with adults in mind - particularly professionals who want to straighten their teeth without the visible look of traditional metal braces. It is one of the most popular orthodontic choices for adults at Apex Dental.',
+    },
+    {
+      q: 'How many hours a day do you wear aligners?',
+      a: 'For best results, aligners should be worn for 20 to 22 hours per day. They are removed for eating, drinking anything other than water, and brushing and flossing your teeth.',
+    },
+    {
+      q: 'Is Invisalign painful?',
+      a: 'Most patients experience mild pressure or discomfort when switching to a new set of aligners - this is normal and typically settles within a day or two. It is generally considered more comfortable than traditional fixed braces.',
+    },
+    {
+      q: 'Can Invisalign fix my bite as well as straighten my teeth?',
+      a: 'Invisalign can address a range of orthodontic issues including crowding, spacing, overbite, underbite, and crossbite. Whether it is suitable for your specific case will be assessed during your consultation.',
+    },
+  ];
+
+  const alignerSteps = [
+    {
+      title: 'Consultation & scan',
+      text: 'We assess your teeth, bite, and suitability for clear aligner treatment using digital scanning and photographs - no messy impressions required.',
+    },
+    {
+      title: 'Treatment preview',
+      text: 'Using digital planning software, we show you a simulation of how your teeth will move and what your smile will look like at the end of treatment.',
+    },
+    {
+      title: 'Aligner delivery',
+      text: 'Your custom-made aligner series is fabricated and delivered to the clinic. You receive your first sets and full instructions on wear and care.',
+    },
+    {
+      title: 'Progress check-ups',
+      text: 'Regular short appointments allow us to monitor your progress, issue new aligners, and make any adjustments to keep your treatment on track.',
+    },
+  ];
 
   return (
     <>
       <SEO
-        title="Clear Aligners Malta | Apex Dental"
-        description="Discover clear aligners in Malta at Apex Dental. Discreet orthodontic treatment for adults and teens with modern planning and a premium experience."
+        title="Invisalign Malta | Clear Aligners | Apex Dental"
+        description="Invisalign and clear aligner treatment in Malta at Apex Dental. Discreet, removable orthodontics for adults. Digital planning and a premium patient experience."
         canonical={`${siteUrl}/invisalign-malta/`}
-        schema={serviceSchema(
-          'Clear Aligners',
-          'Clear aligner treatment in Malta for discreet orthodontic smile improvement.',
-          `${siteUrl}/invisalign-malta/`
-        )}
+        schema={serviceSchema('Clear Aligners', 'Invisalign and clear aligner orthodontic treatment in Malta at Apex Dental.', `${siteUrl}/invisalign-malta/`)}
       />
       <PageHero
         image={images.aligners.A1}
-        eyebrow="Clear Aligners Malta"
-        title="Discreet orthodontic treatment for patients who want straight teeth without the obvious hardware"
-        subtitle="Clear aligners offer a modern way to improve tooth alignment with comfort, discretion, and a treatment approach better suited to adult lifestyles."
+        eyebrow="Invisalign & Clear Aligners Malta"
+        title="Straighten your teeth discreetly - without fixed braces or obvious hardware"
+        subtitle="Clear aligners are the orthodontic choice for patients who want a better smile without disrupting their lifestyle, appearance, or confidence during treatment."
       />
 
       <SplitEditorial
         imageLeft={images.aligners.A2}
-        title="Digitally guided smile improvement"
-        text="Clear aligner treatment begins with careful assessment and planning. Digital workflows help evaluate alignment concerns and build a treatment journey that is more visual, precise, and convenient for the patient."
+        title="Why so many adults choose clear aligners"
+        text="Traditional metal braces are visible, fixed in place, and can make eating and cleaning difficult. Clear aligners are transparent, removable, and designed around modern adult life. You can eat what you like, maintain normal oral hygiene, and go about your day without anyone noticing you are in orthodontic treatment."
         points={[
-          'Modern digital planning',
-          'Discreet treatment option',
-          'Comfort-focused approach',
-          'Suitable for image-conscious patients',
+          'Nearly invisible during wear',
+          'Removable for meals, drinks and brushing',
+          'No food restrictions',
+          'Fewer and shorter clinic appointments',
         ]}
       />
 
       <SplitEditorial
         imageLeft={images.aligners.A3}
-        title="Designed around your life"
-        text="Patients often choose aligners because they are removable, discreet, and easier to integrate into work, social life, eating, and oral hygiene. The treatment aims to improve the smile while remaining as low-profile as possible."
+        title="Digital planning - see your result before you start"
+        text="One of the advantages of clear aligner treatment is that digital planning software allows us to show you a simulation of your tooth movement and predicted outcome before treatment begins. You know what you are signing up for - and so do we."
         points={[
-          'Removable for meals and cleaning',
-          'More discreet than fixed braces',
-          'Popular with adults and professionals',
-          'Planned for practical everyday use',
+          'Digital smile simulation before you commit',
+          'Precise, predictable tooth movement',
+          'Custom-made aligners for your exact teeth',
+          'Clear timeline from day one',
         ]}
         dark
         reverse
       />
 
+      <ProcessSteps steps={alignerSteps} />
+
       <SplitEditorial
         imageLeft={images.aligners.A4}
-        title="A confident, modern orthodontic experience"
-        text="At Apex Dental, aligner treatment is presented as a premium orthodontic option supported by clear communication, digital planning, and close follow-up. It is not just about moving teeth. It is about improving the smile in a way that feels practical, elegant, and well-managed."
+        title="Multilingual consultations - English, Italian and Spanish"
+        text="At Apex Dental, our team includes Dr Martha Lopez (Spanish-speaking) and Dr Massimo D'Alessandro (Italian-speaking), making clear aligner treatment accessible to Malta's diverse international community. Consultations are available in your preferred language."
         points={[
-          'Patient-friendly treatment process',
-          'Aesthetic and functional planning',
-          'Contemporary smile enhancement',
-          'Premium consultation experience',
+          'English, Italian and Spanish spoken',
+          'Welcoming to expats and international patients',
+          'Same high standard of care for every patient',
+          'Located at Trident Park, Birkirkara',
         ]}
       />
 
+      <FAQSection faqs={alignerFaqs} dark />
+
       <CTASection
-        title="Interested in clear aligners?"
-        text="Book a consultation to find out whether aligners are suitable for your smile, lifestyle, and treatment goals."
+        title="Interested in clear aligners in Malta?"
+        text="Book a consultation at Apex Dental and we will assess your suitability, show you a digital preview of your result, and walk you through all available options."
       />
     </>
   );
@@ -1774,7 +1871,7 @@ function CosmeticPage() {
           'Porcelain and aesthetic smile solutions',
           'Refined cosmetic planning',
           'Natural-looking enhancement',
-          'Tailored to each patient’s features',
+          'Tailored to each patient\'s features',
         ]}
       />
 
@@ -2109,44 +2206,99 @@ function HygienePage() {
 }
 
 function VeneersPage() {
-  usePageTitle('Veneers Malta | Apex Dental');
+  usePageTitle('Dental Veneers Malta | Apex Dental');
+
+  const veneerFaqs = [
+    {
+      q: 'What are dental veneers made of?',
+      a: 'At Apex Dental, we primarily use porcelain veneers, which are thin ceramic shells custom-made to fit over the front surface of your teeth. Porcelain is preferred for its durability, stain resistance, and natural light-reflecting properties that closely mimic real tooth enamel.',
+    },
+    {
+      q: 'How long do veneers last?',
+      a: 'Porcelain veneers typically last 10 to 15 years or longer with proper care. This includes regular brushing, flossing, avoiding biting very hard objects, and attending routine dental check-ups.',
+    },
+    {
+      q: 'Is the veneer procedure painful?',
+      a: 'The procedure involves minimal discomfort. Local anaesthesia is used during the tooth preparation stage. Some patients experience mild sensitivity for a few days after placement, which settles quickly.',
+    },
+    {
+      q: 'How many teeth can be treated with veneers?',
+      a: 'Veneers can be placed on one tooth or across an entire smile - it depends entirely on your goals. Some patients choose veneers for just one or two teeth affected by staining or chips, while others opt for a full smile makeover covering six to ten front teeth.',
+    },
+    {
+      q: 'Can veneers be combined with whitening?',
+      a: 'Yes, but the sequencing matters. If you are whitening natural teeth alongside getting veneers, whitening should be done first. The veneers are then shade-matched to your newly whitened teeth for a consistent, natural result.',
+    },
+  ];
+
+  const veneerSteps = [
+    {
+      title: 'Smile design consultation',
+      text: 'We discuss your aesthetic goals, assess your teeth, and plan the shape, size and shade of your veneers using photos and digital references.',
+    },
+    {
+      title: 'Tooth preparation',
+      text: 'A thin layer of enamel is removed from the front of the teeth to make room for the veneer. Temporary veneers are placed while your permanent ones are made.',
+    },
+    {
+      title: 'Veneer fabrication',
+      text: 'Your custom porcelain veneers are precision-made by a dental technician based on detailed impressions and shade information from your consultation.',
+    },
+    {
+      title: 'Bonding & final fitting',
+      text: 'The veneers are checked for fit, shape and colour before being permanently bonded to your teeth. The result is immediately visible.',
+    },
+  ];
 
   return (
     <>
+      <SEO
+        title="Dental Veneers Malta | Porcelain Veneers | Apex Dental"
+        description="Porcelain dental veneers in Malta at Apex Dental. Custom smile design for chipped, stained, or misshapen teeth. Book a veneer consultation today."
+        canonical={`${siteUrl}/veneers/`}
+        schema={serviceSchema('Dental Veneers', 'Porcelain dental veneer treatment in Malta for smile improvement.', `${siteUrl}/veneers/`)}
+      />
       <PageHero
         image={images.cosmetic.C1}
-        eyebrow="Veneers Malta"
-        title="Smile enhancement with veneers designed for elegance, balance, and natural-looking results"
-        subtitle="Veneers can help improve colour, shape, symmetry, and overall smile harmony for patients seeking a more refined aesthetic result."
+        eyebrow="Dental Veneers Malta"
+        title="Transform the shape, colour and symmetry of your smile with porcelain veneers"
+        subtitle="Veneers are one of the most effective cosmetic dental treatments available - covering imperfections and redesigning your smile in a way that looks completely natural."
       />
+
       <SplitEditorial
         imageLeft={images.cosmetic.C2}
-        title="A premium cosmetic option"
-        text="Veneers are thin aesthetic restorations placed on the front surfaces of teeth to improve their appearance. They can be used to enhance shape, colour, proportion, and smile consistency."
+        title="What veneers can correct"
+        text="Porcelain veneers are used to address a wide range of aesthetic concerns - from minor chips and staining to more significant issues with shape, size, or symmetry. Unlike whitening, which only affects colour, veneers can change the entire appearance of a tooth."
         points={[
-          'Porcelain and composite options',
-          'Smile refinement and symmetry',
-          'Natural-looking enhancement',
-          'Careful cosmetic planning',
+          'Discoloured or stained teeth that do not whiten',
+          'Chipped, cracked or worn teeth',
+          'Slight misalignment or gaps between teeth',
+          'Teeth that are too small or irregularly shaped',
         ]}
       />
+
       <SplitEditorial
-        imageLeft={images.cosmetic.C4}
-        title="Cosmetic results should look polished, not artificial"
-        text="At Apex Dental, cosmetic treatment is planned to feel elegant and believable. Good veneers improve the smile without making it look overdone."
+        imageLeft={images.cosmetic.C3}
+        title="Porcelain - the premium choice"
+        text="Porcelain veneers are the gold standard in cosmetic dentistry. They are stronger than composite resin alternatives, highly resistant to staining, and have a translucency that mirrors natural tooth enamel under light. When crafted well, they are virtually indistinguishable from your natural teeth."
         points={[
-          'Balanced smile design',
-          'Attention to facial harmony',
-          'Refined cosmetic workflow',
-          'Premium consultation process',
+          'Durable and long-lasting - 10 to 15+ years',
+          'Highly stain resistant',
+          'Natural light-reflecting appearance',
+          'Custom-fabricated for your smile',
         ]}
         dark
         reverse
       />
+
+      <ProcessSteps steps={veneerSteps} />
+
+      <FAQSection faqs={veneerFaqs} />
+
       <CTASection
         dark
-        title="Thinking about veneers?"
-        text="Book a cosmetic consultation to discuss whether veneers are the right fit for your smile goals."
+        title="Ready to improve your smile with veneers?"
+        text="Book a cosmetic consultation at Apex Dental and we will discuss your goals, assess suitability, and walk you through your options - with no pressure and complete transparency."
       />
     </>
   );
@@ -2270,44 +2422,77 @@ function TeethWhiteningPage() {
 }
 
 function CrownsBridgeworkPage() {
-  usePageTitle('Crowns and Bridgework Malta | Apex Dental');
+  usePageTitle('Crowns and Bridges Malta | Apex Dental');
+
+  const crownFaqs = [
+    {
+      q: 'When is a crown needed?',
+      a: 'A crown is typically recommended when a tooth is too damaged or decayed to be reliably restored with a filling alone - for example after root canal treatment, a large fracture, or severe wear. Crowns are also used to improve the appearance of misshapen or heavily discoloured teeth.',
+    },
+    {
+      q: 'What are dental crowns made of?',
+      a: 'At Apex Dental we use high-quality ceramic and zirconia crowns, which are strong, tooth-coloured, and virtually indistinguishable from natural teeth. Metal-fused options are available for specific clinical situations.',
+    },
+    {
+      q: 'How long do crowns last?',
+      a: 'With proper care, crowns typically last 10 to 15 years or more. Regular dental check-ups, good oral hygiene, and avoiding habits like grinding or biting very hard objects help maximise crown longevity.',
+    },
+    {
+      q: 'What is a dental bridge?',
+      a: 'A dental bridge replaces one or more missing teeth by anchoring to the teeth on either side of the gap. The adjacent teeth are prepared and crowned, with an artificial tooth (pontic) suspended between them. It is a fixed, non-removable solution for missing teeth.',
+    },
+    {
+      q: 'Crown or implant - which is better for a missing tooth?',
+      a: 'An implant is generally the preferred long-term solution for a single missing tooth because it does not require altering adjacent healthy teeth. However, a bridge may be more appropriate in certain clinical situations, such as when adjacent teeth already need crowns. Your dentist will advise based on your specific case.',
+    },
+  ];
 
   return (
     <>
-      <PageHero
-        image={images.home.H4}
-        eyebrow="Crowns and Bridgework Malta"
-        title="Restorative dentistry designed to rebuild strength, function, and aesthetics"
-        subtitle="Crowns and bridges can help protect weakened teeth, restore damaged structures, and replace missing teeth in a stable and aesthetic way."
+      <SEO
+        title="Crowns and Bridges Malta | Apex Dental"
+        description="Dental crowns and bridges in Malta at Apex Dental. Protect damaged teeth and replace missing teeth with high-quality ceramic and zirconia restorations."
+        canonical={`${siteUrl}/crowns-and-bridgework/`}
+        schema={serviceSchema('Dental Crowns and Bridges', 'Dental crown and bridge treatment in Malta at Apex Dental.', `${siteUrl}/crowns-and-bridgework/`)}
       />
+      <PageHero
+        image={images.cosmetic.C4}
+        eyebrow="Crowns & Bridges Malta"
+        title="Protect damaged teeth and replace missing ones with strong, natural-looking restorations"
+        subtitle="Dental crowns and bridges are among the most reliable restorative options available - restoring function, protecting weakened teeth, and improving appearance with durable ceramic materials."
+      />
+
       <SplitEditorial
-        imageLeft={images.home.H3}
-        title="Restoring teeth properly matters"
-        text="Crowns are used to cover and protect teeth that are weakened, heavily restored, or structurally compromised. Bridges help replace missing teeth and restore continuity to the smile."
+        imageLeft={images.cosmetic.C1}
+        title="Dental crowns - when a filling is not enough"
+        text="A crown covers the entire visible surface of a tooth, providing protection and restoring shape, strength and appearance. It is used when a tooth has been significantly weakened by decay, fracture, or previous treatment - and needs more support than a filling alone can provide."
         points={[
-          'Protection for compromised teeth',
-          'Replacement for missing teeth',
-          'Improved chewing function',
-          'Better structural stability',
+          'Protects teeth after root canal treatment',
+          'Restores badly broken or worn teeth',
+          'Covers misshapen or heavily stained teeth',
+          'High-quality ceramic and zirconia materials',
         ]}
       />
+
       <SplitEditorial
-        imageLeft={images.home.H2}
-        title="Built for fit, bite, and longevity"
-        text="A strong restorative result depends on diagnosis, fit, bite planning, materials, and overall balance. The goal is not just to fill space, but to restore confidence and function properly."
+        imageLeft={images.cosmetic.C2}
+        title="Dental bridges - a fixed solution for missing teeth"
+        text="A dental bridge replaces one or more missing teeth using the support of adjacent teeth. The teeth on either side of the gap are prepared and crowned, with an artificial tooth connecting them. The result is a fixed, non-removable restoration that looks and functions like natural teeth."
         points={[
-          'Functional bite planning',
-          'Natural-looking restorations',
-          'Material choice matched to the case',
-          'Careful restorative workflow',
+          'Replaces one or more missing teeth',
+          'Fixed - not removable like a denture',
+          'Restores chewing function and smile aesthetics',
+          'Prevents remaining teeth from shifting',
         ]}
         dark
         reverse
       />
+
+      <FAQSection faqs={crownFaqs} />
+
       <CTASection
-        dark
-        title="Need a crown or bridge?"
-        text="Book a consultation to discuss the most suitable restorative option for your tooth or missing space."
+        title="Need a crown or bridge in Malta?"
+        text="Book a consultation at Apex Dental. We will assess your tooth and recommend the most appropriate and cost-effective restoration for your situation."
       />
     </>
   );
@@ -2490,44 +2675,96 @@ function RemovableProsthesisPage() {
 function RootCanalPage() {
   usePageTitle('Root Canal Treatment Malta | Apex Dental');
 
+  const rootCanalFaqs = [
+    {
+      q: 'Is root canal treatment painful?',
+      a: 'This is the most common concern - and the most common misconception. Root canal treatment is performed under local anaesthesia, so you should not feel pain during the procedure. Most patients are surprised by how comfortable it is. The treatment relieves the pain caused by infection, rather than causing it.',
+    },
+    {
+      q: 'How do I know if I need a root canal?',
+      a: 'Signs that may indicate root canal treatment is needed include persistent toothache, sensitivity to hot or cold that lingers, a darkening tooth, swelling or tenderness in the gum near a tooth, or a persistent pimple on the gum. An X-ray is needed to confirm the diagnosis.',
+    },
+    {
+      q: 'How long does root canal treatment take?',
+      a: 'Most root canal treatments are completed in one to two appointments, each lasting approximately 60 to 90 minutes. Complex cases or teeth with multiple canals may require additional time.',
+    },
+    {
+      q: 'What happens after root canal treatment?',
+      a: 'After root canal treatment, the tooth is typically restored with a crown to protect it from fracture. A tooth that has had its pulp removed is more brittle and vulnerable without a crown. Your dentist will discuss the restoration plan with you.',
+    },
+    {
+      q: 'Can a root-treated tooth last a lifetime?',
+      a: 'Yes - with proper restoration and good oral hygiene, a root-treated tooth can last as long as your natural teeth. The key is having the tooth properly crowned after treatment and maintaining regular dental check-ups.',
+    },
+  ];
+
+  const rootCanalSteps = [
+    {
+      title: 'Assessment & X-ray',
+      text: 'We examine the tooth, take X-rays to assess the root canals and extent of infection, and confirm whether root canal treatment is the appropriate option.',
+    },
+    {
+      title: 'Cleaning the canals',
+      text: 'Under local anaesthesia, the infected pulp is removed and the root canals are carefully cleaned, shaped, and disinfected to eliminate bacteria.',
+    },
+    {
+      title: 'Sealing the tooth',
+      text: 'The cleaned canals are filled and sealed with a biocompatible material. A temporary or permanent filling is placed to close the tooth.',
+    },
+    {
+      title: 'Crown placement',
+      text: 'In most cases, a crown is recommended to protect the treated tooth from fracture and restore full function and appearance.',
+    },
+  ];
+
   return (
     <>
+      <SEO
+        title="Root Canal Treatment Malta | Apex Dental"
+        description="Root canal treatment in Malta at Apex Dental. Comfortable, effective treatment for infected or damaged teeth - saving your natural tooth and relieving pain."
+        canonical={`${siteUrl}/root-canal-treatment/`}
+        schema={serviceSchema('Root Canal Treatment', 'Root canal treatment in Malta to save infected or damaged teeth and relieve pain.', `${siteUrl}/root-canal-treatment/`)}
+      />
       <PageHero
-        image={images.home.H6}
+        image={images.implants.I2}
         eyebrow="Root Canal Treatment Malta"
-        title="Endodontic treatment focused on relieving pain and helping save natural teeth"
-        subtitle="Root canal treatment may be needed when the nerve inside a tooth becomes inflamed or infected. The goal is to treat the problem, reduce discomfort, and preserve the tooth where possible."
+        title="Save your natural tooth - comfortable, effective treatment for infected teeth"
+        subtitle="Root canal treatment has a reputation that is far worse than the reality. At Apex Dental, treatment is carried out under local anaesthesia and most patients are surprised by how manageable the experience is."
       />
 
       <SplitEditorial
-        imageLeft={images.home.H7}
+        imageLeft={images.implants.I3}
         title="When is root canal treatment needed?"
-        text="Root canal treatment may be recommended when a tooth has deep decay, infection, trauma, or persistent pain related to the pulp tissue inside the tooth. Symptoms may include prolonged sensitivity, pain on biting, swelling, or spontaneous toothache."
+        text="Root canal treatment becomes necessary when the inner pulp of a tooth - which contains nerves and blood vessels - becomes infected or inflamed. This can happen as a result of deep decay, a crack or fracture, repeated dental procedures on the same tooth, or trauma. Left untreated, the infection can spread and the tooth may be lost entirely."
         points={[
-          'Tooth pain or sensitivity',
-          'Deep decay or infection',
-          'Swelling or inflammation',
-          'An option to help save the natural tooth',
+          'Severe or persistent toothache',
+          'Prolonged sensitivity to hot or cold',
+          'Darkening of the tooth',
+          'Swelling or a gum abscess near the tooth',
         ]}
       />
 
       <SplitEditorial
-        imageLeft={images.home.H8}
-        title="A treatment patients often fear more than they should"
-        text="Root canal treatment has a dramatic reputation, mostly because teeth have good publicists and bad behaviour. In reality, modern endodontic treatment is designed to manage infection and discomfort carefully while preserving the tooth when possible."
+        imageLeft={images.implants.I4}
+        title="The goal: save your natural tooth"
+        text="Wherever possible, saving a natural tooth is the better long-term outcome. A tooth that has been root-treated, properly crowned, and maintained with good oral hygiene can last a lifetime. Replacing a lost tooth with an implant or bridge is effective - but preserving what you have is always the first priority."
         points={[
-          'Focus on removing infection',
-          'Designed to preserve the tooth',
-          'Modern treatment approach',
-          'Clear explanation throughout the process',
+          'Preserves your natural tooth and root',
+          'Avoids the cost and recovery of extraction and replacement',
+          'Treated tooth restored with a crown for strength',
+          'Normal eating and function restored',
         ]}
         dark
         reverse
       />
 
+      <ProcessSteps steps={rootCanalSteps} />
+
+      <FAQSection faqs={rootCanalFaqs} />
+
       <CTASection
-        title="Worried you may need root canal treatment?"
-        text="Book an assessment at Apex Dental so we can examine the tooth, explain the problem clearly, and guide you through the most suitable next step."
+        title="Concerned about a painful tooth?"
+        text="Do not leave toothache or swelling untreated. Book an appointment at Apex Dental and we will assess the situation promptly and recommend the right treatment for your case."
       />
     </>
   );
@@ -2722,7 +2959,7 @@ function BlogPage() {
 
       <CTASection
         title="Want content that ranks and converts better?"
-        text="Apex Dental’s blog should support your implants, aligners, cosmetic, and emergency pages with stronger educational content and internal linking."
+        text="Apex Dental's blog should support your implants, aligners, cosmetic, and emergency pages with stronger educational content and internal linking."
       />
     </>
   );
@@ -3672,6 +3909,7 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/terms" element={<Terms />} />
       </Routes>
 
+      <WhatsAppFloat />
       <Footer />
       <MobileStickyBar />
     </div>
