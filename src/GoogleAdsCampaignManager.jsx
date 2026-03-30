@@ -51,7 +51,7 @@ export default function GoogleAdsCampaignManager() {
   const [adGroupLoading, setAdGroupLoading] = useState({});
   const [confirm, setConfirm] = useState(null);
   const [editBudget, setEditBudget] = useState({});
-  const [filter, setFilter] = useState('ALL');
+  const [filter, setFilter] = useState('ENABLED');
   const [search, setSearch] = useState('');
 
   useEffect(() => { loadCampaigns(); }, []);
