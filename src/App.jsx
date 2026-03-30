@@ -1652,9 +1652,8 @@ function AboutPage() {
     { name: 'Dr Martha Lopez', role: 'General and Cosmetic Dentist', flag: 'ES', bio: 'Dr Martha Lopez joins Apex Dental from Spain, bringing international dental expertise and a particular interest in cosmetic and aesthetic dentistry. Spanish-speaking patients are warmly welcome to consult with Dr Lopez in their first language.' },
   ];
   const milestones = [
-    { year: '2018', label: 'Apex Dental founded at Trident Park, Malta' },
-    { year: '2020', label: 'Expanded services to include full implant surgery and All-on-4' },
-    { year: '2022', label: 'Introduced clear aligner therapy and digital smile design' },
+    { year: '2023', label: 'Apex Dental founded at Trident Park, Birkirkara, Malta' },
+    { year: '2024', label: 'Expanded to full implant surgery, All-on-4, and clear aligner therapy' },
     { year: '2024', label: 'Compliance recognition for high-level professional standards' },
     { year: '2025', label: "Continued growth as one of Malta's leading private dental clinics" },
   ];
