@@ -75,119 +75,155 @@ function ContactFormCard() {
       <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
         <h2 className="text-3xl font-semibold">Thank you</h2>
         <p className="mt-4 text-slate-300 leading-7">
-          Your message has been sent successfully. We’ll get back to you shortly.
+          usePageTitle('About Apex Dental Malta | Dr Jonathan Mifsud');
+
+          const values = [
+            {
+              title: 'Precision over speed',
+              text: 'Every treatment is planned carefully before it begins. From implant placement to smile design, we prioritise accuracy and a well-considered outcome over rushing a result.',
+            },
+            {
+              title: 'Clarity and transparency',
+              text: 'Patients receive clear explanations of their treatment options, realistic expectations, and transparent pricing before committing to any procedure.',
+            },
+            {
+              title: 'A welcoming environment',
+              text: 'Apex Dental is designed to feel calm, modern, and professional - not clinical and intimidating. Many patients who were previously anxious about dentistry have found a different experience here.',
+            },
+          ];
+
+          const team = [
+            {
+              name: 'Dr Jonathan Mifsud',
+              role: 'Lead Dentist & Implantologist',
+              bio: 'Dr Jonathan Mifsud is the founder and lead clinician at Apex Dental. With a focused interest in dental implantology and restorative dentistry, he leads all implant cases and complex treatment planning at the clinic. He is committed to evidence-based care, ongoing education, and a patient-first approach to treatment.',
+            },
+          ];
+
+          const milestones = [
+            { year: '2018', label: 'Apex Dental founded at Trident Park, Malta' },
+            { year: '2020', label: 'Expanded services to include full implant surgery and All-on-4' },
+            { year: '2022', label: 'Introduced clear aligner therapy and digital smile design' },
+            { year: '2024', label: 'Compliance recognition for high-level professional standards' },
+            { year: '2025', label: 'Continued growth as one of Malta\'s leading private dental clinics' },
+          ];
         </p>
       </div>
     );
   }
-
-  return (
+                title="About Apex Dental Malta | Dr Jonathan Mifsud"
+                description="Learn about Apex Dental Malta - a modern private dental clinic at Trident Park, led by Dr Jonathan Mifsud, specialising in implants, cosmetic dentistry and clear aligners."
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Contact Us</h2>
 
-      <form onSubmit={handleContactSubmit} className="mt-8 space-y-4">
-        <input
           type="text"
           name="name"
           placeholder="Full Name"
           required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
+                title="A modern dental clinic in Malta built around precision, clarity, and patient confidence"
+                subtitle="Apex Dental is a private dental clinic located at Trident Park, Birkirkara, led by Dr Jonathan Mifsud. We specialise in dental implants, cosmetic dentistry, clear aligners, and a full range of general and restorative treatments."
 
         <input
+              {/* Image gallery */}
           type="tel"
           name="phone"
-          placeholder="Phone Number"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-
-        <input
-          type="email"
+                  <div className="grid lg:grid-cols-3 gap-6">
+                    <div className="rounded-[2.5rem] overflow-hidden shadow-xl lg:col-span-2">
+                      <img src={images.about.AB1} alt="Apex Dental clinic interior" className="w-full h-[420px] object-cover" />
           name="email"
-          placeholder="Email Address"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-        <ValidationError prefix="Email" field="email" errors={contactState.errors} />
-
+                    <div className="grid gap-6">
+                      <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+                        <img src={images.about.AB2} alt="Apex Dental treatment room" className="w-full h-[196px] object-cover" />
+                      </div>
+                      <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+                        <img src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[196px] object-cover" />
+                      </div>
         <textarea
           rows="5"
           name="message"
           placeholder="Message"
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+              {/* About the clinic */}
         />
         <ValidationError prefix="Message" field="message" errors={contactState.errors} />
+                  <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    <div>
+                      <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our clinic</div>
+                      <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6">
+                        Dentistry done properly, in an environment that reflects that
+                      </h2>
+                      <p className="text-slate-600 leading-8 mb-6">
+                        Apex Dental is located at Trident Park, a modern commercial development in the Central Business District of Birkirkara, Malta. The clinic is equipped for a broad range of treatments - from routine hygiene appointments to complex implant surgery and full-smile makeovers.
+                      </p>
+                      <p className="text-slate-600 leading-8">
+                        We work with patients from across Malta and the wider region, including residents, expats, and patients travelling specifically for dental treatment. Whether you need a simple consultation or a comprehensive restorative plan, the approach is the same: thorough assessment, honest advice, and treatment that is well-executed and properly followed up.
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      {values.map((v) => (
+                        <div key={v.title} className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
+                          <div className="flex items-start gap-3">
+                            <BadgeCheck className="text-sky-600 mt-1 shrink-0" size={20} />
+                            <div>
+                              <h3 className="font-semibold text-slate-900 mb-2">{v.title}</h3>
+                              <p className="text-slate-600 leading-7 text-sm">{v.text}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Section>
+              </section>
 
-        <button
-          type="submit"
-          disabled={contactState.submitting}
-          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold"
-        >
-          {contactState.submitting ? 'Sending...' : 'Send Request'}
-        </button>
-      </form>
-    </div>
-  );
-}
+              {/* Dr Jonathan Mifsud */}
+              <section className="bg-slate-950 py-20 text-white">
+                <Section>
+                  <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+                    <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
+                      <img src={images.about.AB2} alt="Dr Jonathan Mifsud, Apex Dental" className="w-full h-[520px] object-cover" />
+                    </div>
+                    <div>
+                      <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Meet the team</div>
+                      {team.map((member) => (
+                        <div key={member.name}>
+                          <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-2">{member.name}</h2>
+                          <div className="text-amber-300 font-medium mb-6">{member.role}</div>
+                          <p className="text-slate-300 leading-8 text-lg">{member.bio}</p>
+                          <div className="mt-8 flex flex-wrap gap-4">
+                            <Button to="/appointment-booking/" variant="gold">Book a consultation</Button>
+                            <Button to="/dental-implants/" variant="glass">Implant treatments</Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Section>
+              </section>
 
-function BookingFormCard({ serviceOptions }) {
-  const [appointmentState, handleAppointmentSubmit] = useForm('mwvrgyay');
-
-  useEffect(() => {
-    if (appointmentState.succeeded) {
-      trackAppointmentBookingConversion();
-    }
-  }, [appointmentState.succeeded]);
-
-  if (appointmentState.succeeded) {
-    return <div>Booking request sent</div>;
-  }
-
-  return (
-    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-      <h2 className="text-3xl font-semibold">Request an Appointment</h2>
-
+              {/* Clinic milestones */}
+              <section className="bg-white py-20">
+                <Section>
+                  <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our journey</div>
+                  <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
+                    Building a clinic patients trust, year by year
+                  </h2>
+                  <div className="space-y-0">
+                    {milestones.map((m, i) => (
+                      <div key={i} className="flex gap-8 items-start py-6 border-b border-slate-100">
+                        <div className="text-sky-600 font-bold text-lg w-16 shrink-0">{m.year}</div>
+                        <div className="text-slate-700 leading-7">{m.label}</div>
       <form onSubmit={handleAppointmentSubmit} className="mt-8 space-y-4">
         <input
           type="text"
           name="name"
           placeholder="Full Name"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
-        <ValidationError prefix="Email" field="email" errors={appointmentState.errors} />
-
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
-
-        <input
-          type="date"
-          name="preferredDate"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
-        />
-
-        <select
-          name="service"
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
         >
           <option className="text-slate-900">Select Service</option>
           {serviceOptions.map((service) => (
             <option key={service} className="text-slate-900">
-              {service}
+                text="Book an appointment online, call us on 27016017, or send a WhatsApp message to 79854037. We are based at Trident Park, Birkirkara, Malta."
             </option>
           ))}
         </select>
@@ -236,21 +272,95 @@ const siteUrl = 'https://apexdentalmalta.com';
 function localBusinessSchema(pageUrl) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Dentist',
+    '@type': ['Dentist', 'MedicalBusiness', 'LocalBusiness'],
+    '@id': `${siteUrl}/#dentist`,
     name: 'Apex Dental',
+    alternateName: 'Apex Dental Malta',
     url: siteUrl,
-    image: `${siteUrl}/images/H1.jpg`,
-    telephone: brand.phone,
-    email: brand.email,
+    logo: `${siteUrl}/images/orislogo.png`,
+    image: [
+      `${siteUrl}/images/H1.jpg`,
+      `${siteUrl}/images/H2.jpg`,
+      `${siteUrl}/images/I1.jpg`,
+    ],
+    telephone: '+356 2701 6017',
+    email: 'info@apexdental.com.mt',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Trident Park, Imdina Road, Central Business District',
-      addressLocality: 'Imrieħel',
+      addressLocality: 'Birkirkara',
+      addressRegion: 'Malta',
       postalCode: 'CBD 2010',
       addressCountry: 'MT',
     },
-    areaServed: 'Malta',
-    sameAs: [],
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 35.8989,
+      longitude: 14.4654,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Saturday'],
+        opens: '09:00',
+        closes: '13:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Sunday'],
+        opens: '09:00',
+        closes: '12:00',
+      },
+    ],
+    priceRange: '€€',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+    areaServed: [
+      { '@type': 'Country', name: 'Malta' },
+      { '@type': 'City', name: 'Birkirkara' },
+      { '@type': 'City', name: 'Valletta' },
+      { '@type': 'City', name: 'Sliema' },
+      { '@type': 'City', name: 'St Julian\'s' },
+      { '@type': 'City', name: 'Mdina' },
+    ],
+    medicalSpecialty: [
+      'Dentistry',
+      'Oral Surgery',
+      'Orthodontics',
+      'Cosmetic Dentistry',
+      'Implantology',
+    ],
+    availableService: [
+      { '@type': 'MedicalProcedure', name: 'Dental Implants' },
+      { '@type': 'MedicalProcedure', name: 'Teeth Whitening' },
+      { '@type': 'MedicalProcedure', name: 'Clear Aligners' },
+      { '@type': 'MedicalProcedure', name: 'Dental Veneers' },
+      { '@type': 'MedicalProcedure', name: 'Root Canal Treatment' },
+      { '@type': 'MedicalProcedure', name: 'Emergency Dentistry' },
+      { '@type': 'MedicalProcedure', name: 'Crowns and Bridges' },
+      { '@type': 'MedicalProcedure', name: 'Periodontology' },
+    ],
+    employee: {
+      '@type': 'Physician',
+      name: 'Dr Jonathan Mifsud',
+      jobTitle: 'Dental Implantologist',
+      medicalSpecialty: 'Dentistry',
+      worksFor: {
+        '@type': 'Dentist',
+        name: 'Apex Dental',
+        url: siteUrl,
+      },
+    },
+    sameAs: [
+      'https://www.facebook.com/Apexdental.com.mt/',
+    ],
+    hasMap: 'https://maps.google.com/?q=Apex+Dental+Trident+Park+Malta',
     mainEntityOfPage: pageUrl,
   };
 }
@@ -258,21 +368,57 @@ function localBusinessSchema(pageUrl) {
 function serviceSchema(name, description, pageUrl) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Service',
-    serviceType: name,
+    '@type': 'MedicalProcedure',
     name,
     description,
+    procedureType: 'https://schema.org/TherapeuticProcedure',
+    status: 'http://snomed.info/sct/385435006',
+    followup: 'Regular dental check-ups recommended following treatment.',
+    howPerformed: `${name} is performed by qualified dental professionals at Apex Dental in Malta.`,
+    preparation: 'A consultation and clinical assessment is required before treatment.',
     provider: {
       '@type': 'Dentist',
+      '@id': `${siteUrl}/#dentist`,
       name: 'Apex Dental',
       url: siteUrl,
-      telephone: brand.phone,
+      telephone: '+356 2701 6017',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Trident Park, Imdina Road',
+        addressLocality: 'Birkirkara',
+        addressCountry: 'MT',
+      },
     },
     areaServed: {
       '@type': 'Country',
       name: 'Malta',
     },
     url: pageUrl,
+  };
+}
+
+function faqSchema(faqs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+}
+
+function combinedSchema(...schemas) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': schemas.map((s) => {
+      const { '@context': _, ...rest } = s;
+      return rest;
+    }),
   };
 }
 
@@ -1132,6 +1278,103 @@ function CTASection({ dark = false, title, text }) {
   );
 }
 
+function FAQSection({ faqs, dark = false }) {
+  const [open, setOpen] = React.useState(null);
+  const bg = dark ? 'bg-slate-950 text-white' : 'bg-[#f7f4ef] text-slate-900';
+  const itemBg = dark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200';
+  const textColor = dark ? 'text-slate-300' : 'text-slate-600';
+
+  return (
+    <section className={bg}>
+      <Section className="py-20">
+        <div className="max-w-3xl mx-auto">
+          <div className={`text-sm uppercase tracking-[0.25em] text-center mb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Common Questions
+          </div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12 leading-tight">
+            Frequently asked questions
+          </h2>
+          <div className="space-y-3">
+            {faqs.map((faq, i) => (
+              <div key={i} className={`rounded-2xl border ${itemBg} overflow-hidden`}>
+                <button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-semibold text-lg"
+                >
+                  <span>{faq.q}</span>
+                  <span className={`text-2xl transition-transform ${open === i ? 'rotate-45' : ''} shrink-0`}>+</span>
+                </button>
+                {open === i && (
+                  <div className={`px-6 pb-6 ${textColor} leading-8 text-base`}>
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+function ProcessSteps({ steps, dark = false }) {
+  const bg = dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900';
+  const stepBg = dark ? 'bg-white/5 border-white/10' : 'bg-[#f7f4ef] border-slate-200';
+  const numColor = dark ? 'text-amber-300' : 'text-sky-600';
+
+  return (
+    <section className={bg}>
+      <Section className="py-20">
+        <div className={`text-sm uppercase tracking-[0.25em] mb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+          Treatment Process
+        </div>
+        <h2 className="text-3xl md:text-4xl font-semibold mb-12 leading-tight max-w-2xl">
+          What to expect, step by step
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((step, i) => (
+            <div key={i} className={`rounded-2xl border ${stepBg} p-6`}>
+              <div className={`text-4xl font-bold ${numColor} mb-4`}>{String(i + 1).padStart(2, '0')}</div>
+              <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
+              <p className={`text-sm leading-7 ${dark ? 'text-slate-400' : 'text-slate-600'}`}>{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+function PricingHint({ items, note }) {
+  return (
+    <section className="bg-white py-20">
+      <Section>
+        <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Pricing Guide</div>
+        <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6">
+              Transparent pricing - no surprises
+            </h2>
+            <p className="text-slate-600 leading-8 mb-8">
+              {note}
+            </p>
+            <Button to="/price-list/" variant="dark">View full price list</Button>
+          </div>
+          <div className="space-y-3">
+            {items.map((item, i) => (
+              <div key={i} className="flex items-center justify-between py-4 border-b border-slate-100">
+                <span className="text-slate-700 font-medium">{item.label}</span>
+                <span className="text-slate-900 font-semibold">{item.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-slate-950 text-white">
@@ -1310,67 +1553,134 @@ function HomePage() {
 function ImplantsPage() {
   usePageTitle('Dental Implants Malta | Apex Dental');
 
+  const implantFaqs = [
+    {
+      q: 'How long do dental implants last?',
+      a: 'With proper care and regular maintenance, dental implants can last a lifetime. The crown on top may need replacement after 15–20 years due to normal wear, but the implant itself, once fully integrated with the bone, is designed to be a permanent solution.',
+    },
+    {
+      q: 'Am I suitable for dental implants?',
+      a: 'Most adults with good general health are suitable candidates. Key factors include having sufficient jawbone density, healthy gums, and no uncontrolled systemic conditions. A 3D scan and thorough assessment at Apex Dental will confirm suitability for your specific case.',
+    },
+    {
+      q: 'Is the implant procedure painful?',
+      a: 'The procedure is carried out under local anaesthesia, so you should not feel pain during treatment. Post-operative discomfort is normal for a few days and is typically managed with standard pain relief. Most patients find the experience more straightforward than expected.',
+    },
+    {
+      q: 'How long does the full implant process take?',
+      a: 'The full treatment - from implant placement to the final crown - typically takes between 3 and 6 months. This allows time for osseointegration, where the implant fuses with the jawbone before the final restoration is fitted.',
+    },
+    {
+      q: 'What is the cost of dental implants in Malta?',
+      a: 'At Apex Dental, the implant consultation is free if implant treatment is carried out, or the fee is deducted from your treatment bill. A 3D scan is also included at no extra cost when you proceed with implant surgery. View our full price list for detailed pricing on single implants, All-on-4, and implant-supported dentures.',
+    },
+    {
+      q: 'What is All-on-4 and is it available at Apex Dental?',
+      a: 'All-on-4 is a full-arch restoration technique where four implants support a complete fixed bridge - often called a Toronto bridge. It is a well-established solution for patients who have lost most or all of their teeth and want a fixed, non-removable result. Apex Dental offers All-on-4 treatment.',
+    },
+  ];
+
+  const implantSteps = [
+    {
+      title: 'Consultation & 3D scan',
+      text: 'We assess your bone volume, gum health, and overall suitability with a detailed clinical examination and a 3D CBCT scan at no extra cost when you proceed with treatment.',
+    },
+    {
+      title: 'Implant placement',
+      text: 'The titanium implant is placed into the jawbone under local anaesthesia. This is a precise surgical procedure carried out in our modern clinical environment.',
+    },
+    {
+      title: 'Healing & integration',
+      text: 'The implant is given time to integrate with the surrounding bone - a process called osseointegration. This typically takes 3 to 4 months and is essential for long-term stability.',
+    },
+    {
+      title: 'Final restoration',
+      text: 'Once integration is confirmed, the abutment and custom crown are fitted. The result is a natural-looking, fully functional tooth that is cared for just like your natural teeth.',
+    },
+  ];
+
+  const implantPricing = [
+    { label: 'Implant consultation', price: 'Free with treatment' },
+    { label: '3D CBCT scan', price: 'Free with implant surgery' },
+    { label: 'Single implant + crown', price: 'From price list' },
+    { label: 'All-on-4 (Toronto bridge)', price: 'From price list' },
+    { label: 'Implant-retained denture (2 implants)', price: 'From price list' },
+  ];
+
   return (
     <>
       <SEO
         title="Dental Implants Malta | Apex Dental"
-        description="Apex Dental provides dental implants in Malta for single missing teeth, multiple teeth, and advanced restorative treatment with a premium patient experience."
+        description="Apex Dental provides dental implants in Malta for single missing teeth, multiple teeth, All-on-4, and advanced restorative cases. Free consultation and 3D scan with treatment."
         canonical={`${siteUrl}/dental-implants/`}
-        schema={serviceSchema(
-          'Dental Implants',
-          'Dental implant treatment in Malta for missing teeth replacement with function, aesthetics, and long-term stability in mind.',
-          `${siteUrl}/dental-implants/`
-        )}
+        schemas={[
+          localBusinessSchema(`${siteUrl}/dental-implants/`),
+          serviceSchema(
+            'Dental Implants',
+            'Dental implant treatment in Malta for missing teeth replacement. Single implants, All-on-4, implant-retained dentures. Free consultation and 3D scan included with treatment.',
+            `${siteUrl}/dental-implants/`
+          ),
+          faqSchema(implantFaqs),
+        ]}
       />
       <PageHero
         image={images.implants.I1}
         eyebrow="Dental Implants Malta"
-        title="Premium dental implant care with precision, stability, and aesthetics in mind"
-        subtitle="Apex Dental provides carefully planned implant treatment for patients looking to restore missing teeth with a functional, long-term, and natural-looking solution."
+        title="Replace missing teeth with a stable, long-lasting solution that looks and feels natural"
+        subtitle="At Apex Dental, implant treatment is planned with precision - from the initial 3D scan to the final crown. Led by Dr Jonathan Mifsud, a specialist implantologist based in Malta."
       />
 
       <SplitEditorial
         imageLeft={images.implants.I2}
-        title="A modern solution for missing teeth"
-        text="Dental implants are designed to replace missing tooth roots and support crowns, bridges, or fixed restorations. They can help restore function, confidence, stability, and smile aesthetics in a predictable and refined way."
+        title="Why implants are the gold standard for missing teeth"
+        text="A dental implant replaces both the root and the crown of a missing tooth. Unlike a bridge, it does not rely on adjacent teeth for support. It integrates directly with the jawbone, providing stability that feels and functions like a natural tooth - and helps preserve the bone around it."
         points={[
-          'Single-tooth replacement',
-          'Multiple missing teeth solutions',
-          'Advanced restorative planning',
-          'Long-term functional and aesthetic goals',
+          'No damage to adjacent healthy teeth',
+          'Preserves jawbone and prevents bone loss',
+          'Feels, looks, and functions like a natural tooth',
+          'Suitable for single teeth, multiple teeth, or full-arch cases',
         ]}
       />
 
       <SplitEditorial
         imageLeft={images.implants.I3}
-        title="Precision planning matters"
-        text="Successful implant treatment is not only about placing an implant. It is about diagnosis, planning, restorative design, soft tissue aesthetics, long-term maintenance, and creating a stable result that feels natural in function and appearance."
+        title="Precision planning with 3D imaging"
+        text="Successful implant treatment starts well before surgery. At Apex Dental, every implant case begins with a thorough assessment and a 3D CBCT scan - included at no extra cost when you proceed with treatment. This allows us to evaluate bone volume, plan implant position accurately, and avoid complications before they arise."
         points={[
-          'Detailed assessment before treatment',
-          'Careful restorative planning',
-          'Focus on both function and aesthetics',
-          'Patient guidance throughout each phase',
+          'Free 3D scan with implant surgery',
+          'Accurate bone and anatomy assessment',
+          'Precise surgical planning',
+          'Reduced risk and better long-term outcomes',
         ]}
         dark
         reverse
       />
 
+      <ProcessSteps steps={implantSteps} />
+
       <SplitEditorial
         imageLeft={images.implants.I4}
-        title="A more premium implant experience"
-        text="At Apex Dental, implant care is approached with attention to detail, modern workflows, and a commitment to quality outcomes. Whether replacing one tooth or planning a more advanced case, our goal is to provide treatment that is precise, clear, and carefully executed."
+        title="All-on-4 and full-arch implant solutions"
+        text="For patients who have lost most or all of their teeth, All-on-4 - also known as the Toronto bridge - provides a fixed, full-arch restoration supported by just four implants. It is a well-established, efficient solution that avoids the need for a removable denture and can often be completed in fewer appointments than traditional full-arch implant approaches."
         points={[
-          'High-quality restorative focus',
-          'Modern implant workflow',
-          'Natural-looking final outcomes',
-          'Premium patient experience',
+          'Fixed non-removable full-arch bridge',
+          'Supported by four strategically placed implants',
+          'No need for a removable denture',
+          'Restores function, confidence, and aesthetics',
         ]}
       />
+
+      <PricingHint
+        items={implantPricing}
+        note="At Apex Dental, the implant consultation is free when you proceed with treatment - and your 3D scan is also included at no additional cost. We believe in transparent pricing with no unexpected fees. View our full price list for detailed figures on all implant options including single implants, All-on-4, and implant-supported prosthetics."
+      />
+
+      <FAQSection faqs={implantFaqs} dark />
 
       <CTASection
         dark
         title="Thinking about dental implants?"
-        text="Book an implant consultation to discuss suitability, treatment options, and the most appropriate plan for your case."
+        text="Book a free implant consultation at Apex Dental in Malta. Dr Jonathan Mifsud will assess your suitability and walk you through all available options for your case."
       />
     </>
   );
@@ -1504,109 +1814,194 @@ function CosmeticPage() {
 }
 
 function AboutPage() {
-  usePageTitle('About Apex Dental Malta');
+  usePageTitle('About Apex Dental Malta | Our Dental Team');
+
+  const values = [
+    {
+      title: 'Precision over speed',
+      text: 'Every treatment is planned carefully before it begins. From implant placement to smile design, we prioritise accuracy and a well-considered outcome over rushing a result.',
+    },
+    {
+      title: 'Clarity and transparency',
+      text: 'Patients receive clear explanations of their treatment options, realistic expectations, and transparent pricing before committing to any procedure.',
+    },
+    {
+      title: 'A welcoming environment',
+      text: 'Apex Dental is designed to feel calm, modern, and professional - not clinical and intimidating. Many patients who were previously anxious about dentistry have found a different experience here.',
+    },
+  ];
+
+  const team = [
+    {
+      name: 'Dr Jonathan Mifsud',
+      role: 'Dental Implantologist',
+      flag: null,
+      bio: 'Dr Jonathan Mifsud is the founder and lead clinician at Apex Dental. Specialising in dental implantology and restorative dentistry, he leads all implant cases and complex treatment planning at the clinic - including single implants, All-on-4, and full-arch restorations. He is committed to precision, evidence-based care, and a patient-first approach.',
+    },
+    {
+      name: 'Dr Charlotte Axisa',
+      role: 'General & Restorative Dentist',
+      flag: null,
+      bio: 'Dr Charlotte Axisa is a skilled general and restorative dentist with experience across a broad range of treatments. She provides routine care, fillings, crowns, and preventive dentistry with a calm and patient-focused manner that puts patients at ease.',
+    },
+    {
+      name: 'Dr Massimo D\'Alessandro',
+      role: 'General Dentist',
+      flag: '🇮🇹',
+      bio: 'Dr Massimo D\'Alessandro brings his Italian dental training and background to Apex Dental, offering high-quality general and restorative dental care. Italian-speaking patients are welcome to consult with Dr D\'Alessandro in their preferred language.',
+    },
+    {
+      name: 'Dr Adam Borg',
+      role: 'General Dentist',
+      flag: null,
+      bio: 'Dr Adam Borg provides a wide range of general dental treatments at Apex Dental, with a focus on clear communication, patient comfort, and delivering consistent quality care across routine and restorative procedures.',
+    },
+    {
+      name: 'Dr Martha Lopez',
+      role: 'General & Cosmetic Dentist',
+      flag: '🇪🇸',
+      bio: 'Dr Martha Lopez joins Apex Dental from Spain, bringing international dental expertise and a particular interest in cosmetic and aesthetic dentistry. Spanish-speaking patients are warmly welcome to consult with Dr Lopez in their first language.',
+    },
+  ];
+
+  const milestones = [
+    { year: '2018', label: 'Apex Dental founded at Trident Park, Malta' },
+    { year: '2020', label: 'Expanded services to include full implant surgery and All-on-4' },
+    { year: '2022', label: 'Introduced clear aligner therapy and digital smile design' },
+    { year: '2024', label: 'Compliance recognition for high-level professional standards' },
+    { year: '2025', label: 'Continued growth as one of Malta\'s leading private dental clinics' },
+  ];
 
   return (
     <>
       <SEO
-        title="About Apex Dental Malta"
-        description="Learn more about Apex Dental Malta, a modern dental clinic focused on quality care, digital dentistry, patient confidence, and a premium experience."
+        title="About Apex Dental Malta | Our Dental Team"
+        description="Meet the team at Apex Dental Malta - Dr Jonathan Mifsud (Implantologist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian), Dr Adam Borg and Dr Martha Lopez (Spanish). Based at Trident Park, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
-      <ComplianceTrustSection />
 
       <PageHero
         image={images.about.AB1}
         eyebrow="About Apex Dental"
-        title="A modern dental clinic in Malta built around quaality, precision, and patient confidence"
-        subtitle="Apex Dental combines professional care, modern technology, and a welcoming clinic atmosphere to create a better patient experience from the moment you walk in."
+        title="A modern dental clinic in Malta built around precision, clarity, and patient confidence"
+        subtitle="Apex Dental is a private dental clinic at Trident Park, Birkirkara, with a multilingual team of five dentists. We offer consultations in English, Italian, and Spanish."
       />
 
+      {/* Image gallery */}
       <section className="bg-white py-20">
         <Section>
-          <div className="grid lg:grid-cols-[1fr_1fr] gap-8">
-            <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-              <img
-                src={images.about.AB1}
-                alt="Apex Dental team or clinic image"
-                className="w-full h-[520px] object-cover"
-              />
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="rounded-[2.5rem] overflow-hidden shadow-xl lg:col-span-2">
+              <img src={images.about.AB1} alt="Apex Dental clinic interior" className="w-full h-[420px] object-cover" />
             </div>
-            <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-              <img
-                src={images.about.AB2}
-                alt="Apex Dental interior image"
-                className="w-full h-[520px] object-cover"
-              />
+            <div className="grid gap-6">
+              <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+                <img src={images.about.AB2} alt="Apex Dental treatment room" className="w-full h-[196px] object-cover" />
+              </div>
+              <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
+                <img src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[196px] object-cover" />
+              </div>
             </div>
           </div>
         </Section>
       </section>
 
+      {/* About the clinic */}
       <section className="bg-[#f7f4ef] py-20">
         <Section>
-          <div className="max-w-4xl">
-            <TextPanel
-              title="A clinic experience that feels reassuring and refined"
-              text="Great dental care is about more than technical treatment alone. It is also about clarity, trust, comfort, and how the entire experience feels to the patient. Apex Dental is designed to provide high-quality care in an environment that feels calm, modern, and professional."
-            />
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our clinic</div>
+              <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6">
+                Dentistry done properly, in an environment that reflects that
+              </h2>
+              <p className="text-slate-600 leading-8 mb-6">
+                Apex Dental is located at Trident Park, a modern commercial development in the Central Business District of Birkirkara, Malta. The clinic is equipped for a broad range of treatments - from routine hygiene appointments to complex implant surgery and full-smile makeovers.
+              </p>
+              <p className="text-slate-600 leading-8">
+                We work with patients from across Malta and the wider region, including residents, expats, and patients travelling specifically for dental treatment. Whether you need a simple consultation or a comprehensive restorative plan, the approach is the same: thorough assessment, honest advice, and treatment that is well-executed and properly followed up.
+              </p>
+            </div>
+            <div className="space-y-4">
+              {values.map((v) => (
+                <div key={v.title} className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <BadgeCheck className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <h3 className="font-semibold text-slate-900 mb-2">{v.title}</h3>
+                      <p className="text-slate-600 leading-7 text-sm">{v.text}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+        </Section>
+      </section>
 
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Professionalism',
-                text: 'A high standard of communication, planning, and patient support.',
-              },
-              {
-                title: 'Modern Approach',
-                text: 'Digital workflows and up-to-date treatment presentation.',
-              },
-              {
-                title: 'Patient Trust',
-                text: 'Clear guidance, transparency, and careful attention to comfort.',
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm"
-              >
-                <h3 className="text-xl font-semibold text-slate-900">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
+      {/* Dr Jonathan Mifsud - lead doctor feature */}
+      <section className="bg-slate-950 py-20 text-white">
+        <Section>
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+            <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
+              <img src={images.about.AB2} alt="Dr Jonathan Mifsud, Apex Dental" className="w-full h-[520px] object-cover" />
+            </div>
+            <div>
+              <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Meet the team</div>
+              <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-2">{team[0].name}</h2>
+              <div className="text-amber-300 font-medium mb-6">{team[0].role}</div>
+              <p className="text-slate-300 leading-8 text-lg">{team[0].bio}</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button to="/appointment-booking/" variant="gold">Book a consultation</Button>
+                <Button to="/dental-implants/" variant="glass">Implant treatments</Button>
+              </div>
+            </div>
+          </div>
+        </Section>
+      </section>
+
+      {/* Rest of the team */}
+      <section className="bg-white py-20">
+        <Section>
+          <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our dentists</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
+            A multilingual team - English, Italian and Spanish spoken
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {team.slice(1).map((doctor) => (
+              <div key={doctor.name} className="rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-6 shadow-sm">
+                <div className="w-14 h-14 rounded-full bg-slate-950 flex items-center justify-content-center mb-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">
+                    {doctor.name.split(' ').slice(-1)[0][0]}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-slate-900 text-lg">{doctor.name}</h3>
+                  {doctor.flag && <span className="text-xl">{doctor.flag}</span>}
+                </div>
+                <div className="text-sky-600 font-medium text-sm mb-4">{doctor.role}</div>
+                <p className="text-slate-600 leading-7 text-sm">{doctor.bio}</p>
               </div>
             ))}
           </div>
         </Section>
       </section>
 
-      <section className="bg-slate-950 py-20 text-white">
+      {/* Clinic milestones */}
+      <section className="bg-white py-20">
         <Section>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">
-                Apex Dental
+          <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our journey</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
+            Building a clinic patients trust, year by year
+          </h2>
+          <div className="space-y-0">
+            {milestones.map((m, i) => (
+              <div key={i} className="flex gap-8 items-start py-6 border-b border-slate-100">
+                <div className="text-sky-600 font-bold text-lg w-16 shrink-0">{m.year}</div>
+                <div className="text-slate-700 leading-7">{m.label}</div>
               </div>
-              <h2 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight">
-                Built for patients who value quality care and a better overall experience
-              </h2>
-              <p className="mt-6 text-slate-300 text-lg leading-8">
-                Use this page to add your team details, doctor bios,
-                qualifications, and a stronger explanation of your clinical
-                philosophy. It already has the premium layout. Now it just needs
-                your story.
-              </p>
-            </div>
-
-            <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
-              <img
-                src={images.about.AB3}
-                alt="Apex Dental clinic detail"
-                className="w-full h-[520px] object-cover"
-              />
-            </div>
+            ))}
           </div>
         </Section>
       </section>
@@ -1615,7 +2010,7 @@ function AboutPage() {
 
       <CTASection
         title="Would you like to visit Apex Dental?"
-        text="Contact us to arrange an appointment, discuss treatment options, or ask about emergency availability."
+        text="Book an appointment online, call us on 27016017, or send a WhatsApp message to 79854037. We are based at Trident Park, Birkirkara, Malta."
       />
     </>
   );
@@ -1760,51 +2155,115 @@ function VeneersPage() {
 function TeethWhiteningPage() {
   usePageTitle('Teeth Whitening Malta | Apex Dental');
 
+  const whiteningFaqs = [
+    {
+      q: 'How white can my teeth get?',
+      a: 'Results vary depending on your natural tooth colour and the type of staining present. Most patients achieve a noticeably brighter result. Professional whitening is more effective than over-the-counter products because it uses higher-concentration gels under controlled conditions.',
+    },
+    {
+      q: 'Is teeth whitening safe?',
+      a: 'Yes, when carried out by a dental professional. Whitening performed at Apex Dental uses regulated, clinically appropriate bleaching agents. Your gums and soft tissues are protected during in-clinic treatment, and custom trays for home whitening ensure the gel only contacts your teeth.',
+    },
+    {
+      q: 'How long do whitening results last?',
+      a: 'This depends on your diet, lifestyle, and oral hygiene habits. Most patients maintain good results for 12-24 months with regular brushing and occasional top-up treatments using their custom trays.',
+    },
+    {
+      q: 'Does whitening work on crowns or veneers?',
+      a: 'No - whitening agents only affect natural tooth enamel and will not change the colour of crowns, veneers, or composite fillings. If you have existing restorations, we will discuss this during your consultation so your treatment is planned appropriately.',
+    },
+    {
+      q: 'Will whitening make my teeth sensitive?',
+      a: 'Some patients experience mild, temporary sensitivity during or after whitening treatment. This typically resolves within a few days. Sensitivity toothpaste used during the whitening period can help manage this.',
+    },
+  ];
+
+  const whiteningSteps = [
+    {
+      title: 'Consultation',
+      text: 'We assess your tooth colour, existing restorations, and suitability for whitening - and discuss whether home or in-clinic treatment is the better fit for your goals.',
+    },
+    {
+      title: 'Custom tray impressions',
+      text: 'For home whitening, we take impressions to create precision-fitted trays that hold the bleaching gel against your teeth for even, predictable results.',
+    },
+    {
+      title: 'Whitening treatment',
+      text: 'You apply the whitening gel in your custom trays at home for the prescribed duration, or attend for an in-clinic session depending on your chosen treatment.',
+    },
+    {
+      title: 'Review and top-ups',
+      text: 'We review your result and provide guidance on maintaining it. Your custom trays can be used for future top-up treatments to keep your smile bright.',
+    },
+  ];
+
   return (
     <>
       <SEO
         title="Teeth Whitening Malta | Apex Dental"
-        description="Professional teeth whitening in Malta with home kits and in-clinic whitening options designed for brighter, cleaner smiles."
+        description="Professional teeth whitening in Malta at Apex Dental. Custom home whitening trays and in-clinic options for a brighter, whiter smile. Book a consultation today."
         canonical={`${siteUrl}/teeth-whitening/`}
-        schema={serviceSchema(
-          'Teeth Whitening',
-          'Professional teeth whitening in Malta with home and in-clinic options.',
-          `${siteUrl}/teeth-whitening/`
-        )}
+        schemas={[
+          serviceSchema(
+            'Teeth Whitening',
+            'Professional teeth whitening in Malta with custom home trays and in-clinic options. Supervised treatment for safe, effective results.',
+            `${siteUrl}/teeth-whitening/`
+          ),
+          faqSchema(whiteningFaqs),
+        ]}
       />
       <PageHero
         image={images.cosmetic.C2}
         eyebrow="Teeth Whitening Malta"
-        title="Professional whitening options for a brighter, cleaner, more confident smile"
-        subtitle="Apex Dental offers whitening solutions designed to improve tooth colour in a safer and more controlled way than over-the-counter shortcuts."
+        title="Professional whitening for a brighter, more confident smile - done safely and effectively"
+        subtitle="At Apex Dental, whitening is supervised and tailored to your teeth. Custom trays and professional-grade gels deliver better, more predictable results than anything available off the shelf."
       />
+
       <SplitEditorial
         imageLeft={images.cosmetic.C3}
-        title="Home kits and in-clinic whitening"
-        text="Professional teeth whitening may include custom home trays or an in-house whitening session depending on the patient’s needs, goals, and suitability."
+        title="Why professional whitening outperforms DIY"
+        text="Over-the-counter whitening strips and kits use low-concentration gels and generic trays that do not fit properly. This leads to uneven results, gel leakage onto the gums, and disappointing outcomes. Professional whitening uses regulated, higher-strength bleaching agents with custom trays that hold the gel precisely where it needs to be."
         points={[
-          'Custom tray home whitening',
-          'In-clinic whitening sessions',
-          'Professional supervision',
-          'More predictable aesthetic improvement',
+          'Higher-strength, regulated whitening gels',
+          'Custom trays for even, precise application',
+          'Supervised treatment with professional guidance',
+          'More consistent, longer-lasting results',
         ]}
       />
+
       <SplitEditorial
         imageLeft={images.cosmetic.C4}
-        title="A cosmetic boost with minimal disruption"
-        text="Whitening is often one of the simplest ways to freshen a smile and improve confidence, whether used on its own or before other cosmetic treatment."
+        title="Home whitening with custom trays"
+        text="Apex Dental's home whitening kit includes custom-fitted trays made from impressions of your teeth, along with professional whitening gel. You wear the trays for a set period each day - typically one to two weeks - and the results build gradually. The trays can be kept and used for future top-up treatments."
         points={[
-          'Popular aesthetic treatment',
-          'Useful before smile makeovers',
-          'Designed for cleaner brighter colour',
-          'Quick confidence upgrade',
+          'Precision-fitted custom trays included',
+          'Gradual, controlled whitening at home',
+          'Flexible - fits around your schedule',
+          'Trays reusable for long-term maintenance',
         ]}
         dark
         reverse
       />
+
+      <ProcessSteps steps={whiteningSteps} dark />
+
+      <SplitEditorial
+        imageLeft={images.cosmetic.C1}
+        title="Whitening as part of a smile makeover"
+        text="Many patients choose whitening before or alongside other cosmetic treatments such as veneers, composite bonding, or Invisalign. When planned as part of a broader smile improvement, whitening is timed to ensure your restorations are shade-matched to your new, brighter tooth colour - for a seamlessly consistent result."
+        points={[
+          'Often combined with veneers or composite work',
+          'Planned to ensure shade-consistent restorations',
+          'A popular first step in cosmetic treatment',
+          'Quick and cost-effective confidence upgrade',
+        ]}
+      />
+
+      <FAQSection faqs={whiteningFaqs} />
+
       <CTASection
-        title="Interested in professional whitening?"
-        text="Book a consultation and Apex Dental can guide you toward the most suitable whitening option."
+        title="Ready for a brighter smile?"
+        text="Book a whitening consultation at Apex Dental and we will recommend the most suitable option for your teeth, lifestyle, and goals."
       />
     </>
   );
@@ -2077,55 +2536,107 @@ function RootCanalPage() {
 function EmergencyPage() {
   usePageTitle('Emergency Dentist Malta | Apex Dental');
 
+  const emergencyFaqs = [
+    {
+      q: 'What counts as a dental emergency?',
+      a: 'A dental emergency is any situation causing severe pain, swelling, bleeding, or significant damage that needs prompt professional attention. This includes severe toothache, a knocked-out or broken tooth, a dental abscess, a lost crown or filling causing pain, and facial swelling.',
+    },
+    {
+      q: 'What should I do if a tooth is knocked out?',
+      a: 'Pick up the tooth by the crown (not the root), rinse it gently with milk or clean water, and try to reposition it in the socket if possible. If not, store it in milk or between your cheek and gum to keep it moist. Contact Apex Dental immediately - time is critical for saving a knocked-out tooth.',
+    },
+    {
+      q: 'How quickly can I be seen at Apex Dental for an emergency?',
+      a: 'We aim to accommodate genuine dental emergencies as quickly as possible. Contact us directly by phone or WhatsApp to explain your situation and we will arrange an appointment at the earliest available slot.',
+    },
+    {
+      q: 'What can I do at home while waiting to be seen?',
+      a: 'For pain, take over-the-counter pain relief such as ibuprofen or paracetamol as directed. For swelling, apply a cold compress to the outside of the cheek. Avoid very hot, cold, or hard foods. For a lost filling or crown, temporary dental cement from a pharmacy can provide short-term protection.',
+    },
+    {
+      q: 'Is a dental abscess a dental emergency?',
+      a: 'Yes. A dental abscess is an infection that can spread if left untreated and should be assessed promptly. Signs include severe throbbing pain, swelling of the face or jaw, fever, and difficulty swallowing. Contact Apex Dental or seek urgent care if you suspect an abscess.',
+    },
+  ];
+
+  const emergencyTypes = [
+    {
+      title: 'Severe toothache',
+      text: 'Persistent or severe tooth pain that does not settle with pain relief may indicate infection, a deep crack, or an abscess requiring urgent assessment.',
+    },
+    {
+      title: 'Swelling or abscess',
+      text: 'Facial swelling, gum swelling, or a painful lump near a tooth can indicate infection. This should be assessed promptly to prevent the infection from spreading.',
+    },
+    {
+      title: 'Broken or knocked-out tooth',
+      text: 'A knocked-out tooth has the best chance of being saved if you act within the hour. Broken teeth with sharp edges or exposed nerve tissue also require urgent attention.',
+    },
+    {
+      title: 'Lost crown, bridge, or filling',
+      text: 'If a restoration has come off and is causing pain or leaving a tooth vulnerable, contact us to arrange a prompt appointment to protect the tooth.',
+    },
+  ];
+
   return (
     <>
       <SEO
         title="Emergency Dentist Malta | Apex Dental"
-        description="Need an emergency dentist in Malta? Apex Dental provides urgent assessment for toothache, swelling, broken teeth, trauma, and lost restorations."
+        description="Need an emergency dentist in Malta? Apex Dental provides urgent dental care for toothache, swelling, broken teeth, abscesses, and lost restorations. Call or WhatsApp us now."
         canonical={`${siteUrl}/emergency-dental-service-malta/`}
-        schema={serviceSchema(
-          'Emergency Dentist',
-          'Emergency dental care in Malta for tooth pain, swelling, broken teeth, trauma, and urgent dental problems.',
-          `${siteUrl}/emergency-dental-service-malta/`
-        )}
+        schemas={[
+          localBusinessSchema(`${siteUrl}/emergency-dental-service-malta/`),
+          serviceSchema(
+            'Emergency Dentist Malta',
+            'Emergency dental care in Malta at Apex Dental. Urgent assessment for severe toothache, dental abscess, broken teeth, knocked-out teeth, and lost restorations.',
+            `${siteUrl}/emergency-dental-service-malta/`
+          ),
+          faqSchema(emergencyFaqs),
+        ]}
       />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Emergency Dentist Malta"
-        title="Urgent dental care when you need fast help, not a philosophical lecture from your tooth"
-        subtitle="Apex Dental provides urgent assessment for dental pain, swelling, broken teeth, trauma, lost restorations, and other unexpected dental problems."
+        title="Urgent dental care when you need it - fast assessment, clear guidance, prompt treatment"
+        subtitle="Apex Dental provides emergency appointments for dental pain, swelling, broken teeth, trauma, lost restorations, and other situations that cannot wait. Contact us directly by phone or WhatsApp."
       />
 
       <SplitEditorial
         imageLeft={images.contact.CT2}
-        title="When should you seek emergency dental care?"
-        text="You may need urgent dental treatment if you are experiencing severe toothache, swelling, facial pain, trauma, bleeding, a broken tooth, or a lost filling, crown, or bridge causing pain or functional difficulty."
+        title="When should you contact us urgently?"
+        text="Not every dental problem is an emergency - but some situations need to be assessed promptly to prevent complications, manage infection, or save a tooth. If you are in significant pain, have swelling, or have suffered dental trauma, contact Apex Dental without delay. When in doubt, it is always safer to call."
         points={[
-          'Severe tooth pain',
-          'Swelling or infection',
-          'Broken or knocked teeth',
-          'Lost crowns, bridges, or fillings',
+          'Severe or persistent toothache',
+          'Facial or gum swelling - possible infection or abscess',
+          'Knocked-out, broken, or cracked tooth',
+          'Lost crown, bridge, or filling causing pain',
         ]}
+      />
+
+      <ProcessSteps
+        steps={emergencyTypes}
+        dark
       />
 
       <SplitEditorial
         imageLeft={images.contact.CT3}
-        title="Fast guidance and prompt assessment"
-        text="If you are unsure whether your problem is an emergency, the safest step is to contact Apex Dental directly. Early assessment can reduce complications, improve comfort, and sometimes save a tooth that would otherwise worsen."
+        title="What to do before you reach us"
+        text="While waiting for your appointment, there are steps you can take to manage discomfort and protect the affected tooth. Take over-the-counter pain relief as directed. Apply a cold compress to the outside of the cheek for swelling. Avoid very hot, cold, hard, or chewy foods. If a tooth has been knocked out, keep it moist in milk or saliva and contact us immediately."
         points={[
-          'Prompt communication matters',
-          'Fast assessment can reduce complications',
-          'Clear next-step guidance',
-          'Support for urgent dental situations',
+          'Pain relief: ibuprofen or paracetamol as directed',
+          'Cold compress to reduce external swelling',
+          'Keep a knocked-out tooth moist in milk',
+          'Temporary dental cement for a lost crown (pharmacy)',
         ]}
-        dark
         reverse
       />
 
+      <FAQSection faqs={emergencyFaqs} />
+
       <CTASection
         dark
-        title="Need urgent dental care now?"
-        text="Call or WhatsApp Apex Dental directly so our team can guide you as quickly as possible."
+        title="Dental emergency in Malta? Contact us now."
+        text="Call or WhatsApp Apex Dental directly so our team can assess your situation and arrange an emergency appointment as quickly as possible."
       />
     </>
   );
@@ -2620,45 +3131,52 @@ function AppointmentBookingPage() {
 }
 
 function ContactPage() {
-  usePageTitle('Contact Apex Dental Malta');
+  usePageTitle('Contact Apex Dental Malta | Book an Appointment');
+
+  const quickLinks = [
+    { label: 'Book appointment online', to: '/appointment-booking/', icon: '📅' },
+    { label: 'Dental implants', to: '/dental-implants/', icon: '🦷' },
+    { label: 'Emergency dental care', to: '/emergency-dental-service-malta/', icon: '🚨' },
+    { label: 'Price list', to: '/price-list/', icon: '💶' },
+  ];
 
   return (
     <>
       <SEO
-        title="Contact Apex Dental Malta"
-        description="Contact Apex Dental Malta to book appointments for dental implants, Invisalign, veneers, emergency dental care, hygiene, and general dentistry."
+        title="Contact Apex Dental Malta | Book an Appointment"
+        description="Contact Apex Dental Malta at Trident Park, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment."
         canonical={`${siteUrl}/contact-us/`}
         schema={localBusinessSchema(`${siteUrl}/contact-us/`)}
       />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Contact Apex Dental"
-        title="Book your visit at Apex Dental Malta"
-        subtitle="Get in touch for routine care, cosmetic treatment, clear aligners, implant consultations, or urgent dental care."
+        title="Get in touch - we're based at Trident Park, Birkirkara, Malta"
+        subtitle="Call, WhatsApp, or send a message below. We'll get back to you quickly to confirm your appointment or answer any questions about your treatment."
       />
 
       <section className="bg-white py-20">
         <Section>
-          <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 items-start">
-            <div>
-              <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                <img
-                  src={images.contact.CT2}
-                  alt="Apex Dental location or reception"
-                  className="w-full h-[520px] object-cover"
-                />
-              </div>
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
 
-              <div className="mt-8 rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-8">
-                <h2 className="text-2xl font-semibold text-slate-900">
-                  Contact Details
-                </h2>
-                <div className="mt-6 space-y-5">
+            {/* Left column: contact info + map */}
+            <div>
+              <div className="rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-8 mb-6">
+                <h2 className="text-2xl font-semibold text-slate-900 mb-6">Contact details</h2>
+                <div className="space-y-5">
                   <div className="flex items-start gap-3">
                     <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
                       <div className="font-medium text-slate-900">Address</div>
-                      <div className="text-slate-600 mt-1">{brand.address}</div>
+                      <div className="text-slate-600 mt-1 leading-7">{brand.address}</div>
+                      <a
+                        href="https://maps.google.com/?q=Apex+Dental+Trident+Park+Birkirkara+Malta"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sky-600 hover:text-sky-700 text-sm font-medium mt-1 inline-block"
+                      >
+                        Get directions -&gt;
+                      </a>
                     </div>
                   </div>
 
@@ -2666,10 +3184,7 @@ function ContactPage() {
                     <Phone className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
                       <div className="font-medium text-slate-900">Phone</div>
-                      <a
-                        href={`tel:${brand.phone}`}
-                        className="text-slate-600 mt-1 block hover:text-sky-700"
-                      >
+                      <a href={`tel:${brand.phone}`} className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium">
                         {brand.phone}
                       </a>
                     </div>
@@ -2684,7 +3199,9 @@ function ContactPage() {
                       <div className="font-medium text-slate-900">WhatsApp</div>
                       <a
                         href={`https://wa.me/356${brand.whatsapp}`}
-                        className="text-slate-600 mt-1 block hover:text-sky-700"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium"
                       >
                         {brand.mobile}
                       </a>
@@ -2694,31 +3211,78 @@ function ContactPage() {
                   <div className="flex items-start gap-3">
                     <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">
-                        Appointments
-                      </div>
-                      <div className="text-slate-600 mt-1">
-                        Contact us for available times and emergency guidance.
+                      <div className="font-medium text-slate-900">Opening hours</div>
+                      <div className="text-slate-600 mt-1 leading-7">
+                        Monday - Friday: 9:00 - 18:00<br />
+                        Saturday: 9:00 - 13:00<br />
+                        <span className="text-sm text-slate-500">Emergency care: contact us directly</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Google Maps embed */}
+              <div className="rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm">
+                <iframe
+                  title="Apex Dental Malta location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.1!2d14.4654!3d35.8989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDUzJzU2LjAiTiAxNMKwMjcnNTUuNCJF!5e0!3m2!1sen!2smt!4v1234567890"
+                  width="100%"
+                  height="280"
+                  style={{ border: 0, display: 'block' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
             </div>
 
+            {/* Right column: contact form */}
             <ContactFormCard />
           </div>
         </Section>
       </section>
 
-      <section className="bg-[#f7f4ef] py-20">
+      {/* Quick links */}
+      <section className="bg-[#f7f4ef] py-16">
         <Section>
-          <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-            <img
-              src={images.contact.CT3}
-              alt="Apex Dental exterior or entrance"
-              className="w-full h-[480px] object-cover"
-            />
+          <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-8">Quick access</div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quickLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex items-center gap-4"
+              >
+                <span className="text-2xl">{link.icon}</span>
+                <span className="font-medium text-slate-900">{link.label}</span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      </section>
+
+      {/* Google Ads App access */}
+      <section className="bg-slate-950 py-16 text-white">
+        <Section>
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10">
+            <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+              <div>
+                <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Internal tools</div>
+                <h2 className="text-2xl md:text-3xl font-semibold leading-tight mb-3">
+                  Apex Dental Google Ads management
+                </h2>
+                <p className="text-slate-300 leading-7">
+                  Access the internal Google Ads dashboard, campaign builder, campaign manager, and AI strategy engine.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <Button to="/google-ads-dashboard" variant="gold">Ads dashboard</Button>
+                <Button to="/google-ads-builder" variant="glass">Campaign builder</Button>
+                <Button to="/google-ads-manager" variant="glass">Campaign manager</Button>
+                <Button to="/google-ads-strategy" variant="glass">AI strategy</Button>
+              </div>
+            </div>
           </div>
         </Section>
       </section>
@@ -3010,6 +3574,7 @@ function SEO({
   canonical,
   type = 'website',
   schema = null,
+  schemas = null,
 }) {
   useEffect(() => {
     document.title = title;
@@ -3039,27 +3604,31 @@ function SEO({
     ensureMeta('property', 'og:description', description);
     ensureMeta('property', 'og:type', type);
     ensureMeta('property', 'og:url', canonical);
+    ensureMeta('property', 'og:site_name', 'Apex Dental Malta');
+    ensureMeta('property', 'og:image', `${siteUrl}/images/H1.jpg`);
     ensureMeta('name', 'twitter:card', 'summary_large_image');
     ensureMeta('name', 'twitter:title', title);
     ensureMeta('name', 'twitter:description', description);
+    ensureMeta('name', 'robots', 'index, follow');
 
     ensureLink('canonical', canonical);
 
-    let schemaTag = document.head.querySelector('#seo-schema');
-    if (schema) {
-      if (!schemaTag) {
-        schemaTag = document.createElement('script');
-        schemaTag.type = 'application/ld+json';
-        schemaTag.id = 'seo-schema';
-        document.head.appendChild(schemaTag);
-      }
-      schemaTag.textContent = JSON.stringify(schema);
-    } else if (schemaTag) {
-      schemaTag.remove();
-    }
+    document.head
+      .querySelectorAll('script[type="application/ld+json"]')
+      .forEach((el) => el.remove());
+
+    const allSchemas = schemas ? schemas : schema ? [schema] : [];
+
+    allSchemas.forEach((s, i) => {
+      const tag = document.createElement('script');
+      tag.type = 'application/ld+json';
+      tag.id = `seo-schema-${i}`;
+      tag.textContent = JSON.stringify(s);
+      document.head.appendChild(tag);
+    });
 
     return () => {};
-  }, [title, description, canonical, type, schema]);
+  }, [title, description, canonical, type, schema, schemas]);
 
   return null;
 }
