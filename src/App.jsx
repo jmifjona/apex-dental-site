@@ -4,6 +4,9 @@ import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
 import GoogleAdsDashboard from './GoogleAdsDashboard.jsx';
 import GoogleAdsCampaignCreator from './GoogleAdsCampaignCreator';
+import GoogleAdsCampaignManager from './GoogleAdsCampaignManager';
+import GoogleAdsStrategyEngine from './GoogleAdsStrategyEngine';
+import GoogleAdsCampaignBuilder from './GoogleAdsCampaignBuilder';
 import { trackAppointmentBookingConversion } from './lib/googleAds';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
@@ -3305,6 +3308,105 @@ function SEO({
   return null;
 }
 
+
+// ── GOOGLE ADS AUTH GATE ─────────────────────────────────────
+// Credentials - change these to your preferred login
+const ADS_USERNAME = 'apexdental';
+const ADS_PASSWORD = 'Apex2025!';
+const SESSION_KEY = 'apex_ads_auth';
+
+function AdsAuthGate({ children }) {
+  const [authed, setAuthed] = React.useState(() => {
+    try { return sessionStorage.getItem(SESSION_KEY) === 'true'; } catch { return false; }
+  });
+  const [user, setUser] = React.useState('');
+  const [pass, setPass] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  function handleLogin(e) {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      if (user.trim() === ADS_USERNAME && pass === ADS_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, 'true');
+        setAuthed(true);
+        setError('');
+      } else {
+        setError('Incorrect username or password.');
+      }
+      setLoading(false);
+    }, 600);
+  }
+
+  if (authed) return children;
+
+  return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <img src="/images/orislogo.png" alt="Apex Dental" className="h-12 w-auto mx-auto mb-4" />
+          <h1 className="text-2xl font-semibold text-white">Google Ads Management</h1>
+          <p className="text-slate-400 mt-2 text-sm">Sign in to access the Apex Dental ads dashboard</p>
+        </div>
+
+        <div className="rounded-[2rem] bg-white/5 border border-white/10 p-8">
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Username</label>
+              <input
+                type="text"
+                value={user}
+                onChange={e => setUser(e.target.value)}
+                placeholder="Enter username"
+                required
+                autoComplete="username"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-amber-400 transition text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+              <input
+                type="password"
+                value={pass}
+                onChange={e => setPass(e.target.value)}
+                placeholder="Enter password"
+                required
+                autoComplete="current-password"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 outline-none focus:border-amber-400 transition text-sm"
+              />
+            </div>
+
+            {error && (
+              <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-amber-400 text-slate-950 py-3 font-semibold text-sm hover:bg-amber-300 transition disabled:opacity-60"
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </form>
+
+          <div className="mt-6 pt-5 border-t border-white/10 text-center">
+            <Link to="/" className="text-slate-400 hover:text-white text-xs transition">
+              Back to website
+            </Link>
+          </div>
+        </div>
+
+        <p className="text-center text-slate-600 text-xs mt-6">
+          Apex Dental Malta · Internal tool
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function ApexDentalWebsitePremium() {
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
@@ -3334,9 +3436,12 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/appointment-booking/" element={<AppointmentBookingPage />} />
         <Route path="/services/" element={<ServicesPage />} />
         <Route path="/contact-us/" element={<ContactPage />} />
-        <Route path="/google-ads-app" element={<GoogleAdsAppPage />} />
-        <Route path="/google-ads-dashboard" element={<GoogleAdsDashboard />} />
-        <Route path="/google-ads-campaign-creator" element={<GoogleAdsCampaignCreator />} />
+        <Route path="/google-ads-app" element={<AdsAuthGate><GoogleAdsAppPage /></AdsAuthGate>} />
+        <Route path="/google-ads-dashboard" element={<AdsAuthGate><GoogleAdsDashboard /></AdsAuthGate>} />
+        <Route path="/google-ads-campaign-creator" element={<AdsAuthGate><GoogleAdsCampaignCreator /></AdsAuthGate>} />
+        <Route path="/google-ads-manager" element={<AdsAuthGate><GoogleAdsCampaignManager /></AdsAuthGate>} />
+        <Route path="/google-ads-strategy" element={<AdsAuthGate><GoogleAdsStrategyEngine /></AdsAuthGate>} />
+        <Route path="/google-ads-builder" element={<AdsAuthGate><GoogleAdsCampaignBuilder /></AdsAuthGate>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<Terms />} />
       </Routes>
