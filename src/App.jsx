@@ -796,8 +796,7 @@ function DarkHero({
                 <Star size={16} fill="currentColor" />
               </div>
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Replace this with a real Google review to add instant trust and
-                make the hero feel authentic.
+                The staff were welcoming, the clinic is modern and clean. I felt comfortable and well cared for throughout. Highly recommended! — Sarah Jane
               </p>
             </div>
           </div>
@@ -1065,19 +1064,19 @@ function HomeGallery() {
 function ReviewStrip() {
   const reviews = [
     {
-      name: 'Maria C.',
+      name: 'Sarah Jane',
       date: 'March 2025',
-      text: 'Had my dental implant done by Dr Mifsud. The whole process was explained clearly from start to finish. The clinic is modern and clean, and the team made me feel completely at ease. Highly recommend Apex Dental.',
+      text: 'I had an excellent experience at Apex Dental Clinic. The staff were very welcoming from the moment I walked in, and the dentist explained everything clearly before starting the treatment. The clinic is clean, modern, and well-organized. I felt comfortable and well cared for throughout my visit. Highly recommended!',
     },
     {
-      name: 'James B.',
-      date: 'February 2025',
-      text: 'Went in for an emergency on a Sunday morning and they saw me within the hour. Professional, efficient and genuinely caring. Could not have asked for better service in a stressful situation.',
+      name: 'Maime Eliot',
+      date: 'March 2025',
+      text: 'Apex Dental Clinic truly exceeded my expectations. I was quite nervous about my dental procedure, but the dentist and assistants were incredibly patient and reassuring. The treatment was painless and done very professionally. I am very happy with the results and will definitely come back for regular check-ups.',
     },
     {
-      name: 'Sofia R.',
+      name: 'Keith Pablo',
       date: 'January 2025',
-      text: 'I had been putting off the dentist for years due to anxiety. The team at Apex were patient and kind throughout. I now come regularly and do not dread it at all. The results of my whitening treatment are amazing.',
+      text: 'The team here is amazing! From the moment you walk in, the staff is incredibly friendly and welcoming, instantly making you feel at ease. I usually get very nervous about dental visits, but they are so patient and understanding. They take the time to ensure you feel calm and comfortable throughout. I highly recommend them!',
     },
   ];
   return (
@@ -1099,8 +1098,8 @@ function ReviewStrip() {
                     <Star key={i} size={18} fill="currentColor" />
                   ))}
                 </div>
-                <span className="text-white font-semibold text-lg">5.0</span>
-                <span className="text-slate-400 text-sm">Google Reviews</span>
+                <span className="text-white font-semibold text-lg">4.9</span>
+                <span className="text-slate-400 text-sm">119 Google Reviews</span>
               </div>
               <a
                 href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
