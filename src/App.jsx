@@ -448,7 +448,7 @@ function FloatingHeader() {
               </Link>
 
               <Link
-                to="/about"
+                to="/about-us/"
                 className="text-sm font-medium text-slate-200 hover:text-white transition"
               >
                 About
@@ -518,7 +518,7 @@ function FloatingHeader() {
               </Link>
 
               <Link
-                to="/contact"
+                to="/contact-us/"
                 className="text-sm font-medium text-slate-200 hover:text-white transition"
               >
                 Contact
@@ -558,7 +558,7 @@ function FloatingHeader() {
                 Home
               </Link>
               <Link
-                to="/about"
+                to="/about-us/"
                 onClick={() => setOpen(false)}
                 className="text-slate-200 hover:text-white"
               >
@@ -627,7 +627,7 @@ function FloatingHeader() {
                 Blog
               </Link>
               <Link
-                to="/contact"
+                to="/contact-us/"
                 onClick={() => setOpen(false)}
                 className="text-slate-200 hover:text-white"
               >
@@ -671,7 +671,7 @@ function MobileStickyBar() {
         </a>
 
         <Link
-          to="/contact"
+          to="/contact-us/"
           className="flex flex-col items-center justify-center py-3 text-slate-900 font-semibold"
         >
           <ChevronRight size={18} />
@@ -749,7 +749,7 @@ function DarkHero({
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button to="/contact" variant="gold">
+              <Button to="/contact-us/" variant="gold">
                 {primaryCta}
               </Button>
               <Button
@@ -910,7 +910,7 @@ function ServiceTiles() {
           </div>
 
           <Link
-            to="/contact"
+            to="/contact-us/"
             className="inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-slate-600 transition"
           >
             Book your consultation <ArrowUpRight size={18} />
@@ -1175,7 +1175,7 @@ function CTASection({ dark = false, title, text }) {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button to="/contact" variant={dark ? 'gold' : 'dark'}>
+              <Button to="/contact-us/" variant={dark ? 'gold' : 'dark'}>
                 Book Appointment
               </Button>
               <Button
@@ -2335,7 +2335,7 @@ function BlogPage() {
                 </h2>
                 <p className="mt-4 text-slate-600 leading-7">{post.excerpt}</p>
                 <Link
-                  to="/contact"
+                  to="/contact-us/"
                   className="inline-flex items-center gap-2 mt-6 text-slate-900 font-semibold hover:text-slate-600"
                 >
                   Read more <ChevronRight size={18} />
@@ -3142,7 +3142,7 @@ function ComplianceTrustSection() {
             </div>
 
             <div className="mt-8">
-              <Button to="/contact" variant="dark">
+              <Button to="/contact-us/" variant="dark">
                 Book Appointment
               </Button>
             </div>
