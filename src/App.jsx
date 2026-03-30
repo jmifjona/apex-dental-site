@@ -372,39 +372,39 @@ function FloatingHeader() {
     {
       title: 'Implant & Restorative',
       items: [
-        { to: '/dental-implants', label: 'Dental Implants' },
-        { to: '/crowns-and-bridgework-malta', label: 'Crowns & Bridgework' },
-        { to: '/dental-prosthetics-malta', label: 'Dental Prosthetics' },
-        { to: '/removable-prosthesis-malta', label: 'Removable Prosthesis' },
-        { to: '/root-canal-treatment-malta', label: 'Root Canal Treatment' },
+        { to: '/dental-implants/', label: 'Dental Implants' },
+        { to: '/crowns-and-bridgework/', label: 'Crowns & Bridgework' },
+        { to: '/dental-prosthetics/', label: 'Dental Prosthetics' },
+        { to: '/removable-prosthesis/', label: 'Removable Prosthesis' },
+        { to: '/root-canal-treatment/', label: 'Root Canal Treatment' },
       ],
     },
     {
       title: 'Cosmetic',
       items: [
         { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
-        { to: '/veneers-malta', label: 'Veneers' },
-        { to: '/teeth-whitening-malta', label: 'Teeth Whitening' },
+        { to: '/veneers/', label: 'Veneers' },
+        { to: '/teeth-whitening/', label: 'Teeth Whitening' },
       ],
     },
     {
       title: 'Orthodontic',
       items: [
-        { to: '/clear-aligners-malta', label: 'Clear Aligners' },
-        { to: '/orthodontic-malta', label: 'Orthodontic Treatment' },
+        { to: '/invisalign-malta/', label: 'Clear Aligners' },
+        { to: '/orthodontics/', label: 'Orthodontic Treatment' },
       ],
     },
     {
       title: 'Preventive',
       items: [
-        { to: '/general-dentistry-malta', label: 'General Dentistry' },
-        { to: '/dental-hygiene-malta', label: 'Dental Hygiene' },
-        { to: '/periodontology-malta', label: 'Periodontology' },
+        { to: '/general-dentistry/', label: 'General Dentistry' },
+        { to: '/dental-hygiene/', label: 'Dental Hygiene' },
+        { to: '/periodontology/', label: 'Periodontology' },
       ],
     },
     {
       title: 'Urgent Care',
-      items: [{ to: '/emergency-dentist-malta', label: 'Emergency Dentist' }],
+      items: [{ to: '/emergency-dental-service-malta/', label: 'Emergency Dentist' }],
     },
   ];
 
@@ -880,13 +880,13 @@ function ServiceTiles() {
       title: 'Dental Implants',
       text: 'Advanced tooth replacement planned for stability, function, and aesthetics.',
       image: images.implants.I1,
-      to: '/dental-implants',
+      to: '/dental-implants/',
     },
     {
       title: 'Clear Aligners',
       text: 'Discreet orthodontic treatment designed around modern lifestyles.',
       image: images.aligners.A1,
-      to: '/clear-aligners-malta',
+      to: '/invisalign-malta/',
     },
     {
       title: 'Cosmetic Dentistry',
@@ -2886,31 +2886,31 @@ function ServicesPage() {
       items: [
         {
           title: 'Dental Implants',
-          to: '/dental-implants',
+          to: '/dental-implants/',
           text: 'Single-tooth to advanced implant solutions for long-term replacement of missing teeth.',
           image: images.implants.I1,
         },
         {
           title: 'Crowns & Bridgework',
-          to: '/crowns-and-bridgework-malta',
+          to: '/crowns-and-bridgework/',
           text: 'Carefully planned restorations to rebuild damaged teeth and replace missing spaces.',
           image: images.home.H4,
         },
         {
           title: 'Dental Prosthetics',
-          to: '/dental-prosthetics-malta',
+          to: '/dental-prosthetics/',
           text: 'Restorative prosthetic options tailored for function, comfort, and daily usability.',
           image: images.home.H5,
         },
         {
           title: 'Removable Prosthesis',
-          to: '/removable-prosthesis-malta',
+          to: '/removable-prosthesis/',
           text: 'Practical removable tooth replacement solutions planned around support and fit.',
           image: images.home.H8,
         },
         {
           title: 'Root Canal Treatment',
-          to: '/root-canal-treatment-malta',
+          to: '/root-canal-treatment/',
           text: 'Treatment focused on relieving pain and helping preserve natural teeth where possible.',
           image: images.home.H6,
         },
@@ -2929,13 +2929,13 @@ function ServicesPage() {
         },
         {
           title: 'Veneers',
-          to: '/veneers-malta',
+          to: '/veneers/',
           text: 'Porcelain or composite veneer options for shape, symmetry, and aesthetic refinement.',
           image: images.cosmetic.C2,
         },
         {
           title: 'Teeth Whitening',
-          to: '/teeth-whitening-malta',
+          to: '/teeth-whitening/',
           text: 'Professional whitening options for a brighter, cleaner, more confident smile.',
           image: images.cosmetic.C3,
         },
@@ -2948,13 +2948,13 @@ function ServicesPage() {
       items: [
         {
           title: 'Clear Aligners',
-          to: '/clear-aligners-malta',
+          to: '/invisalign-malta/',
           text: 'Discreet modern aligner treatment designed for comfort and adult-friendly lifestyles.',
           image: images.aligners.A1,
         },
         {
           title: 'Orthodontic Treatment',
-          to: '/orthodontic-malta',
+          to: '/orthodontics/',
           text: 'Orthodontic care for spacing, crowding, bite improvement, and smile positioning.',
           image: images.aligners.A3,
         },
@@ -2967,19 +2967,19 @@ function ServicesPage() {
       items: [
         {
           title: 'General Dentistry',
-          to: '/general-dentistry-malta',
+          to: '/general-dentistry/',
           text: 'Routine examinations, diagnosis, maintenance, and everyday dental care.',
           image: images.home.H5,
         },
         {
           title: 'Dental Hygiene',
-          to: '/dental-hygiene-malta',
+          to: '/dental-hygiene/',
           text: 'Professional hygiene care to support gum health, fresh breath, and long-term maintenance.',
           image: images.home.H9,
         },
         {
           title: 'Periodontology',
-          to: '/periodontology-malta',
+          to: '/periodontology/',
           text: 'Gum-focused care supporting the health of the tissues around teeth and implants.',
           image: images.home.H10,
         },
@@ -2992,7 +2992,7 @@ function ServicesPage() {
       items: [
         {
           title: 'Emergency Dentist',
-          to: '/emergency-dentist-malta',
+          to: '/emergency-dental-service-malta/',
           text: 'Urgent assessment and guidance for dental pain, swelling, broken teeth, and trauma.',
           image: images.contact.CT1,
         },
