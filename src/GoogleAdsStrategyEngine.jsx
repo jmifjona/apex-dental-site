@@ -440,6 +440,156 @@ Respond with JSON only:
   );
 }
 
+// ── CAMPAIGN TYPE ADVISOR TAB ────────────────────────────────
+const CAMPAIGN_TYPES = {
+  search: {
+    name: 'Search campaign',
+    desc: 'Text ads shown when people actively search on Google. Highest intent, most control.',
+    intent: 95, reach: 60, control: 95, automation: 30,
+    color: '#DBEAFE', textColor: '#1E40AF', fillColor: '#3B82F6',
+    pros: ['Captures people actively searching', 'Full control over keywords and copy', 'Works with any budget', 'Best for new accounts'],
+    cons: ['Limited to text format', 'Only reaches searchers, not browsers'],
+  },
+  pmax: {
+    name: 'Performance Max',
+    desc: 'AI-driven campaign across all Google channels — Search, YouTube, Display, Gmail, Maps.',
+    intent: 70, reach: 98, control: 25, automation: 95,
+    color: '#D1FAE5', textColor: '#065F46', fillColor: '#10B981',
+    pros: ['Reaches customers across all Google properties', 'AI optimises automatically', 'Lower average CPC', 'Great for scale'],
+    cons: ['Needs conversion data to learn', 'Less control and transparency', 'Not ideal for new accounts'],
+  },
+  display: {
+    name: 'Display campaign',
+    desc: 'Visual banner ads across millions of websites. Best for awareness and remarketing.',
+    intent: 30, reach: 90, control: 70, automation: 50,
+    color: '#FEF3C7', textColor: '#92400E', fillColor: '#F59E0B',
+    pros: ['Visual format builds brand recall', 'Cheap CPM for awareness', 'Good for remarketing'],
+    cons: ['Lower conversion intent', 'Not standalone for lead gen', 'Needs good creative assets'],
+  },
+  hybrid: {
+    name: 'Search + Performance Max',
+    desc: 'Run Search for high-intent keywords and PMax for broader reach. The expert strategy.',
+    intent: 85, reach: 95, control: 65, automation: 65,
+    color: '#EDE9FE', textColor: '#5B21B6', fillColor: '#8B5CF6',
+    pros: ['Best of both worlds', 'Search captures high-intent, PMax finds new audiences', 'Proven for dental practices'],
+    cons: ['Higher budget needed', 'More complex to manage', 'PMax needs time to learn'],
+  },
+};
+
+function ScoreBar2({ val, color }) {
+  return (
+    <div style={{ height: 6, background: '#F3F4F6', borderRadius: 3, overflow: 'hidden', marginTop: 3 }}>
+      <div style={{ width: `${val}%`, background: color, height: '100%', borderRadius: 3 }} />
+    </div>
+  );
+}
+
+function CampaignTypeTab() {
+  const [answers, setAnswers] = useState({});
+  const [result, setResult] = useState(null);
+
+  function setAnswer(q, v) { setAnswers(p => ({ ...p, [q]: v })); setResult(null); }
+
+  function calcScores() {
+    const { 1: goal, 2: budget, 3: service, 4: maturity } = answers;
+    const s = { search: 0, pmax: 0, display: 0, hybrid: 0 };
+    if (goal === 'bookings' || goal === 'leads') { s.search += 40; s.hybrid += 30; }
+    if (goal === 'awareness') { s.display += 35; s.pmax += 25; }
+    if (goal === 'traffic') { s.search += 25; s.pmax += 20; }
+    if (budget === 'small') { s.search += 40; s.pmax -= 20; s.hybrid -= 30; }
+    if (budget === 'medium') { s.search += 25; s.hybrid += 10; }
+    if (budget === 'large') { s.hybrid += 35; s.pmax += 20; s.search += 15; }
+    if (budget === 'enterprise') { s.hybrid += 40; s.pmax += 35; }
+    if (service === 'emergency' || service === 'implants') { s.search += 35; }
+    if (service === 'cosmetic' || service === 'invisalign') { s.search += 20; s.pmax += 15; }
+    if (service === 'multiple') { s.hybrid += 30; s.pmax += 25; }
+    if (service === 'general') { s.search += 20; s.pmax += 10; }
+    if (maturity === 'new') { s.search += 35; s.pmax -= 25; s.hybrid -= 20; }
+    if (maturity === 'some') { s.search += 20; s.pmax += 5; s.hybrid += 10; }
+    if (maturity === 'mature') { s.hybrid += 30; s.pmax += 25; s.search += 10; }
+    return s;
+  }
+
+  function recommend() {
+    if (Object.keys(answers).length < 4) { alert('Please answer all 4 questions.'); return; }
+    const scores = calcScores();
+    const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    setResult({ top: ranked[0][0], second: ranked[1][0] });
+  }
+
+  const questions = [
+    { id: 1, label: 'What is your primary goal?', opts: [{ v: 'bookings', l: 'Get appointment bookings' }, { v: 'leads', l: 'Generate phone calls / leads' }, { v: 'awareness', l: 'Build brand awareness' }, { v: 'traffic', l: 'Drive website traffic' }] },
+    { id: 2, label: 'What is your monthly budget?', opts: [{ v: 'small', l: 'Under €300' }, { v: 'medium', l: '€300 – €800' }, { v: 'large', l: '€800 – €2000' }, { v: 'enterprise', l: 'Over €2000' }] },
+    { id: 3, label: 'Which service are you promoting?', opts: [{ v: 'implants', l: 'Dental implants' }, { v: 'emergency', l: 'Emergency dental' }, { v: 'cosmetic', l: 'Cosmetic (whitening, veneers)' }, { v: 'invisalign', l: 'Invisalign / aligners' }, { v: 'general', l: 'General dentistry' }, { v: 'multiple', l: 'Multiple services' }] },
+    { id: 4, label: 'How mature is your Google Ads account?', opts: [{ v: 'new', l: 'New — little or no data' }, { v: 'some', l: 'Some history — a few months' }, { v: 'mature', l: 'Mature — 6+ months of data' }] },
+  ];
+
+  const TypeCard = ({ typeKey, isPrimary }) => {
+    const t = CAMPAIGN_TYPES[typeKey];
+    return (
+      <div style={{ background: isPrimary ? t.color : '#F9FAFB', border: isPrimary ? `2px solid ${t.fillColor}` : '1px solid #E5E7EB', borderRadius: 12, padding: '1rem 1.25rem', marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+          {isPrimary && <span style={{ background: t.fillColor, color: 'white', fontSize: 11, padding: '3px 10px', borderRadius: 20, fontWeight: 600 }}>Top recommendation</span>}
+          {!isPrimary && <span style={{ background: '#E5E7EB', color: '#6B7280', fontSize: 11, padding: '3px 10px', borderRadius: 20 }}>Also consider</span>}
+        </div>
+        <div style={{ fontSize: 16, fontWeight: 600, color: '#0F172A', marginBottom: 4 }}>{t.name}</div>
+        <div style={{ fontSize: 13, color: '#6B7280', marginBottom: 14, lineHeight: 1.6 }}>{t.desc}</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 16px', marginBottom: 14 }}>
+          {[['Audience intent', t.intent], ['Reach', t.reach], ['Your control', t.control], ['Automation', t.automation]].map(([label, val]) => (
+            <div key={label}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#6B7280' }}><span>{label}</span><span>{val}/100</span></div>
+              <ScoreBar2 val={val} color={t.fillColor} />
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 12 }}>
+          <div>
+            <div style={{ color: '#9CA3AF', fontWeight: 500, marginBottom: 5 }}>Advantages</div>
+            {t.pros.map((p, i) => <div key={i} style={{ color: '#374151', padding: '2px 0' }}>+ {p}</div>)}
+          </div>
+          <div>
+            <div style={{ color: '#9CA3AF', fontWeight: 500, marginBottom: 5 }}>Watch out for</div>
+            {t.cons.map((c, i) => <div key={i} style={{ color: '#374151', padding: '2px 0' }}>- {c}</div>)}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div style={card}>
+        <div style={{ fontSize: 13, fontWeight: 500, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>Campaign type advisor</div>
+        <p style={{ fontSize: 14, color: '#6B7280', marginBottom: 20, lineHeight: 1.6 }}>Answer 4 questions and get an instant recommendation on whether to use Search, Performance Max, Display or a hybrid strategy.</p>
+
+        {questions.map(q => (
+          <div key={q.id} style={{ marginBottom: 18 }}>
+            <label style={{ ...label, marginBottom: 8 }}>{q.id}. {q.label}</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {q.opts.map(opt => (
+                <button key={opt.v} onClick={() => setAnswer(q.id, opt.v)}
+                  style={{ padding: '7px 14px', fontSize: 13, borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', border: answers[q.id] === opt.v ? `1.5px solid #0F172A` : '1px solid #E5E7EB', background: answers[q.id] === opt.v ? '#0F172A' : '#F9FAFB', color: answers[q.id] === opt.v ? 'white' : '#374151', fontWeight: answers[q.id] === opt.v ? 500 : 400 }}>
+                  {opt.l}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <button style={btn('#0F172A', 'white')} onClick={recommend}>Get recommendation</button>
+      </div>
+
+      {result && (
+        <div style={card}>
+          <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Your campaign type recommendation</div>
+          <TypeCard typeKey={result.top} isPrimary={true} />
+          <TypeCard typeKey={result.second} isPrimary={false} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── MAIN COMPONENT ───────────────────────────────────────────
 export default function GoogleAdsStrategyEngine() {
   const [tab, setTab] = useState('research');
@@ -447,6 +597,7 @@ export default function GoogleAdsStrategyEngine() {
     { id: 'research', label: '🔍 Competitor research' },
     { id: 'score', label: '📊 Campaign scorer' },
     { id: 'strategy', label: '🤖 Strategy advisor' },
+    { id: 'type', label: '🎯 Campaign type advisor' },
   ];
 
   return (
@@ -459,7 +610,7 @@ export default function GoogleAdsStrategyEngine() {
 
         <div style={{ display: 'flex', gap: 0, border: '1px solid #E5E7EB', borderRadius: 10, overflow: 'hidden', marginBottom: '1.5rem' }}>
           {tabs.map(t => (
-            <button key={t.id} onClick={() => setTab(t.id)} style={{ flex: 1, padding: '10px', fontSize: 13, border: 'none', cursor: 'pointer', background: tab === t.id ? '#0F172A' : '#F9FAFB', color: tab === t.id ? 'white' : '#374151', fontWeight: tab === t.id ? 500 : 400, fontFamily: 'inherit' }}>
+            <button key={t.id} onClick={() => setTab(t.id)} style={{ flex: 1, padding: '10px', fontSize: 12, border: 'none', cursor: 'pointer', background: tab === t.id ? '#0F172A' : '#F9FAFB', color: tab === t.id ? 'white' : '#374151', fontWeight: tab === t.id ? 500 : 400, fontFamily: 'inherit' }}>
               {t.label}
             </button>
           ))}
@@ -468,6 +619,7 @@ export default function GoogleAdsStrategyEngine() {
         {tab === 'research' && <ResearchTab />}
         {tab === 'score' && <ScorerTab />}
         {tab === 'strategy' && <StrategyTab />}
+        {tab === 'type' && <CampaignTypeTab />}
       </section>
     </main>
   );
