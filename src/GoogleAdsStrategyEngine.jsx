@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const API = 'https://google-ads-backend-production-2319.up.railway.app';
 
@@ -9,6 +9,7 @@ const TABS = [
   { id: 'generator', emoji: '✨', label: 'AI Campaign Generator' },
 ];
 
+// ── Shared UI components ──────────────────────────────────────
 function LoadingPulse({ message = 'Working…', sub }) {
   return (
     <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-8 text-center">
@@ -30,9 +31,9 @@ function ErrorBox({ message, onRetry }) {
         <div className="flex-1">
           <div className="text-rose-400 font-semibold text-sm">Request failed</div>
           <div className="text-rose-300 text-sm mt-1">{message}</div>
-          {message?.toLowerCase().includes('fetch') && (
+          {(message?.toLowerCase().includes('fetch') || message?.toLowerCase().includes('timeout')) && (
             <div className="mt-2 text-xs text-slate-400">
-              This may be a timeout — the AI request took longer than expected. Try again or check your Railway timeout setting (Settings → Networking → set to 180s).
+              This may be a timeout. Try again or set Railway request timeout to 180s (Service → Settings → Networking).
             </div>
           )}
         </div>
@@ -47,25 +48,23 @@ function ErrorBox({ message, onRetry }) {
 }
 
 function ResultCard({ title, items = [], color = 'amber' }) {
-  const colors = {
-    amber: 'border-amber-400/20 bg-amber-400/5',
-    sky:   'border-sky-400/20 bg-sky-400/5',
-    emerald: 'border-emerald-400/20 bg-emerald-400/5',
-    violet: 'border-violet-400/20 bg-violet-400/5',
-  };
-  const textColors = { amber: 'text-amber-400', sky: 'text-sky-400', emerald: 'text-emerald-400', violet: 'text-violet-400' };
+  const borders = { amber: 'border-amber-400/20 bg-amber-400/5', sky: 'border-sky-400/20 bg-sky-400/5', emerald: 'border-emerald-400/20 bg-emerald-400/5', violet: 'border-violet-400/20 bg-violet-400/5' };
+  const labels  = { amber: 'text-amber-400', sky: 'text-sky-400', emerald: 'text-emerald-400', violet: 'text-violet-400' };
+  const dots    = { amber: 'bg-amber-400', sky: 'bg-sky-400', emerald: 'bg-emerald-400', violet: 'bg-violet-400' };
   return (
-    <div className={`rounded-2xl border p-5 ${colors[color] || colors.amber}`}>
-      <div className={`text-xs font-bold uppercase tracking-widest mb-3 ${textColors[color] || textColors.amber}`}>{title}</div>
-      {items.length === 0 && <div className="text-slate-500 text-sm">No data returned.</div>}
-      <ul className="space-y-1.5">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-            <span className={`mt-1 w-1.5 h-1.5 rounded-full shrink-0 ${textColors[color]?.replace('text-', 'bg-') || 'bg-amber-400'}`} />
-            {typeof item === 'string' ? item : JSON.stringify(item)}
-          </li>
-        ))}
-      </ul>
+    <div className={`rounded-2xl border p-5 ${borders[color] || borders.amber}`}>
+      <div className={`text-xs font-bold uppercase tracking-widest mb-3 ${labels[color] || labels.amber}`}>{title}</div>
+      {items.length === 0
+        ? <div className="text-slate-500 text-sm">No data returned.</div>
+        : <ul className="space-y-1.5">
+            {items.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${dots[color] || dots.amber}`} />
+                {typeof item === 'string' ? item : JSON.stringify(item)}
+              </li>
+            ))}
+          </ul>
+      }
     </div>
   );
 }
@@ -86,14 +85,42 @@ function ScoreBar({ label, value }) {
   );
 }
 
+// ── Research insights summary banner ─────────────────────────
+function ResearchInsightsBanner({ insights, onUseInStrategy }) {
+  if (!insights) return null;
+  return (
+    <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-1">
+            ✓ Research data ready
+          </div>
+          <div className="text-white text-sm font-medium">
+            {insights.top_keywords?.length || 0} keywords · {insights.opportunities?.length || 0} opportunities · {insights.competitor_angles?.length || 0} competitor angles found
+          </div>
+          <div className="text-slate-400 text-xs mt-1">
+            Use this data to pre-fill the Strategy Advisor with AI-selected insights
+          </div>
+        </div>
+        <button
+          onClick={onUseInStrategy}
+          className="px-5 py-2.5 rounded-xl bg-emerald-500 text-white text-sm font-bold hover:bg-emerald-400 transition flex items-center gap-2 shrink-0"
+        >
+          🤖 Use in Strategy Advisor →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Tab: Competitor Research ──────────────────────────────────
-function ResearchTab() {
-  const [service, setService] = useState('dental implants Malta');
-  const [business, setBusiness] = useState('Apex Dental Malta');
+function ResearchTab({ onResearchComplete, storedInsights }) {
+  const [service,     setService]     = useState('dental implants Malta');
+  const [business,    setBusiness]    = useState('Apex Dental Malta');
   const [competitors, setCompetitors] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
+  const [loading,     setLoading]     = useState(false);
+  const [error,       setError]       = useState('');
+  const [result,      setResult]      = useState(storedInsights || null);
 
   async function run() {
     setLoading(true); setError(''); setResult(null);
@@ -107,13 +134,15 @@ function ResearchTab() {
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.message || 'Research failed');
       setResult(data);
+      onResearchComplete(data, service, business); // pass up to parent
     } catch (e) {
-      setError(e.name === 'TimeoutError' ? 'Request timed out after 2 minutes. Try increasing Railway timeout to 180s in your service settings.' : e.message);
+      setError(e.name === 'TimeoutError' ? 'Request timed out after 2 minutes. Please retry.' : e.message);
     } finally { setLoading(false); }
   }
 
   return (
     <div className="space-y-6">
+      {/* Settings */}
       <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6">
         <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Research Settings</div>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -135,26 +164,31 @@ function ResearchTab() {
         </div>
         <button onClick={run} disabled={loading}
           className="mt-4 px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 text-sm font-bold hover:bg-amber-300 transition disabled:opacity-50 flex items-center gap-2">
-          {loading ? <><div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> Analysing…</> : '🔍 Analyse Competitors with AI'}
+          {loading
+            ? <><div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> Analysing…</>
+            : '🔍 Analyse Competitors with AI'}
         </button>
       </div>
 
       {loading && <LoadingPulse message="Researching competitors with AI + web search…" sub="Searching for competitor ads, keywords and strategies" />}
-      {error && <ErrorBox message={error} onRetry={run} />}
+      {error   && <ErrorBox message={error} onRetry={run} />}
 
       {result && (
         <div className="space-y-4">
+          {/* Use in strategy CTA */}
+          <ResearchInsightsBanner insights={result} onUseInStrategy={() => onResearchComplete(result, service, business, true)} />
+
           <div className="grid md:grid-cols-2 gap-4">
-            <ResultCard title="Competitor Angles" items={result.competitor_angles || []} color="amber" />
-            <ResultCard title="Top Keywords" items={result.top_keywords || []} color="sky" />
-            <ResultCard title="Common USPs" items={result.common_usps || []} color="emerald" />
-            <ResultCard title="Opportunities for Apex" items={result.opportunities || []} color="violet" />
+            <ResultCard title="Competitor Angles"      items={result.competitor_angles || []}  color="amber" />
+            <ResultCard title="Top Keywords"           items={result.top_keywords || []}       color="sky" />
+            <ResultCard title="Common USPs"            items={result.common_usps || []}        color="emerald" />
+            <ResultCard title="Opportunities for Apex" items={result.opportunities || []}      color="violet" />
           </div>
           {result.suggested_headlines?.length > 0 && (
-            <ResultCard title="Suggested Headlines" items={result.suggested_headlines} color="amber" />
+            <ResultCard title="Suggested Headlines"    items={result.suggested_headlines}      color="amber" />
           )}
           {result.suggested_descriptions?.length > 0 && (
-            <ResultCard title="Suggested Descriptions" items={result.suggested_descriptions} color="sky" />
+            <ResultCard title="Suggested Descriptions" items={result.suggested_descriptions}   color="sky" />
           )}
           {result.recommended_strategy && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
@@ -176,13 +210,13 @@ function ResearchTab() {
 
 // ── Tab: Campaign Scorer ──────────────────────────────────────
 function ScorerTab() {
-  const [headlines, setHeadlines] = useState('');
-  const [descriptions, setDescriptions] = useState('');
-  const [keywords, setKeywords] = useState('');
-  const [service, setService] = useState('dental implants');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
+  const [headlines,     setHeadlines]     = useState('');
+  const [descriptions,  setDescriptions]  = useState('');
+  const [keywords,      setKeywords]      = useState('');
+  const [service,       setService]       = useState('dental implants');
+  const [loading,       setLoading]       = useState(false);
+  const [error,         setError]         = useState('');
+  const [result,        setResult]        = useState(null);
 
   async function run() {
     setLoading(true); setError(''); setResult(null);
@@ -202,44 +236,35 @@ function ScorerTab() {
   }
 
   const scoreFields = [
-    ['headline_quality', 'Headline Quality'],
+    ['headline_quality',    'Headline Quality'],
     ['description_quality', 'Description Quality'],
-    ['keyword_relevance', 'Keyword Relevance'],
-    ['policy_risk', 'Policy Safety'],
-    ['character_compliance', 'Character Compliance'],
-    ['usp_clarity', 'USP Clarity'],
+    ['keyword_relevance',   'Keyword Relevance'],
+    ['policy_risk',         'Policy Safety'],
+    ['character_compliance','Character Compliance'],
+    ['usp_clarity',         'USP Clarity'],
   ];
 
   return (
     <div className="space-y-6">
       <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6">
         <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Campaign Copy to Score</div>
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Service</label>
-            <input value={service} onChange={e => setService(e.target.value)}
-              className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition" />
-          </div>
+        <div className="mb-4">
+          <label className="block text-xs font-medium text-slate-400 mb-1.5">Service</label>
+          <input value={service} onChange={e => setService(e.target.value)}
+            className="w-full md:w-64 rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition" />
         </div>
         <div className="grid md:grid-cols-3 gap-4 mb-4">
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Headlines (one per line)</label>
-            <textarea value={headlines} onChange={e => setHeadlines(e.target.value)} rows={6}
-              placeholder="Book Dental Implants&#10;Apex Dental Malta&#10;Free Consultation"
-              className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Descriptions (one per line)</label>
-            <textarea value={descriptions} onChange={e => setDescriptions(e.target.value)} rows={6}
-              placeholder="Book dental implants at Apex Dental Malta.&#10;Visit our website to book online."
-              className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1.5">Keywords (one per line)</label>
-            <textarea value={keywords} onChange={e => setKeywords(e.target.value)} rows={6}
-              placeholder="dental implants malta&#10;book dentist malta&#10;apex dental"
-              className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none" />
-          </div>
+          {[
+            { label: 'Headlines (one per line)',     value: headlines,    set: setHeadlines,    placeholder: 'Book Dental Implants\nApex Dental Malta\nFree Consultation' },
+            { label: 'Descriptions (one per line)',  value: descriptions, set: setDescriptions, placeholder: 'Book dental implants at Apex Dental Malta.\nVisit our website to book online.' },
+            { label: 'Keywords (one per line)',      value: keywords,     set: setKeywords,     placeholder: 'dental implants malta\nbook dentist malta\napex dental' },
+          ].map(f => (
+            <div key={f.label}>
+              <label className="block text-xs font-medium text-slate-400 mb-1.5">{f.label}</label>
+              <textarea value={f.value} onChange={e => f.set(e.target.value)} rows={6} placeholder={f.placeholder}
+                className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none" />
+            </div>
+          ))}
         </div>
         <button onClick={run} disabled={loading}
           className="px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 text-sm font-bold hover:bg-amber-300 transition disabled:opacity-50 flex items-center gap-2">
@@ -248,11 +273,10 @@ function ScorerTab() {
       </div>
 
       {loading && <LoadingPulse message="AI is scoring your campaign copy…" sub="Checking policy compliance, quality and relevance" />}
-      {error && <ErrorBox message={error} onRetry={run} />}
+      {error   && <ErrorBox message={error} onRetry={run} />}
 
       {result && (
         <div className="space-y-4">
-          {/* Overall score */}
           <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-6 flex items-center gap-6">
             <div className="text-center">
               <div className="text-6xl font-black text-amber-400">{result.overall_score}</div>
@@ -263,26 +287,20 @@ function ScorerTab() {
               <p className="text-slate-400 text-sm leading-6">{result.summary}</p>
             </div>
           </div>
-
-          {/* Score bars */}
           {result.scores && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Score Breakdown</div>
               <div className="grid md:grid-cols-2 gap-4">
-                {scoreFields.map(([key, label]) => (
-                  <ScoreBar key={key} label={label} value={result.scores[key]} />
-                ))}
+                {scoreFields.map(([key, label]) => <ScoreBar key={key} label={label} value={result.scores[key]} />)}
               </div>
             </div>
           )}
-
           <div className="grid md:grid-cols-2 gap-4">
-            {result.issues?.length > 0 && <ResultCard title="Issues Found" items={result.issues} color="amber" />}
-            {result.quick_wins?.length > 0 && <ResultCard title="Quick Wins" items={result.quick_wins} color="emerald" />}
-            {result.improved_headlines?.length > 0 && <ResultCard title="Improved Headlines" items={result.improved_headlines} color="sky" />}
+            {result.issues?.length > 0              && <ResultCard title="Issues Found"          items={result.issues}               color="amber" />}
+            {result.quick_wins?.length > 0           && <ResultCard title="Quick Wins"            items={result.quick_wins}           color="emerald" />}
+            {result.improved_headlines?.length > 0   && <ResultCard title="Improved Headlines"    items={result.improved_headlines}   color="sky" />}
             {result.improved_descriptions?.length > 0 && <ResultCard title="Improved Descriptions" items={result.improved_descriptions} color="violet" />}
           </div>
-
           {result.bidding_recommendation && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Bidding Recommendation</div>
@@ -296,16 +314,48 @@ function ScorerTab() {
 }
 
 // ── Tab: Strategy Advisor ─────────────────────────────────────
-function AdvisorTab() {
-  const [budget, setBudget] = useState('600');
-  const [goal, setGoal] = useState('Get appointment bookings');
-  const [clicks, setClicks] = useState('');
+function AdvisorTab({ prefill }) {
+  const [budget,      setBudget]      = useState('600');
+  const [goal,        setGoal]        = useState('Get appointment bookings');
+  const [clicks,      setClicks]      = useState('');
   const [conversions, setConversions] = useState('');
-  const [challenge, setChallenge] = useState('');
-  const [services, setServices] = useState('Dental Implants, Invisalign, Teeth Whitening');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
+  const [challenge,   setChallenge]   = useState('');
+  const [services,    setServices]    = useState('Dental Implants, Invisalign, Teeth Whitening');
+  const [context,     setContext]     = useState(''); // populated from research
+  const [loading,     setLoading]     = useState(false);
+  const [error,       setError]       = useState('');
+  const [result,      setResult]      = useState(null);
+  const [prefillApplied, setPrefillApplied] = useState(false);
+
+  // Apply prefill from research when it arrives
+  React.useEffect(() => {
+    if (!prefill || prefillApplied) return;
+
+    const lines = [];
+
+    if (prefill.top_keywords?.length > 0) {
+      lines.push(`TOP COMPETITOR KEYWORDS:\n${prefill.top_keywords.slice(0, 8).join(', ')}`);
+    }
+    if (prefill.opportunities?.length > 0) {
+      lines.push(`OPPORTUNITIES IDENTIFIED:\n${prefill.opportunities.slice(0, 5).map(o => `• ${o}`).join('\n')}`);
+    }
+    if (prefill.competitor_angles?.length > 0) {
+      lines.push(`COMPETITOR AD ANGLES:\n${prefill.competitor_angles.slice(0, 5).map(a => `• ${a}`).join('\n')}`);
+    }
+    if (prefill.common_usps?.length > 0) {
+      lines.push(`COMMON USPs IN MARKET:\n${prefill.common_usps.slice(0, 4).map(u => `• ${u}`).join('\n')}`);
+    }
+    if (prefill.recommended_strategy) {
+      lines.push(`RESEARCH RECOMMENDATION:\n${prefill.recommended_strategy}`);
+    }
+
+    setContext(lines.join('\n\n'));
+
+    if (prefill.service) setServices(prefill.service);
+    if (prefill.challenge) setChallenge(prefill.challenge);
+
+    setPrefillApplied(true);
+  }, [prefill, prefillApplied]);
 
   async function run() {
     setLoading(true); setError(''); setResult(null);
@@ -313,7 +363,11 @@ function AdvisorTab() {
       const res = await fetch(`${API}/ai/strategy-advisor`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ budget, goal, clicks, conversions, challenge, services }),
+        body: JSON.stringify({
+          budget, goal, clicks, conversions,
+          challenge: challenge + (context ? `\n\nRESEARCH CONTEXT:\n${context}` : ''),
+          services,
+        }),
         signal: AbortSignal.timeout(120000),
       });
       const data = await res.json();
@@ -326,15 +380,29 @@ function AdvisorTab() {
 
   return (
     <div className="space-y-6">
+
+      {/* Research context banner */}
+      {prefill && (
+        <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-4 flex items-start gap-3">
+          <span className="text-emerald-400 text-lg mt-0.5">✓</span>
+          <div>
+            <div className="text-emerald-400 text-sm font-bold">Research data loaded</div>
+            <div className="text-slate-400 text-xs mt-0.5">
+              Competitor keywords, opportunities and angles from your research have been added to the strategy context below.
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6">
         <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Your Campaign Data</div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {[
-            { label: 'Monthly budget (€)', value: budget, set: setBudget, placeholder: '600' },
-            { label: 'Primary goal', value: goal, set: setGoal, placeholder: 'Get appointment bookings' },
-            { label: 'Monthly clicks', value: clicks, set: setClicks, placeholder: '0' },
-            { label: 'Monthly conversions', value: conversions, set: setConversions, placeholder: '0' },
-            { label: 'Services', value: services, set: setServices, placeholder: 'Dental Implants, Invisalign…' },
+            { label: 'Monthly budget (€)', value: budget,      set: setBudget,      placeholder: '600' },
+            { label: 'Primary goal',       value: goal,        set: setGoal,        placeholder: 'Get appointment bookings' },
+            { label: 'Monthly clicks',     value: clicks,      set: setClicks,      placeholder: '0' },
+            { label: 'Monthly conversions',value: conversions, set: setConversions, placeholder: '0' },
+            { label: 'Services',           value: services,    set: setServices,    placeholder: 'Dental Implants, Invisalign…' },
           ].map(f => (
             <div key={f.label}>
               <label className="block text-xs font-medium text-slate-400 mb-1.5">{f.label}</label>
@@ -343,24 +411,46 @@ function AdvisorTab() {
             </div>
           ))}
         </div>
-        <div>
+
+        <div className="mb-4">
           <label className="block text-xs font-medium text-slate-400 mb-1.5">Main challenge (optional)</label>
           <textarea value={challenge} onChange={e => setChallenge(e.target.value)} rows={2}
             placeholder="e.g. Low conversion rate, high CPC, not enough impressions…"
             className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none" />
         </div>
+
+        {/* Research context field */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-xs font-medium text-slate-400">
+              Research context {prefill ? <span className="text-emerald-400">(auto-filled from competitor research)</span> : '(optional — paste competitor insights)'}
+            </label>
+            {context && (
+              <button onClick={() => setContext('')} className="text-xs text-slate-500 hover:text-slate-300 transition">
+                Clear
+              </button>
+            )}
+          </div>
+          <textarea value={context} onChange={e => setContext(e.target.value)} rows={6}
+            placeholder="Paste any research notes, competitor findings, keyword ideas…"
+            className={`w-full rounded-xl bg-slate-900 border px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition resize-none ${
+              prefill ? 'border-emerald-500/40' : 'border-slate-700'
+            }`} />
+        </div>
+
         <button onClick={run} disabled={loading}
           className="mt-4 px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 text-sm font-bold hover:bg-amber-300 transition disabled:opacity-50 flex items-center gap-2">
-          {loading ? <><div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> Generating…</> : '🤖 Generate Strategy'}
+          {loading
+            ? <><div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> Generating…</>
+            : '🤖 Generate Strategy'}
         </button>
       </div>
 
-      {loading && <LoadingPulse message="AI is building your strategy…" sub="Analysing budget, goals and campaign structure" />}
-      {error && <ErrorBox message={error} onRetry={run} />}
+      {loading && <LoadingPulse message="AI is building your strategy…" sub={prefill ? 'Using research data + your campaign stats to build a tailored strategy' : 'Analysing budget, goals and campaign structure'} />}
+      {error   && <ErrorBox message={error} onRetry={run} />}
 
       {result && (
         <div className="space-y-4">
-          {/* Bidding strategy */}
           {result.recommended_bidding_strategy && (
             <div className="rounded-2xl bg-amber-400/10 border border-amber-400/20 p-5">
               <div className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2">Recommended Bidding Strategy</div>
@@ -368,8 +458,6 @@ function AdvisorTab() {
               {result.bidding_rationale && <p className="text-slate-400 text-sm mt-2 leading-7">{result.bidding_rationale}</p>}
             </div>
           )}
-
-          {/* Budget allocation */}
           {result.budget_allocation && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Budget Allocation</div>
@@ -383,21 +471,18 @@ function AdvisorTab() {
               </div>
             </div>
           )}
-
           <div className="grid md:grid-cols-2 gap-4">
-            {result.campaign_structure?.length > 0 && <ResultCard title="Campaign Structure" items={result.campaign_structure} color="sky" />}
-            {result.priority_services?.length > 0 && <ResultCard title="Priority Services" items={result.priority_services} color="emerald" />}
-            {result.targeting_recommendations?.length > 0 && <ResultCard title="Targeting Recommendations" items={result.targeting_recommendations} color="violet" />}
-            {result.quick_action_items?.length > 0 && <ResultCard title="Quick Action Items" items={result.quick_action_items} color="amber" />}
+            {result.campaign_structure?.length > 0          && <ResultCard title="Campaign Structure"         items={result.campaign_structure}         color="sky" />}
+            {result.priority_services?.length > 0           && <ResultCard title="Priority Services"          items={result.priority_services}          color="emerald" />}
+            {result.targeting_recommendations?.length > 0   && <ResultCard title="Targeting Recommendations"  items={result.targeting_recommendations}  color="violet" />}
+            {result.quick_action_items?.length > 0          && <ResultCard title="Quick Action Items"         items={result.quick_action_items}         color="amber" />}
           </div>
-
           {result.expected_outcomes && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Expected Outcomes</div>
               <p className="text-slate-300 text-sm leading-7">{result.expected_outcomes}</p>
             </div>
           )}
-
           {result['30_day_plan']?.length > 0 && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">30-Day Action Plan</div>
@@ -411,13 +496,65 @@ function AdvisorTab() {
               </div>
             </div>
           )}
-
           {result.raw && (
             <div className="rounded-2xl bg-slate-900 border border-slate-700 p-5">
               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Raw AI Response</div>
               <pre className="text-slate-400 text-xs whitespace-pre-wrap overflow-auto max-h-60">{result.raw}</pre>
             </div>
           )}
+
+          {/* ── Implement Strategy CTA ── */}
+          <div className="rounded-2xl bg-gradient-to-br from-amber-400/15 to-amber-600/5 border border-amber-400/30 p-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="text-amber-400 font-bold text-lg">Ready to implement this strategy?</div>
+                <div className="text-slate-400 text-sm mt-1">
+                  Send this strategy directly to the Campaign Builder — it will pre-fill your services, budget, goals and context so you can generate and launch campaigns immediately.
+                </div>
+                <div className="flex flex-wrap gap-4 mt-3 text-xs text-slate-500">
+                  {result.priority_services?.length > 0 && (
+                    <span>📋 {result.priority_services.length} priority service{result.priority_services.length > 1 ? 's' : ''}</span>
+                  )}
+                  {result.recommended_bidding_strategy && (
+                    <span>💡 {result.recommended_bidding_strategy}</span>
+                  )}
+                  {result['30_day_plan']?.length > 0 && (
+                    <span>📅 {result['30_day_plan'].length}-step action plan</span>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  // Package strategy data for the Campaign Builder
+                  const payload = {
+                    from: 'strategy',
+                    timestamp: Date.now(),
+                    services: services,
+                    budget: budget,
+                    goal: goal,
+                    biddingStrategy: result.recommended_bidding_strategy || '',
+                    biddingRationale: result.bidding_rationale || '',
+                    priorityServices: result.priority_services || [],
+                    campaignStructure: result.campaign_structure || [],
+                    targetingRecommendations: result.targeting_recommendations || [],
+                    quickActionItems: result.quick_action_items || [],
+                    expectedOutcomes: result.expected_outcomes || '',
+                    thirtyDayPlan: result['30_day_plan'] || [],
+                    budgetAllocation: result.budget_allocation || {},
+                    researchContext: context || '',
+                  };
+                  try {
+                    sessionStorage.setItem('apex_strategy_prefill', JSON.stringify(payload));
+                  } catch(e) {}
+                  window.location.href = '/google-ads-builder';
+                }}
+                className="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 text-sm font-bold hover:bg-amber-300 transition flex items-center gap-2 shrink-0 shadow-lg shadow-amber-400/20"
+              >
+                🚀 Implement in Campaign Builder →
+              </button>
+            </div>
+          </div>
+
         </div>
       )}
     </div>
@@ -426,15 +563,15 @@ function AdvisorTab() {
 
 // ── Tab: AI Campaign Generator ────────────────────────────────
 function GeneratorTab() {
-  const [service, setService] = useState('Dental Implants');
-  const [location, setLocation] = useState('Malta');
+  const [service,      setService]      = useState('Dental Implants');
+  const [location,     setLocation]     = useState('Malta');
   const [businessName, setBusinessName] = useState('Apex Dental');
-  const [finalUrl, setFinalUrl] = useState('https://www.apexdentalmalta.com');
-  const [languages, setLanguages] = useState(['English', 'Italian', 'Spanish']);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
-  const [activeLang, setActiveLang] = useState('English');
+  const [finalUrl,     setFinalUrl]     = useState('https://www.apexdentalmalta.com');
+  const [languages,    setLanguages]    = useState(['English', 'Italian', 'Spanish']);
+  const [loading,      setLoading]      = useState(false);
+  const [error,        setError]        = useState('');
+  const [result,       setResult]       = useState(null);
+  const [activeLang,   setActiveLang]   = useState('English');
 
   const allLangs = ['English', 'Italian', 'Spanish'];
 
@@ -468,10 +605,10 @@ function GeneratorTab() {
         <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Campaign Settings</div>
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           {[
-            { label: 'Service', value: service, set: setService },
-            { label: 'Location', value: location, set: setLocation },
+            { label: 'Service',       value: service,      set: setService },
+            { label: 'Location',      value: location,     set: setLocation },
             { label: 'Business name', value: businessName, set: setBusinessName },
-            { label: 'Final URL', value: finalUrl, set: setFinalUrl },
+            { label: 'Final URL',     value: finalUrl,     set: setFinalUrl },
           ].map(f => (
             <div key={f.label}>
               <label className="block text-xs font-medium text-slate-400 mb-1.5">{f.label}</label>
@@ -500,11 +637,10 @@ function GeneratorTab() {
       </div>
 
       {loading && <LoadingPulse message="AI is generating campaign copy…" sub={`Creating ${languages.join(', ')} campaign copy with policy-safe content`} />}
-      {error && <ErrorBox message={error} onRetry={run} />}
+      {error   && <ErrorBox message={error} onRetry={run} />}
 
       {result && camp && (
         <div className="space-y-4">
-          {/* Language tabs */}
           {Object.keys(result.campaigns).length > 1 && (
             <div className="flex gap-1 p-1 bg-slate-800/50 rounded-xl border border-slate-700/50 w-fit">
               {Object.keys(result.campaigns).map(lang => (
@@ -515,9 +651,7 @@ function GeneratorTab() {
               ))}
             </div>
           )}
-
           <div className="grid md:grid-cols-2 gap-4">
-            {/* Headlines */}
             <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-5">
               <div className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Headlines ({camp.headlines?.length || 0})</div>
               <div className="space-y-2">
@@ -529,8 +663,6 @@ function GeneratorTab() {
                 ))}
               </div>
             </div>
-
-            {/* Descriptions */}
             <div className="rounded-2xl bg-slate-800/40 border border-sky-400/20 p-5">
               <div className="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Descriptions ({camp.descriptions?.length || 0})</div>
               <div className="space-y-2">
@@ -542,8 +674,6 @@ function GeneratorTab() {
                 ))}
               </div>
             </div>
-
-            {/* Keywords */}
             <div className="rounded-2xl bg-slate-800/40 border border-emerald-400/20 p-5">
               <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Keywords ({camp.keywords?.length || 0})</div>
               <div className="flex flex-wrap gap-2">
@@ -552,8 +682,6 @@ function GeneratorTab() {
                 ))}
               </div>
             </div>
-
-            {/* Callouts & sitelinks */}
             <div className="rounded-2xl bg-slate-800/40 border border-violet-400/20 p-5">
               <div className="text-xs font-bold text-violet-400 uppercase tracking-widest mb-3">Callouts & Sitelinks</div>
               {(camp.callouts || []).map((c, i) => (
@@ -570,8 +698,6 @@ function GeneratorTab() {
               )}
             </div>
           </div>
-
-          {/* Bidding strategy */}
           {result.biddingStrategy && (
             <div className="rounded-2xl bg-amber-400/10 border border-amber-400/20 p-5">
               <div className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2">Recommended Bidding</div>
@@ -579,8 +705,6 @@ function GeneratorTab() {
               {result.biddingRationale && <p className="text-slate-400 text-sm mt-2 leading-6">{result.biddingRationale}</p>}
             </div>
           )}
-
-          {/* Shutterstock queries */}
           {result.shutterstockQueries?.length > 0 && (
             <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Shutterstock Image Queries</div>
@@ -602,7 +726,17 @@ function GeneratorTab() {
 
 // ── Main component ────────────────────────────────────────────
 export default function GoogleAdsStrategyEngine() {
-  const [activeTab, setActiveTab] = useState('research');
+  const [activeTab,      setActiveTab]      = useState('research');
+  const [researchData,   setResearchData]   = useState(null); // shared research results
+  const [advisorPrefill, setAdvisorPrefill] = useState(null); // data piped to advisor
+
+  // Called by ResearchTab when research completes
+  // If switchToAdvisor=true, also navigate to the Advisor tab
+  const handleResearchComplete = useCallback((data, service, business, switchToAdvisor = false) => {
+    setResearchData(data);
+    setAdvisorPrefill({ ...data, service, business });
+    if (switchToAdvisor) setActiveTab('advisor');
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-950 pt-28 pb-20">
@@ -617,9 +751,19 @@ export default function GoogleAdsStrategyEngine() {
           </div>
           <div className="flex items-center gap-3">
             <a href="/google-ads-dashboard" className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700">← Dashboard</a>
-            <a href="/google-ads-manager" className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700">Campaign Manager</a>
+            <a href="/google-ads-manager"   className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700">Campaign Manager</a>
           </div>
         </div>
+
+        {/* Research data available indicator */}
+        {researchData && activeTab !== 'research' && (
+          <div className="mb-6 flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <span className="text-emerald-400 text-sm">✓ Research data loaded into Strategy Advisor</span>
+            <button onClick={() => setActiveTab('research')} className="text-xs text-slate-400 hover:text-white transition ml-auto">
+              View research →
+            </button>
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
@@ -631,22 +775,25 @@ export default function GoogleAdsStrategyEngine() {
                   : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50'
               }`}>
               {t.emoji} {t.label}
+              {t.id === 'advisor' && advisorPrefill && (
+                <span className="w-2 h-2 rounded-full bg-emerald-400" title="Research data loaded" />
+              )}
             </button>
           ))}
         </div>
 
-        {activeTab === 'research'  && <ResearchTab />}
+        {activeTab === 'research'  && <ResearchTab onResearchComplete={handleResearchComplete} storedInsights={researchData} />}
         {activeTab === 'scorer'    && <ScorerTab />}
-        {activeTab === 'advisor'   && <AdvisorTab />}
+        {activeTab === 'advisor'   && <AdvisorTab prefill={advisorPrefill} />}
         {activeTab === 'generator' && <GeneratorTab />}
 
         {/* Nav footer */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: 'Dashboard', href: '/google-ads-dashboard' },
+            { label: 'Dashboard',        href: '/google-ads-dashboard' },
             { label: 'Campaign Manager', href: '/google-ads-manager' },
             { label: 'Campaign Builder', href: '/google-ads-builder' },
-            { label: 'AI Strategy', href: '/google-ads-strategy', active: true },
+            { label: 'AI Strategy',      href: '/google-ads-strategy', active: true },
           ].map(l => (
             <a key={l.label} href={l.href}
               className={`rounded-2xl p-4 text-center text-sm font-semibold border transition ${

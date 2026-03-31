@@ -247,7 +247,7 @@ export default function GoogleAdsDashboard() {
   const [error, setError] = useState('');
   const [updating, setUpdating] = useState(null);
   const [toast, setToast] = useState('');
-  const [filter, setFilter] = useState('All');
+  const [filter, setFilter] = useState('Active'); // hides Removed by default
   const [sortBy, setSortBy] = useState('cost');
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -281,6 +281,15 @@ export default function GoogleAdsDashboard() {
 
   useEffect(() => { load(); }, []);
 
+  // Optimistic update — Google Ads reporting cache has a 3-5 min delay,
+  // so re-fetching immediately after a status change returns stale data.
+  function optimisticStatusUpdate(id, newStatus) {
+    const statusNum = newStatus === 'ENABLED' ? 3 : newStatus === 'PAUSED' ? 2 : 4;
+    setCampaigns(prev => prev.map(c =>
+      String(c.id) === String(id) ? { ...c, status: statusNum } : c
+    ));
+  }
+
   async function handleToggle(id, newStatus) {
     setUpdating(id);
     try {
@@ -291,8 +300,8 @@ export default function GoogleAdsDashboard() {
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.message);
-      showToast(`Campaign ${newStatus === 'ENABLED' ? 'enabled' : 'paused'} ✓`);
-      await load();
+      optimisticStatusUpdate(id, newStatus);
+      showToast(`Campaign ${newStatus === 'ENABLED' ? 'enabled ▶' : 'paused ⏸'} — refresh in ~5 min to confirm`);
     } catch (e) {
       showToast(`Error: ${e.message}`);
     } finally {
@@ -311,8 +320,8 @@ export default function GoogleAdsDashboard() {
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.message);
+      optimisticStatusUpdate(id, 'REMOVED');
       showToast('Campaign removed ✓');
-      await load();
     } catch (e) {
       showToast(`Error: ${e.message}`);
     } finally {
@@ -325,8 +334,17 @@ export default function GoogleAdsDashboard() {
   const enabledCount = campaigns.filter(c => statusLabel(c.status) === 'Enabled').length;
   const pausedCount  = campaigns.filter(c => statusLabel(c.status) === 'Paused').length;
 
+  const removedCount = campaigns.filter(c => statusLabel(c.status) === 'Removed').length;
+
   const filtered = campaigns
-    .filter(c => filter === 'All' || statusLabel(c.status) === filter)
+    .filter(c => {
+      const lbl = statusLabel(c.status);
+      if (filter === 'Active')  return lbl !== 'Removed';
+      if (filter === 'Enabled') return lbl === 'Enabled';
+      if (filter === 'Paused')  return lbl === 'Paused';
+      if (filter === 'Removed') return lbl === 'Removed';
+      return true;
+    })
     .sort((a, b) => Number(b[sortBy] || 0) - Number(a[sortBy] || 0));
 
   return (
@@ -429,8 +447,8 @@ export default function GoogleAdsDashboard() {
                 {/* Spend bars */}
                 <div className="mt-6">
                   <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Spend by campaign</div>
-                  {campaigns.slice(0, 5).map(c => {
-                    const maxCost = Math.max(...campaigns.map(x => x.cost), 1);
+                  {campaigns.filter(c => statusLabel(c.status) !== 'Removed').slice(0, 5).map(c => {
+                    const maxCost = Math.max(...campaigns.filter(x => statusLabel(x.status) !== 'Removed').map(x => x.cost), 1);
                     const pct = (c.cost / maxCost) * 100;
                     return (
                       <div key={c.id} className="mb-2">
@@ -476,7 +494,7 @@ export default function GoogleAdsDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {campaigns.map(c => {
+                    {campaigns.filter(c => statusLabel(c.status) !== 'Removed').map(c => {
                       const ctr = c.impressions > 0 ? (c.clicks / c.impressions) * 100 : 0;
                       const avgCpc = c.clicks > 0 ? c.cost / c.clicks : 0;
                       const sc = statusColor(c.status);
@@ -512,15 +530,22 @@ export default function GoogleAdsDashboard() {
             {/* Filter + sort bar */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <div className="flex gap-1 p-1 bg-slate-800/50 rounded-xl border border-slate-700/50">
-                {['All', 'Enabled', 'Paused'].map(f => (
+                {[
+                  { key: 'Active',  count: campaigns.length - removedCount },
+                  { key: 'Enabled', count: enabledCount },
+                  { key: 'Paused',  count: pausedCount },
+                  { key: 'Removed', count: removedCount },
+                ].map(f => (
                   <button
-                    key={f}
-                    onClick={() => setFilter(f)}
+                    key={f.key}
+                    onClick={() => setFilter(f.key)}
                     className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
-                      filter === f ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'
+                      filter === f.key
+                        ? f.key === 'Removed' ? 'bg-rose-500/20 text-rose-400' : 'bg-amber-400 text-slate-950'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    {f} {f === 'All' ? `(${campaigns.length})` : f === 'Enabled' ? `(${enabledCount})` : `(${pausedCount})`}
+                    {f.key} ({f.count})
                   </button>
                 ))}
               </div>

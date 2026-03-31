@@ -199,7 +199,7 @@ export default function GoogleAdsCampaignManager() {
   const [updating, setUpdating]   = useState(new Set());
   const [bulkUpdating, setBulkUpdating] = useState(false);
   const [toast, setToast]         = useState('');
-  const [filter, setFilter]       = useState('All');
+  const [filter, setFilter]       = useState('Active'); // 'Active' hides Removed by default
   const [sortBy, setSortBy]       = useState('cost');
   const [search, setSearch]       = useState('');
   const [selected, setSelected]   = useState(new Set());
@@ -322,8 +322,17 @@ export default function GoogleAdsCampaignManager() {
   const enabledCount = campaigns.filter(c => getStatusLabel(c.status) === 'Enabled').length;
   const pausedCount  = campaigns.filter(c => getStatusLabel(c.status) === 'Paused').length;
 
+  const removedCount = campaigns.filter(c => getStatusLabel(c.status) === 'Removed').length;
+
   const filtered = campaigns
-    .filter(c => filter === 'All' || getStatusLabel(c.status) === filter)
+    .filter(c => {
+      const label = getStatusLabel(c.status);
+      if (filter === 'Active')  return label !== 'Removed';
+      if (filter === 'Enabled') return label === 'Enabled';
+      if (filter === 'Paused')  return label === 'Paused';
+      if (filter === 'Removed') return label === 'Removed';
+      return true; // 'All'
+    })
     .filter(c => !search || c.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => Number(b[sortBy] || 0) - Number(a[sortBy] || 0));
 
@@ -384,10 +393,19 @@ export default function GoogleAdsCampaignManager() {
         {!loading && !error && (
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <div className="flex gap-1 p-1 bg-slate-800/50 rounded-xl border border-slate-700/50">
-              {['All', 'Enabled', 'Paused'].map(f => (
-                <button key={f} onClick={() => { setFilter(f); setSelected(new Set()); }}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition ${filter === f ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'}`}>
-                  {f} ({f === 'All' ? campaigns.length : f === 'Enabled' ? enabledCount : pausedCount})
+              {[
+                { key: 'Active',  count: campaigns.length - removedCount },
+                { key: 'Enabled', count: enabledCount },
+                { key: 'Paused',  count: pausedCount },
+                { key: 'Removed', count: removedCount },
+              ].map(f => (
+                <button key={f.key} onClick={() => { setFilter(f.key); setSelected(new Set()); }}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    filter === f.key
+                      ? f.key === 'Removed' ? 'bg-rose-500/20 text-rose-400' : 'bg-amber-400 text-slate-950'
+                      : 'text-slate-400 hover:text-white'
+                  }`}>
+                  {f.key} ({f.count})
                 </button>
               ))}
             </div>
@@ -414,7 +432,7 @@ export default function GoogleAdsCampaignManager() {
                 onChange={toggleSelectAll}
                 className="w-4 h-4 rounded accent-amber-400 cursor-pointer"
               />
-              {allSelectedInView ? 'Deselect all' : `Select all ${filtered.length} campaigns`}
+            {allSelectedInView ? 'Deselect all' : `Select all ${filtered.length} visible campaigns`}
             </label>
           </div>
         )}

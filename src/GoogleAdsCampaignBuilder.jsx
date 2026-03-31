@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const API = 'https://google-ads-backend-production-2319.up.railway.app';
+const STRATEGY_KEY = 'apex_strategy_prefill';
 
 const DENTAL_SERVICES = [
   'Dental Implants', 'Invisalign', 'Teeth Whitening', 'Veneers',
@@ -44,10 +45,64 @@ function Toast({ msg }) {
   return <div style={{ position: 'fixed', bottom: 24, right: 24, background: '#1E293B', color: 'white', padding: '12px 20px', borderRadius: 10, zIndex: 999, fontSize: 14, maxWidth: 400 }}>{msg}</div>;
 }
 
+// ── Strategy context banner shown when prefill is active ──────
+function StrategyBanner({ strategy, onDismiss }) {
+  if (!strategy) return null;
+  return (
+    <div style={{ background: 'linear-gradient(135deg, #064E3B 0%, #065F46 100%)', border: '1px solid #059669', borderRadius: 14, padding: '16px 20px', marginBottom: '1.5rem', color: 'white' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#6EE7B7', marginBottom: 6 }}>
+            ✓ Strategy loaded from AI Strategy Engine
+          </div>
+          <div style={{ fontSize: 14, color: '#D1FAE5', lineHeight: 1.6 }}>
+            Your campaign setup has been pre-filled based on your strategy. The AI generator will use your research context and strategy recommendations to create targeted campaign copy.
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10 }}>
+            {strategy.biddingStrategy && (
+              <span style={{ fontSize: 12, background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 20, color: '#A7F3D0' }}>
+                💡 {strategy.biddingStrategy}
+              </span>
+            )}
+            {strategy.priorityServices?.length > 0 && (
+              <span style={{ fontSize: 12, background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 20, color: '#A7F3D0' }}>
+                📋 {strategy.priorityServices.length} priority service{strategy.priorityServices.length > 1 ? 's' : ''}
+              </span>
+            )}
+            {strategy.campaignStructure?.length > 0 && (
+              <span style={{ fontSize: 12, background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 20, color: '#A7F3D0' }}>
+                🏗 {strategy.campaignStructure.length} structure recommendations
+              </span>
+            )}
+          </div>
+        </div>
+        <button
+          onClick={onDismiss}
+          style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', fontSize: 13, flexShrink: 0 }}>
+          ✕ Dismiss
+        </button>
+      </div>
+
+      {/* Strategy details accordion */}
+      {strategy.quickActionItems?.length > 0 && (
+        <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+          <div style={{ fontSize: 12, color: '#6EE7B7', fontWeight: 600, marginBottom: 6 }}>Quick action items from strategy:</div>
+          <ul style={{ margin: 0, padding: '0 0 0 16px' }}>
+            {strategy.quickActionItems.slice(0, 4).map((item, i) => (
+              <li key={i} style={{ fontSize: 13, color: '#D1FAE5', lineHeight: 1.7 }}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function GoogleAdsCampaignBuilder() {
   const [step, setStep] = useState(1);
   const [toast, setToast] = useState('');
   const [loading, setLoading] = useState(false);
+  const [strategyPrefill, setStrategyPrefill] = useState(null); // from AI Strategy Engine
 
   // Step 1 form
   const [form, setForm] = useState({
@@ -60,6 +115,9 @@ export default function GoogleAdsCampaignBuilder() {
     languages: ['English'],
   });
 
+  // Strategy context — passed into AI generation prompt
+  const [strategyContext, setStrategyContext] = useState('');
+
   // Step 2 — AI generated data
   const [generated, setGenerated] = useState(null);
   const [shutterstockQueries, setShutterstockQueries] = useState([]);
@@ -69,6 +127,65 @@ export default function GoogleAdsCampaignBuilder() {
   const [edited, setEdited] = useState({});
   const [activeLang, setActiveLang] = useState('English');
   const [uploadedImages, setUploadedImages] = useState([]);
+
+  // ── Read strategy prefill from sessionStorage on mount ──────
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(STRATEGY_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      // Only use if fresh (within last 10 minutes)
+      if (!data.timestamp || Date.now() - data.timestamp > 10 * 60 * 1000) {
+        sessionStorage.removeItem(STRATEGY_KEY);
+        return;
+      }
+
+      setStrategyPrefill(data);
+
+      // Pre-fill form fields from strategy
+      setForm(prev => {
+        const updated = { ...prev };
+
+        // Budget — parse numeric value from strategy
+        if (data.budget) {
+          const budgetNum = parseFloat(String(data.budget).replace(/[^0-9.]/g, ''));
+          if (!isNaN(budgetNum) && budgetNum > 0) updated.dailyBudget = String(Math.round(budgetNum / 30) || 20);
+        }
+
+        // Service — try to match to our dropdown list
+        if (data.services) {
+          const serviceStr = Array.isArray(data.services) ? data.services[0] : data.services.split(',')[0].trim();
+          const matched = DENTAL_SERVICES.find(s => s.toLowerCase().includes(serviceStr.toLowerCase()) || serviceStr.toLowerCase().includes(s.toLowerCase()));
+          if (matched) {
+            updated.service = matched;
+          } else {
+            updated.service = 'Other';
+            updated.customService = serviceStr;
+          }
+        }
+
+        // Languages — keep existing defaults unless strategy specifies
+        return updated;
+      });
+
+      // Build strategy context string for AI prompt
+      const lines = [];
+      if (data.biddingStrategy)              lines.push(`RECOMMENDED BIDDING STRATEGY: ${data.biddingStrategy}`);
+      if (data.biddingRationale)             lines.push(`BIDDING RATIONALE: ${data.biddingRationale}`);
+      if (data.priorityServices?.length)     lines.push(`PRIORITY SERVICES: ${data.priorityServices.join(', ')}`);
+      if (data.campaignStructure?.length)    lines.push(`CAMPAIGN STRUCTURE: ${data.campaignStructure.join(' | ')}`);
+      if (data.targetingRecommendations?.length) lines.push(`TARGETING: ${data.targetingRecommendations.join(' | ')}`);
+      if (data.quickActionItems?.length)     lines.push(`QUICK WINS: ${data.quickActionItems.slice(0, 3).join(' | ')}`);
+      if (data.expectedOutcomes)             lines.push(`EXPECTED OUTCOMES: ${data.expectedOutcomes}`);
+      if (data.researchContext)              lines.push(`RESEARCH CONTEXT:\n${data.researchContext}`);
+      if (data.goal)                         lines.push(`PRIMARY GOAL: ${data.goal}`);
+
+      setStrategyContext(lines.join('\n\n'));
+
+    } catch (e) {
+      // Silently ignore parse errors
+    }
+  }, []);
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 4000); };
 
@@ -89,6 +206,12 @@ export default function GoogleAdsCampaignBuilder() {
     return edited[lang]?.[field] ?? (generated?.campaigns?.[lang]?.[field] || '');
   }
 
+  function dismissStrategy() {
+    setStrategyPrefill(null);
+    setStrategyContext('');
+    try { sessionStorage.removeItem(STRATEGY_KEY); } catch (e) {}
+  }
+
   async function runGenerate() {
     const service = form.service === 'Other' ? form.customService : form.service;
     if (!service) { showToast('Please select or enter a service'); return; }
@@ -96,6 +219,11 @@ export default function GoogleAdsCampaignBuilder() {
 
     setLoading(true);
     try {
+      // Build enriched prompt — include strategy context if available
+      const extraContext = strategyContext
+        ? `\n\nSTRATEGY CONTEXT FROM AI ANALYSIS:\n${strategyContext}\n\nUse the above strategy insights to inform the campaign copy — align messaging with identified opportunities, use competitor differentiators, and reflect the recommended bidding and targeting approach.`
+        : '';
+
       const res = await fetch(`${API}/ai/generate-campaign`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -105,6 +233,8 @@ export default function GoogleAdsCampaignBuilder() {
           businessName: form.businessName,
           finalUrl: form.finalUrl,
           languages: form.languages,
+          // Pass strategy context as additional instructions
+          additionalContext: extraContext,
         }),
       });
       const data = await res.json();
@@ -112,7 +242,8 @@ export default function GoogleAdsCampaignBuilder() {
 
       setGenerated(data);
       setShutterstockQueries(data.shutterstockQueries || []);
-      setBiddingStrategy(data.biddingStrategy || '');
+      // Use strategy bidding recommendation if available, otherwise use AI's
+      setBiddingStrategy(strategyPrefill?.biddingStrategy || data.biddingStrategy || '');
 
       // Init edited with generated data
       const init = {};
@@ -164,10 +295,15 @@ export default function GoogleAdsCampaignBuilder() {
       const data = await res.json();
       if (!data.ok) throw new Error(data.message);
 
-      showToast(`🎉 ${campaigns.length} campaign(s) created successfully! They are paused — enable them when ready.`);
+      // Clear strategy prefill after successful launch
+      try { sessionStorage.removeItem(STRATEGY_KEY); } catch (e) {}
+
+      showToast(`🎉 ${campaigns.length} campaign(s) created successfully! They are paused — enable them in the Campaign Manager when ready.`);
       setStep(1);
       setGenerated(null);
       setEdited({});
+      setStrategyPrefill(null);
+      setStrategyContext('');
     } catch (e) {
       showToast('Launch failed: ' + e.message);
     } finally {
@@ -199,9 +335,26 @@ export default function GoogleAdsCampaignBuilder() {
 
         {/* Header */}
         <div style={{ ...s.card, background: '#0F172A', color: 'white', marginBottom: '1.5rem' }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, margin: 0 }}>Campaign builder</h1>
-          <p style={{ color: '#94A3B8', margin: '4px 0 0', fontSize: 14 }}>AI-powered Google Ads campaign creation with images and multi-language support</p>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+            <div>
+              <h1 style={{ fontSize: 26, fontWeight: 700, margin: 0 }}>Campaign builder</h1>
+              <p style={{ color: '#94A3B8', margin: '4px 0 0', fontSize: 14 }}>
+                AI-powered Google Ads campaign creation with images and multi-language support
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+              <a href="/google-ads-strategy" style={{ ...s.btn('rgba(255,255,255,0.1)', 'white', '1px solid rgba(255,255,255,0.2)'), textDecoration: 'none', fontSize: 13 }}>
+                ← AI Strategy
+              </a>
+              <a href="/google-ads-manager" style={{ ...s.btn('rgba(255,255,255,0.1)', 'white', '1px solid rgba(255,255,255,0.2)'), textDecoration: 'none', fontSize: 13 }}>
+                Campaign Manager
+              </a>
+            </div>
+          </div>
         </div>
+
+        {/* Strategy banner */}
+        <StrategyBanner strategy={strategyPrefill} onDismiss={dismissStrategy} />
 
         <StepBar step={step} />
 
@@ -258,6 +411,24 @@ export default function GoogleAdsCampaignBuilder() {
               </div>
             </div>
 
+            {/* Strategy context preview — shown when prefill active */}
+            {strategyContext && (
+              <div style={s.card}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                  <div style={{ ...s.sectionTitle, margin: 0 }}>Strategy context for AI generation</div>
+                  <span style={s.badge('#D1FAE5', '#065F46')}>Auto-filled from strategy</span>
+                </div>
+                <p style={{ fontSize: 13, color: '#6B7280', marginBottom: 8, lineHeight: 1.6 }}>
+                  This context will be sent to the AI alongside your campaign details to generate more targeted copy based on your research and strategy.
+                </p>
+                <textarea
+                  style={{ ...s.textarea, minHeight: 140, fontSize: 13, background: '#F0FDF4', border: '1px solid #BBF7D0' }}
+                  value={strategyContext}
+                  onChange={e => setStrategyContext(e.target.value)}
+                />
+              </div>
+            )}
+
             <button style={s.btn('#0F172A', 'white')} onClick={() => { if (!service) { showToast('Select a service first'); return; } setStep(2); }}>
               Next: AI generation →
             </button>
@@ -271,10 +442,10 @@ export default function GoogleAdsCampaignBuilder() {
               <div style={s.sectionTitle}>Ready to generate</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginBottom: 20 }}>
                 {[
-                  { label: 'Service', value: service },
-                  { label: 'Location', value: form.location },
+                  { label: 'Service',    value: service },
+                  { label: 'Location',   value: form.location },
                   { label: 'Daily budget', value: `€${form.dailyBudget}` },
-                  { label: 'Languages', value: form.languages.join(', ') },
+                  { label: 'Languages',  value: form.languages.join(', ') },
                 ].map(m => (
                   <div key={m.label} style={{ background: '#F8FAFC', borderRadius: 10, padding: '12px 14px' }}>
                     <div style={{ fontSize: 11, color: '#9CA3AF', marginBottom: 2 }}>{m.label}</div>
@@ -282,18 +453,27 @@ export default function GoogleAdsCampaignBuilder() {
                   </div>
                 ))}
               </div>
+
+              {strategyPrefill && (
+                <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: '12px 16px', marginBottom: 16, fontSize: 13, color: '#065F46', lineHeight: 1.7 }}>
+                  ✓ <strong>Strategy context active</strong> — AI will use your competitor research, recommended bidding strategy and targeting insights to generate more relevant campaign copy.
+                </div>
+              )}
+
               <p style={{ fontSize: 14, color: '#6B7280', marginBottom: 20, lineHeight: 1.7 }}>
                 Claude AI will generate <strong>creative, policy-compliant</strong> headlines, descriptions, keywords, callouts, sitelinks and image suggestions specifically for <strong>{service}</strong> in <strong>{form.location}</strong> — in {form.languages.join(', ')}.
+                {strategyPrefill && ' Informed by your AI strategy analysis.'}
               </p>
+
               {loading ? (
                 <div style={{ background: '#F0FDF4', color: '#166534', padding: '16px 20px', borderRadius: 10, fontSize: 14 }}>
-                  ⏳ Claude AI is generating your campaign copy... this takes about 15 seconds.
+                  ⏳ Claude AI is generating your campaign copy{strategyPrefill ? ' using your strategy context' : ''}... this takes about 15–30 seconds.
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: 10 }}>
                   <button style={s.btn('#6B7280', 'white')} onClick={() => setStep(1)}>← Back</button>
                   <button style={s.btn('#0F172A', 'white')} onClick={runGenerate}>
-                    ✨ Generate with AI
+                    ✨ {strategyPrefill ? 'Generate with AI + Strategy' : 'Generate with AI'}
                   </button>
                 </div>
               )}
@@ -313,10 +493,10 @@ export default function GoogleAdsCampaignBuilder() {
               ))}
             </div>
 
-            {/* Bidding strategy */}
+            {/* Bidding strategy — from strategy prefill or AI */}
             {biddingStrategy && (
-              <div style={{ background: '#EFF6FF', color: '#1D4ED8', borderLeft: '4px solid #3B82F6', padding: '12px 16px', borderRadius: '0 10px 10px 0', marginBottom: '1rem', fontSize: 13 }}>
-                <strong>AI recommended bidding strategy:</strong> {biddingStrategy}
+              <div style={{ background: strategyPrefill ? '#F0FDF4' : '#EFF6FF', color: strategyPrefill ? '#166534' : '#1D4ED8', borderLeft: `4px solid ${strategyPrefill ? '#22C55E' : '#3B82F6'}`, padding: '12px 16px', borderRadius: '0 10px 10px 0', marginBottom: '1rem', fontSize: 13 }}>
+                <strong>{strategyPrefill ? '✓ Strategy recommended bidding:' : 'AI recommended bidding strategy:'}</strong> {biddingStrategy}
               </div>
             )}
 
@@ -380,21 +560,19 @@ export default function GoogleAdsCampaignBuilder() {
             {/* Image section */}
             <div style={s.card}>
               <div style={s.sectionTitle}>Images</div>
-
               {shutterstockQueries.length > 0 && (
                 <div style={{ marginBottom: 16 }}>
                   <div style={{ fontSize: 13, fontWeight: 500, color: '#374151', marginBottom: 8 }}>Shutterstock search suggestions for this campaign:</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {shutterstockQueries.map((q, i) => (
                       <a key={i} href={`https://www.shutterstock.com/search/${encodeURIComponent(q)}`} target="_blank" rel="noopener noreferrer"
-                        style={{ padding: '6px 14px', background: '#F0FDF4', color: '#166534', borderRadius: 20, fontSize: 13, textDecoration: 'none', border: '1px solid #BBF7D0', fontWeight: 500 }}>
+                        style={{ padding: '6px 14px', background: '#F0FDF4', color: '#166634', borderRadius: 20, fontSize: 13, textDecoration: 'none', border: '1px solid #BBF7D0', fontWeight: 500 }}>
                         🔍 {q} ↗
                       </a>
                     ))}
                   </div>
                 </div>
               )}
-
               <div style={{ marginTop: 12 }}>
                 <div style={{ fontSize: 13, fontWeight: 500, color: '#374151', marginBottom: 8 }}>Or upload your own images:</div>
                 <label style={{ display: 'inline-block', padding: '8px 16px', background: '#F3F4F6', border: '1px solid #E5E7EB', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 500 }}>
@@ -428,7 +606,6 @@ export default function GoogleAdsCampaignBuilder() {
             <div style={s.card}>
               <div style={s.sectionTitle}>Ad preview — {activeLang}</div>
 
-              {/* Language selector */}
               <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
                 {form.languages.map(lang => (
                   <button key={lang} onClick={() => setActiveLang(lang)} style={s.btn(activeLang === lang ? '#0F172A' : '#F3F4F6', activeLang === lang ? 'white' : '#374151', '1px solid #E5E7EB')}>
@@ -448,8 +625,6 @@ export default function GoogleAdsCampaignBuilder() {
                   {previewDescs[0] || 'Your description will appear here.'}
                 </div>
                 {previewDescs[1] && <div style={{ fontSize: 14, color: '#374151', lineHeight: 1.6 }}>{previewDescs[1]}</div>}
-
-                {/* Sitelinks preview */}
                 {getVal(activeLang, 'sitelinks') && (
                   <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                     {(getVal(activeLang, 'sitelinks') || '').split('\n').filter(Boolean).slice(0, 4).map((sl, i) => {
@@ -458,8 +633,6 @@ export default function GoogleAdsCampaignBuilder() {
                     })}
                   </div>
                 )}
-
-                {/* Callouts preview */}
                 {getVal(activeLang, 'callouts') && (
                   <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
                     {(getVal(activeLang, 'callouts') || '').split('\n').filter(Boolean).slice(0, 4).map((c, i) => (
@@ -475,10 +648,10 @@ export default function GoogleAdsCampaignBuilder() {
               <div style={s.sectionTitle}>Campaign summary</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginBottom: 16 }}>
                 {[
-                  { label: 'Campaigns', value: form.languages.length },
+                  { label: 'Campaigns',    value: form.languages.length },
                   { label: 'Daily budget', value: `€${form.dailyBudget} each` },
-                  { label: 'Service', value: service },
-                  { label: 'Location', value: form.location },
+                  { label: 'Service',      value: service },
+                  { label: 'Location',     value: form.location },
                 ].map(m => (
                   <div key={m.label} style={{ background: '#F8FAFC', borderRadius: 10, padding: '12px' }}>
                     <div style={{ fontSize: 11, color: '#9CA3AF', marginBottom: 2 }}>{m.label}</div>
@@ -488,12 +661,12 @@ export default function GoogleAdsCampaignBuilder() {
               </div>
 
               {form.languages.map(lang => {
-                const hls = (getVal(lang, 'headlines') || '').split('\n').filter(Boolean);
+                const hls   = (getVal(lang, 'headlines') || '').split('\n').filter(Boolean);
                 const descs = (getVal(lang, 'descriptions') || '').split('\n').filter(Boolean);
-                const kws = (getVal(lang, 'keywords') || '').split('\n').filter(Boolean);
-                const hlOk = hls.length >= 3;
+                const kws   = (getVal(lang, 'keywords') || '').split('\n').filter(Boolean);
+                const hlOk  = hls.length >= 3;
                 const descOk = descs.length >= 2;
-                const kwOk = kws.length >= 1;
+                const kwOk  = kws.length >= 1;
                 return (
                   <div key={lang} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #F3F4F6', fontSize: 13 }}>
                     <span style={{ fontWeight: 500 }}>{lang}</span>
@@ -519,22 +692,33 @@ export default function GoogleAdsCampaignBuilder() {
           <div>
             <div style={s.card}>
               <div style={s.sectionTitle}>Ready to launch</div>
-              <div style={{ background: '#FEF3C7', color: '#92400E', padding: '14px 18px', borderRadius: 10, fontSize: 14, marginBottom: 20, lineHeight: 1.7 }}>
-                ⚠️ Campaigns will be created as <strong>PAUSED</strong>. You can review and enable them in Google Ads or in the Campaign Manager.
+              <div style={{ background: '#FEF3C7', color: '#92400E', padding: '14px 18px', borderRadius: 10, fontSize: 14, marginBottom: 16, lineHeight: 1.7 }}>
+                ⚠️ Campaigns will be created as <strong>PAUSED</strong>. You can review and enable them in the Campaign Manager.
               </div>
+
+              {strategyPrefill && (
+                <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 10, padding: '12px 16px', marginBottom: 16, fontSize: 13, color: '#065F46', lineHeight: 1.7 }}>
+                  ✓ <strong>Strategy-informed campaigns</strong> — these campaigns were generated using your AI strategy analysis and competitor research.
+                </div>
+              )}
+
               <div style={{ fontSize: 15, color: '#374151', marginBottom: 20, lineHeight: 1.7 }}>
                 You are about to create <strong>{form.languages.length} campaign(s)</strong> for <strong>{service}</strong> in {form.location} with a daily budget of <strong>€{form.dailyBudget}</strong> each.
               </div>
+
               {loading ? (
                 <div style={{ background: '#F0FDF4', color: '#166534', padding: '16px 20px', borderRadius: 10, fontSize: 14 }}>
                   ⏳ Creating campaigns in Google Ads...
                 </div>
               ) : (
-                <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                   <button style={s.btn('#6B7280', 'white')} onClick={() => setStep(4)}>← Back</button>
                   <button style={s.btn('#166534', 'white')} onClick={launchCampaigns}>
                     🚀 Launch campaigns
                   </button>
+                  <a href="/google-ads-manager" style={{ ...s.btn('transparent', '#374151', '1px solid #E5E7EB'), textDecoration: 'none' }}>
+                    Go to Campaign Manager
+                  </a>
                 </div>
               )}
             </div>
