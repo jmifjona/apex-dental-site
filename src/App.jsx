@@ -251,8 +251,8 @@ function localBusinessSchema(pageUrl) {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 35.8956,
-      longitude: 14.4589,
+      latitude: 35.89618,
+      longitude: 14.45876,
     },
     openingHoursSpecification: [
       {
@@ -3025,10 +3025,10 @@ function ContactPage() {
               </div>
               <div className="rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm">
                 <iframe
-                  title="Apex Dental Malta location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.5!2d14.4589!3d35.8956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e45249b414d63%3A0x5b9956b98cace3!2sTrident+Park!5e0!3m2!1sen!2smt!4v1"
+                  title="Apex Dental Malta — Trident Park, Birkirkara"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.2!2d14.45876!3d35.89618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e51a910f3489f%3A0x6cb52257e336786f!2sApex+Dental!5e0!3m2!1sen!2smt!4v1"
                   width="100%"
-                  height="260"
+                  height="320"
                   style={{ border: 0, display: 'block' }}
                   allowFullScreen=""
                   loading="lazy"
