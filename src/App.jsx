@@ -249,8 +249,38 @@ function localBusinessSchema(pageUrl) {
       postalCode: 'CBD 2010',
       addressCountry: 'MT',
     },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 35.8956,
+      longitude: 14.4589,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '19:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Saturday',
+        opens: '09:00',
+        closes: '12:30',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Sunday',
+        opens: '09:00',
+        closes: '12:00',
+        description: 'Emergency appointments only',
+      },
+    ],
+    priceRange: '€€',
     areaServed: 'Malta',
-    sameAs: [],
+    sameAs: [
+      'https://www.google.com/maps/place/Apex+Dental',
+      'https://www.facebook.com/apexdentalmalta',
+    ],
     mainEntityOfPage: pageUrl,
   };
 }
@@ -3254,6 +3284,7 @@ function SEO({
   canonical,
   type = 'website',
   schema = null,
+  image = `${siteUrl}/images/H1.jpg`,
 }) {
   useEffect(() => {
     document.title = title;
@@ -3283,9 +3314,14 @@ function SEO({
     ensureMeta('property', 'og:description', description);
     ensureMeta('property', 'og:type', type);
     ensureMeta('property', 'og:url', canonical);
+    ensureMeta('property', 'og:image', image);
+    ensureMeta('property', 'og:image:width', '1200');
+    ensureMeta('property', 'og:image:height', '630');
+    ensureMeta('property', 'og:locale', 'en_MT');
     ensureMeta('name', 'twitter:card', 'summary_large_image');
     ensureMeta('name', 'twitter:title', title);
     ensureMeta('name', 'twitter:description', description);
+    ensureMeta('name', 'twitter:image', image);
 
     ensureLink('canonical', canonical);
 
