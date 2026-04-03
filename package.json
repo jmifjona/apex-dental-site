@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-meta.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@rolldown/binding-linux-x64-gnu": "^1.0.0-rc.12",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
@@ -26,8 +27,12 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "lightningcss": "^1.32.0",
+    "picomatch": "^4.0.4",
     "postcss": "^8.5.8",
+    "rolldown": "^1.0.0-rc.13",
     "tailwindcss": "^3.4.19",
-    "vite": "^8.0.0"
+    "tinyglobby": "^0.2.15",
+    "vite": "^8.0.3"
   }
 }

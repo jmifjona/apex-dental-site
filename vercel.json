@@ -1,8 +1,25 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/about-us", "destination": "/about-us/index.html" },
+    { "source": "/services", "destination": "/services/index.html" },
+    { "source": "/dental-implants", "destination": "/dental-implants/index.html" },
+    { "source": "/invisalign-malta", "destination": "/invisalign-malta/index.html" },
+    { "source": "/cosmetic-dentistry-malta", "destination": "/cosmetic-dentistry-malta/index.html" },
+    { "source": "/veneers", "destination": "/veneers/index.html" },
+    { "source": "/teeth-whitening", "destination": "/teeth-whitening/index.html" },
+    { "source": "/crowns-and-bridgework", "destination": "/crowns-and-bridgework/index.html" },
+    { "source": "/general-dentistry", "destination": "/general-dentistry/index.html" },
+    { "source": "/dental-hygiene", "destination": "/dental-hygiene/index.html" },
+    { "source": "/periodontology", "destination": "/periodontology/index.html" },
+    { "source": "/orthodontics", "destination": "/orthodontics/index.html" },
+    { "source": "/dental-prosthetics", "destination": "/dental-prosthetics/index.html" },
+    { "source": "/removable-prosthesis", "destination": "/removable-prosthesis/index.html" },
+    { "source": "/root-canal-treatment", "destination": "/root-canal-treatment/index.html" },
+    { "source": "/emergency-dental-service-malta", "destination": "/emergency-dental-service-malta/index.html" },
+    { "source": "/price-list", "destination": "/price-list/index.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/appointment-booking", "destination": "/appointment-booking/index.html" },
+    { "source": "/contact-us", "destination": "/contact-us/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
