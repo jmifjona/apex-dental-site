@@ -20,6 +20,12 @@
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/appointment-booking", "destination": "/appointment-booking/index.html" },
     { "source": "/contact-us", "destination": "/contact-us/index.html" },
+    { "source": "/blog/dental-implants-cost-malta", "destination": "/blog/dental-implants-cost-malta/index.html" },
+    { "source": "/blog/veneers-vs-teeth-whitening", "destination": "/blog/veneers-vs-teeth-whitening/index.html" },
+    { "source": "/blog/dental-emergency-malta", "destination": "/blog/dental-emergency-malta/index.html" },
+    { "source": "/blog/clear-aligners-adults-malta", "destination": "/blog/clear-aligners-adults-malta/index.html" },
+    { "source": "/blog/dental-hygiene-appointments", "destination": "/blog/dental-hygiene-appointments/index.html" },
+    { "source": "/blog/dental-crowns-protect-teeth", "destination": "/blog/dental-crowns-protect-teeth/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

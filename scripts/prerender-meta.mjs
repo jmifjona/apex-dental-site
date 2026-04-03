@@ -141,6 +141,42 @@ const routes = [
     description: 'Contact Apex Dental Malta at Trident Park, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment.',
     image: `${siteUrl}/images/CT1.jpg`,
   },
+  {
+    path: '/blog/dental-implants-cost-malta/',
+    title: 'How much do dental implants cost in Malta? | Apex Dental',
+    description: 'A clear guide to what influences dental implant costs in Malta, from the initial 3D scan to the final crown. Learn what\'s included at Apex Dental.',
+    image: `${siteUrl}/images/I1.jpg`,
+  },
+  {
+    path: '/blog/veneers-vs-teeth-whitening/',
+    title: 'Veneers vs Teeth Whitening — What\'s the Difference? | Apex Dental',
+    description: 'Veneers and whitening are often confused. One changes colour only. The other transforms shape, size and symmetry. Find out which is right for you.',
+    image: `${siteUrl}/images/C1.jpg`,
+  },
+  {
+    path: '/blog/dental-emergency-malta/',
+    title: 'When Is a Dental Problem a Dental Emergency? | Apex Dental Malta',
+    description: 'Not every dental issue needs same-day care. Here\'s how to tell the difference — and what Apex Dental can do for you urgently in Malta.',
+    image: `${siteUrl}/images/CT1.jpg`,
+  },
+  {
+    path: '/blog/clear-aligners-adults-malta/',
+    title: 'Are Clear Aligners Suitable for Adults? | Apex Dental Malta',
+    description: 'More adults than ever are choosing aligners over fixed braces. Find out why and what to expect from Invisalign and clear aligner treatment in Malta.',
+    image: `${siteUrl}/images/A1.jpg`,
+  },
+  {
+    path: '/blog/dental-hygiene-appointments/',
+    title: 'Why Dental Hygiene Appointments Matter | Apex Dental Malta',
+    description: 'Prevention is almost always cheaper and easier than treatment. Find out what happens at a hygiene visit and how often you should attend.',
+    image: `${siteUrl}/images/H9.jpg`,
+  },
+  {
+    path: '/blog/dental-crowns-protect-teeth/',
+    title: 'How Dental Crowns Protect Damaged Teeth | Apex Dental Malta',
+    description: 'Crowns are one of the most reliable ways to save a tooth that would otherwise be lost. Here\'s how they work and when they\'re needed.',
+    image: `${siteUrl}/images/C4.jpg`,
+  },
 ];
 
 function buildHtml(template, route) {

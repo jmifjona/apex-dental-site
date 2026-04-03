@@ -276,6 +276,13 @@ function localBusinessSchema(pageUrl) {
       },
     ],
     priceRange: '€€',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '119',
+      bestRating: '5',
+      worstRating: '1',
+    },
     areaServed: 'Malta',
     sameAs: [
       'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
@@ -304,6 +311,59 @@ function serviceSchema(name, description, pageUrl) {
       name: 'Malta',
     },
     url: pageUrl,
+  };
+}
+
+function faqSchema(faqs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+}
+
+function articleSchema({ title, description, url, datePublished, image }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    url,
+    datePublished,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Apex Dental Malta',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/orislogo.png`,
+      },
+    },
+    image: image || `${siteUrl}/images/H1.jpg`,
+    author: {
+      '@type': 'Organization',
+      name: 'Apex Dental Malta',
+    },
+  };
+}
+
+function breadcrumbSchema(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `${siteUrl}${item.path}`,
+    })),
   };
 }
 
@@ -1522,7 +1582,12 @@ function ImplantsPage() {
         title="Dental Implants Malta | Apex Dental"
         description="Apex Dental provides dental implants in Malta for single missing teeth, multiple teeth, All-on-4, and advanced restorative cases. Free consultation and 3D scan with treatment. Led by Dr Jonathan Mifsud."
         canonical={`${siteUrl}/dental-implants/`}
-        schema={serviceSchema('Dental Implants', 'Dental implant treatment in Malta. Single implants, All-on-4, implant-retained dentures. Free consultation and 3D scan included with treatment.', `${siteUrl}/dental-implants/`)}
+        image={`${siteUrl}/images/I1.jpg`}
+        schemas={[
+          serviceSchema('Dental Implants', 'Dental implant treatment in Malta. Single implants, All-on-4, implant-retained dentures. Free consultation and 3D scan included with treatment.', `${siteUrl}/dental-implants/`),
+          faqSchema(implantFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Dental Implants', path: '/dental-implants/' }]),
+        ]}
       />
       <PageHero
         image={images.implants.I1}
@@ -1580,7 +1645,12 @@ function AlignersPage() {
         title="Invisalign Malta | Clear Aligners | Apex Dental"
         description="Invisalign and clear aligner treatment in Malta at Apex Dental. Discreet, removable orthodontics for adults. Digital planning and multilingual consultations available."
         canonical={`${siteUrl}/invisalign-malta/`}
-        schema={serviceSchema('Clear Aligners', 'Invisalign and clear aligner orthodontic treatment in Malta at Apex Dental.', `${siteUrl}/invisalign-malta/`)}
+        image={`${siteUrl}/images/A1.jpg`}
+        schemas={[
+          serviceSchema('Clear Aligners', 'Invisalign and clear aligner orthodontic treatment in Malta at Apex Dental.', `${siteUrl}/invisalign-malta/`),
+          faqSchema(alignerFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Clear Aligners', path: '/invisalign-malta/' }]),
+        ]}
       />
       <PageHero
         image={images.aligners.A1}
@@ -1900,7 +1970,12 @@ function VeneersPage() {
         title="Dental Veneers Malta | Porcelain Veneers | Apex Dental"
         description="Porcelain dental veneers in Malta at Apex Dental. Custom smile design for chipped, stained, or misshapen teeth. Book a veneer consultation today."
         canonical={`${siteUrl}/veneers/`}
-        schema={serviceSchema('Dental Veneers', 'Porcelain dental veneer treatment in Malta for smile improvement at Apex Dental.', `${siteUrl}/veneers/`)}
+        image={`${siteUrl}/images/C1.jpg`}
+        schemas={[
+          serviceSchema('Dental Veneers', 'Porcelain dental veneer treatment in Malta for smile improvement at Apex Dental.', `${siteUrl}/veneers/`),
+          faqSchema(veneerFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Veneers', path: '/veneers/' }]),
+        ]}
       />
       <PageHero
         image={images.cosmetic.C1}
@@ -1951,7 +2026,12 @@ function TeethWhiteningPage() {
         title="Teeth Whitening Malta | Apex Dental"
         description="Professional teeth whitening in Malta at Apex Dental. Custom home whitening trays and in-clinic options for a brighter, whiter smile. Book a consultation today."
         canonical={`${siteUrl}/teeth-whitening/`}
-        schema={serviceSchema('Teeth Whitening', 'Professional teeth whitening in Malta with custom home trays and in-clinic options.', `${siteUrl}/teeth-whitening/`)}
+        image={`${siteUrl}/images/C2.jpg`}
+        schemas={[
+          serviceSchema('Teeth Whitening', 'Professional teeth whitening in Malta with custom home trays and in-clinic options.', `${siteUrl}/teeth-whitening/`),
+          faqSchema(whiteningFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Teeth Whitening', path: '/teeth-whitening/' }]),
+        ]}
       />
       <PageHero
         image={images.cosmetic.C2}
@@ -1996,7 +2076,12 @@ function CrownsBridgeworkPage() {
         title="Crowns and Bridges Malta | Apex Dental"
         description="Dental crowns and bridges in Malta at Apex Dental. Protect damaged teeth and replace missing teeth with high-quality ceramic and zirconia restorations."
         canonical={`${siteUrl}/crowns-and-bridgework/`}
-        schema={serviceSchema('Dental Crowns and Bridges', 'Dental crown and bridge treatment in Malta at Apex Dental.', `${siteUrl}/crowns-and-bridgework/`)}
+        image={`${siteUrl}/images/C4.jpg`}
+        schemas={[
+          serviceSchema('Dental Crowns and Bridges', 'Dental crown and bridge treatment in Malta at Apex Dental.', `${siteUrl}/crowns-and-bridgework/`),
+          faqSchema(crownFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Crowns & Bridgework', path: '/crowns-and-bridgework/' }]),
+        ]}
       />
       <PageHero
         image={images.cosmetic.C4}
@@ -2220,7 +2305,12 @@ function RootCanalPage() {
         title="Root Canal Treatment Malta | Apex Dental"
         description="Root canal treatment in Malta at Apex Dental. Comfortable, effective treatment for infected or damaged teeth saving your natural tooth and relieving pain."
         canonical={`${siteUrl}/root-canal-treatment/`}
-        schema={serviceSchema('Root Canal Treatment', 'Root canal treatment in Malta to save infected or damaged teeth and relieve pain.', `${siteUrl}/root-canal-treatment/`)}
+        image={`${siteUrl}/images/I2.jpg`}
+        schemas={[
+          serviceSchema('Root Canal Treatment', 'Root canal treatment in Malta to save infected or damaged teeth and relieve pain.', `${siteUrl}/root-canal-treatment/`),
+          faqSchema(rootCanalFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Root Canal Treatment', path: '/root-canal-treatment/' }]),
+        ]}
       />
       <PageHero
         image={images.implants.I2}
@@ -2271,7 +2361,12 @@ function EmergencyPage() {
         title="Emergency Dentist Malta | Apex Dental"
         description="Need an emergency dentist in Malta? Apex Dental provides urgent dental care for toothache, swelling, broken teeth, abscesses, and lost restorations. Open Sunday 9-12. Call or WhatsApp us now."
         canonical={`${siteUrl}/emergency-dental-service-malta/`}
-        schema={serviceSchema('Emergency Dentist Malta', 'Emergency dental care in Malta at Apex Dental. Open Sunday 9am-12pm for emergencies. Urgent assessment for severe toothache, dental abscess, broken teeth, and lost restorations.', `${siteUrl}/emergency-dental-service-malta/`)}
+        image={`${siteUrl}/images/CT1.jpg`}
+        schemas={[
+          serviceSchema('Emergency Dentist Malta', 'Emergency dental care in Malta at Apex Dental. Open Sunday 9am-12pm for emergencies. Urgent assessment for severe toothache, dental abscess, broken teeth, and lost restorations.', `${siteUrl}/emergency-dental-service-malta/`),
+          faqSchema(emergencyFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Emergency Dentist Malta', path: '/emergency-dental-service-malta/' }]),
+        ]}
       />
       <PageHero
         image={images.contact.CT1}
@@ -2440,31 +2535,12 @@ function BlogPage() {
                   </div>
                   <h2 className="text-xl font-semibold text-slate-900 leading-tight mb-3">{post.title}</h2>
                   <p className="text-slate-600 leading-7 text-sm">{post.excerpt}</p>
-                  <button
-                    onClick={() => setOpenPost(openPost === post.id ? null : post.id)}
+                  <Link
+                    to={blogPostMeta[post.id].slug}
                     className="inline-flex items-center gap-2 mt-5 text-slate-900 font-semibold hover:text-sky-700 transition text-sm"
                   >
-                    {openPost === post.id ? 'Close' : 'Read article'}
-                    <ChevronRight size={16} className={`transition-transform ${openPost === post.id ? 'rotate-90' : ''}`} />
-                  </button>
-                </div>
-
-                {openPost === post.id && (
-                  <div className="border-t border-slate-100 px-8 py-6 bg-slate-50">
-                    <div className="prose prose-slate max-w-none">
-                      {post.content.map((block, i) => {
-                        if (block.type === 'p') return <p key={i} className="text-slate-600 leading-8 mb-4 text-sm">{block.text}</p>;
-                        if (block.type === 'h3') return <h3 key={i} className="text-base font-semibold text-slate-900 mt-6 mb-2">{block.text}</h3>;
-                        if (block.type === 'cta') return (
-                          <Link key={i} to={block.to} className="inline-flex items-center gap-2 mt-4 bg-slate-900 text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-slate-700 transition">
-                            {block.text} <ChevronRight size={14} />
-                          </Link>
-                        );
-                        return null;
-                      })}
-                    </div>
-                  </div>
-                )}
+                    Read article <ChevronRight size={16} />
+                  </Link>
               </article>
             ))}
           </div>
@@ -3285,6 +3361,7 @@ function SEO({
   canonical,
   type = 'website',
   schema = null,
+  schemas = null,
   image = `${siteUrl}/images/H1.jpg`,
 }) {
   useEffect(() => {
@@ -3326,25 +3403,198 @@ function SEO({
 
     ensureLink('canonical', canonical);
 
-    let schemaTag = document.head.querySelector('#seo-schema');
-    if (schema) {
-      if (!schemaTag) {
-        schemaTag = document.createElement('script');
-        schemaTag.type = 'application/ld+json';
-        schemaTag.id = 'seo-schema';
-        document.head.appendChild(schemaTag);
-      }
-      schemaTag.textContent = JSON.stringify(schema);
-    } else if (schemaTag) {
-      schemaTag.remove();
-    }
+    // Remove old single schema tag
+    document.head.querySelectorAll('[id^="seo-schema"]').forEach(el => el.remove());
+
+    // Collect all schemas
+    const allSchemas = [];
+    if (schema) allSchemas.push(schema);
+    if (schemas) allSchemas.push(...schemas);
+
+    allSchemas.forEach((s, i) => {
+      const tag = document.createElement('script');
+      tag.type = 'application/ld+json';
+      tag.id = `seo-schema-${i}`;
+      tag.textContent = JSON.stringify(s);
+      document.head.appendChild(tag);
+    });
 
     return () => {};
-  }, [title, description, canonical, type, schema]);
+  }, [title, description, canonical, type, schema, schemas]);
 
   return null;
 }
 
+
+// ── BLOG POST META MAP ──────────────────────────────────────
+const blogPostMeta = {
+  1: { slug: '/blog/dental-implants-cost-malta/', title: 'How much do dental implants cost in Malta?', description: 'A clear guide to what influences dental implant costs in Malta, from the initial 3D scan to the final crown. Learn what\'s included at Apex Dental.', image: `${siteUrl}/images/I1.jpg`, datePublished: '2025-03-01', breadcrumb: 'Dental Implants Cost Malta' },
+  2: { slug: '/blog/veneers-vs-teeth-whitening/', title: 'Veneers vs teeth whitening — what is the difference?', description: 'Veneers and whitening are often confused. One changes colour only. The other transforms shape, size and symmetry. Find out which is right for you.', image: `${siteUrl}/images/C1.jpg`, datePublished: '2025-03-05', breadcrumb: 'Veneers vs Whitening' },
+  3: { slug: '/blog/dental-emergency-malta/', title: 'When is a dental problem a dental emergency?', description: 'Not every dental issue needs same-day care. Here\'s how to tell the difference — and what Apex Dental can do for you urgently in Malta.', image: `${siteUrl}/images/CT1.jpg`, datePublished: '2025-03-10', breadcrumb: 'Dental Emergency Malta' },
+  4: { slug: '/blog/clear-aligners-adults-malta/', title: 'Are clear aligners suitable for adults?', description: 'More adults than ever are choosing aligners over fixed braces. Find out why and what to expect from Invisalign and clear aligner treatment in Malta.', image: `${siteUrl}/images/A1.jpg`, datePublished: '2025-03-15', breadcrumb: 'Clear Aligners Adults' },
+  5: { slug: '/blog/dental-hygiene-appointments/', title: 'Why regular dental hygiene appointments matter more than you think', description: 'Prevention is almost always cheaper and easier than treatment. Find out what happens at a hygiene visit and how often you should attend.', image: `${siteUrl}/images/H9.jpg`, datePublished: '2025-03-20', breadcrumb: 'Dental Hygiene' },
+  6: { slug: '/blog/dental-crowns-protect-teeth/', title: 'How do dental crowns protect damaged teeth?', description: 'Crowns are one of the most reliable ways to save a tooth that would otherwise be lost. Here\'s how they work and when they\'re needed.', image: `${siteUrl}/images/C4.jpg`, datePublished: '2025-03-25', breadcrumb: 'Dental Crowns' },
+};
+
+function BlogPostPage({ postId }) {
+  const meta = blogPostMeta[postId];
+  const canonical = `${siteUrl}${meta.slug}`;
+
+  // Inline post data (same as BlogPage)
+  const allPosts = {
+    1: {
+      title: 'How much do dental implants cost in Malta?',
+      category: 'Implants',
+      readTime: '4 min read',
+      content: [
+        { type: 'p', text: 'Dental implant costs in Malta vary depending on the complexity of your case, the number of implants required, and the type of restoration placed on top. Understanding what is included in the price is just as important as the headline figure.' },
+        { type: 'h3', text: 'What affects the cost of dental implants?' },
+        { type: 'p', text: 'Several factors influence the total cost of implant treatment. The number of implants needed is the most obvious variable. A single implant to replace one missing tooth costs significantly less than a full-arch All-on-4 restoration. The condition of your jawbone matters too — patients who require bone grafting before implant placement will have additional treatment needs. The type of crown or bridge placed on the implant also affects cost: zirconia restorations are generally more expensive than acrylic or porcelain-fused-to-metal options.' },
+        { type: 'h3', text: 'What is typically included at Apex Dental?' },
+        { type: 'p', text: 'At Apex Dental, the implant consultation is free when you proceed with treatment, and the 3D CBCT scan required for planning is also included at no extra cost when implant surgery is carried out. This scan, which provides a detailed view of your bone volume and anatomy, is essential for accurate planning and is a cost that some clinics charge separately.' },
+        { type: 'h3', text: 'Single implants vs All-on-4 in Malta' },
+        { type: 'p', text: 'A single implant includes the titanium implant, the abutment connector, and the crown. For patients missing most or all of their teeth, All-on-4 — also known as the Toronto bridge — places four implants to support a complete fixed arch. This is a more efficient solution than replacing each tooth individually and is generally more cost-effective per tooth than multiple single implants.' },
+        { type: 'h3', text: 'The best way to get an accurate cost' },
+        { type: 'p', text: 'The only way to get a reliable cost estimate is through a consultation and 3D scan. Implant costs quoted online without a clinical assessment are rarely accurate because they cannot account for your specific bone structure, the number of implants you need, or any preparatory treatment required. At Apex Dental the consultation is free when you proceed with implant treatment, so there is no cost to finding out exactly what your case involves.' },
+        { type: 'cta', text: 'Book a free implant consultation', to: '/dental-implants/' },
+      ],
+    },
+    2: {
+      title: 'Veneers vs teeth whitening — what is the difference?',
+      category: 'Cosmetic Dentistry',
+      readTime: '3 min read',
+      content: [
+        { type: 'p', text: 'Teeth whitening and dental veneers are both popular cosmetic treatments, but they work in completely different ways and achieve very different results. Choosing the right one depends on what you are trying to improve.' },
+        { type: 'h3', text: 'What whitening can and cannot do' },
+        { type: 'p', text: 'Professional teeth whitening uses bleaching agents to lighten the natural colour of your teeth. It is effective for removing staining caused by coffee, tea, wine, and ageing. However, whitening only affects the shade of your enamel. It cannot change the shape, size, or alignment of your teeth, and it has no effect on crowns, veneers, or composite fillings — these will remain their original colour while your natural teeth whiten around them.' },
+        { type: 'h3', text: 'What veneers can do that whitening cannot' },
+        { type: 'p', text: 'Porcelain veneers are thin ceramic shells bonded to the front of your teeth. They can change the colour of teeth that are too dark or stained to whiten effectively. But they can also change the shape of teeth that are chipped, worn, or irregularly sized. They can close small gaps, make short teeth appear longer, and create a more symmetrical smile. Veneers offer a degree of smile transformation that whitening simply cannot achieve.' },
+        { type: 'h3', text: 'Which is right for you?' },
+        { type: 'p', text: 'If your teeth are a good shape and you are mainly concerned about colour, whitening is the simpler, less invasive and more affordable option. If you have cosmetic concerns beyond just shade — chips, wear, size, or shape — veneers are worth considering. Many patients do both: whiten their natural teeth first, then match the veneer shade to the whitened result for a completely consistent smile.' },
+        { type: 'cta', text: 'Explore cosmetic treatments', to: '/veneers/' },
+      ],
+    },
+    3: {
+      title: 'When is a dental problem a dental emergency?',
+      category: 'Emergency Care',
+      readTime: '3 min read',
+      content: [
+        { type: 'p', text: 'Knowing when to seek urgent dental care can make the difference between saving a tooth and losing it. Some situations genuinely require same-day attention, while others can safely wait for a routine appointment.' },
+        { type: 'h3', text: 'Situations that require urgent attention' },
+        { type: 'p', text: 'A knocked-out tooth is a genuine emergency — if you act within an hour and keep the tooth moist, it may be possible to reimplant it. A dental abscess with facial swelling, fever, or difficulty swallowing should also be treated as urgent as the infection can spread. Severe, unrelenting toothache that does not respond to over-the-counter pain relief usually indicates infection or nerve damage and needs prompt assessment.' },
+        { type: 'h3', text: 'What can wait for a regular appointment' },
+        { type: 'p', text: 'A chipped tooth with no pain, a lost filling that is not causing discomfort, or mild sensitivity can generally wait a few days for a scheduled appointment. These are worth addressing soon but are not emergencies in the same sense as an abscess or a knocked-out tooth.' },
+        { type: 'h3', text: 'Apex Dental is open Sundays for emergencies' },
+        { type: 'p', text: 'Apex Dental is open Sunday mornings from 9am to 12pm specifically for emergency cases. If you are unsure whether your situation warrants urgent care, it is always better to call and describe your symptoms than to wait and risk the problem worsening.' },
+        { type: 'cta', text: 'Contact us for emergency care', to: '/emergency-dental-service-malta/' },
+      ],
+    },
+    4: {
+      title: 'Are clear aligners suitable for adults?',
+      category: 'Aligners',
+      readTime: '4 min read',
+      content: [
+        { type: 'p', text: 'Clear aligners were originally designed with adults in mind. Unlike traditional metal braces, which are more commonly associated with teenagers, aligners are discreet, removable, and designed around the practical demands of adult life.' },
+        { type: 'h3', text: 'Why adults prefer aligners over fixed braces' },
+        { type: 'p', text: 'The most obvious advantage is appearance. Aligners are transparent and virtually invisible during wear, which matters to professionals and image-conscious adults who would not want visible metal brackets. They are also removable — you take them out for meals, drinks, and oral hygiene, which means no food restrictions and easier cleaning compared to fixed braces. Many adults also find aligners more comfortable than traditional braces, with fewer emergency appointments for broken wires or loose brackets.' },
+        { type: 'h3', text: 'What can aligners treat?' },
+        { type: 'p', text: 'Aligners can address a wide range of orthodontic issues including crowding, spacing, mild to moderate bite problems, and tooth rotation. More complex cases — particularly those involving significant bite correction — may still be better suited to fixed appliances. Your dentist will assess your specific situation and be honest about whether aligners are the right fit for your goals.' },
+        { type: 'h3', text: 'How long does aligner treatment take for adults?' },
+        { type: 'p', text: 'Most adult cases are completed in 6 to 18 months depending on the complexity of the tooth movement required. The process begins with digital scanning and a treatment simulation, which means you can see a preview of your expected outcome before committing to treatment.' },
+        { type: 'h3', text: 'Multilingual consultations available at Apex Dental' },
+        { type: 'p', text: 'Apex Dental offers aligner consultations in English, Italian, and Spanish. Dr Martha Lopez (Spanish-speaking) and Dr Massimo D\'Alessandro (Italian-speaking) are both available for patients who prefer to consult in their first language.' },
+        { type: 'cta', text: 'Book an aligner consultation', to: '/invisalign-malta/' },
+      ],
+    },
+    5: {
+      title: 'Why regular dental hygiene appointments matter more than you think',
+      category: 'Preventive Dentistry',
+      readTime: '3 min read',
+      content: [
+        { type: 'p', text: 'Many people only visit the dentist when something hurts. The problem with this approach is that by the time dental problems cause pain, they are often significantly more advanced — and more expensive to treat — than they would have been if caught earlier.' },
+        { type: 'h3', text: 'What happens at a hygiene appointment?' },
+        { type: 'p', text: 'A hygiene appointment involves professional removal of plaque and tartar buildup that cannot be removed by brushing and flossing alone. Tartar — calcified plaque — accumulates over time on all teeth and particularly around the gum line. If left, it causes gum inflammation, which can progress to periodontitis — a more serious form of gum disease that damages the bone supporting your teeth. Professional cleaning also gives the dentist an opportunity to spot early signs of decay, gum disease, or other issues before they develop into larger problems.' },
+        { type: 'h3', text: 'How often should you attend?' },
+        { type: 'p', text: 'The general recommendation for most adults is every six months. Patients with a history of gum disease, smokers, diabetics, and those with certain medications that affect the gums may be advised to attend more frequently. Your dentist will advise the most appropriate schedule for your situation.' },
+        { type: 'h3', text: 'The cost of prevention versus the cost of treatment' },
+        { type: 'p', text: 'A routine hygiene appointment costs a fraction of what a filling, root canal, or tooth extraction with replacement costs. Regular preventive care consistently reduces the likelihood of needing more complex and costly treatment down the line.' },
+        { type: 'cta', text: 'Book a hygiene appointment', to: '/dental-hygiene/' },
+      ],
+    },
+    6: {
+      title: 'How do dental crowns protect damaged teeth?',
+      category: 'Restorative Dentistry',
+      readTime: '3 min read',
+      content: [
+        { type: 'p', text: 'A dental crown is a cap that fits over the entire visible portion of a tooth, restoring its shape, size, strength, and appearance. Crowns are one of the most versatile and long-lasting restorations in dentistry, used in a wide range of situations where a tooth needs protection or reconstruction.' },
+        { type: 'h3', text: 'When is a crown recommended?' },
+        { type: 'p', text: 'The most common situations that require a crown include teeth that have undergone root canal treatment, which are more brittle and prone to fracture without a crown to reinforce them. Crowns are also used for teeth with large decay or fractures that cannot be reliably restored with a filling, severely worn teeth, and teeth with a poor appearance that cannot be improved with less invasive options.' },
+        { type: 'h3', text: 'What are crowns made of?' },
+        { type: 'p', text: 'Modern crowns are most commonly made from ceramic or zirconia — both tooth-coloured materials that are strong, durable, and virtually indistinguishable from natural teeth. Zirconia in particular is highly resistant to fracture and is an excellent choice for back teeth that are under significant chewing load. Metal-fused options are still used in some specific situations but are less common in contemporary practice.' },
+        { type: 'h3', text: 'How long does a crown last?' },
+        { type: 'p', text: 'With proper care — regular brushing, flossing, and dental check-ups — crowns typically last 10 to 15 years or longer. Avoiding habits like teeth grinding (if untreated), biting very hard objects, or using teeth as tools helps maximise crown lifespan.' },
+        { type: 'cta', text: 'Learn about crowns and bridgework', to: '/crowns-and-bridgework/' },
+      ],
+    },
+  };
+
+  const post = allPosts[postId];
+
+  usePageTitle(meta.title);
+
+  return (
+    <>
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        canonical={canonical}
+        type="article"
+        image={meta.image}
+        schemas={[
+          articleSchema({ title: meta.title, description: meta.description, url: canonical, datePublished: meta.datePublished, image: meta.image }),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog/' }, { name: meta.breadcrumb, path: meta.slug }]),
+        ]}
+      />
+      <PageHero
+        image={meta.image}
+        eyebrow={post.category}
+        title={post.title}
+        subtitle={meta.description}
+      />
+      <section className="bg-white py-20">
+        <Section>
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-4 text-sm text-slate-500 mb-10">
+              <span className="uppercase tracking-[0.2em]">{post.category}</span>
+              <span>·</span>
+              <span>{post.readTime}</span>
+              <span>·</span>
+              <Link to="/blog/" className="hover:text-slate-900 transition">← Back to blog</Link>
+            </div>
+            <div className="space-y-6">
+              {post.content.map((block, i) => {
+                if (block.type === 'p') return <p key={i} className="text-slate-600 leading-8 text-lg">{block.text}</p>;
+                if (block.type === 'h3') return <h2 key={i} className="text-2xl font-semibold text-slate-900 mt-10 mb-2">{block.text}</h2>;
+                if (block.type === 'cta') return (
+                  <div key={i} className="pt-4">
+                    <Link to={block.to} className="inline-flex items-center gap-2 bg-slate-900 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-slate-700 transition">
+                      {block.text} <ChevronRight size={16} />
+                    </Link>
+                  </div>
+                );
+                return null;
+              })}
+            </div>
+          </div>
+        </Section>
+      </section>
+      <CTASection
+        title="Ready to visit Apex Dental?"
+        text="Book an appointment online or contact us directly — our team will guide you through your options."
+      />
+    </>
+  );
+}
 
 // ── GOOGLE ADS AUTH GATE ─────────────────────────────────────
 // Credentials - change these to your preferred login
@@ -3470,6 +3720,12 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/emergency-dental-service-malta/" element={<EmergencyPage />} />
         <Route path="/price-list/" element={<PriceListPage />} />
         <Route path="/blog/" element={<BlogPage />} />
+        <Route path="/blog/dental-implants-cost-malta/" element={<BlogPostPage postId={1} />} />
+        <Route path="/blog/veneers-vs-teeth-whitening/" element={<BlogPostPage postId={2} />} />
+        <Route path="/blog/dental-emergency-malta/" element={<BlogPostPage postId={3} />} />
+        <Route path="/blog/clear-aligners-adults-malta/" element={<BlogPostPage postId={4} />} />
+        <Route path="/blog/dental-hygiene-appointments/" element={<BlogPostPage postId={5} />} />
+        <Route path="/blog/dental-crowns-protect-teeth/" element={<BlogPostPage postId={6} />} />
         <Route path="/appointment-booking/" element={<AppointmentBookingPage />} />
         <Route path="/services/" element={<ServicesPage />} />
         <Route path="/contact-us/" element={<ContactPage />} />
