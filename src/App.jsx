@@ -278,6 +278,7 @@ function localBusinessSchema(pageUrl) {
     priceRange: '€€',
     areaServed: 'Malta',
     sameAs: [
+      'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
       'https://www.facebook.com/ApexDentalMedAesthetic',
       'https://www.instagram.com/apex.dental.clinic_/',
     ],
