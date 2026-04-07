@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, '../dist');
-const siteUrl = 'https://apexdentalmalta.com';
+const siteUrl = 'https://www.apexdentalmalta.com';
 const defaultImage = `${siteUrl}/images/H1.jpg`;
 
 const routes = [

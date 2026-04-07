@@ -13,7 +13,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const siteUrl = 'https://apexdentalmalta.com';
+const siteUrl = 'https://www.apexdentalmalta.com';
 
 const queuePath = join(__dirname, 'blog-queue.json');
 const blogDataPath = join(root, 'src/data/blogPosts.js');
