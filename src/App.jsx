@@ -2541,6 +2541,7 @@ function BlogPage() {
                   >
                     Read article <ChevronRight size={16} />
                   </Link>
+                </div>
               </article>
             ))}
           </div>
