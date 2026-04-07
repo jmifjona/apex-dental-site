@@ -231,7 +231,7 @@ const brand = {
   logo: '/images/orislogo.png',
 };
 
-const siteUrl = 'https://apexdentalmalta.com';
+const siteUrl = 'https://www.apexdentalmalta.com';
 
 function localBusinessSchema(pageUrl) {
   return {
