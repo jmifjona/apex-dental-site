@@ -126,6 +126,68 @@ export const blogPosts = [
       { type: 'cta', text: 'Learn about crowns and bridgework', to: '/crowns-and-bridgework/' },
     ],
   },
+
+  {
+    id: 7,
+    slug: '/blog/dental-implants-vs-bridges/',
+    title: 'Dental implants vs bridges — which is better for a missing tooth?',
+    excerpt: 'Both replace missing teeth, but they work very differently. Here is an honest comparison to help you decide.',
+    category: 'Implants',
+    readTime: '4 min read',
+    datePublished: '2026-04-06',
+    image: '/images/I2.jpg',
+    content: [
+      {
+            "type": "p",
+            "text": "When you lose a tooth, you have two main fixed options: a dental implant or a dental bridge. Both can restore the appearance of your smile and your ability to eat comfortably, but they differ significantly in how they work, how long they last, and what they mean for the health of your surrounding teeth."
+      },
+      {
+            "type": "h3",
+            "text": "How a dental bridge works"
+      },
+      {
+            "type": "p",
+            "text": "A dental bridge fills the gap left by a missing tooth by anchoring an artificial tooth to the teeth on either side. Those adjacent teeth must be prepared — meaning they are permanently reduced in size and crowned — to support the bridge. This is a well-established solution and can look excellent, but it involves altering healthy teeth that might otherwise remain untouched for decades."
+      },
+      {
+            "type": "h3",
+            "text": "How a dental implant works"
+      },
+      {
+            "type": "p",
+            "text": "A dental implant replaces the root of the missing tooth with a titanium post that is placed directly into the jawbone. Once the implant integrates with the bone — a process called osseointegration — a crown is placed on top. The result is a fully independent tooth replacement that does not involve the adjacent teeth at all."
+      },
+      {
+            "type": "h3",
+            "text": "The key differences"
+      },
+      {
+            "type": "p",
+            "text": "The most important difference is that implants preserve the adjacent teeth completely, while a bridge requires them to be permanently altered. Implants also preserve the jawbone — when a tooth root is missing, the bone beneath it gradually resorbs. An implant stimulates the bone just like a natural root, preventing this loss. Bridges do not."
+      },
+      {
+            "type": "h3",
+            "text": "Which lasts longer?"
+      },
+      {
+            "type": "p",
+            "text": "A well-placed implant can last a lifetime with proper care. Bridges typically last 10 to 15 years before needing replacement, after which the process must be repeated on the same already-compromised teeth. Over a 30 to 40 year period, the total cost and clinical impact of a bridge often exceeds that of an implant placed well at the outset."
+      },
+      {
+            "type": "h3",
+            "text": "When is a bridge the right choice?"
+      },
+      {
+            "type": "p",
+            "text": "Bridges remain a valid option in certain situations — for example, when there is insufficient bone for an implant without significant grafting, when the adjacent teeth already require crowns for other reasons, or where budget is a primary consideration. Your dentist will advise based on your specific clinical situation."
+      },
+      {
+            "type": "cta",
+            "text": "Book a free implant consultation",
+            "to": "/dental-implants/"
+      }
+],
+  },
 ];
 
 // Derived meta map for SEO + routing

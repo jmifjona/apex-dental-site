@@ -1,29 +1,5 @@
 [
   {
-    "id": 7,
-    "slug": "/blog/dental-implants-vs-bridges/",
-    "title": "Dental implants vs bridges — which is better for a missing tooth?",
-    "excerpt": "Both replace missing teeth, but they work very differently. Here is an honest comparison to help you decide.",
-    "category": "Implants",
-    "readTime": "4 min read",
-    "datePublished": "2026-04-06",
-    "image": "/images/I2.jpg",
-    "content": [
-      { "type": "p", "text": "When you lose a tooth, you have two main fixed options: a dental implant or a dental bridge. Both can restore the appearance of your smile and your ability to eat comfortably, but they differ significantly in how they work, how long they last, and what they mean for the health of your surrounding teeth." },
-      { "type": "h3", "text": "How a dental bridge works" },
-      { "type": "p", "text": "A dental bridge fills the gap left by a missing tooth by anchoring an artificial tooth to the teeth on either side. Those adjacent teeth must be prepared — meaning they are permanently reduced in size and crowned — to support the bridge. This is a well-established solution and can look excellent, but it involves altering healthy teeth that might otherwise remain untouched for decades." },
-      { "type": "h3", "text": "How a dental implant works" },
-      { "type": "p", "text": "A dental implant replaces the root of the missing tooth with a titanium post that is placed directly into the jawbone. Once the implant integrates with the bone — a process called osseointegration — a crown is placed on top. The result is a fully independent tooth replacement that does not involve the adjacent teeth at all." },
-      { "type": "h3", "text": "The key differences" },
-      { "type": "p", "text": "The most important difference is that implants preserve the adjacent teeth completely, while a bridge requires them to be permanently altered. Implants also preserve the jawbone — when a tooth root is missing, the bone beneath it gradually resorbs. An implant stimulates the bone just like a natural root, preventing this loss. Bridges do not." },
-      { "type": "h3", "text": "Which lasts longer?" },
-      { "type": "p", "text": "A well-placed implant can last a lifetime with proper care. Bridges typically last 10 to 15 years before needing replacement, after which the process must be repeated on the same already-compromised teeth. Over a 30 to 40 year period, the total cost and clinical impact of a bridge often exceeds that of an implant placed well at the outset." },
-      { "type": "h3", "text": "When is a bridge the right choice?" },
-      { "type": "p", "text": "Bridges remain a valid option in certain situations — for example, when there is insufficient bone for an implant without significant grafting, when the adjacent teeth already require crowns for other reasons, or where budget is a primary consideration. Your dentist will advise based on your specific clinical situation." },
-      { "type": "cta", "text": "Book a free implant consultation", "to": "/dental-implants/" }
-    ]
-  },
-  {
     "id": 8,
     "slug": "/blog/all-on-4-dental-implants-malta/",
     "title": "All-on-4 dental implants explained — what you need to know",
@@ -33,16 +9,47 @@
     "datePublished": "2026-04-09",
     "image": "/images/I3.jpg",
     "content": [
-      { "type": "p", "text": "All-on-4 — also known as the Toronto bridge — is a full-arch dental implant solution that replaces an entire upper or lower set of teeth using just four strategically placed implants. For patients who have lost most or all of their teeth, or who are facing significant tooth loss, it offers a fixed, non-removable result without the limitations of dentures." },
-      { "type": "h3", "text": "Why four implants?" },
-      { "type": "p", "text": "Traditional full-arch implant treatment often required six or more implants per arch. The All-on-4 technique uses four implants, with the two rear implants placed at an angle to maximise contact with available bone. This angular placement allows the procedure to work even in patients with some degree of bone loss, often avoiding the need for extensive bone grafting." },
-      { "type": "h3", "text": "What does the final result look like?" },
-      { "type": "p", "text": "The final prosthesis is a full-arch bridge — a complete set of fixed teeth that attaches to the four implants. Unlike a denture, it does not come out. Patients eat, speak, and smile with it in place, and clean it much like natural teeth. It feels and functions significantly more like natural teeth than any removable solution." },
-      { "type": "h3", "text": "Am I suitable for All-on-4?" },
-      { "type": "p", "text": "Suitability depends on a thorough clinical assessment including a 3D scan. Most patients with good general health are candidates, though certain conditions — including uncontrolled diabetes, active gum disease, or significant bone loss in specific areas — may require additional treatment beforehand. The assessment at Apex Dental is free when you proceed with treatment and includes a 3D CBCT scan." },
-      { "type": "h3", "text": "How long does treatment take?" },
-      { "type": "p", "text": "In most cases, the four implants are placed in a single surgical appointment. A provisional bridge is often fitted the same day or shortly after. The final permanent bridge is typically completed after osseointegration — the period when the implants fuse with the bone — which takes around three to four months." },
-      { "type": "cta", "text": "Learn more about dental implants at Apex Dental", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "All-on-4 — also known as the Toronto bridge — is a full-arch dental implant solution that replaces an entire upper or lower set of teeth using just four strategically placed implants. For patients who have lost most or all of their teeth, or who are facing significant tooth loss, it offers a fixed, non-removable result without the limitations of dentures."
+      },
+      {
+        "type": "h3",
+        "text": "Why four implants?"
+      },
+      {
+        "type": "p",
+        "text": "Traditional full-arch implant treatment often required six or more implants per arch. The All-on-4 technique uses four implants, with the two rear implants placed at an angle to maximise contact with available bone. This angular placement allows the procedure to work even in patients with some degree of bone loss, often avoiding the need for extensive bone grafting."
+      },
+      {
+        "type": "h3",
+        "text": "What does the final result look like?"
+      },
+      {
+        "type": "p",
+        "text": "The final prosthesis is a full-arch bridge — a complete set of fixed teeth that attaches to the four implants. Unlike a denture, it does not come out. Patients eat, speak, and smile with it in place, and clean it much like natural teeth. It feels and functions significantly more like natural teeth than any removable solution."
+      },
+      {
+        "type": "h3",
+        "text": "Am I suitable for All-on-4?"
+      },
+      {
+        "type": "p",
+        "text": "Suitability depends on a thorough clinical assessment including a 3D scan. Most patients with good general health are candidates, though certain conditions — including uncontrolled diabetes, active gum disease, or significant bone loss in specific areas — may require additional treatment beforehand. The assessment at Apex Dental is free when you proceed with treatment and includes a 3D CBCT scan."
+      },
+      {
+        "type": "h3",
+        "text": "How long does treatment take?"
+      },
+      {
+        "type": "p",
+        "text": "In most cases, the four implants are placed in a single surgical appointment. A provisional bridge is often fitted the same day or shortly after. The final permanent bridge is typically completed after osseointegration — the period when the implants fuse with the bone — which takes around three to four months."
+      },
+      {
+        "type": "cta",
+        "text": "Learn more about dental implants at Apex Dental",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -55,16 +62,47 @@
     "datePublished": "2026-04-12",
     "image": "/images/I4.jpg",
     "content": [
-      { "type": "p", "text": "One of the most common questions patients ask before implant treatment is: how long will it last? The honest answer is that a well-placed dental implant, properly maintained, can last a lifetime. The titanium implant itself — the root component placed into the jaw — has an excellent long-term track record in clinical studies. The crown on top may eventually need replacing, typically after 15 to 25 years depending on the material and the forces placed on it." },
-      { "type": "h3", "text": "What determines implant longevity?" },
-      { "type": "p", "text": "Several factors influence how long an implant lasts. The quality of the initial planning and placement matters enormously — proper 3D imaging, correct positioning, and the choice of implant system all contribute to long-term stability. Patient factors also play a role: bone density, gum health, smoking status, and whether conditions like diabetes are well controlled." },
-      { "type": "h3", "text": "Does smoking affect implants?" },
-      { "type": "p", "text": "Yes, significantly. Smoking impairs blood supply to the gums, slows the healing process, and increases the risk of peri-implantitis — a form of gum disease that affects the tissue around implants. Smokers have a higher rate of implant complications and failures. Stopping smoking before and after implant placement significantly improves outcomes." },
-      { "type": "h3", "text": "How to maximise the lifespan of your implants" },
-      { "type": "p", "text": "Brush twice daily with a soft or electric toothbrush, clean between the implant and adjacent teeth with interdental brushes or floss, and attend regular hygiene appointments. Implants do not decay, but the gum and bone around them can be damaged by plaque if not managed. Routine maintenance is the single most important factor in long-term implant success." },
-      { "type": "h3", "text": "What is peri-implantitis?" },
-      { "type": "p", "text": "Peri-implantitis is an inflammatory condition that affects the gum and bone around an implant, caused by bacterial buildup. If left untreated, it can lead to bone loss and eventually implant failure. It is treatable if caught early — which is why regular professional hygiene visits matter even after implant placement." },
-      { "type": "cta", "text": "Book your implant consultation", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "One of the most common questions patients ask before implant treatment is: how long will it last? The honest answer is that a well-placed dental implant, properly maintained, can last a lifetime. The titanium implant itself — the root component placed into the jaw — has an excellent long-term track record in clinical studies. The crown on top may eventually need replacing, typically after 15 to 25 years depending on the material and the forces placed on it."
+      },
+      {
+        "type": "h3",
+        "text": "What determines implant longevity?"
+      },
+      {
+        "type": "p",
+        "text": "Several factors influence how long an implant lasts. The quality of the initial planning and placement matters enormously — proper 3D imaging, correct positioning, and the choice of implant system all contribute to long-term stability. Patient factors also play a role: bone density, gum health, smoking status, and whether conditions like diabetes are well controlled."
+      },
+      {
+        "type": "h3",
+        "text": "Does smoking affect implants?"
+      },
+      {
+        "type": "p",
+        "text": "Yes, significantly. Smoking impairs blood supply to the gums, slows the healing process, and increases the risk of peri-implantitis — a form of gum disease that affects the tissue around implants. Smokers have a higher rate of implant complications and failures. Stopping smoking before and after implant placement significantly improves outcomes."
+      },
+      {
+        "type": "h3",
+        "text": "How to maximise the lifespan of your implants"
+      },
+      {
+        "type": "p",
+        "text": "Brush twice daily with a soft or electric toothbrush, clean between the implant and adjacent teeth with interdental brushes or floss, and attend regular hygiene appointments. Implants do not decay, but the gum and bone around them can be damaged by plaque if not managed. Routine maintenance is the single most important factor in long-term implant success."
+      },
+      {
+        "type": "h3",
+        "text": "What is peri-implantitis?"
+      },
+      {
+        "type": "p",
+        "text": "Peri-implantitis is an inflammatory condition that affects the gum and bone around an implant, caused by bacterial buildup. If left untreated, it can lead to bone loss and eventually implant failure. It is treatable if caught early — which is why regular professional hygiene visits matter even after implant placement."
+      },
+      {
+        "type": "cta",
+        "text": "Book your implant consultation",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -77,16 +115,47 @@
     "datePublished": "2026-04-15",
     "image": "/images/I1.jpg",
     "content": [
-      { "type": "p", "text": "Bone loss in the jaw is a common concern among patients considering dental implants — particularly those who have been missing teeth for some time. When a tooth root is absent, the bone beneath it gradually resorbs. The longer a tooth has been missing, the more bone may have been lost. This leads some patients to believe implants are no longer an option for them. In many cases, this is not true." },
-      { "type": "h3", "text": "Why does bone volume matter for implants?" },
-      { "type": "p", "text": "A dental implant is a titanium post placed into the jawbone. For it to integrate successfully, there needs to be sufficient bone around it — in terms of both height and width. If bone volume is too low, the implant may not achieve the stability needed for long-term success. However, the threshold for what is considered sufficient has improved with advances in implant design and surgical technique." },
-      { "type": "h3", "text": "What is bone grafting?" },
-      { "type": "p", "text": "Bone grafting involves adding bone material to a deficient area to regenerate volume before or during implant placement. The graft material may come from the patient, from a donor, or from synthetic sources. Over several months, the graft integrates with the existing bone, creating a stronger foundation for the implant. It adds time and some cost to the overall treatment but makes implants possible for patients who would otherwise not be candidates." },
-      { "type": "h3", "text": "Zygomatic implants and All-on-4 for severe bone loss" },
-      { "type": "p", "text": "For patients with significant bone loss in the upper jaw, zygomatic implants — which anchor into the cheekbone rather than the jaw — can be an option. In many cases of bone loss, the angled placement used in the All-on-4 technique allows implants to be placed in areas of denser existing bone, avoiding the need for large-scale grafting entirely." },
-      { "type": "h3", "text": "The only way to know is a 3D scan" },
-      { "type": "p", "text": "Every bone loss situation is different. A 3D CBCT scan provides a precise picture of bone volume, density, and anatomy. At Apex Dental, this scan is included at no extra cost when you proceed with implant treatment. Only after this assessment can a clinician tell you definitively what your options are." },
-      { "type": "cta", "text": "Book a free implant consultation and 3D scan", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "Bone loss in the jaw is a common concern among patients considering dental implants — particularly those who have been missing teeth for some time. When a tooth root is absent, the bone beneath it gradually resorbs. The longer a tooth has been missing, the more bone may have been lost. This leads some patients to believe implants are no longer an option for them. In many cases, this is not true."
+      },
+      {
+        "type": "h3",
+        "text": "Why does bone volume matter for implants?"
+      },
+      {
+        "type": "p",
+        "text": "A dental implant is a titanium post placed into the jawbone. For it to integrate successfully, there needs to be sufficient bone around it — in terms of both height and width. If bone volume is too low, the implant may not achieve the stability needed for long-term success. However, the threshold for what is considered sufficient has improved with advances in implant design and surgical technique."
+      },
+      {
+        "type": "h3",
+        "text": "What is bone grafting?"
+      },
+      {
+        "type": "p",
+        "text": "Bone grafting involves adding bone material to a deficient area to regenerate volume before or during implant placement. The graft material may come from the patient, from a donor, or from synthetic sources. Over several months, the graft integrates with the existing bone, creating a stronger foundation for the implant. It adds time and some cost to the overall treatment but makes implants possible for patients who would otherwise not be candidates."
+      },
+      {
+        "type": "h3",
+        "text": "Zygomatic implants and All-on-4 for severe bone loss"
+      },
+      {
+        "type": "p",
+        "text": "For patients with significant bone loss in the upper jaw, zygomatic implants — which anchor into the cheekbone rather than the jaw — can be an option. In many cases of bone loss, the angled placement used in the All-on-4 technique allows implants to be placed in areas of denser existing bone, avoiding the need for large-scale grafting entirely."
+      },
+      {
+        "type": "h3",
+        "text": "The only way to know is a 3D scan"
+      },
+      {
+        "type": "p",
+        "text": "Every bone loss situation is different. A 3D CBCT scan provides a precise picture of bone volume, density, and anatomy. At Apex Dental, this scan is included at no extra cost when you proceed with implant treatment. Only after this assessment can a clinician tell you definitively what your options are."
+      },
+      {
+        "type": "cta",
+        "text": "Book a free implant consultation and 3D scan",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -99,18 +168,55 @@
     "datePublished": "2026-04-18",
     "image": "/images/I3.jpg",
     "content": [
-      { "type": "p", "text": "For patients facing significant tooth loss, dentures have long been the default solution. Dental implants offer a fundamentally different approach. The right choice depends on your clinical situation, priorities, and long-term goals — but understanding the practical differences clearly is the first step." },
-      { "type": "h3", "text": "Stability and comfort" },
-      { "type": "p", "text": "Conventional dentures rest on the gum surface and are held in place by suction or adhesive. They can move during eating and speaking, and many patients find lower dentures particularly unstable. Implant-supported restorations are fixed to the bone. They do not move. Patients can eat the same foods they ate with natural teeth and speak without the anxiety of a denture shifting." },
-      { "type": "h3", "text": "Bone preservation" },
-      { "type": "p", "text": "This is one of the most significant differences. When a tooth root is missing, the jaw bone beneath it gradually resorbs. Dentures sit on top of the gum and do not stimulate the bone at all — in fact, the pressure of a denture can accelerate bone loss over time. Implants integrate into the bone and stimulate it the same way natural roots do, preserving the jaw structure long-term." },
-      { "type": "h3", "text": "Maintenance and daily life" },
-      { "type": "p", "text": "Dentures are removed for cleaning and typically at night. Implant-supported teeth are cleaned in place — brushing and interdental cleaning, just like natural teeth. There are no adhesives, no soaking solutions, and no risk of leaving them behind." },
-      { "type": "h3", "text": "Cost over time" },
-      { "type": "p", "text": "Dentures have a lower upfront cost but need to be replaced regularly — typically every five to eight years — and may require relining as the bone beneath them changes shape. Implants have a higher initial investment but, with proper care, last significantly longer. Over 20 to 30 years, implants often represent better value." },
-      { "type": "h3", "text": "The middle ground: implant-retained dentures" },
-      { "type": "p", "text": "For patients who want improved stability without the full cost of a fixed bridge, implant-retained dentures offer a compromise. Two to four implants are placed, and the denture clips onto them for much greater security than conventional dentures — while still being removable for cleaning." },
-      { "type": "cta", "text": "Explore implant options at Apex Dental", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "For patients facing significant tooth loss, dentures have long been the default solution. Dental implants offer a fundamentally different approach. The right choice depends on your clinical situation, priorities, and long-term goals — but understanding the practical differences clearly is the first step."
+      },
+      {
+        "type": "h3",
+        "text": "Stability and comfort"
+      },
+      {
+        "type": "p",
+        "text": "Conventional dentures rest on the gum surface and are held in place by suction or adhesive. They can move during eating and speaking, and many patients find lower dentures particularly unstable. Implant-supported restorations are fixed to the bone. They do not move. Patients can eat the same foods they ate with natural teeth and speak without the anxiety of a denture shifting."
+      },
+      {
+        "type": "h3",
+        "text": "Bone preservation"
+      },
+      {
+        "type": "p",
+        "text": "This is one of the most significant differences. When a tooth root is missing, the jaw bone beneath it gradually resorbs. Dentures sit on top of the gum and do not stimulate the bone at all — in fact, the pressure of a denture can accelerate bone loss over time. Implants integrate into the bone and stimulate it the same way natural roots do, preserving the jaw structure long-term."
+      },
+      {
+        "type": "h3",
+        "text": "Maintenance and daily life"
+      },
+      {
+        "type": "p",
+        "text": "Dentures are removed for cleaning and typically at night. Implant-supported teeth are cleaned in place — brushing and interdental cleaning, just like natural teeth. There are no adhesives, no soaking solutions, and no risk of leaving them behind."
+      },
+      {
+        "type": "h3",
+        "text": "Cost over time"
+      },
+      {
+        "type": "p",
+        "text": "Dentures have a lower upfront cost but need to be replaced regularly — typically every five to eight years — and may require relining as the bone beneath them changes shape. Implants have a higher initial investment but, with proper care, last significantly longer. Over 20 to 30 years, implants often represent better value."
+      },
+      {
+        "type": "h3",
+        "text": "The middle ground: implant-retained dentures"
+      },
+      {
+        "type": "p",
+        "text": "For patients who want improved stability without the full cost of a fixed bridge, implant-retained dentures offer a compromise. Two to four implants are placed, and the denture clips onto them for much greater security than conventional dentures — while still being removable for cleaning."
+      },
+      {
+        "type": "cta",
+        "text": "Explore implant options at Apex Dental",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -123,16 +229,47 @@
     "datePublished": "2026-04-21",
     "image": "/images/I4.jpg",
     "content": [
-      { "type": "p", "text": "One word comes up repeatedly in discussions about dental implants: osseointegration. It is the biological process that makes implants work — and understanding it helps explain why implants behave so differently from any other tooth replacement option." },
-      { "type": "h3", "text": "What does osseointegration mean?" },
-      { "type": "p", "text": "Osseointegration describes the direct structural and functional connection between living bone and the surface of a titanium implant. Over a period of several weeks to months after placement, the bone cells grow into and around the textured surface of the implant, anchoring it firmly in the jaw. This is not simply the bone healing around a foreign object — it is a genuine integration at a cellular level." },
-      { "type": "h3", "text": "Why does it matter?" },
-      { "type": "p", "text": "Osseointegration is what gives implants their stability and longevity. A fully integrated implant is held in the jaw as securely as a natural tooth root — it does not rely on adhesive, adjacent teeth, or mechanical retention. It also allows the implant to transmit biting forces directly to the bone, which stimulates the jaw and prevents the bone loss that follows tooth extraction." },
-      { "type": "h3", "text": "How long does it take?" },
-      { "type": "p", "text": "The osseointegration period typically takes three to four months, though this varies depending on bone density, the location in the jaw, and the patient's overall health. During this time, a temporary crown or provisional restoration is usually placed. The final crown is fitted only after integration is confirmed." },
-      { "type": "h3", "text": "What can disrupt osseointegration?" },
-      { "type": "p", "text": "Several factors can impair the process: smoking significantly reduces blood supply to the healing tissue, uncontrolled diabetes affects bone healing, and certain medications can influence bone metabolism. Following post-operative instructions, avoiding smoking, and attending follow-up appointments all support a successful outcome." },
-      { "type": "cta", "text": "Book your implant consultation in Malta", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "One word comes up repeatedly in discussions about dental implants: osseointegration. It is the biological process that makes implants work — and understanding it helps explain why implants behave so differently from any other tooth replacement option."
+      },
+      {
+        "type": "h3",
+        "text": "What does osseointegration mean?"
+      },
+      {
+        "type": "p",
+        "text": "Osseointegration describes the direct structural and functional connection between living bone and the surface of a titanium implant. Over a period of several weeks to months after placement, the bone cells grow into and around the textured surface of the implant, anchoring it firmly in the jaw. This is not simply the bone healing around a foreign object — it is a genuine integration at a cellular level."
+      },
+      {
+        "type": "h3",
+        "text": "Why does it matter?"
+      },
+      {
+        "type": "p",
+        "text": "Osseointegration is what gives implants their stability and longevity. A fully integrated implant is held in the jaw as securely as a natural tooth root — it does not rely on adhesive, adjacent teeth, or mechanical retention. It also allows the implant to transmit biting forces directly to the bone, which stimulates the jaw and prevents the bone loss that follows tooth extraction."
+      },
+      {
+        "type": "h3",
+        "text": "How long does it take?"
+      },
+      {
+        "type": "p",
+        "text": "The osseointegration period typically takes three to four months, though this varies depending on bone density, the location in the jaw, and the patient's overall health. During this time, a temporary crown or provisional restoration is usually placed. The final crown is fitted only after integration is confirmed."
+      },
+      {
+        "type": "h3",
+        "text": "What can disrupt osseointegration?"
+      },
+      {
+        "type": "p",
+        "text": "Several factors can impair the process: smoking significantly reduces blood supply to the healing tissue, uncontrolled diabetes affects bone healing, and certain medications can influence bone metabolism. Following post-operative instructions, avoiding smoking, and attending follow-up appointments all support a successful outcome."
+      },
+      {
+        "type": "cta",
+        "text": "Book your implant consultation in Malta",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -145,18 +282,55 @@
     "datePublished": "2026-04-24",
     "image": "/images/I2.jpg",
     "content": [
-      { "type": "p", "text": "Dental implant treatment involves several stages spread over a number of months. Understanding each stage in advance reduces anxiety and helps patients plan for the time involved. Here is a clear walkthrough of the full process at Apex Dental." },
-      { "type": "h3", "text": "Stage 1: Consultation and 3D scan" },
-      { "type": "p", "text": "The first appointment involves a thorough clinical examination and a 3D CBCT scan. This scan gives a detailed three-dimensional view of your bone volume, density, and anatomy. At Apex Dental, the consultation is free when you proceed with treatment, and the scan is included at no extra cost with implant surgery. The clinician uses this information to plan the precise position, angle, and depth of each implant." },
-      { "type": "h3", "text": "Stage 2: Implant placement" },
-      { "type": "p", "text": "The implant surgery is carried out under local anaesthesia. A small incision is made in the gum, a carefully sized channel is prepared in the bone, and the titanium implant is placed. The gum is then closed with sutures. The procedure typically takes 30 to 90 minutes depending on the number of implants. Most patients report the experience as more manageable than they expected." },
-      { "type": "h3", "text": "Stage 3: Healing and osseointegration" },
-      { "type": "p", "text": "Over the following three to four months, the implant integrates with the surrounding bone. During this period, some mild soreness and swelling in the first few days is normal. A temporary restoration may be placed to maintain aesthetics and function while healing takes place. Patients can eat normally, though avoiding very hard foods on the implant side is advised initially." },
-      { "type": "h3", "text": "Stage 4: Abutment and final crown" },
-      { "type": "p", "text": "Once integration is confirmed, the abutment — a small connector piece — is attached to the implant. Impressions or digital scans are taken to fabricate the final crown. The crown is then fitted and adjusted for bite. The result is a natural-looking, fully functional tooth that is cared for just like natural teeth." },
-      { "type": "h3", "text": "Is it painful?" },
-      { "type": "p", "text": "The procedure itself is carried out under local anaesthesia and should be entirely pain-free. Post-operative discomfort is typically mild to moderate and is managed with standard over-the-counter pain relief for the first two to three days. Most patients return to normal activities the following day." },
-      { "type": "cta", "text": "Book your free implant consultation", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "Dental implant treatment involves several stages spread over a number of months. Understanding each stage in advance reduces anxiety and helps patients plan for the time involved. Here is a clear walkthrough of the full process at Apex Dental."
+      },
+      {
+        "type": "h3",
+        "text": "Stage 1: Consultation and 3D scan"
+      },
+      {
+        "type": "p",
+        "text": "The first appointment involves a thorough clinical examination and a 3D CBCT scan. This scan gives a detailed three-dimensional view of your bone volume, density, and anatomy. At Apex Dental, the consultation is free when you proceed with treatment, and the scan is included at no extra cost with implant surgery. The clinician uses this information to plan the precise position, angle, and depth of each implant."
+      },
+      {
+        "type": "h3",
+        "text": "Stage 2: Implant placement"
+      },
+      {
+        "type": "p",
+        "text": "The implant surgery is carried out under local anaesthesia. A small incision is made in the gum, a carefully sized channel is prepared in the bone, and the titanium implant is placed. The gum is then closed with sutures. The procedure typically takes 30 to 90 minutes depending on the number of implants. Most patients report the experience as more manageable than they expected."
+      },
+      {
+        "type": "h3",
+        "text": "Stage 3: Healing and osseointegration"
+      },
+      {
+        "type": "p",
+        "text": "Over the following three to four months, the implant integrates with the surrounding bone. During this period, some mild soreness and swelling in the first few days is normal. A temporary restoration may be placed to maintain aesthetics and function while healing takes place. Patients can eat normally, though avoiding very hard foods on the implant side is advised initially."
+      },
+      {
+        "type": "h3",
+        "text": "Stage 4: Abutment and final crown"
+      },
+      {
+        "type": "p",
+        "text": "Once integration is confirmed, the abutment — a small connector piece — is attached to the implant. Impressions or digital scans are taken to fabricate the final crown. The crown is then fitted and adjusted for bite. The result is a natural-looking, fully functional tooth that is cared for just like natural teeth."
+      },
+      {
+        "type": "h3",
+        "text": "Is it painful?"
+      },
+      {
+        "type": "p",
+        "text": "The procedure itself is carried out under local anaesthesia and should be entirely pain-free. Post-operative discomfort is typically mild to moderate and is managed with standard over-the-counter pain relief for the first two to three days. Most patients return to normal activities the following day."
+      },
+      {
+        "type": "cta",
+        "text": "Book your free implant consultation",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -169,16 +343,47 @@
     "datePublished": "2026-04-27",
     "image": "/images/I1.jpg",
     "content": [
-      { "type": "p", "text": "Losing a single tooth — whether through trauma, decay, or extraction — is more significant than it might initially seem. Left untreated, the gap can affect how you chew, cause neighbouring teeth to drift, accelerate bone loss in the jaw, and affect the long-term stability of adjacent teeth. A single dental implant addresses all of these issues." },
-      { "type": "h3", "text": "Why not just leave the gap?" },
-      { "type": "p", "text": "The teeth on either side of a gap will gradually tilt into the space over time. The tooth above or below the gap may also drift. This changes the bite, creates new areas that are difficult to clean, and increases the risk of decay and gum problems in the surrounding teeth. The jawbone beneath the gap also begins to resorb without a root to stimulate it." },
-      { "type": "h3", "text": "The advantage of a single implant over a bridge" },
-      { "type": "p", "text": "A single-tooth implant replaces the missing tooth completely without affecting the adjacent teeth. A bridge, by contrast, requires the teeth on either side to be permanently reduced and crowned to support the artificial tooth. If those adjacent teeth are healthy, this represents a significant sacrifice of healthy tooth structure. An implant avoids this entirely." },
-      { "type": "h3", "text": "What does a single implant involve?" },
-      { "type": "p", "text": "A single implant treatment involves a consultation and 3D scan, surgical placement of the titanium implant, a healing period of three to four months for osseointegration, and finally the placement of an abutment and custom crown. The crown is colour-matched to your natural teeth and sits flush with the gumline for a completely natural appearance." },
-      { "type": "h3", "text": "How soon after extraction can I have an implant?" },
-      { "type": "p", "text": "In some cases, an implant can be placed immediately after extraction — this is called immediate implant placement. In other cases, it is preferable to allow the socket to heal for a period first. The timing depends on the condition of the bone and gum at the extraction site. Your dentist will advise the most appropriate approach for your situation at the consultation." },
-      { "type": "cta", "text": "Book a consultation for a single tooth implant", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "Losing a single tooth — whether through trauma, decay, or extraction — is more significant than it might initially seem. Left untreated, the gap can affect how you chew, cause neighbouring teeth to drift, accelerate bone loss in the jaw, and affect the long-term stability of adjacent teeth. A single dental implant addresses all of these issues."
+      },
+      {
+        "type": "h3",
+        "text": "Why not just leave the gap?"
+      },
+      {
+        "type": "p",
+        "text": "The teeth on either side of a gap will gradually tilt into the space over time. The tooth above or below the gap may also drift. This changes the bite, creates new areas that are difficult to clean, and increases the risk of decay and gum problems in the surrounding teeth. The jawbone beneath the gap also begins to resorb without a root to stimulate it."
+      },
+      {
+        "type": "h3",
+        "text": "The advantage of a single implant over a bridge"
+      },
+      {
+        "type": "p",
+        "text": "A single-tooth implant replaces the missing tooth completely without affecting the adjacent teeth. A bridge, by contrast, requires the teeth on either side to be permanently reduced and crowned to support the artificial tooth. If those adjacent teeth are healthy, this represents a significant sacrifice of healthy tooth structure. An implant avoids this entirely."
+      },
+      {
+        "type": "h3",
+        "text": "What does a single implant involve?"
+      },
+      {
+        "type": "p",
+        "text": "A single implant treatment involves a consultation and 3D scan, surgical placement of the titanium implant, a healing period of three to four months for osseointegration, and finally the placement of an abutment and custom crown. The crown is colour-matched to your natural teeth and sits flush with the gumline for a completely natural appearance."
+      },
+      {
+        "type": "h3",
+        "text": "How soon after extraction can I have an implant?"
+      },
+      {
+        "type": "p",
+        "text": "In some cases, an implant can be placed immediately after extraction — this is called immediate implant placement. In other cases, it is preferable to allow the socket to heal for a period first. The timing depends on the condition of the bone and gum at the extraction site. Your dentist will advise the most appropriate approach for your situation at the consultation."
+      },
+      {
+        "type": "cta",
+        "text": "Book a consultation for a single tooth implant",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -191,16 +396,47 @@
     "datePublished": "2026-04-30",
     "image": "/images/I2.jpg",
     "content": [
-      { "type": "p", "text": "Dental implant surgery is a relatively straightforward procedure, but how you care for yourself in the days and weeks afterwards plays a significant role in the success of your treatment. The healing phase — when the implant integrates with the jawbone — is the most important period, and a few simple steps make a real difference." },
-      { "type": "h3", "text": "The first 24 hours" },
-      { "type": "p", "text": "Some swelling, mild bleeding, and discomfort in the first day or two is entirely normal. Keep your head elevated, avoid strenuous activity, and do not rinse vigorously. Stick to soft foods — soup, yoghurt, scrambled eggs — and avoid eating directly on the implant side. Ibuprofen and paracetamol manage discomfort well for most patients." },
-      { "type": "h3", "text": "The first week" },
-      { "type": "p", "text": "Swelling typically peaks around day two or three and then subsides. Continue with soft foods. Begin gentle warm saltwater rinses from the day after surgery to keep the area clean. Brush carefully around the implant site — the rest of your teeth should be brushed as normal. Avoid smoking, which significantly impairs healing." },
-      { "type": "h3", "text": "What to avoid" },
-      { "type": "p", "text": "For the first two weeks, avoid smoking, drinking through straws, very hot foods and drinks, alcohol, and any direct pressure on the implant site. Avoid contact sports and strenuous exercise for the first few days. Do not probe the area with your tongue or fingers." },
-      { "type": "h3", "text": "Long-term care" },
-      { "type": "p", "text": "Once healed, implants are maintained much like natural teeth. Brush twice daily with a soft or electric toothbrush, clean between the implant and adjacent teeth with interdental brushes, and attend regular hygiene appointments. The gum and bone around an implant can still be affected by plaque — professional maintenance is what protects your investment long-term." },
-      { "type": "cta", "text": "Learn more about dental implants", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "Dental implant surgery is a relatively straightforward procedure, but how you care for yourself in the days and weeks afterwards plays a significant role in the success of your treatment. The healing phase — when the implant integrates with the jawbone — is the most important period, and a few simple steps make a real difference."
+      },
+      {
+        "type": "h3",
+        "text": "The first 24 hours"
+      },
+      {
+        "type": "p",
+        "text": "Some swelling, mild bleeding, and discomfort in the first day or two is entirely normal. Keep your head elevated, avoid strenuous activity, and do not rinse vigorously. Stick to soft foods — soup, yoghurt, scrambled eggs — and avoid eating directly on the implant side. Ibuprofen and paracetamol manage discomfort well for most patients."
+      },
+      {
+        "type": "h3",
+        "text": "The first week"
+      },
+      {
+        "type": "p",
+        "text": "Swelling typically peaks around day two or three and then subsides. Continue with soft foods. Begin gentle warm saltwater rinses from the day after surgery to keep the area clean. Brush carefully around the implant site — the rest of your teeth should be brushed as normal. Avoid smoking, which significantly impairs healing."
+      },
+      {
+        "type": "h3",
+        "text": "What to avoid"
+      },
+      {
+        "type": "p",
+        "text": "For the first two weeks, avoid smoking, drinking through straws, very hot foods and drinks, alcohol, and any direct pressure on the implant site. Avoid contact sports and strenuous exercise for the first few days. Do not probe the area with your tongue or fingers."
+      },
+      {
+        "type": "h3",
+        "text": "Long-term care"
+      },
+      {
+        "type": "p",
+        "text": "Once healed, implants are maintained much like natural teeth. Brush twice daily with a soft or electric toothbrush, clean between the implant and adjacent teeth with interdental brushes, and attend regular hygiene appointments. The gum and bone around an implant can still be affected by plaque — professional maintenance is what protects your investment long-term."
+      },
+      {
+        "type": "cta",
+        "text": "Learn more about dental implants",
+        "to": "/dental-implants/"
+      }
     ]
   },
   {
@@ -213,16 +449,47 @@
     "datePublished": "2026-05-03",
     "image": "/images/H3.jpg",
     "content": [
-      { "type": "p", "text": "Dental anxiety affects a significant proportion of adults. For some it is mild discomfort; for others it is a barrier that leads to avoiding dental care entirely, often until a problem becomes serious. Understanding what causes it and what can be done about it is the first step." },
-      { "type": "h3", "text": "Why dental anxiety happens" },
-      { "type": "p", "text": "Dental anxiety usually stems from a negative past experience, fear of pain, a sense of loss of control, or embarrassment about the state of the teeth. These are all valid feelings. Modern dentistry has changed significantly, and the experience at most clinics today bears little resemblance to the dentistry of 20 or 30 years ago." },
-      { "type": "h3", "text": "What actually helps" },
-      { "type": "p", "text": "The single most important thing is honest communication with your dentist. Telling the team that you are anxious at the outset changes how the appointment is managed. A simple signal — raising your hand — can pause treatment at any time. Knowing you have that control removes a significant source of anxiety. Bringing music or a podcast through earphones, controlled breathing, and booking an early morning slot when you are less worked up during the day also help." },
-      { "type": "h3", "text": "What Apex Dental does differently" },
-      { "type": "p", "text": "Our team is experienced with anxious patients. We take time to explain each step before it happens, work at a pace that suits the patient, and never rush. A short consultation with no treatment at all can be a useful starting point — just to meet the team, see the environment, and build trust before any clinical work begins." },
-      { "type": "h3", "text": "Avoiding the dentist makes things worse" },
-      { "type": "p", "text": "The uncomfortable truth is that dental problems left untreated become more complex, more expensive, and more uncomfortable to treat over time. Managing anxiety early makes it possible to stay on top of oral health before problems escalate." },
-      { "type": "cta", "text": "Book a no-pressure consultation at Apex Dental", "to": "/contact-us/" }
+      {
+        "type": "p",
+        "text": "Dental anxiety affects a significant proportion of adults. For some it is mild discomfort; for others it is a barrier that leads to avoiding dental care entirely, often until a problem becomes serious. Understanding what causes it and what can be done about it is the first step."
+      },
+      {
+        "type": "h3",
+        "text": "Why dental anxiety happens"
+      },
+      {
+        "type": "p",
+        "text": "Dental anxiety usually stems from a negative past experience, fear of pain, a sense of loss of control, or embarrassment about the state of the teeth. These are all valid feelings. Modern dentistry has changed significantly, and the experience at most clinics today bears little resemblance to the dentistry of 20 or 30 years ago."
+      },
+      {
+        "type": "h3",
+        "text": "What actually helps"
+      },
+      {
+        "type": "p",
+        "text": "The single most important thing is honest communication with your dentist. Telling the team that you are anxious at the outset changes how the appointment is managed. A simple signal — raising your hand — can pause treatment at any time. Knowing you have that control removes a significant source of anxiety. Bringing music or a podcast through earphones, controlled breathing, and booking an early morning slot when you are less worked up during the day also help."
+      },
+      {
+        "type": "h3",
+        "text": "What Apex Dental does differently"
+      },
+      {
+        "type": "p",
+        "text": "Our team is experienced with anxious patients. We take time to explain each step before it happens, work at a pace that suits the patient, and never rush. A short consultation with no treatment at all can be a useful starting point — just to meet the team, see the environment, and build trust before any clinical work begins."
+      },
+      {
+        "type": "h3",
+        "text": "Avoiding the dentist makes things worse"
+      },
+      {
+        "type": "p",
+        "text": "The uncomfortable truth is that dental problems left untreated become more complex, more expensive, and more uncomfortable to treat over time. Managing anxiety early makes it possible to stay on top of oral health before problems escalate."
+      },
+      {
+        "type": "cta",
+        "text": "Book a no-pressure consultation at Apex Dental",
+        "to": "/contact-us/"
+      }
     ]
   },
   {
@@ -235,16 +502,47 @@
     "datePublished": "2026-05-06",
     "image": "/images/H6.jpg",
     "content": [
-      { "type": "p", "text": "Most people brush their teeth every day — but a large proportion do it in a way that leaves significant plaque behind. The good news is that correct technique is simple, and the difference it makes to long-term dental health is significant." },
-      { "type": "h3", "text": "How long should you brush?" },
-      { "type": "p", "text": "Two minutes, twice a day. Most people brush for around 45 seconds. Spending a full two minutes — timed, if necessary — is the single easiest improvement most people can make. An electric toothbrush with a built-in timer removes the guesswork entirely." },
-      { "type": "h3", "text": "The right technique" },
-      { "type": "p", "text": "Hold the brush at a 45-degree angle to the gumline and use small circular or gentle back-and-forth motions rather than aggressive horizontal scrubbing. Work systematically — outer surfaces, inner surfaces, and biting surfaces of every tooth. Do not press too hard; the bristles should flex slightly but not be crushed against the tooth." },
-      { "type": "h3", "text": "Manual vs electric" },
-      { "type": "p", "text": "Electric toothbrushes consistently outperform manual brushes in clinical studies for plaque removal and gum health. The oscillating-rotating type — such as Oral-B — has the strongest evidence base. If you use a manual brush, technique matters even more." },
-      { "type": "h3", "text": "What brushing does not do" },
-      { "type": "p", "text": "Brushing only cleans the outer, inner, and biting surfaces of the teeth. It cannot reach between them. Interdental cleaning — floss, interdental brushes, or a water flosser — is essential to remove plaque from the spaces where decay and gum disease typically begin." },
-      { "type": "cta", "text": "Book a hygiene appointment at Apex Dental", "to": "/dental-hygiene/" }
+      {
+        "type": "p",
+        "text": "Most people brush their teeth every day — but a large proportion do it in a way that leaves significant plaque behind. The good news is that correct technique is simple, and the difference it makes to long-term dental health is significant."
+      },
+      {
+        "type": "h3",
+        "text": "How long should you brush?"
+      },
+      {
+        "type": "p",
+        "text": "Two minutes, twice a day. Most people brush for around 45 seconds. Spending a full two minutes — timed, if necessary — is the single easiest improvement most people can make. An electric toothbrush with a built-in timer removes the guesswork entirely."
+      },
+      {
+        "type": "h3",
+        "text": "The right technique"
+      },
+      {
+        "type": "p",
+        "text": "Hold the brush at a 45-degree angle to the gumline and use small circular or gentle back-and-forth motions rather than aggressive horizontal scrubbing. Work systematically — outer surfaces, inner surfaces, and biting surfaces of every tooth. Do not press too hard; the bristles should flex slightly but not be crushed against the tooth."
+      },
+      {
+        "type": "h3",
+        "text": "Manual vs electric"
+      },
+      {
+        "type": "p",
+        "text": "Electric toothbrushes consistently outperform manual brushes in clinical studies for plaque removal and gum health. The oscillating-rotating type — such as Oral-B — has the strongest evidence base. If you use a manual brush, technique matters even more."
+      },
+      {
+        "type": "h3",
+        "text": "What brushing does not do"
+      },
+      {
+        "type": "p",
+        "text": "Brushing only cleans the outer, inner, and biting surfaces of the teeth. It cannot reach between them. Interdental cleaning — floss, interdental brushes, or a water flosser — is essential to remove plaque from the spaces where decay and gum disease typically begin."
+      },
+      {
+        "type": "cta",
+        "text": "Book a hygiene appointment at Apex Dental",
+        "to": "/dental-hygiene/"
+      }
     ]
   },
   {
@@ -257,16 +555,47 @@
     "datePublished": "2026-05-09",
     "image": "/images/H5.jpg",
     "content": [
-      { "type": "p", "text": "That sharp, brief pain when you eat something cold, sweet, or hot is familiar to a huge number of people. Tooth sensitivity is not something to simply put up with — it is your teeth signalling that something needs attention." },
-      { "type": "h3", "text": "What causes sensitivity?" },
-      { "type": "p", "text": "The most common cause is exposed dentine — the layer beneath the enamel. Dentine contains tiny tubules that lead to the nerve, and when exposed, stimuli like temperature, sweet foods, or pressure travel directly to the nerve. Dentine exposure can happen through enamel erosion (from acidic food and drinks), gum recession, brushing too hard, tooth grinding, or cracked teeth." },
-      { "type": "h3", "text": "Sensitivity after dental treatment" },
-      { "type": "p", "text": "Some sensitivity after fillings, crowns, whitening, or scale-and-polish is completely normal and usually resolves within a few days to a couple of weeks. If it persists or worsens, it is worth letting your dentist know." },
-      { "type": "h3", "text": "What actually helps" },
-      { "type": "p", "text": "Desensitising toothpaste — containing potassium nitrate or stannous fluoride — can be effective with consistent use over several weeks. Applying it directly to the sensitive area with your finger and leaving it rather than rinsing can improve the effect. Avoiding acidic drinks, brushing with a softer brush, and addressing any grinding with a splint all help depending on the cause." },
-      { "type": "h3", "text": "When to see a dentist" },
-      { "type": "p", "text": "Sensitivity that does not improve with desensitising toothpaste after a few weeks, sensitivity to hot liquids that lingers after the stimulus is removed, or spontaneous pain may indicate a deeper issue — a cracked tooth, decay, or nerve involvement. These need professional assessment rather than self-treatment." },
-      { "type": "cta", "text": "Book a check-up at Apex Dental", "to": "/general-dentistry/" }
+      {
+        "type": "p",
+        "text": "That sharp, brief pain when you eat something cold, sweet, or hot is familiar to a huge number of people. Tooth sensitivity is not something to simply put up with — it is your teeth signalling that something needs attention."
+      },
+      {
+        "type": "h3",
+        "text": "What causes sensitivity?"
+      },
+      {
+        "type": "p",
+        "text": "The most common cause is exposed dentine — the layer beneath the enamel. Dentine contains tiny tubules that lead to the nerve, and when exposed, stimuli like temperature, sweet foods, or pressure travel directly to the nerve. Dentine exposure can happen through enamel erosion (from acidic food and drinks), gum recession, brushing too hard, tooth grinding, or cracked teeth."
+      },
+      {
+        "type": "h3",
+        "text": "Sensitivity after dental treatment"
+      },
+      {
+        "type": "p",
+        "text": "Some sensitivity after fillings, crowns, whitening, or scale-and-polish is completely normal and usually resolves within a few days to a couple of weeks. If it persists or worsens, it is worth letting your dentist know."
+      },
+      {
+        "type": "h3",
+        "text": "What actually helps"
+      },
+      {
+        "type": "p",
+        "text": "Desensitising toothpaste — containing potassium nitrate or stannous fluoride — can be effective with consistent use over several weeks. Applying it directly to the sensitive area with your finger and leaving it rather than rinsing can improve the effect. Avoiding acidic drinks, brushing with a softer brush, and addressing any grinding with a splint all help depending on the cause."
+      },
+      {
+        "type": "h3",
+        "text": "When to see a dentist"
+      },
+      {
+        "type": "p",
+        "text": "Sensitivity that does not improve with desensitising toothpaste after a few weeks, sensitivity to hot liquids that lingers after the stimulus is removed, or spontaneous pain may indicate a deeper issue — a cracked tooth, decay, or nerve involvement. These need professional assessment rather than self-treatment."
+      },
+      {
+        "type": "cta",
+        "text": "Book a check-up at Apex Dental",
+        "to": "/general-dentistry/"
+      }
     ]
   },
   {
@@ -279,16 +608,47 @@
     "datePublished": "2026-05-12",
     "image": "/images/H9.jpg",
     "content": [
-      { "type": "p", "text": "Gum disease — known clinically as periodontitis in its more serious form — is responsible for more tooth loss in adults than decay. It is also largely painless in its early stages, which means many people are unaware they have it until significant damage has already occurred." },
-      { "type": "h3", "text": "The warning signs" },
-      { "type": "p", "text": "Bleeding gums when brushing or flossing is the most common early sign and is frequently dismissed as normal. It is not — healthy gums do not bleed. Other signs include persistent bad breath, gums that look red or swollen, gums that have visibly receded from the teeth, teeth that feel loose or have shifted position, and pain when chewing." },
-      { "type": "h3", "text": "How gum disease progresses" },
-      { "type": "p", "text": "It begins as gingivitis — inflammation of the gum tissue caused by plaque buildup. At this stage it is entirely reversible with professional cleaning and improved home care. If left untreated, it progresses to periodontitis, where the inflammation extends below the gumline and begins to destroy the bone that supports the teeth. This stage is manageable but not fully reversible — lost bone does not fully regenerate." },
-      { "type": "h3", "text": "The link to general health" },
-      { "type": "p", "text": "There is strong evidence linking untreated gum disease with increased risk of cardiovascular disease, complications in diabetes, and adverse pregnancy outcomes. The inflammation and bacteria involved in gum disease do not stay localised — they enter the bloodstream. This is one reason why oral health genuinely matters beyond the mouth." },
-      { "type": "h3", "text": "Treatment" },
-      { "type": "p", "text": "Early gum disease responds well to professional hygiene treatment and improved home care. More advanced cases may require deeper cleaning below the gumline (root planing) and more frequent maintenance appointments. The earlier it is caught, the simpler and less costly the treatment." },
-      { "type": "cta", "text": "Book a hygiene assessment at Apex Dental", "to": "/periodontology/" }
+      {
+        "type": "p",
+        "text": "Gum disease — known clinically as periodontitis in its more serious form — is responsible for more tooth loss in adults than decay. It is also largely painless in its early stages, which means many people are unaware they have it until significant damage has already occurred."
+      },
+      {
+        "type": "h3",
+        "text": "The warning signs"
+      },
+      {
+        "type": "p",
+        "text": "Bleeding gums when brushing or flossing is the most common early sign and is frequently dismissed as normal. It is not — healthy gums do not bleed. Other signs include persistent bad breath, gums that look red or swollen, gums that have visibly receded from the teeth, teeth that feel loose or have shifted position, and pain when chewing."
+      },
+      {
+        "type": "h3",
+        "text": "How gum disease progresses"
+      },
+      {
+        "type": "p",
+        "text": "It begins as gingivitis — inflammation of the gum tissue caused by plaque buildup. At this stage it is entirely reversible with professional cleaning and improved home care. If left untreated, it progresses to periodontitis, where the inflammation extends below the gumline and begins to destroy the bone that supports the teeth. This stage is manageable but not fully reversible — lost bone does not fully regenerate."
+      },
+      {
+        "type": "h3",
+        "text": "The link to general health"
+      },
+      {
+        "type": "p",
+        "text": "There is strong evidence linking untreated gum disease with increased risk of cardiovascular disease, complications in diabetes, and adverse pregnancy outcomes. The inflammation and bacteria involved in gum disease do not stay localised — they enter the bloodstream. This is one reason why oral health genuinely matters beyond the mouth."
+      },
+      {
+        "type": "h3",
+        "text": "Treatment"
+      },
+      {
+        "type": "p",
+        "text": "Early gum disease responds well to professional hygiene treatment and improved home care. More advanced cases may require deeper cleaning below the gumline (root planing) and more frequent maintenance appointments. The earlier it is caught, the simpler and less costly the treatment."
+      },
+      {
+        "type": "cta",
+        "text": "Book a hygiene assessment at Apex Dental",
+        "to": "/periodontology/"
+      }
     ]
   },
   {
@@ -301,16 +661,47 @@
     "datePublished": "2026-05-15",
     "image": "/images/C2.jpg",
     "content": [
-      { "type": "p", "text": "Cosmetic dentistry has grown significantly in scope over the past decade. What was once limited to whitening and the occasional veneer now includes a sophisticated range of treatments that can address almost any aesthetic concern. Understanding which option addresses which problem is the starting point for any cosmetic consultation." },
-      { "type": "h3", "text": "Teeth whitening" },
-      { "type": "p", "text": "The most accessible cosmetic treatment. Professional whitening lightens the natural shade of the teeth effectively and safely. It works on staining from coffee, tea, wine, and age — but has no effect on crowns, veneers, or composite restorations. Best for patients whose teeth are a good shape but have darkened over time." },
-      { "type": "h3", "text": "Composite veneers" },
-      { "type": "p", "text": "Composite veneers are applied directly to the teeth in a single visit using tooth-coloured resin. They can mask chips, close small gaps, and improve shape. They are less expensive than porcelain veneers and require no laboratory stage, but they stain more easily and typically need replacement after five to seven years." },
-      { "type": "h3", "text": "Porcelain veneers" },
-      { "type": "p", "text": "Porcelain veneers are custom-made ceramic shells bonded to the front of the teeth. They are more durable, more stain-resistant, and produce a more refined result than composite. They last 10 to 15 years or longer. They are the treatment of choice for more significant cosmetic changes — improving shape, symmetry, and colour simultaneously." },
-      { "type": "h3", "text": "Smile design" },
-      { "type": "p", "text": "A full smile design considers the entire aesthetic picture — the shape and proportion of the teeth, how they relate to the gums, lips, and face, and the overall balance of the smile. It may combine veneers, whitening, gum reshaping, and orthodontic work. The goal is a result that enhances the smile without looking artificial." },
-      { "type": "cta", "text": "Book a cosmetic consultation at Apex Dental", "to": "/cosmetic-dentistry-malta" }
+      {
+        "type": "p",
+        "text": "Cosmetic dentistry has grown significantly in scope over the past decade. What was once limited to whitening and the occasional veneer now includes a sophisticated range of treatments that can address almost any aesthetic concern. Understanding which option addresses which problem is the starting point for any cosmetic consultation."
+      },
+      {
+        "type": "h3",
+        "text": "Teeth whitening"
+      },
+      {
+        "type": "p",
+        "text": "The most accessible cosmetic treatment. Professional whitening lightens the natural shade of the teeth effectively and safely. It works on staining from coffee, tea, wine, and age — but has no effect on crowns, veneers, or composite restorations. Best for patients whose teeth are a good shape but have darkened over time."
+      },
+      {
+        "type": "h3",
+        "text": "Composite veneers"
+      },
+      {
+        "type": "p",
+        "text": "Composite veneers are applied directly to the teeth in a single visit using tooth-coloured resin. They can mask chips, close small gaps, and improve shape. They are less expensive than porcelain veneers and require no laboratory stage, but they stain more easily and typically need replacement after five to seven years."
+      },
+      {
+        "type": "h3",
+        "text": "Porcelain veneers"
+      },
+      {
+        "type": "p",
+        "text": "Porcelain veneers are custom-made ceramic shells bonded to the front of the teeth. They are more durable, more stain-resistant, and produce a more refined result than composite. They last 10 to 15 years or longer. They are the treatment of choice for more significant cosmetic changes — improving shape, symmetry, and colour simultaneously."
+      },
+      {
+        "type": "h3",
+        "text": "Smile design"
+      },
+      {
+        "type": "p",
+        "text": "A full smile design considers the entire aesthetic picture — the shape and proportion of the teeth, how they relate to the gums, lips, and face, and the overall balance of the smile. It may combine veneers, whitening, gum reshaping, and orthodontic work. The goal is a result that enhances the smile without looking artificial."
+      },
+      {
+        "type": "cta",
+        "text": "Book a cosmetic consultation at Apex Dental",
+        "to": "/cosmetic-dentistry-malta"
+      }
     ]
   },
   {
@@ -323,16 +714,47 @@
     "datePublished": "2026-05-18",
     "image": "/images/H7.jpg",
     "content": [
-      { "type": "p", "text": "Tooth extractions are one of the most common dental procedures, and most heal without issue. Following a few straightforward guidelines in the hours and days afterwards significantly reduces the risk of complications and helps the socket heal cleanly." },
-      { "type": "h3", "text": "Immediately after the extraction" },
-      { "type": "p", "text": "Bite firmly on the gauze pad provided for 30 to 45 minutes to help a blood clot form in the socket. Avoid spitting, rinsing vigorously, or drinking through a straw for the first 24 hours — all of these can dislodge the clot. Some bleeding and oozing in the first few hours is normal. Swelling and mild discomfort for the first two to three days is also expected." },
-      { "type": "h3", "text": "The first 24 hours" },
-      { "type": "p", "text": "Keep your head elevated, even when resting. Eat soft foods on the opposite side. Avoid hot food and drinks, alcohol, and smoking. Take pain relief as advised — ibuprofen is generally effective and also reduces swelling." },
-      { "type": "h3", "text": "What is dry socket and how to avoid it" },
-      { "type": "p", "text": "Dry socket occurs when the blood clot in the extraction site is lost or dissolves before the wound has healed, leaving the underlying bone exposed. It causes significant pain — typically starting two to four days after extraction — and requires treatment at the dental clinic. Smoking, using a straw, and vigorous rinsing are the main causes. Smokers are at significantly higher risk." },
-      { "type": "h3", "text": "When to call the clinic" },
-      { "type": "p", "text": "Contact Apex Dental if you experience increasing rather than decreasing pain after 48 to 72 hours, significant swelling that worsens after day three, fever, difficulty swallowing, or if the socket appears to be actively infected. These are signs that need professional review." },
-      { "type": "cta", "text": "Contact Apex Dental", "to": "/contact-us/" }
+      {
+        "type": "p",
+        "text": "Tooth extractions are one of the most common dental procedures, and most heal without issue. Following a few straightforward guidelines in the hours and days afterwards significantly reduces the risk of complications and helps the socket heal cleanly."
+      },
+      {
+        "type": "h3",
+        "text": "Immediately after the extraction"
+      },
+      {
+        "type": "p",
+        "text": "Bite firmly on the gauze pad provided for 30 to 45 minutes to help a blood clot form in the socket. Avoid spitting, rinsing vigorously, or drinking through a straw for the first 24 hours — all of these can dislodge the clot. Some bleeding and oozing in the first few hours is normal. Swelling and mild discomfort for the first two to three days is also expected."
+      },
+      {
+        "type": "h3",
+        "text": "The first 24 hours"
+      },
+      {
+        "type": "p",
+        "text": "Keep your head elevated, even when resting. Eat soft foods on the opposite side. Avoid hot food and drinks, alcohol, and smoking. Take pain relief as advised — ibuprofen is generally effective and also reduces swelling."
+      },
+      {
+        "type": "h3",
+        "text": "What is dry socket and how to avoid it"
+      },
+      {
+        "type": "p",
+        "text": "Dry socket occurs when the blood clot in the extraction site is lost or dissolves before the wound has healed, leaving the underlying bone exposed. It causes significant pain — typically starting two to four days after extraction — and requires treatment at the dental clinic. Smoking, using a straw, and vigorous rinsing are the main causes. Smokers are at significantly higher risk."
+      },
+      {
+        "type": "h3",
+        "text": "When to call the clinic"
+      },
+      {
+        "type": "p",
+        "text": "Contact Apex Dental if you experience increasing rather than decreasing pain after 48 to 72 hours, significant swelling that worsens after day three, fever, difficulty swallowing, or if the socket appears to be actively infected. These are signs that need professional review."
+      },
+      {
+        "type": "cta",
+        "text": "Contact Apex Dental",
+        "to": "/contact-us/"
+      }
     ]
   },
   {
@@ -345,16 +767,47 @@
     "datePublished": "2026-05-21",
     "image": "/images/A2.jpg",
     "content": [
-      { "type": "p", "text": "Choosing between clear aligners and fixed braces is one of the most common questions for adult patients considering orthodontic treatment. Both are effective — the right choice depends on the complexity of the case, lifestyle considerations, and personal preference." },
-      { "type": "h3", "text": "Appearance during treatment" },
-      { "type": "p", "text": "This is where aligners have the clearest advantage. Clear aligners are virtually invisible during wear. Metal braces are obvious. For adults in professional or social environments, this difference matters significantly. Ceramic braces offer a midpoint — less visible than metal, but still noticeable." },
-      { "type": "h3", "text": "Comfort" },
-      { "type": "p", "text": "Both involve some discomfort when new forces are applied to the teeth. Aligners have no brackets or wires, which eliminates the risk of mouth sores caused by hardware. Brace patients occasionally experience cuts on the inside of the cheeks or lips, particularly after adjustments. Most patients find aligners more comfortable day to day." },
-      { "type": "h3", "text": "Discipline required" },
-      { "type": "p", "text": "Fixed braces require no discipline — they are always in place. Aligners must be worn for 20 to 22 hours per day. Patients who regularly forget to put their aligners back in after eating will see slower progress. For self-motivated adults this is rarely a problem; for others, braces may actually produce more consistent results." },
-      { "type": "h3", "text": "What each can treat" },
-      { "type": "p", "text": "Aligners handle mild to moderate crowding, spacing, and bite correction well. Very complex bite corrections — particularly significant overbites, underbites, or severe crowding — may still be better addressed with fixed appliances. Your dentist will be clear about this at the consultation." },
-      { "type": "cta", "text": "Book a clear aligner consultation at Apex Dental", "to": "/invisalign-malta/" }
+      {
+        "type": "p",
+        "text": "Choosing between clear aligners and fixed braces is one of the most common questions for adult patients considering orthodontic treatment. Both are effective — the right choice depends on the complexity of the case, lifestyle considerations, and personal preference."
+      },
+      {
+        "type": "h3",
+        "text": "Appearance during treatment"
+      },
+      {
+        "type": "p",
+        "text": "This is where aligners have the clearest advantage. Clear aligners are virtually invisible during wear. Metal braces are obvious. For adults in professional or social environments, this difference matters significantly. Ceramic braces offer a midpoint — less visible than metal, but still noticeable."
+      },
+      {
+        "type": "h3",
+        "text": "Comfort"
+      },
+      {
+        "type": "p",
+        "text": "Both involve some discomfort when new forces are applied to the teeth. Aligners have no brackets or wires, which eliminates the risk of mouth sores caused by hardware. Brace patients occasionally experience cuts on the inside of the cheeks or lips, particularly after adjustments. Most patients find aligners more comfortable day to day."
+      },
+      {
+        "type": "h3",
+        "text": "Discipline required"
+      },
+      {
+        "type": "p",
+        "text": "Fixed braces require no discipline — they are always in place. Aligners must be worn for 20 to 22 hours per day. Patients who regularly forget to put their aligners back in after eating will see slower progress. For self-motivated adults this is rarely a problem; for others, braces may actually produce more consistent results."
+      },
+      {
+        "type": "h3",
+        "text": "What each can treat"
+      },
+      {
+        "type": "p",
+        "text": "Aligners handle mild to moderate crowding, spacing, and bite correction well. Very complex bite corrections — particularly significant overbites, underbites, or severe crowding — may still be better addressed with fixed appliances. Your dentist will be clear about this at the consultation."
+      },
+      {
+        "type": "cta",
+        "text": "Book a clear aligner consultation at Apex Dental",
+        "to": "/invisalign-malta/"
+      }
     ]
   },
   {
@@ -367,16 +820,47 @@
     "datePublished": "2026-05-24",
     "image": "/images/I3.jpg",
     "content": [
-      { "type": "p", "text": "When a visible front tooth is lost, most people act quickly. When a back tooth is extracted, it is easy to think it does not matter — it cannot be seen, eating is still possible, and there is no immediate pain. But the consequences of leaving the gap are real and compound over time." },
-      { "type": "h3", "text": "The teeth drift" },
-      { "type": "p", "text": "The teeth on either side of a gap will gradually tilt into the space over months and years. The tooth in the opposing jaw will also over-erupt — it no longer has a tooth to bite against, so it grows longer. This changes the bite, creates new cleaning challenges, and sets up adjacent teeth for decay and gum problems." },
-      { "type": "h3", "text": "Bone loss begins immediately" },
-      { "type": "p", "text": "The jawbone around and beneath a tooth root exists because of the stimulation the root provides. When the tooth is extracted and not replaced, the bone begins to resorb within weeks. After a year, significant volume can be lost. After several years, this loss becomes clinically significant — potentially complicating future implant placement and changing the appearance of the face over time." },
-      { "type": "h3", "text": "The longer you wait, the more complex the solution" },
-      { "type": "p", "text": "Replacing a tooth shortly after extraction is straightforward. Replacing it after years of bone loss and tooth drift is more complex, more time-consuming, and more expensive. Acting early keeps the options simpler." },
-      { "type": "h3", "text": "What are the options?" },
-      { "type": "p", "text": "The main options for replacing a missing tooth are a dental implant, a fixed bridge, or a removable partial denture. Each has different advantages and limitations. A consultation with a 3D scan at Apex Dental will clarify which option suits your specific situation." },
-      { "type": "cta", "text": "Book a consultation at Apex Dental", "to": "/dental-implants/" }
+      {
+        "type": "p",
+        "text": "When a visible front tooth is lost, most people act quickly. When a back tooth is extracted, it is easy to think it does not matter — it cannot be seen, eating is still possible, and there is no immediate pain. But the consequences of leaving the gap are real and compound over time."
+      },
+      {
+        "type": "h3",
+        "text": "The teeth drift"
+      },
+      {
+        "type": "p",
+        "text": "The teeth on either side of a gap will gradually tilt into the space over months and years. The tooth in the opposing jaw will also over-erupt — it no longer has a tooth to bite against, so it grows longer. This changes the bite, creates new cleaning challenges, and sets up adjacent teeth for decay and gum problems."
+      },
+      {
+        "type": "h3",
+        "text": "Bone loss begins immediately"
+      },
+      {
+        "type": "p",
+        "text": "The jawbone around and beneath a tooth root exists because of the stimulation the root provides. When the tooth is extracted and not replaced, the bone begins to resorb within weeks. After a year, significant volume can be lost. After several years, this loss becomes clinically significant — potentially complicating future implant placement and changing the appearance of the face over time."
+      },
+      {
+        "type": "h3",
+        "text": "The longer you wait, the more complex the solution"
+      },
+      {
+        "type": "p",
+        "text": "Replacing a tooth shortly after extraction is straightforward. Replacing it after years of bone loss and tooth drift is more complex, more time-consuming, and more expensive. Acting early keeps the options simpler."
+      },
+      {
+        "type": "h3",
+        "text": "What are the options?"
+      },
+      {
+        "type": "p",
+        "text": "The main options for replacing a missing tooth are a dental implant, a fixed bridge, or a removable partial denture. Each has different advantages and limitations. A consultation with a 3D scan at Apex Dental will clarify which option suits your specific situation."
+      },
+      {
+        "type": "cta",
+        "text": "Book a consultation at Apex Dental",
+        "to": "/dental-implants/"
+      }
     ]
   }
 ]

@@ -177,6 +177,13 @@ const routes = [
     description: 'Crowns are one of the most reliable ways to save a tooth that would otherwise be lost. Here\'s how they work and when they\'re needed.',
     image: `${siteUrl}/images/C4.jpg`,
   },
+
+  {
+    path: '/blog/dental-implants-vs-bridges/',
+    title: 'Dental implants vs bridges — which is better for a missing tooth? | Apex Dental Malta',
+    description: 'Both replace missing teeth, but they work very differently. Here is an honest comparison to help you decide.',
+    image: `${siteUrl}/images/I2.jpg`,
+  },
 ];
 
 function buildHtml(template, route) {
