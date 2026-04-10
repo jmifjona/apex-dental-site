@@ -109,6 +109,10 @@
       "destination": "/blog/dental-implants-vs-bridges/index.html"
     },
     {
+      "source": "/blog/all-on-4-dental-implants-malta",
+      "destination": "/blog/all-on-4-dental-implants-malta/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

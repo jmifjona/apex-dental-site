@@ -188,6 +188,60 @@ export const blogPosts = [
       }
 ],
   },
+
+  {
+    id: 8,
+    slug: '/blog/all-on-4-dental-implants-malta/',
+    title: 'All-on-4 dental implants explained — what you need to know',
+    excerpt: 'All-on-4 gives patients with significant tooth loss a fixed, non-removable full arch of teeth on just four implants. Here is how it works.',
+    category: 'Implants',
+    readTime: '5 min read',
+    datePublished: '2026-04-09',
+    image: '/images/I3.jpg',
+    content: [
+      {
+            "type": "p",
+            "text": "All-on-4 — also known as the Toronto bridge — is a full-arch dental implant solution that replaces an entire upper or lower set of teeth using just four strategically placed implants. For patients who have lost most or all of their teeth, or who are facing significant tooth loss, it offers a fixed, non-removable result without the limitations of dentures."
+      },
+      {
+            "type": "h3",
+            "text": "Why four implants?"
+      },
+      {
+            "type": "p",
+            "text": "Traditional full-arch implant treatment often required six or more implants per arch. The All-on-4 technique uses four implants, with the two rear implants placed at an angle to maximise contact with available bone. This angular placement allows the procedure to work even in patients with some degree of bone loss, often avoiding the need for extensive bone grafting."
+      },
+      {
+            "type": "h3",
+            "text": "What does the final result look like?"
+      },
+      {
+            "type": "p",
+            "text": "The final prosthesis is a full-arch bridge — a complete set of fixed teeth that attaches to the four implants. Unlike a denture, it does not come out. Patients eat, speak, and smile with it in place, and clean it much like natural teeth. It feels and functions significantly more like natural teeth than any removable solution."
+      },
+      {
+            "type": "h3",
+            "text": "Am I suitable for All-on-4?"
+      },
+      {
+            "type": "p",
+            "text": "Suitability depends on a thorough clinical assessment including a 3D scan. Most patients with good general health are candidates, though certain conditions — including uncontrolled diabetes, active gum disease, or significant bone loss in specific areas — may require additional treatment beforehand. The assessment at Apex Dental is free when you proceed with treatment and includes a 3D CBCT scan."
+      },
+      {
+            "type": "h3",
+            "text": "How long does treatment take?"
+      },
+      {
+            "type": "p",
+            "text": "In most cases, the four implants are placed in a single surgical appointment. A provisional bridge is often fitted the same day or shortly after. The final permanent bridge is typically completed after osseointegration — the period when the implants fuse with the bone — which takes around three to four months."
+      },
+      {
+            "type": "cta",
+            "text": "Learn more about dental implants at Apex Dental",
+            "to": "/dental-implants/"
+      }
+],
+  },
 ];
 
 // Derived meta map for SEO + routing

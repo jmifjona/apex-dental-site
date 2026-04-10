@@ -184,6 +184,13 @@ const routes = [
     description: 'Both replace missing teeth, but they work very differently. Here is an honest comparison to help you decide.',
     image: `${siteUrl}/images/I2.jpg`,
   },
+
+  {
+    path: '/blog/all-on-4-dental-implants-malta/',
+    title: 'All-on-4 dental implants explained — what you need to know | Apex Dental Malta',
+    description: 'All-on-4 gives patients with significant tooth loss a fixed, non-removable full arch of teeth on just four implants. Here is how it works.',
+    image: `${siteUrl}/images/I3.jpg`,
+  },
 ];
 
 function buildHtml(template, route) {
