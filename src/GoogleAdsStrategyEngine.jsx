@@ -8,6 +8,7 @@ const TABS = [
   { id: 'advisor',   emoji: '🤖', label: 'Strategy Advisor' },
   { id: 'generator', emoji: '✨', label: 'AI Campaign Generator' },
   { id: 'deepdive',  emoji: '🔬', label: 'Strategy Deep Dive' },
+  { id: 'policy',    emoji: '🛡', label: 'Policy Audit' },
 ];
 
 // ── Shared UI components ──────────────────────────────────────
@@ -1313,6 +1314,265 @@ function ImpactBadge({ impact }) {
 
 // ── Main component ────────────────────────────────────────────
 export default function GoogleAdsStrategyEngine() {
+const POLICY_CACHE_KEY = 'apexdental_policy_audit_v1';
+
+function PolicyAuditTab() {
+  const [data, setData]       = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError]     = React.useState(null);
+  const [scanTime, setScanTime] = React.useState(null);
+
+  React.useEffect(() => {
+    try {
+      const raw = localStorage.getItem(POLICY_CACHE_KEY);
+      if (!raw) return;
+      const cached = JSON.parse(raw);
+      setData(cached);
+      setScanTime(cached.generatedAt);
+    } catch {
+      localStorage.removeItem(POLICY_CACHE_KEY);
+    }
+  }, []);
+
+  async function runScan() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API}/ai/policy-audit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.message || 'Policy audit failed');
+      setData(json);
+      setScanTime(json.generatedAt);
+      localStorage.setItem(POLICY_CACHE_KEY, JSON.stringify(json));
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <LoadingPulse
+      message="Scanning for policy issues…"
+      sub="Reading every asset, ad and keyword in the account, then asking Claude to cluster issues and suggest fixes."
+    />;
+  }
+
+  if (!data) {
+    return (
+      <div className="rounded-2xl bg-slate-800/40 border border-rose-400/20 p-8">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="text-4xl mb-3">🛡</div>
+          <h2 className="text-2xl font-bold text-white mb-2">Policy Audit</h2>
+          <p className="text-slate-400 text-sm mb-6">
+            Scans every ad, asset (lead forms, sitelinks, callouts, images) and keyword
+            in your account for policy disapprovals or limited-serving statuses. Clusters
+            issues by root cause and gives you specific fix instructions.
+          </p>
+          <button
+            onClick={runScan}
+            className="px-6 py-3 rounded-xl bg-rose-400 text-slate-950 font-semibold hover:bg-rose-300 transition"
+          >
+            Run scan
+          </button>
+          <p className="mt-3 text-xs text-slate-500">Takes 15–30 seconds.</p>
+          {error && <div className="mt-4"><ErrorBox message={error} onRetry={runScan} /></div>}
+        </div>
+      </div>
+    );
+  }
+
+  // Clean account celebration
+  if (data.cleanAccount) {
+    return (
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div className="text-xs font-semibold text-emerald-400 uppercase tracking-widest mb-1">
+              Scanned {scanTime ? new Date(scanTime).toLocaleString() : ''}
+            </div>
+            <div className="text-slate-400 text-sm">No policy violations detected</div>
+          </div>
+          <button onClick={runScan} className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700">
+            ↻ Re-scan
+          </button>
+        </div>
+        <div className="rounded-2xl bg-emerald-500/5 border border-emerald-500/20 p-8 text-center">
+          <div className="text-5xl mb-3">✅</div>
+          <div className="text-xl font-bold text-emerald-300 mb-2">All clear</div>
+          <p className="text-slate-300 text-sm max-w-md mx-auto">{data.summary}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const totals = data.totals || { critical: 0, limited: 0, warnings: 0 };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="text-xs font-semibold text-rose-400 uppercase tracking-widest mb-1">
+            Scanned {scanTime ? new Date(scanTime).toLocaleString() : 'just now'}
+          </div>
+          <div className="text-slate-400 text-sm">{data.summary}</div>
+        </div>
+        <button onClick={runScan} className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700">
+          ↻ Re-scan
+        </button>
+      </div>
+
+      {/* Totals row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <PolicyMetric tone="rose"    label="Critical (blocking)"   value={totals.critical} />
+        <PolicyMetric tone="amber"   label="Limited (reduced reach)" value={totals.limited} />
+        <PolicyMetric tone="slate"   label="Warnings"              value={totals.warnings} />
+      </div>
+
+      {data.estimated_impact_eur > 0 && (
+        <div className="rounded-2xl bg-rose-500/5 border border-rose-500/20 p-4">
+          <div className="text-xs uppercase tracking-widest text-rose-400 mb-1">Estimated impact</div>
+          <div className="text-2xl font-bold text-white">~€{data.estimated_impact_eur.toFixed(0)}/month of impressions blocked or limited</div>
+        </div>
+      )}
+
+      {/* Priority order */}
+      {data.priority_order?.length > 0 && (
+        <div className="rounded-2xl bg-emerald-500/5 border border-emerald-500/20 p-5">
+          <div className="text-xs font-bold uppercase tracking-widest mb-3 text-emerald-400">⚡ Fix in this order</div>
+          <ol className="space-y-1 list-decimal list-inside text-sm text-slate-200">
+            {data.priority_order.map((t, i) => <li key={i}>{t}</li>)}
+          </ol>
+        </div>
+      )}
+
+      {/* Critical issues */}
+      {data.critical?.length > 0 && (
+        <PolicySection title={`🔴 Critical — blocking (${data.critical.length})`} color="rose" issues={data.critical} />
+      )}
+
+      {/* Limited */}
+      {data.limited?.length > 0 && (
+        <PolicySection title={`🟡 Limited — reduced reach (${data.limited.length})`} color="amber" issues={data.limited} />
+      )}
+
+      {/* Warnings */}
+      {data.warnings?.length > 0 && (
+        <PolicySection title={`⚠️ Warnings (${data.warnings.length})`} color="slate" issues={data.warnings} />
+      )}
+
+      {error && <ErrorBox message={error} onRetry={runScan} />}
+    </div>
+  );
+}
+
+// ── PolicyMetric — small metric tile ──────────────────────────────────────────
+function PolicyMetric({ label, value, tone = 'slate' }) {
+  const tones = {
+    rose:    'border-rose-500/20 bg-rose-500/5 text-rose-400',
+    amber:   'border-amber-400/20 bg-amber-400/5 text-amber-400',
+    slate:   'border-slate-700/40 bg-slate-800/40 text-slate-400',
+  };
+  return (
+    <div className={`rounded-2xl border p-4 ${tones[tone]}`}>
+      <div className="text-xs font-semibold uppercase tracking-widest opacity-80">{label}</div>
+      <div className="text-3xl font-bold text-white mt-2">{value}</div>
+    </div>
+  );
+}
+
+// ── PolicySection — collapsible cluster list ─────────────────────────────────
+function PolicySection({ title, color, issues }) {
+  const borders = {
+    rose:  'border-rose-500/20 bg-slate-800/40',
+    amber: 'border-amber-400/20 bg-slate-800/40',
+    slate: 'border-slate-700/40 bg-slate-800/40',
+  };
+  const labels = {
+    rose:  'text-rose-400',
+    amber: 'text-amber-400',
+    slate: 'text-slate-400',
+  };
+  return (
+    <div className={`rounded-2xl border p-5 ${borders[color]}`}>
+      <div className={`text-xs font-bold uppercase tracking-widest mb-3 ${labels[color]}`}>{title}</div>
+      <div className="space-y-3">
+        {issues.map((issue, i) => <PolicyIssueCard key={i} issue={issue} />)}
+      </div>
+    </div>
+  );
+}
+
+function PolicyIssueCard({ issue }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="bg-slate-900/40 rounded-xl border border-slate-700/40 overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full text-left px-4 py-3 hover:bg-slate-900/60 transition flex items-start justify-between gap-3"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-semibold text-white">{issue.title}</div>
+          <p className="text-xs text-slate-400 mt-1">{issue.description}</p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {issue.affected_count > 0 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-300">
+                {issue.affected_count} affected
+              </span>
+            )}
+            {issue.affected_spend_eur > 0 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300">
+                €{issue.affected_spend_eur.toFixed(0)}/mo spend
+              </span>
+            )}
+          </div>
+        </div>
+        <span className="text-slate-500 text-xs mt-1">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="px-4 pb-4 pt-2 border-t border-slate-700/40 space-y-3">
+          {issue.fix_steps?.length > 0 && (
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1.5">Fix steps</div>
+              <ol className="list-decimal list-inside text-xs text-slate-300 space-y-1">
+                {issue.fix_steps.map((s, j) => <li key={j}>{s}</li>)}
+              </ol>
+            </div>
+          )}
+          {issue.where_to_fix && (
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-sky-400 mb-1">Where in Google Ads</div>
+              <p className="text-xs text-slate-300">{issue.where_to_fix}</p>
+            </div>
+          )}
+          {issue.examples?.length > 0 && (
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Examples</div>
+              <ul className="space-y-1.5">
+                {issue.examples.map((ex, j) => (
+                  <li key={j} className="text-xs bg-slate-950/40 border border-slate-700/40 rounded px-2.5 py-1.5">
+                    {ex.snippet && <code className="text-amber-300 font-mono">{ex.snippet}</code>}
+                    {ex.snippet && (ex.campaign || ex.id) && <span className="text-slate-500"> · </span>}
+                    {ex.campaign && <span className="text-slate-400">{ex.campaign}</span>}
+                    {ex.id && <span className="text-slate-600 ml-2">[{ex.id}]</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+  
   const [activeTab,      setActiveTab]      = useState('research');
   const [researchData,   setResearchData]   = useState(null); // shared research results
   const [advisorPrefill, setAdvisorPrefill] = useState(null); // data piped to advisor
@@ -1374,6 +1634,7 @@ export default function GoogleAdsStrategyEngine() {
         {activeTab === 'advisor'   && <AdvisorTab prefill={advisorPrefill} />}
         {activeTab === 'generator' && <GeneratorTab />}
         {activeTab === 'deepdive'  && <DeepDiveTab />}
+        {activeTab === 'policy'    && <PolicyAuditTab />}
 
         {/* Nav footer */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
