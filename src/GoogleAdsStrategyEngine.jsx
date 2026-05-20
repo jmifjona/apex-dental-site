@@ -1322,6 +1322,45 @@ function PolicyAuditTab() {
   const [error, setError]     = React.useState(null);
   const [scanTime, setScanTime] = React.useState(null);
 
+  const [policyApplied, setPolicyApplied] = React.useState({});
+  const [policyApplying, setPolicyApplying] = React.useState({});
+  const [policyToast, setPolicyToast] = React.useState(null);
+
+  React.useEffect(() => {
+    try {
+      const r = localStorage.getItem('apexdental_policy_applied_v1');
+      if (r) setPolicyApplied(JSON.parse(r));
+    } catch {}
+  }, []);
+
+  React.useEffect(() => {
+    if (!policyToast) return;
+    const t = setTimeout(() => setPolicyToast(null), 5000);
+    return () => clearTimeout(t);
+  }, [policyToast]);
+
+  async function applyPolicy(key, endpoint, body, successText) {
+    if (policyApplied[key] || policyApplying[key]) return;
+    setPolicyApplying(p => ({ ...p, [key]: true }));
+    try {
+      const res = await fetch(`${API}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.message || 'Apply failed');
+      const next = { ...policyApplied, [key]: { ts: Date.now(), msg: json.message } };
+      setPolicyApplied(next);
+      localStorage.setItem('apexdental_policy_applied_v1', JSON.stringify(next));
+      setPolicyToast({ type: 'ok', text: successText || json.message });
+    } catch (e) {
+      setPolicyToast({ type: 'err', text: e.message });
+    } finally {
+      setPolicyApplying(p => ({ ...p, [key]: false }));
+    }
+  }
+
   React.useEffect(() => {
     try {
       const raw = localStorage.getItem(POLICY_CACHE_KEY);
@@ -1414,6 +1453,15 @@ function PolicyAuditTab() {
 
   return (
     <div className="space-y-6">
+      {policyToast && (
+        <div className={`fixed top-6 right-6 z-50 px-4 py-3 rounded-xl shadow-2xl border max-w-md ${
+          policyToast.type === 'ok'
+            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+            : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+        }`}>
+          <div className="text-sm font-medium">{policyToast.type === 'ok' ? '✓ ' : '⚠ '}{policyToast.text}</div>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -1453,17 +1501,38 @@ function PolicyAuditTab() {
 
       {/* Critical issues */}
       {data.critical?.length > 0 && (
-        <PolicySection title={`🔴 Critical — blocking (${data.critical.length})`} color="rose" issues={data.critical} />
+        <PolicySection
+          title={`🔴 Critical — blocking (${data.critical.length})`}
+          color="rose"
+          issues={data.critical}
+          applied={policyApplied}
+          applying={policyApplying}
+          onApply={applyPolicy}
+        />
       )}
 
       {/* Limited */}
       {data.limited?.length > 0 && (
-        <PolicySection title={`🟡 Limited — reduced reach (${data.limited.length})`} color="amber" issues={data.limited} />
+        <PolicySection
+          title={`🟡 Limited — reduced reach (${data.limited.length})`}
+          color="amber"
+          issues={data.limited}
+          applied={policyApplied}
+          applying={policyApplying}
+          onApply={applyPolicy}
+        />
       )}
 
       {/* Warnings */}
       {data.warnings?.length > 0 && (
-        <PolicySection title={`⚠️ Warnings (${data.warnings.length})`} color="slate" issues={data.warnings} />
+        <PolicySection
+          title={`⚠️ Warnings (${data.warnings.length})`}
+          color="slate"
+          issues={data.warnings}
+          applied={policyApplied}
+          applying={policyApplying}
+          onApply={applyPolicy}
+        />
       )}
 
       {error && <ErrorBox message={error} onRetry={runScan} />}
@@ -1487,7 +1556,7 @@ function PolicyMetric({ label, value, tone = 'slate' }) {
 }
 
 // ── PolicySection — collapsible cluster list ─────────────────────────────────
-function PolicySection({ title, color, issues }) {
+function PolicySection({ title, color, issues, applied, applying, onApply }) {
   const borders = {
     rose:  'border-rose-500/20 bg-slate-800/40',
     amber: 'border-amber-400/20 bg-slate-800/40',
@@ -1502,21 +1571,136 @@ function PolicySection({ title, color, issues }) {
     <div className={`rounded-2xl border p-5 ${borders[color]}`}>
       <div className={`text-xs font-bold uppercase tracking-widest mb-3 ${labels[color]}`}>{title}</div>
       <div className="space-y-3">
-        {issues.map((issue, i) => <PolicyIssueCard key={i} issue={issue} />)}
+        {issues.map((issue, i) => (
+          <PolicyIssueCard
+            key={i}
+            issue={issue}
+            issueKey={`${color}-${i}`}
+            applied={applied}
+            applying={applying}
+            onApply={onApply}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-function PolicyIssueCard({ issue }) {
+function PolicyIssueCard({ issue, issueKey, applied = {}, applying = {}, onApply }) {
   const [open, setOpen] = React.useState(false);
+  const key = issueKey || issue.title;
+  const isApplied = !!applied[key];
+  const isApplying = !!applying[key];
+
+  // Detect which cluster type this is by title keywords
+  const titleLc = (issue.title || '').toLowerCase();
+  let actionConfig = null;
+
+  if (titleLc.includes('phone') && titleLc.includes('callout')) {
+    actionConfig = {
+      label: 'Replace callouts with safe text',
+      tone: 'safe',
+      onClick: () => {
+        const ids = (issue.examples || [])
+          .map(ex => ex.id || ex.asset_id)
+          .filter(Boolean);
+        if (!ids.length) {
+          return alert('Could not find callout asset IDs to replace. Please fix manually in Google Ads.');
+        }
+        onApply(key, '/apply/edit-callout-text', { calloutAssetIds: ids });
+      },
+    };
+  } else if (titleLc.includes('auto-generated') || titleLc.includes('auto generated')) {
+    actionConfig = {
+      label: 'Disable auto-generated assets',
+      tone: 'safe',
+      onClick: () => {
+        const campNames = (issue.examples || [])
+          .map(ex => ex.campaign)
+          .filter(Boolean);
+        const target = campNames.length ? campNames : ['all'];
+        onApply(key, '/apply/disable-auto-assets', { campaignNames: target });
+      },
+    };
+  } else if (titleLc.includes('lead form') && (titleLc.includes('privacy') || titleLc.includes('domain'))) {
+    actionConfig = {
+      label: 'Update privacy URL (with confirm)',
+      tone: 'warn',
+      onClick: () => {
+        const examples = issue.examples || [];
+        if (!examples.length) {
+          return alert('No lead form examples found. Please fix manually in Google Ads.');
+        }
+
+        const defaultUrl = 'https://apexdentalmalta.com/privacy-policy/';
+        const confirmedFixes = [];
+
+        for (const ex of examples) {
+          const assetId = ex.id || ex.asset_id;
+          if (!assetId) continue;
+          const currentSnippet = ex.snippet || '(unknown URL)';
+          const message =
+            `Lead form: ${ex.campaign || assetId}\n` +
+            `Current privacy URL: ${currentSnippet}\n\n` +
+            `Enter the NEW privacy policy URL.\n` +
+            `Must be a working page with GDPR + health-data lead form disclosures.\n\n` +
+            `Default: ${defaultUrl}\n\n` +
+            `Press Cancel to skip this one.`;
+          const newUrl = prompt(message, defaultUrl);
+          if (newUrl && newUrl.trim()) {
+            confirmedFixes.push({ assetId, newUrl: newUrl.trim() });
+          }
+        }
+
+        if (!confirmedFixes.length) return;
+
+        Promise.all(
+          confirmedFixes.map((fix, i) =>
+            onApply(
+              `${key}-${i}`,
+              '/apply/update-lead-form-privacy-url',
+              { leadFormAssetId: fix.assetId, newPrivacyUrl: fix.newUrl },
+              `Updated privacy URL on lead form ${fix.assetId} (re-review 1-3 days)`,
+            ),
+          ),
+        );
+      },
+    };
+  }
+
+  const renderButton = () => {
+    if (!actionConfig) return null;
+    if (isApplied) {
+      return (
+        <span className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-semibold border border-emerald-500/25 cursor-default">
+          ✓ Applied
+        </span>
+      );
+    }
+    const toneClass =
+      actionConfig.tone === 'warn'
+        ? 'bg-amber-400/10 text-amber-300 border-amber-400/30 hover:bg-amber-400/20'
+        : 'bg-emerald-400/10 text-emerald-300 border-emerald-400/30 hover:bg-emerald-400/20';
+    return (
+      <button
+        onClick={(e) => { e.stopPropagation(); actionConfig.onClick(); }}
+        disabled={isApplying}
+        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+          isApplying ? 'bg-slate-700/30 text-slate-500 border-slate-700/50 cursor-wait' : toneClass
+        }`}
+      >
+        {isApplying ? '…working' : actionConfig.label}
+      </button>
+    );
+  };
+
   return (
     <div className="bg-slate-900/40 rounded-xl border border-slate-700/40 overflow-hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full text-left px-4 py-3 hover:bg-slate-900/60 transition flex items-start justify-between gap-3"
-      >
-        <div className="flex-1 min-w-0">
+      <div className="w-full flex items-start justify-between gap-3 px-4 py-3">
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex-1 min-w-0 text-left hover:opacity-80 transition"
+        >
           <div className="text-sm font-semibold text-white">{issue.title}</div>
           <p className="text-xs text-slate-400 mt-1">{issue.description}</p>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -1531,9 +1715,12 @@ function PolicyIssueCard({ issue }) {
               </span>
             )}
           </div>
+        </button>
+        <div className="flex flex-col items-end gap-2 shrink-0">
+          {renderButton()}
+          <button onClick={() => setOpen(!open)} className="text-slate-500 text-xs">{open ? '▲' : '▼'}</button>
         </div>
-        <span className="text-slate-500 text-xs mt-1">{open ? '▲' : '▼'}</span>
-      </button>
+      </div>
 
       {open && (
         <div className="px-4 pb-4 pt-2 border-t border-slate-700/40 space-y-3">
