@@ -736,23 +736,48 @@ function DeepDiveTab() {
   const [error, setError]     = useState(null);
   const [cacheAge, setCacheAge] = useState(null);
 
-  // Load cached result on mount
+  // Per-item applied state — keys like 'neg-0', 'pause-kw-2', 'sl-camp-0'
+  const [applied, setApplied] = useState({});
+  const [applying, setApplying] = useState({});
+  const [toast, setToast] = useState(null); // {type:'ok'|'err', text:''}
+
+  // Sitelinks state (separate fetch, separate cache)
+  const [sitelinks, setSitelinks] = useState(null);
+  const [loadingSitelinks, setLoadingSitelinks] = useState(false);
+
   React.useEffect(() => {
     try {
       const raw = localStorage.getItem(DEEP_DIVE_CACHE_KEY);
-      if (!raw) return;
-      const cached = JSON.parse(raw);
-      const ageDays = (Date.now() - new Date(cached.generatedAt).getTime()) / (1000 * 60 * 60 * 24);
-      if (ageDays < DEEP_DIVE_TTL_DAYS) {
-        setData(cached);
-        setCacheAge(Math.floor(ageDays));
-      } else {
-        localStorage.removeItem(DEEP_DIVE_CACHE_KEY);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        const ageDays = (Date.now() - new Date(cached.generatedAt).getTime()) / (1000 * 60 * 60 * 24);
+        if (ageDays < DEEP_DIVE_TTL_DAYS) {
+          setData(cached);
+          setCacheAge(Math.floor(ageDays));
+        } else {
+          localStorage.removeItem(DEEP_DIVE_CACHE_KEY);
+        }
       }
+      const slRaw = localStorage.getItem('apexdental_sitelinks_v1');
+      if (slRaw) {
+        const cached = JSON.parse(slRaw);
+        const ageDays = (Date.now() - new Date(cached.generatedAt).getTime()) / (1000 * 60 * 60 * 24);
+        if (ageDays < DEEP_DIVE_TTL_DAYS) setSitelinks(cached);
+      }
+      // Restore applied state
+      const appliedRaw = localStorage.getItem('apexdental_applied_v1');
+      if (appliedRaw) setApplied(JSON.parse(appliedRaw));
     } catch {
       localStorage.removeItem(DEEP_DIVE_CACHE_KEY);
     }
   }, []);
+
+  // Auto-clear toast after 4 seconds
+  React.useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 4000);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   async function runAnalysis() {
     setLoading(true);
@@ -775,6 +800,49 @@ function DeepDiveTab() {
     }
   }
 
+  async function runSitelinkScan() {
+    setLoadingSitelinks(true);
+    try {
+      const res = await fetch(`${API}/ai/sitelink-scanner`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ siteUrl: 'https://apexdentalmalta.com' }),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.message || 'Sitelink scan failed');
+      setSitelinks(json);
+      localStorage.setItem('apexdental_sitelinks_v1', JSON.stringify(json));
+    } catch (e) {
+      setToast({ type: 'err', text: `Sitelink scan: ${e.message}` });
+    } finally {
+      setLoadingSitelinks(false);
+    }
+  }
+
+  // Generic apply caller — used by all the buttons
+  async function apply(key, endpoint, body, successText) {
+    if (applied[key] || applying[key]) return;
+    setApplying(prev => ({ ...prev, [key]: true }));
+    try {
+      const res = await fetch(`${API}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.message || 'Apply failed');
+
+      const newApplied = { ...applied, [key]: { ts: Date.now(), msg: json.message } };
+      setApplied(newApplied);
+      localStorage.setItem('apexdental_applied_v1', JSON.stringify(newApplied));
+      setToast({ type: 'ok', text: successText || json.message || 'Applied' });
+    } catch (e) {
+      setToast({ type: 'err', text: e.message });
+    } finally {
+      setApplying(prev => ({ ...prev, [key]: false }));
+    }
+  }
+
   if (loading) {
     return <LoadingPulse
       message="Analysing your account…"
@@ -782,7 +850,6 @@ function DeepDiveTab() {
     />;
   }
 
-  // Empty state — first time use
   if (!data) {
     return (
       <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-8">
@@ -792,7 +859,7 @@ function DeepDiveTab() {
           <p className="text-slate-400 text-sm mb-6">
             Pulls your last 30 days of real Google Ads data — campaigns, keywords, search terms, ads —
             and asks Claude to find wasted spend, keywords to pause, ad copy to rewrite, budget
-            reallocations and new opportunities. Recommendations are prioritised by impact.
+            reallocations and new opportunities. Now with one-click Apply on every recommendation.
           </p>
           <button
             onClick={runAnalysis}
@@ -807,9 +874,19 @@ function DeepDiveTab() {
     );
   }
 
-  // Result state — render the recommendations
   return (
     <div className="space-y-6">
+      {/* Toast */}
+      {toast && (
+        <div className={`fixed top-6 right-6 z-50 px-4 py-3 rounded-xl shadow-2xl border max-w-md ${
+          toast.type === 'ok'
+            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+            : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+        }`}>
+          <div className="text-sm font-medium">{toast.type === 'ok' ? '✓ ' : '⚠ '}{toast.text}</div>
+        </div>
+      )}
+
       {/* Header bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -820,7 +897,7 @@ function DeepDiveTab() {
             )}
           </div>
           <div className="text-slate-400 text-sm">
-            Based on last {data.periodDays || 30} days of account activity
+            Based on last {data.periodDays || 30} days of account activity · Click Apply to execute changes live
           </div>
         </div>
         <button
@@ -834,9 +911,7 @@ function DeepDiveTab() {
       {/* Executive summary */}
       {data.executive_summary && (
         <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-5">
-          <div className="text-xs font-bold uppercase tracking-widest mb-2 text-amber-400">
-            Executive summary
-          </div>
+          <div className="text-xs font-bold uppercase tracking-widest mb-2 text-amber-400">Executive summary</div>
           <p className="text-slate-200 text-sm leading-relaxed">{data.executive_summary}</p>
         </div>
       )}
@@ -844,32 +919,16 @@ function DeepDiveTab() {
       {/* Headline metrics */}
       {data.headline_metrics && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <MetricCard
-            label="Wasted spend (est.)"
-            value={`€${(data.headline_metrics.wasted_spend_estimate_eur || 0).toFixed(0)}`}
-            tone="rose"
-          />
-          <MetricCard
-            label="Biggest opportunity"
-            value={data.headline_metrics.biggest_opportunity || '—'}
-            tone="emerald"
-            small
-          />
-          <MetricCard
-            label="Biggest risk"
-            value={data.headline_metrics.biggest_risk || '—'}
-            tone="amber"
-            small
-          />
+          <MetricCard label="Wasted spend (est.)" value={`€${(data.headline_metrics.wasted_spend_estimate_eur || 0).toFixed(0)}`} tone="rose" />
+          <MetricCard label="Biggest opportunity" value={data.headline_metrics.biggest_opportunity || '—'} tone="emerald" small />
+          <MetricCard label="Biggest risk" value={data.headline_metrics.biggest_risk || '—'} tone="amber" small />
         </div>
       )}
 
       {/* Priority actions */}
       {data.priority_actions_this_week?.length > 0 && (
         <div className="rounded-2xl bg-emerald-500/5 border border-emerald-500/20 p-5">
-          <div className="text-xs font-bold uppercase tracking-widest mb-3 text-emerald-400">
-            ⚡ Priority actions this week
-          </div>
+          <div className="text-xs font-bold uppercase tracking-widest mb-3 text-emerald-400">⚡ Priority actions this week</div>
           <ul className="space-y-2">
             {data.priority_actions_this_week.map((a, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-slate-200">
@@ -882,119 +941,147 @@ function DeepDiveTab() {
         </div>
       )}
 
-      {/* Negative keywords */}
+      {/* NEGATIVE KEYWORDS — APPLY ENABLED */}
       {data.negative_keywords_to_add?.length > 0 && (
         <Section title={`🚫 Negative keywords to add (${data.negative_keywords_to_add.length})`} color="rose">
-          {data.negative_keywords_to_add.map((n, i) => (
-            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
-                  {n.term}
-                </code>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
-                  {n.match_type}
-                </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
-                  {n.scope}{n.scope_name ? `: ${n.scope_name}` : ''}
-                </span>
-                {n.estimated_savings_eur > 0 && (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">
-                    save ~€{n.estimated_savings_eur.toFixed(0)}/mo
-                  </span>
-                )}
+          {data.negative_keywords_to_add.map((n, i) => {
+            const key = `neg-${i}`;
+            return (
+              <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0 flex flex-wrap items-center gap-2">
+                <div className="flex-1 min-w-[200px]">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">{n.term}</code>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">{n.match_type}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
+                      {n.scope}{n.scope_name ? `: ${n.scope_name}` : ''}
+                    </span>
+                    {n.estimated_savings_eur > 0 && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">save ~€{n.estimated_savings_eur.toFixed(0)}/mo</span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400">{n.reason}</p>
+                </div>
+                <ApplyButton
+                  applied={applied[key]}
+                  applying={applying[key]}
+                  onClick={() => apply(key, '/apply/add-negative-keyword', {
+                    term: n.term,
+                    matchType: n.match_type,
+                    scope: (n.scope === 'account' || n.scope === 'all') ? 'account' : 'campaign',
+                    campaignName: n.scope_name,
+                  }, `Added "${n.term}" as negative keyword`)}
+                />
               </div>
-              <p className="text-xs text-slate-400">{n.reason}</p>
-            </div>
-          ))}
+            );
+          })}
         </Section>
       )}
 
-      {/* Keywords to pause */}
+      {/* KEYWORDS TO PAUSE — APPLY ENABLED */}
       {data.keywords_to_pause?.length > 0 && (
         <Section title={`⏸ Keywords to pause (${data.keywords_to_pause.length})`} color="amber">
-          {data.keywords_to_pause.map((k, i) => (
-            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
-                  {k.keyword}
-                </code>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">
-                  €{k.spent_eur?.toFixed(0)} · {k.conversions} conv
-                </span>
-                <span className="text-xs text-slate-500">in {k.campaign} / {k.ad_group}</span>
+          {data.keywords_to_pause.map((k, i) => {
+            const key = `pause-kw-${i}`;
+            return (
+              <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0 flex flex-wrap items-center gap-2">
+                <div className="flex-1 min-w-[200px]">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">{k.keyword}</code>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">€{k.spent_eur?.toFixed(0)} · {k.conversions} conv</span>
+                    <span className="text-xs text-slate-500">in {k.campaign} / {k.ad_group}</span>
+                  </div>
+                  <p className="text-xs text-slate-400">{k.reason}</p>
+                </div>
+                <ApplyButton
+                  applied={applied[key]}
+                  applying={applying[key]}
+                  onClick={() => apply(key, '/apply/pause-keyword', {
+                    keyword: k.keyword,
+                    campaignName: k.campaign,
+                    adGroupName: k.ad_group,
+                  }, `Paused "${k.keyword}"`)}
+                />
               </div>
-              <p className="text-xs text-slate-400">{k.reason}</p>
-            </div>
-          ))}
+            );
+          })}
         </Section>
       )}
 
-      {/* Ad copy rewrites */}
+      {/* AD COPY — read-only suggestion (not applyable via this UI) */}
       {data.ad_copy_rewrites?.length > 0 && (
         <Section title={`✏️ Ad copy rewrites (${data.ad_copy_rewrites.length})`} color="violet">
           {data.ad_copy_rewrites.map((a, i) => (
             <div key={i} className="py-3 border-t border-slate-700/30 first:border-t-0">
-              <div className="text-white text-sm font-semibold mb-1">
-                {a.campaign} → {a.ad_group}
-              </div>
+              <div className="text-white text-sm font-semibold mb-1">{a.campaign} → {a.ad_group}</div>
               <p className="text-xs text-slate-400 mb-3">{a.issue}</p>
               {a.suggested_headlines?.length > 0 && (
                 <div className="mb-2">
-                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
-                    Suggested headlines
-                  </div>
+                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Suggested headlines</div>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
                     {a.suggested_headlines.map((h, j) => (
-                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">
-                        {h}
-                      </li>
+                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">{h}</li>
                     ))}
                   </ul>
                 </div>
               )}
               {a.suggested_descriptions?.length > 0 && (
                 <div>
-                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
-                    Suggested descriptions
-                  </div>
+                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Suggested descriptions</div>
                   <ul className="space-y-1.5">
                     {a.suggested_descriptions.map((d, j) => (
-                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">
-                        {d}
-                      </li>
+                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">{d}</li>
                     ))}
                   </ul>
                 </div>
               )}
+              <p className="text-xs text-slate-500 italic mt-2">Use the AI Campaign Generator tab to push new copy.</p>
             </div>
           ))}
         </Section>
       )}
 
-      {/* Budget reallocation */}
+      {/* BUDGET REALLOCATION — APPLY ENABLED (raises destination budget) */}
       {data.budget_reallocation?.length > 0 && (
         <Section title="💰 Budget reallocation" color="sky">
-          {data.budget_reallocation.map((b, i) => (
-            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-sm text-slate-200">
-                  <strong className="text-white">{b.from_campaign}</strong>
-                  <span className="text-slate-500 mx-1.5">→</span>
-                  <strong className="text-white">{b.to_campaign}</strong>
-                </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300">
-                  €{b.amount_eur_per_day}/day
-                </span>
+          <p className="text-xs text-slate-500 mb-3">Apply increases the destination campaign's daily budget by the suggested amount. Decrease the source campaign manually or pause it separately.</p>
+          {data.budget_reallocation.map((b, i) => {
+            const key = `budget-${i}`;
+            return (
+              <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0 flex flex-wrap items-center gap-2">
+                <div className="flex-1 min-w-[200px]">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="text-sm text-slate-200">
+                      <strong className="text-white">{b.from_campaign}</strong>
+                      <span className="text-slate-500 mx-1.5">→</span>
+                      <strong className="text-white">{b.to_campaign}</strong>
+                    </span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300">+€{b.amount_eur_per_day}/day to destination</span>
+                  </div>
+                  <p className="text-xs text-slate-400">{b.reason}</p>
+                </div>
+                <ApplyButton
+                  applied={applied[key]}
+                  applying={applying[key]}
+                  onClick={() => {
+                    // Backend needs absolute budget. Ask user to confirm new daily.
+                    const newBudget = prompt(`New daily budget for "${b.to_campaign}" (in €)?\n\nThis sets the absolute daily budget. Add the recommended €${b.amount_eur_per_day}/day to the current budget.`);
+                    if (!newBudget) return;
+                    return apply(key, '/apply/update-budget', {
+                      campaignName: b.to_campaign,
+                      newDailyBudgetEur: Number(newBudget),
+                    }, `Updated budget for "${b.to_campaign}" to €${newBudget}/day`);
+                  }}
+                />
               </div>
-              <p className="text-xs text-slate-400">{b.reason}</p>
-            </div>
-          ))}
+            );
+          })}
         </Section>
       )}
 
-      {/* Structural changes */}
+      {/* STRUCTURAL CHANGES — read-only (too complex for one-click) */}
       {data.structural_changes?.length > 0 && (
         <Section title="🏗 Structural changes" color="amber">
+          <p className="text-xs text-slate-500 mb-3">These need manual restructuring in Campaign Manager.</p>
           {data.structural_changes.map((s, i) => (
             <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
               <div className="flex items-start gap-2 mb-1">
@@ -1003,9 +1090,7 @@ function DeepDiveTab() {
                   <div className="text-sm text-white font-medium">
                     {s.issue}
                     {s.campaign && (
-                      <span className="text-xs text-slate-500 ml-2">
-                        · {s.campaign}{s.ad_group ? ` / ${s.ad_group}` : ''}
-                      </span>
+                      <span className="text-xs text-slate-500 ml-2">· {s.campaign}{s.ad_group ? ` / ${s.ad_group}` : ''}</span>
                     )}
                   </div>
                   <p className="text-xs text-slate-400 mt-1">{s.recommendation}</p>
@@ -1016,31 +1101,156 @@ function DeepDiveTab() {
         </Section>
       )}
 
-      {/* New keyword opportunities */}
+      {/* NEW KEYWORD OPPORTUNITIES — read-only (need ad group assignment) */}
       {data.new_keyword_opportunities?.length > 0 && (
         <Section title={`💡 New keyword opportunities (${data.new_keyword_opportunities.length})`} color="emerald">
+          <p className="text-xs text-slate-500 mb-3">Add via Campaign Builder once you've decided which ad group to put them in.</p>
           {data.new_keyword_opportunities.map((k, i) => (
             <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
               <div className="flex flex-wrap items-center gap-2 mb-1">
-                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
-                  {k.keyword}
-                </code>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
-                  {k.match_type}
-                </span>
+                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">{k.keyword}</code>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">{k.match_type}</span>
               </div>
               <p className="text-xs text-slate-400">{k.reason}</p>
               {k.based_on_search_term && (
-                <p className="text-xs text-slate-500 mt-1 italic">
-                  Based on actual search: "{k.based_on_search_term}"
-                </p>
+                <p className="text-xs text-slate-500 mt-1 italic">Based on actual search: "{k.based_on_search_term}"</p>
               )}
             </div>
           ))}
         </Section>
       )}
 
+      {/* SITELINK SUGGESTIONS — NEW SECTION */}
+      <SitelinkSection
+        sitelinks={sitelinks}
+        loading={loadingSitelinks}
+        onScan={runSitelinkScan}
+        onApply={(key, body, msg) => apply(key, '/apply/add-sitelinks', body, msg)}
+        applied={applied}
+        applying={applying}
+      />
+
       {error && <ErrorBox message={error} onRetry={runAnalysis} />}
+    </div>
+  );
+}
+
+// ── Apply button — single-click, no confirm ─────────────────────────────────
+function ApplyButton({ applied, applying, onClick, label = 'Apply' }) {
+  if (applied) {
+    return (
+      <span className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-semibold border border-emerald-500/25 cursor-default">
+        ✓ Applied
+      </span>
+    );
+  }
+  return (
+    <button
+      onClick={onClick}
+      disabled={applying}
+      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+        applying
+          ? 'bg-slate-700/30 text-slate-500 border-slate-700/50 cursor-wait'
+          : 'bg-amber-400/10 text-amber-300 border-amber-400/30 hover:bg-amber-400/20'
+      }`}
+    >
+      {applying ? '…working' : label}
+    </button>
+  );
+}
+
+// ── Sitelink Section ─────────────────────────────────────────────────────────
+function SitelinkSection({ sitelinks, loading, onScan, onApply, applied, applying }) {
+  if (loading) {
+    return (
+      <div className="rounded-2xl bg-slate-800/40 border border-sky-400/20 p-5">
+        <div className="text-xs font-bold uppercase tracking-widest mb-3 text-sky-400">🔗 Sitelink suggestions</div>
+        <div className="flex items-center gap-3 text-sm text-slate-400">
+          <div className="w-5 h-5 rounded-full border-2 border-sky-400 border-t-transparent animate-spin" />
+          Scanning your site and matching sitelinks to campaigns…
+        </div>
+      </div>
+    );
+  }
+
+  if (!sitelinks) {
+    return (
+      <div className="rounded-2xl bg-slate-800/40 border border-sky-400/20 p-5">
+        <div className="text-xs font-bold uppercase tracking-widest mb-2 text-sky-400">🔗 Sitelink suggestions</div>
+        <p className="text-sm text-slate-400 mb-4">Scan your sitemap and let Claude pick the best pages to add as sitelinks for each campaign.</p>
+        <button
+          onClick={onScan}
+          className="px-4 py-2 rounded-xl bg-sky-400/10 text-sky-300 text-sm font-semibold border border-sky-400/30 hover:bg-sky-400/20 transition"
+        >
+          Scan site for sitelinks
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl bg-slate-800/40 border border-sky-400/20 p-5">
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs font-bold uppercase tracking-widest text-sky-400">
+          🔗 Sitelink suggestions ({sitelinks.campaign_sitelinks?.length || 0} campaigns)
+        </div>
+        <button
+          onClick={onScan}
+          className="text-xs text-slate-400 hover:text-white transition"
+        >
+          ↻ Rescan
+        </button>
+      </div>
+      {sitelinks.summary && (
+        <p className="text-sm text-slate-300 mb-4">{sitelinks.summary}</p>
+      )}
+
+      {/* Universal sitelinks */}
+      {sitelinks.universal_sitelinks?.length > 0 && (
+        <div className="mb-4 bg-slate-900/40 rounded-xl p-3">
+          <div className="text-xs font-bold uppercase tracking-wider text-emerald-300 mb-2">Universal sitelinks (safe across any campaign)</div>
+          <div className="flex flex-wrap gap-2">
+            {sitelinks.universal_sitelinks.map((s, i) => (
+              <span key={i} className="text-xs bg-slate-900 border border-slate-700 px-2 py-1 rounded-lg text-slate-200">
+                <strong>{s.text}</strong>
+                <span className="text-slate-500 ml-1.5">{s.url?.replace('https://', '').replace('apexdentalmalta.com', '')}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Per-campaign sitelinks */}
+      {sitelinks.campaign_sitelinks?.map((c, i) => {
+        const key = `sl-camp-${i}`;
+        return (
+          <div key={i} className="mb-3 bg-slate-900/40 rounded-xl p-4 last:mb-0">
+            <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+              <div className="flex-1 min-w-[200px]">
+                <div className="text-sm font-semibold text-white">{c.campaign_name}</div>
+                {c.rationale && <p className="text-xs text-slate-400 mt-1">{c.rationale}</p>}
+              </div>
+              <ApplyButton
+                applied={applied[key]}
+                applying={applying[key]}
+                onClick={() => onApply(key, {
+                  campaignName: c.campaign_name,
+                  sitelinks: c.sitelinks,
+                }, `Added ${c.sitelinks?.length || 0} sitelinks to "${c.campaign_name}"`)}
+                label={`Apply ${c.sitelinks?.length || 0} sitelinks`}
+              />
+            </div>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 mt-2">
+              {c.sitelinks?.map((s, j) => (
+                <li key={j} className="text-xs bg-slate-900 border border-slate-700/50 px-2.5 py-1.5 rounded">
+                  <strong className="text-slate-100">{s.text}</strong>
+                  <span className="text-slate-500 ml-2">{s.url?.replace('https://', '').replace('apexdentalmalta.com', '')}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 }
