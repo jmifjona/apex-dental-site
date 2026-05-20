@@ -7,6 +7,10 @@ const TABS = [
   { id: 'scorer',    emoji: '📊', label: 'Campaign Scorer' },
   { id: 'advisor',   emoji: '🤖', label: 'Strategy Advisor' },
   { id: 'generator', emoji: '✨', label: 'AI Campaign Generator' },
+<<<<<<< Updated upstream
+=======
+  { id: 'deepdive',  emoji: '🔬', label: 'Strategy Deep Dive' },
+>>>>>>> Stashed changes
 ];
 
 // ── Shared UI components ──────────────────────────────────────
@@ -725,6 +729,389 @@ function GeneratorTab() {
 }
 
 // ── Main component ────────────────────────────────────────────
+<<<<<<< Updated upstream
+=======
+// ============================================================================
+// DeepDiveTab — Add this function to GoogleAdsStrategyEngine.jsx
+// Paste it anywhere among the other tab functions (e.g. right after GeneratorTab,
+// before the `export default function GoogleAdsStrategyEngine()` line).
+// ============================================================================
+
+const DEEP_DIVE_CACHE_KEY = 'apexdental_deep_dive_v1';
+const DEEP_DIVE_TTL_DAYS  = 14;
+
+function DeepDiveTab() {
+  const [data, setData]       = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState(null);
+  const [cacheAge, setCacheAge] = useState(null);
+
+  // Load cached result on mount
+  React.useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DEEP_DIVE_CACHE_KEY);
+      if (!raw) return;
+      const cached = JSON.parse(raw);
+      const ageDays = (Date.now() - new Date(cached.generatedAt).getTime()) / (1000 * 60 * 60 * 24);
+      if (ageDays < DEEP_DIVE_TTL_DAYS) {
+        setData(cached);
+        setCacheAge(Math.floor(ageDays));
+      } else {
+        localStorage.removeItem(DEEP_DIVE_CACHE_KEY);
+      }
+    } catch {
+      localStorage.removeItem(DEEP_DIVE_CACHE_KEY);
+    }
+  }, []);
+
+  async function runAnalysis() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API}/ai/strategy-deep-dive`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.message || 'Analysis failed');
+      setData(json);
+      setCacheAge(0);
+      localStorage.setItem(DEEP_DIVE_CACHE_KEY, JSON.stringify(json));
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <LoadingPulse
+      message="Analysing your account…"
+      sub="Pulling 30 days of campaigns, keywords, search terms and ads, then asking Claude to find waste and opportunities."
+    />;
+  }
+
+  // Empty state — first time use
+  if (!data) {
+    return (
+      <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-8">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="text-4xl mb-3">🔬</div>
+          <h2 className="text-2xl font-bold text-white mb-2">Strategy Deep Dive</h2>
+          <p className="text-slate-400 text-sm mb-6">
+            Pulls your last 30 days of real Google Ads data — campaigns, keywords, search terms, ads —
+            and asks Claude to find wasted spend, keywords to pause, ad copy to rewrite, budget
+            reallocations and new opportunities. Recommendations are prioritised by impact.
+          </p>
+          <button
+            onClick={runAnalysis}
+            className="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 font-semibold hover:bg-amber-300 transition"
+          >
+            Run analysis
+          </button>
+          <p className="mt-3 text-xs text-slate-500">Takes 30–60 seconds. Results cached for 14 days.</p>
+          {error && <div className="mt-4"><ErrorBox message={error} onRetry={runAnalysis} /></div>}
+        </div>
+      </div>
+    );
+  }
+
+  // Result state — render the recommendations
+  return (
+    <div className="space-y-6">
+      {/* Header bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="text-xs font-semibold text-amber-400 uppercase tracking-widest mb-1">
+            Generated {cacheAge === 0 ? 'just now' : `${cacheAge} day(s) ago`}
+            {cacheAge !== null && cacheAge < DEEP_DIVE_TTL_DAYS && (
+              <> · next refresh in {DEEP_DIVE_TTL_DAYS - cacheAge} day(s)</>
+            )}
+          </div>
+          <div className="text-slate-400 text-sm">
+            Based on last {data.periodDays || 30} days of account activity
+          </div>
+        </div>
+        <button
+          onClick={runAnalysis}
+          className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-700 transition border border-slate-700"
+        >
+          ↻ Run new analysis
+        </button>
+      </div>
+
+      {/* Executive summary */}
+      {data.executive_summary && (
+        <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-5">
+          <div className="text-xs font-bold uppercase tracking-widest mb-2 text-amber-400">
+            Executive summary
+          </div>
+          <p className="text-slate-200 text-sm leading-relaxed">{data.executive_summary}</p>
+        </div>
+      )}
+
+      {/* Headline metrics */}
+      {data.headline_metrics && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <MetricCard
+            label="Wasted spend (est.)"
+            value={`€${(data.headline_metrics.wasted_spend_estimate_eur || 0).toFixed(0)}`}
+            tone="rose"
+          />
+          <MetricCard
+            label="Biggest opportunity"
+            value={data.headline_metrics.biggest_opportunity || '—'}
+            tone="emerald"
+            small
+          />
+          <MetricCard
+            label="Biggest risk"
+            value={data.headline_metrics.biggest_risk || '—'}
+            tone="amber"
+            small
+          />
+        </div>
+      )}
+
+      {/* Priority actions */}
+      {data.priority_actions_this_week?.length > 0 && (
+        <div className="rounded-2xl bg-emerald-500/5 border border-emerald-500/20 p-5">
+          <div className="text-xs font-bold uppercase tracking-widest mb-3 text-emerald-400">
+            ⚡ Priority actions this week
+          </div>
+          <ul className="space-y-2">
+            {data.priority_actions_this_week.map((a, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-slate-200">
+                <ImpactBadge impact={a.impact} />
+                <span className="text-xs text-slate-500 uppercase mt-0.5">effort: {a.effort}</span>
+                <span className="flex-1">{a.action}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Negative keywords */}
+      {data.negative_keywords_to_add?.length > 0 && (
+        <Section title={`🚫 Negative keywords to add (${data.negative_keywords_to_add.length})`} color="rose">
+          {data.negative_keywords_to_add.map((n, i) => (
+            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
+                  {n.term}
+                </code>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
+                  {n.match_type}
+                </span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
+                  {n.scope}{n.scope_name ? `: ${n.scope_name}` : ''}
+                </span>
+                {n.estimated_savings_eur > 0 && (
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">
+                    save ~€{n.estimated_savings_eur.toFixed(0)}/mo
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-400">{n.reason}</p>
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* Keywords to pause */}
+      {data.keywords_to_pause?.length > 0 && (
+        <Section title={`⏸ Keywords to pause (${data.keywords_to_pause.length})`} color="amber">
+          {data.keywords_to_pause.map((k, i) => (
+            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
+                  {k.keyword}
+                </code>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">
+                  €{k.spent_eur?.toFixed(0)} · {k.conversions} conv
+                </span>
+                <span className="text-xs text-slate-500">in {k.campaign} / {k.ad_group}</span>
+              </div>
+              <p className="text-xs text-slate-400">{k.reason}</p>
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* Ad copy rewrites */}
+      {data.ad_copy_rewrites?.length > 0 && (
+        <Section title={`✏️ Ad copy rewrites (${data.ad_copy_rewrites.length})`} color="violet">
+          {data.ad_copy_rewrites.map((a, i) => (
+            <div key={i} className="py-3 border-t border-slate-700/30 first:border-t-0">
+              <div className="text-white text-sm font-semibold mb-1">
+                {a.campaign} → {a.ad_group}
+              </div>
+              <p className="text-xs text-slate-400 mb-3">{a.issue}</p>
+              {a.suggested_headlines?.length > 0 && (
+                <div className="mb-2">
+                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
+                    Suggested headlines
+                  </div>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+                    {a.suggested_headlines.map((h, j) => (
+                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {a.suggested_descriptions?.length > 0 && (
+                <div>
+                  <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
+                    Suggested descriptions
+                  </div>
+                  <ul className="space-y-1.5">
+                    {a.suggested_descriptions.map((d, j) => (
+                      <li key={j} className="text-xs text-slate-300 bg-slate-900/50 px-2.5 py-1.5 rounded">
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* Budget reallocation */}
+      {data.budget_reallocation?.length > 0 && (
+        <Section title="💰 Budget reallocation" color="sky">
+          {data.budget_reallocation.map((b, i) => (
+            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="text-sm text-slate-200">
+                  <strong className="text-white">{b.from_campaign}</strong>
+                  <span className="text-slate-500 mx-1.5">→</span>
+                  <strong className="text-white">{b.to_campaign}</strong>
+                </span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300">
+                  €{b.amount_eur_per_day}/day
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">{b.reason}</p>
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* Structural changes */}
+      {data.structural_changes?.length > 0 && (
+        <Section title="🏗 Structural changes" color="amber">
+          {data.structural_changes.map((s, i) => (
+            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
+              <div className="flex items-start gap-2 mb-1">
+                <ImpactBadge impact={s.impact} />
+                <div className="flex-1">
+                  <div className="text-sm text-white font-medium">
+                    {s.issue}
+                    {s.campaign && (
+                      <span className="text-xs text-slate-500 ml-2">
+                        · {s.campaign}{s.ad_group ? ` / ${s.ad_group}` : ''}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">{s.recommendation}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* New keyword opportunities */}
+      {data.new_keyword_opportunities?.length > 0 && (
+        <Section title={`💡 New keyword opportunities (${data.new_keyword_opportunities.length})`} color="emerald">
+          {data.new_keyword_opportunities.map((k, i) => (
+            <div key={i} className="py-2.5 border-t border-slate-700/30 first:border-t-0">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <code className="px-2 py-0.5 rounded bg-slate-900 text-amber-300 text-xs font-mono">
+                  {k.keyword}
+                </code>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
+                  {k.match_type}
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">{k.reason}</p>
+              {k.based_on_search_term && (
+                <p className="text-xs text-slate-500 mt-1 italic">
+                  Based on actual search: "{k.based_on_search_term}"
+                </p>
+              )}
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {error && <ErrorBox message={error} onRetry={runAnalysis} />}
+    </div>
+  );
+}
+
+// ── Helper components used by DeepDiveTab ─────────────────────
+function MetricCard({ label, value, tone = 'amber', small = false }) {
+  const tones = {
+    amber:   'border-amber-400/20 bg-amber-400/5 text-amber-400',
+    rose:    'border-rose-500/20 bg-rose-500/5 text-rose-400',
+    emerald: 'border-emerald-500/20 bg-emerald-500/5 text-emerald-400',
+    sky:     'border-sky-500/20 bg-sky-500/5 text-sky-400',
+  };
+  return (
+    <div className={`rounded-2xl border p-4 ${tones[tone]}`}>
+      <div className="text-xs font-semibold uppercase tracking-widest opacity-80">{label}</div>
+      <div className={`text-white font-bold mt-2 ${small ? 'text-sm leading-snug' : 'text-2xl'}`}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function Section({ title, children, color = 'amber' }) {
+  const borders = {
+    amber:   'border-amber-400/20 bg-slate-800/40',
+    rose:    'border-rose-500/20 bg-slate-800/40',
+    emerald: 'border-emerald-500/20 bg-slate-800/40',
+    sky:     'border-sky-500/20 bg-slate-800/40',
+    violet:  'border-violet-500/20 bg-slate-800/40',
+  };
+  const labels = {
+    amber:   'text-amber-400',
+    rose:    'text-rose-400',
+    emerald: 'text-emerald-400',
+    sky:     'text-sky-400',
+    violet:  'text-violet-400',
+  };
+  return (
+    <div className={`rounded-2xl border p-5 ${borders[color]}`}>
+      <div className={`text-xs font-bold uppercase tracking-widest mb-3 ${labels[color]}`}>
+        {title}
+      </div>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+function ImpactBadge({ impact }) {
+  const map = {
+    high:   'bg-rose-500/20 text-rose-300',
+    medium: 'bg-amber-500/20 text-amber-300',
+    low:    'bg-slate-700/50 text-slate-400',
+  };
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded-full uppercase font-semibold ${map[impact] || map.low}`}>
+      {impact || 'low'}
+    </span>
+  );
+}
+
+>>>>>>> Stashed changes
 export default function GoogleAdsStrategyEngine() {
   const [activeTab,      setActiveTab]      = useState('research');
   const [researchData,   setResearchData]   = useState(null); // shared research results
@@ -786,6 +1173,10 @@ export default function GoogleAdsStrategyEngine() {
         {activeTab === 'scorer'    && <ScorerTab />}
         {activeTab === 'advisor'   && <AdvisorTab prefill={advisorPrefill} />}
         {activeTab === 'generator' && <GeneratorTab />}
+<<<<<<< Updated upstream
+=======
+        {activeTab === 'deepdive'  && <DeepDiveTab />}
+>>>>>>> Stashed changes
 
         {/* Nav footer */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
