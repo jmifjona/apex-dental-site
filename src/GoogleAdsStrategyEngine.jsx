@@ -7,10 +7,7 @@ const TABS = [
   { id: 'scorer',    emoji: '📊', label: 'Campaign Scorer' },
   { id: 'advisor',   emoji: '🤖', label: 'Strategy Advisor' },
   { id: 'generator', emoji: '✨', label: 'AI Campaign Generator' },
-<<<<<<< Updated upstream
-=======
   { id: 'deepdive',  emoji: '🔬', label: 'Strategy Deep Dive' },
->>>>>>> Stashed changes
 ];
 
 // ── Shared UI components ──────────────────────────────────────
@@ -728,14 +725,7 @@ function GeneratorTab() {
   );
 }
 
-// ── Main component ────────────────────────────────────────────
-<<<<<<< Updated upstream
-=======
-// ============================================================================
-// DeepDiveTab — Add this function to GoogleAdsStrategyEngine.jsx
-// Paste it anywhere among the other tab functions (e.g. right after GeneratorTab,
-// before the `export default function GoogleAdsStrategyEngine()` line).
-// ============================================================================
+// ── DeepDive tab ──────────────────────────────────────────────
 
 const DEEP_DIVE_CACHE_KEY = 'apexdental_deep_dive_v1';
 const DEEP_DIVE_TTL_DAYS  = 14;
@@ -1111,7 +1101,7 @@ function ImpactBadge({ impact }) {
   );
 }
 
->>>>>>> Stashed changes
+// ── Main component ────────────────────────────────────────────
 export default function GoogleAdsStrategyEngine() {
   const [activeTab,      setActiveTab]      = useState('research');
   const [researchData,   setResearchData]   = useState(null); // shared research results
@@ -1173,10 +1163,7 @@ export default function GoogleAdsStrategyEngine() {
         {activeTab === 'scorer'    && <ScorerTab />}
         {activeTab === 'advisor'   && <AdvisorTab prefill={advisorPrefill} />}
         {activeTab === 'generator' && <GeneratorTab />}
-<<<<<<< Updated upstream
-=======
         {activeTab === 'deepdive'  && <DeepDiveTab />}
->>>>>>> Stashed changes
 
         {/* Nav footer */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
