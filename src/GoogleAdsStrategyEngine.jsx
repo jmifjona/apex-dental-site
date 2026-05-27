@@ -9,6 +9,7 @@ const TABS = [
   { id: 'generator', emoji: '✨', label: 'AI Campaign Generator' },
   { id: 'deepdive',  emoji: '🔬', label: 'Strategy Deep Dive' },
   { id: 'policy',    emoji: '🛡', label: 'Policy Audit' },
+  { id: 'ad_generator', emoji: '🎯', label: 'Ad Generator' },
 ];
 
 // ── Shared UI components ──────────────────────────────────────
@@ -565,165 +566,7 @@ function AdvisorTab({ prefill }) {
 
 // ── Tab: AI Campaign Generator ────────────────────────────────
 function GeneratorTab() {
-  const [service,      setService]      = useState('Dental Implants');
-  const [location,     setLocation]     = useState('Malta');
-  const [businessName, setBusinessName] = useState('Apex Dental');
-  const [finalUrl,     setFinalUrl]     = useState('https://www.apexdentalmalta.com');
-  const [languages,    setLanguages]    = useState(['English', 'Italian', 'Spanish']);
-  const [loading,      setLoading]      = useState(false);
-  const [error,        setError]        = useState('');
-  const [result,       setResult]       = useState(null);
-  const [activeLang,   setActiveLang]   = useState('English');
-
-  const allLangs = ['English', 'Italian', 'Spanish'];
-
-  function toggleLang(lang) {
-    setLanguages(prev => prev.includes(lang) ? prev.filter(l => l !== lang) : [...prev, lang]);
-  }
-
-  async function run() {
-    setLoading(true); setError(''); setResult(null);
-    try {
-      const res = await fetch(`${API}/ai/generate-campaign`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ service, location, businessName, finalUrl, languages }),
-        signal: AbortSignal.timeout(120000),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.message || 'Generation failed');
-      setResult(data);
-      if (data.campaigns) setActiveLang(Object.keys(data.campaigns)[0]);
-    } catch (e) {
-      setError(e.name === 'TimeoutError' ? 'Request timed out. Please retry.' : e.message);
-    } finally { setLoading(false); }
-  }
-
-  const camp = result?.campaigns?.[activeLang];
-
-  return (
-    <div className="space-y-6">
-      <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6">
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Campaign Settings</div>
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          {[
-            { label: 'Service',       value: service,      set: setService },
-            { label: 'Location',      value: location,     set: setLocation },
-            { label: 'Business name', value: businessName, set: setBusinessName },
-            { label: 'Final URL',     value: finalUrl,     set: setFinalUrl },
-          ].map(f => (
-            <div key={f.label}>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">{f.label}</label>
-              <input value={f.value} onChange={e => f.set(e.target.value)}
-                className="w-full rounded-xl bg-slate-900 border border-slate-700 px-4 py-2.5 text-white text-sm outline-none focus:border-amber-400 transition" />
-            </div>
-          ))}
-        </div>
-        <div className="mb-4">
-          <label className="block text-xs font-medium text-slate-400 mb-2">Languages</label>
-          <div className="flex gap-2">
-            {allLangs.map(l => (
-              <button key={l} onClick={() => toggleLang(l)}
-                className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition border ${
-                  languages.includes(l) ? 'bg-amber-400 text-slate-950 border-amber-400' : 'bg-slate-900 text-slate-400 border-slate-700 hover:border-slate-500'
-                }`}>
-                {l}
-              </button>
-            ))}
-          </div>
-        </div>
-        <button onClick={run} disabled={loading || languages.length === 0}
-          className="px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 text-sm font-bold hover:bg-amber-300 transition disabled:opacity-50 flex items-center gap-2">
-          {loading ? <><div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" /> Generating…</> : '✨ Generate AI Campaign Copy'}
-        </button>
-      </div>
-
-      {loading && <LoadingPulse message="AI is generating campaign copy…" sub={`Creating ${languages.join(', ')} campaign copy with policy-safe content`} />}
-      {error   && <ErrorBox message={error} onRetry={run} />}
-
-      {result && camp && (
-        <div className="space-y-4">
-          {Object.keys(result.campaigns).length > 1 && (
-            <div className="flex gap-1 p-1 bg-slate-800/50 rounded-xl border border-slate-700/50 w-fit">
-              {Object.keys(result.campaigns).map(lang => (
-                <button key={lang} onClick={() => setActiveLang(lang)}
-                  className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition ${activeLang === lang ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'}`}>
-                  {lang}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="rounded-2xl bg-slate-800/40 border border-amber-400/20 p-5">
-              <div className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Headlines ({camp.headlines?.length || 0})</div>
-              <div className="space-y-2">
-                {(camp.headlines || []).map((h, i) => (
-                  <div key={i} className="flex items-start justify-between gap-2">
-                    <span className="text-slate-300 text-sm">{h}</span>
-                    <span className={`text-xs shrink-0 ${h.length > 30 ? 'text-rose-400' : 'text-slate-500'}`}>{h.length}/30</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl bg-slate-800/40 border border-sky-400/20 p-5">
-              <div className="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3">Descriptions ({camp.descriptions?.length || 0})</div>
-              <div className="space-y-2">
-                {(camp.descriptions || []).map((d, i) => (
-                  <div key={i} className="flex items-start justify-between gap-2">
-                    <span className="text-slate-300 text-sm">{d}</span>
-                    <span className={`text-xs shrink-0 ${d.length > 90 ? 'text-rose-400' : 'text-slate-500'}`}>{d.length}/90</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl bg-slate-800/40 border border-emerald-400/20 p-5">
-              <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Keywords ({camp.keywords?.length || 0})</div>
-              <div className="flex flex-wrap gap-2">
-                {(camp.keywords || []).map((k, i) => (
-                  <span key={i} className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs">{k}</span>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl bg-slate-800/40 border border-violet-400/20 p-5">
-              <div className="text-xs font-bold text-violet-400 uppercase tracking-widest mb-3">Callouts & Sitelinks</div>
-              {(camp.callouts || []).map((c, i) => (
-                <div key={i} className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-slate-300">{c}</span>
-                  <span className={`text-xs ${c.length > 25 ? 'text-rose-400' : 'text-slate-500'}`}>{c.length}/25</span>
-                </div>
-              ))}
-              {(camp.sitelinks || []).map((s, i) => (
-                <div key={i} className="text-slate-400 text-xs mt-1">🔗 {s}</div>
-              ))}
-              {camp.structuredSnippets && (
-                <div className="text-slate-400 text-xs mt-2">📋 {camp.structuredSnippets}</div>
-              )}
-            </div>
-          </div>
-          {result.biddingStrategy && (
-            <div className="rounded-2xl bg-amber-400/10 border border-amber-400/20 p-5">
-              <div className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2">Recommended Bidding</div>
-              <div className="text-white font-semibold">{result.biddingStrategy}</div>
-              {result.biddingRationale && <p className="text-slate-400 text-sm mt-2 leading-6">{result.biddingRationale}</p>}
-            </div>
-          )}
-          {result.shutterstockQueries?.length > 0 && (
-            <div className="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-5">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Shutterstock Image Queries</div>
-              <div className="flex flex-wrap gap-2">
-                {result.shutterstockQueries.map((q, i) => (
-                  <a key={i} href={`https://www.shutterstock.com/search/${encodeURIComponent(q)}`} target="_blank" rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 text-xs hover:border-amber-400 hover:text-amber-400 transition">
-                    🖼 {q}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+  return <DataDrivenCampaignBuilder API={API} />;
 }
 
 // ── DeepDive tab ──────────────────────────────────────────────
@@ -1312,7 +1155,761 @@ function ImpactBadge({ impact }) {
   );
 }
 
+function DataDrivenCampaignBuilder({ API }) {
+  const [service, setService] = React.useState('');
+  const [language, setLanguage] = React.useState('en');
+  const [goal, setGoal] = React.useState('lead_generation');
+  const [budgetCap, setBudgetCap] = React.useState('');
+  const [building, setBuilding] = React.useState(false);
+  const [result, setResult] = React.useState(null);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem('apexdental_built_campaign_v1');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed?.savedAt && Date.now() - parsed.savedAt < 1000 * 60 * 60 * 24) {
+          setResult(parsed);
+        }
+      }
+    } catch {}
+  }, []);
+
+  async function build() {
+    if (!service.trim()) {
+      setError('Please enter a service name');
+      return;
+    }
+    setError(null);
+    setResult(null);
+    setBuilding(true);
+    try {
+      const r = await fetch(`${API}/ai/build-campaign-from-data`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service: service.trim(),
+          language,
+          goal,
+          monthlyBudgetCap: budgetCap ? Number(budgetCap) : null,
+        }),
+      });
+      const data = await r.json();
+      if (!data.ok) {
+        setError(data.message || 'Build failed');
+      } else {
+        const stamped = { ...data, savedAt: Date.now(), service, language, goal };
+        setResult(stamped);
+        try { localStorage.setItem('apexdental_built_campaign_v1', JSON.stringify(stamped)); } catch {}
+      }
+    } catch (e) {
+      setError(String(e.message || e));
+    } finally {
+      setBuilding(false);
+    }
+  }
+
+  function exportAsCsv() {
+    if (!result?.plan) return;
+    const p = result.plan;
+    const customerId = '5175622348';
+    const campName = p.campaign?.name || `Apex Dental - ${service}`;
+    const adGroupName = p.adGroup?.name || `${service} - Exact Match`;
+    const headlines = (p.ad?.headlines || []).map(h => h.text || '').filter(Boolean);
+    const descriptions = (p.ad?.descriptions || []).map(d => d.text || '').filter(Boolean);
+    const positions = (p.ad?.headlines || []).map(h => h.pin ? String(h.position || '') : '');
+
+    const header = [
+      'Row Type','Action','Ad status','Customer ID','Campaign ID','Campaign','Ad group ID','Ad group','Ad ID','Ad type','Label',
+      ...Array.from({ length: 15 }, (_, i) => `Headline ${i + 1}`),
+      ...Array.from({ length: 4 }, (_, i) => `Description ${i + 1}`),
+      ...Array.from({ length: 15 }, (_, i) => `Headline ${i + 1} position`),
+      ...Array.from({ length: 4 }, (_, i) => `Description ${i + 1} position`),
+      'Path 1','Path 2','Final URL','Mobile final URL','Tracking template','Final URL suffix','Custom parameter',
+    ];
+
+    const row = new Array(header.length).fill('');
+    const ix = (n) => header.indexOf(n);
+    row[ix('Row Type')] = 'Ad';
+    row[ix('Action')] = 'Add';
+    row[ix('Ad status')] = 'Enabled';
+    row[ix('Customer ID')] = customerId;
+    row[ix('Campaign')] = campName;
+    row[ix('Ad group')] = adGroupName;
+    row[ix('Ad type')] = 'Responsive search ad';
+    for (let i = 0; i < 15; i++) row[ix(`Headline ${i + 1}`)] = headlines[i] || '';
+    for (let i = 0; i < 4; i++) row[ix(`Description ${i + 1}`)] = descriptions[i] || '';
+    for (let i = 0; i < 15; i++) row[ix(`Headline ${i + 1} position`)] = positions[i] || '';
+    row[ix('Final URL')] = 'https://www.apexdentalmalta.com';
+
+    const escape = (s) => {
+      const t = String(s ?? '');
+      return /[",\n]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t;
+    };
+    const csv = '\uFEFF' + [header, row].map(r => r.map(escape).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${campName.replace(/[^a-z0-9]+/gi, '_')}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-lg font-semibold text-amber-400 mb-4">📊 Build Campaign from Your Account History</h3>
+        <p className="text-sm text-zinc-400 mb-4">
+          Uses your last 365 days of search terms, keywords, ads, and wasted spend to design a fresh campaign tailored to what's already working for this clinic.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="text-xs uppercase text-zinc-500 block mb-1">Service to advertise</label>
+            <input
+              type="text"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              placeholder="e.g. dental implants, veneers, teeth whitening"
+              value={service}
+              onChange={e => setService(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="text-xs uppercase text-zinc-500 block mb-1">Language</label>
+            <select
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              value={language}
+              onChange={e => setLanguage(e.target.value)}
+            >
+              <option value="en">English</option>
+              <option value="it">Italian</option>
+              <option value="es">Spanish</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-xs uppercase text-zinc-500 block mb-1">Campaign goal</label>
+            <select
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              value={goal}
+              onChange={e => setGoal(e.target.value)}
+            >
+              <option value="lead_generation">Lead Generation (form fills)</option>
+              <option value="calls">Phone Calls</option>
+              <option value="site_visits">Site Visits</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-xs uppercase text-zinc-500 block mb-1">Monthly budget cap (€, optional)</label>
+            <input
+              type="number"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              placeholder="e.g. 1500"
+              value={budgetCap}
+              onChange={e => setBudgetCap(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button
+          onClick={build}
+          disabled={building || !service.trim()}
+          className="mt-4 bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-700 disabled:cursor-not-allowed text-zinc-950 font-semibold px-6 py-2 rounded-lg"
+        >
+          {building ? '🧠 Building from your data...' : '⚡ Build Campaign'}
+        </button>
+
+        {building && (
+          <p className="text-xs text-zinc-500 mt-2">
+            Pulling search terms, keywords, ads, and wasted-spend history (~30-60 seconds)...
+          </p>
+        )}
+
+        {error && (
+          <div className="mt-4 bg-rose-950/40 border border-rose-800 rounded-lg p-3 text-rose-300 text-sm">
+            {error}
+          </div>
+        )}
+      </div>
+
+      {result?.plan && (
+        <>
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-sm uppercase text-zinc-500 mb-3">📈 Data Behind This Campaign</h4>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Search terms analysed</div>
+                <div className="text-amber-300 text-lg font-semibold">{result.dataSources?.searchTermsAnalysed}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Keywords analysed</div>
+                <div className="text-amber-300 text-lg font-semibold">{result.dataSources?.keywordsAnalysed}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Ads analysed</div>
+                <div className="text-amber-300 text-lg font-semibold">{result.dataSources?.adsAnalysed}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Total conversions (365d)</div>
+                <div className="text-amber-300 text-lg font-semibold">{result.dataSources?.totalConversionsLast365Days}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Total spend (365d)</div>
+                <div className="text-amber-300 text-lg font-semibold">€{result.dataSources?.totalSpendLast365Days}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3">
+                <div className="text-zinc-500 text-xs">Avg CPC</div>
+                <div className="text-amber-300 text-lg font-semibold">€{result.dataSources?.averageCpc}</div>
+              </div>
+              <div className="bg-zinc-950/50 rounded p-3 col-span-2 md:col-span-3">
+                <div className="text-zinc-500 text-xs">Wasted spend identified (will be added as negatives)</div>
+                <div className="text-rose-300 text-lg font-semibold">€{result.dataSources?.wastedSpendIdentified}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-amber-400 font-semibold mb-3">🎯 Campaign</h4>
+            <div className="text-white text-lg">{result.plan.campaign?.name}</div>
+            <div className="text-zinc-400 text-sm mt-1">
+              Daily budget: <span className="text-emerald-300 font-semibold">€{result.plan.campaign?.dailyBudget}</span>
+              <span className="mx-2">•</span>
+              Bidding: <span className="text-zinc-300">{result.plan.campaign?.biddingStrategy}</span>
+            </div>
+            {result.plan.campaign?.rationale && (
+              <p className="text-zinc-400 text-sm mt-2 italic">{result.plan.campaign.rationale}</p>
+            )}
+          </div>
+
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-amber-400 font-semibold mb-3">📰 Headlines ({result.plan.ad?.headlines?.length || 0})</h4>
+            <div className="space-y-2">
+              {(result.plan.ad?.headlines || []).map((h, i) => (
+                <div key={i} className="bg-zinc-950/50 rounded p-3 text-sm">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="text-white">
+                      <span className="text-zinc-500 mr-2">H{i+1}</span>
+                      {h.text}
+                      {h.pin && <span className="ml-2 text-xs bg-emerald-900/50 text-emerald-300 px-2 py-0.5 rounded">📌 Pos {h.position}</span>}
+                    </div>
+                    <span className="text-zinc-500 text-xs whitespace-nowrap">{h.text?.length || 0}/30</span>
+                  </div>
+                  {h.rationale && (
+                    <details className="mt-1">
+                      <summary className="text-xs text-zinc-500 cursor-pointer hover:text-amber-400">Why this?</summary>
+                      <p className="text-xs text-zinc-400 mt-1 italic">{h.rationale}</p>
+                    </details>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-amber-400 font-semibold mb-3">📝 Descriptions ({result.plan.ad?.descriptions?.length || 0})</h4>
+            <div className="space-y-2">
+              {(result.plan.ad?.descriptions || []).map((d, i) => (
+                <div key={i} className="bg-zinc-950/50 rounded p-3 text-sm">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="text-white"><span className="text-zinc-500 mr-2">D{i+1}</span>{d.text}</div>
+                    <span className="text-zinc-500 text-xs whitespace-nowrap">{d.text?.length || 0}/90</span>
+                  </div>
+                  {d.rationale && (
+                    <details className="mt-1">
+                      <summary className="text-xs text-zinc-500 cursor-pointer hover:text-amber-400">Why this?</summary>
+                      <p className="text-xs text-zinc-400 mt-1 italic">{d.rationale}</p>
+                    </details>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-amber-400 font-semibold mb-3">🔑 Keywords ({result.plan.adGroup?.keywords?.length || 0})</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {(result.plan.adGroup?.keywords || []).map((k, i) => (
+                <div key={i} className="bg-zinc-950/50 rounded p-2 text-sm">
+                  <div className="text-white">
+                    <span className="text-zinc-500 mr-2">{k.matchType}</span>{k.text}
+                  </div>
+                  {k.rationale && (
+                    <p className="text-xs text-zinc-500 italic mt-1">{k.rationale}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {result.plan.adGroup?.negativeKeywords?.length > 0 && (
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+              <h4 className="text-rose-400 font-semibold mb-3">🚫 Negative Keywords ({result.plan.adGroup.negativeKeywords.length})</h4>
+              <p className="text-xs text-zinc-500 mb-3">These wasted spend in your history. Auto-added as negatives.</p>
+              <div className="flex flex-wrap gap-2">
+                {result.plan.adGroup.negativeKeywords.map((n, i) => (
+                  <span key={i} className="bg-rose-950/30 border border-rose-900/50 text-rose-300 text-xs px-2 py-1 rounded">{n}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+              <h4 className="text-amber-400 font-semibold mb-3">🔗 Sitelinks</h4>
+              <div className="space-y-2">
+                {(result.plan.assets?.sitelinks || []).map((s, i) => (
+                  <div key={i} className="bg-zinc-950/50 rounded p-3 text-sm">
+                    <div className="text-white font-medium">{s.text}</div>
+                    <div className="text-zinc-400 text-xs mt-1">{s.description1}</div>
+                    <div className="text-zinc-400 text-xs">{s.description2}</div>
+                    <div className="text-zinc-600 text-xs mt-1 truncate">{s.url}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+              <h4 className="text-amber-400 font-semibold mb-3">💬 Callouts</h4>
+              <div className="space-y-1">
+                {(result.plan.assets?.callouts || []).map((c, i) => (
+                  <div key={i} className="bg-zinc-950/50 rounded px-3 py-2 text-sm text-white flex items-center justify-between">
+                    <span>{c}</span>
+                    <span className="text-zinc-500 text-xs">{c?.length || 0}/25</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {result.plan.summary?.rationale && (
+            <div className="bg-amber-950/20 border border-amber-900/40 rounded-2xl p-6">
+              <h4 className="text-amber-300 font-semibold mb-3">🧠 Why This Campaign Should Work</h4>
+              <p className="text-zinc-200 text-sm whitespace-pre-line">{result.plan.summary.rationale}</p>
+              <div className="grid grid-cols-2 gap-3 mt-4 text-xs">
+                <div><span className="text-zinc-500">Expected CPC range:</span> <span className="text-amber-300">{result.plan.summary.expectedCpcRange}</span></div>
+                <div><span className="text-zinc-500">Expected daily conversions:</span> <span className="text-amber-300">{result.plan.summary.expectedDailyConversions}</span></div>
+              </div>
+            </div>
+          )}
+
+          {result.validationWarnings?.length > 0 && (
+            <div className="bg-rose-950/30 border border-rose-800 rounded-2xl p-4">
+              <h4 className="text-rose-300 font-semibold mb-2">⚠️ Validation Warnings</h4>
+              <ul className="text-rose-200 text-sm list-disc pl-5">
+                {result.validationWarnings.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <button
+              onClick={exportAsCsv}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-2 rounded-lg"
+            >
+              ⬇️ Download as Google Ads CSV
+            </button>
+            <button
+              onClick={() => { setResult(null); localStorage.removeItem('apexdental_built_campaign_v1'); }}
+              className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold px-6 py-2 rounded-lg"
+            >
+              Clear
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────
+// ── AD GENERATOR TAB COMPONENT (inserted from AdGeneratorTab.jsx) ─────────
+function AdGeneratorTab({ API }) {
+  const [adGroups, setAdGroups] = React.useState([]);
+  const [adGroupsLoading, setAdGroupsLoading] = React.useState(false);
+  const [summary, setSummary] = React.useState(null);
+  const [filter, setFilter] = React.useState('all'); // all | no_ads | weak_ads | strong_ads
+  const [selectedGroup, setSelectedGroup] = React.useState(null);
+  const [generating, setGenerating] = React.useState(false);
+  const [generation, setGeneration] = React.useState(null);
+  const [pushingVariant, setPushingVariant] = React.useState(null);
+  const [pushResult, setPushResult] = React.useState(null);
+  const [includeCompetitor, setIncludeCompetitor] = React.useState(true);
+  const [editableFinalUrl, setEditableFinalUrl] = React.useState({}); // per-variant editable URL
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => { loadAdGroups(); }, []);
+
+  async function loadAdGroups() {
+    setAdGroupsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch(`${API}/ad-groups/list-with-ad-status`);
+      const data = await r.json();
+      if (!data.ok) {
+        setError(data.message || 'Failed to load ad groups');
+      } else {
+        setAdGroups(data.adGroups || []);
+        setSummary(data.summary || null);
+      }
+    } catch (e) {
+      setError(String(e.message || e));
+    } finally {
+      setAdGroupsLoading(false);
+    }
+  }
+
+  async function generateForGroup(group) {
+    setSelectedGroup(group);
+    setGeneration(null);
+    setPushResult(null);
+    setError(null);
+    setGenerating(true);
+    try {
+      const r = await fetch(`${API}/ai/generate-ad-for-group`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          adGroupId: group.adGroupId,
+          includeCompetitorResearch: includeCompetitor,
+        }),
+      });
+      const data = await r.json();
+      if (!data.ok) {
+        setError(data.message || 'Generation failed');
+      } else {
+        setGeneration(data);
+        // Seed editable URL state per variant
+        const urls = {};
+        (data.variants || []).forEach((v, i) => { urls[i] = v.finalUrl || 'https://www.apexdentalmalta.com'; });
+        setEditableFinalUrl(urls);
+      }
+    } catch (e) {
+      setError(String(e.message || e));
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  async function pushVariant(variantIdx) {
+    if (!generation || !selectedGroup) return;
+    const variant = generation.variants[variantIdx];
+    if (!variant) return;
+
+    const finalUrl = editableFinalUrl[variantIdx] || 'https://www.apexdentalmalta.com';
+    if (!/^https?:\/\//.test(finalUrl)) {
+      setError('Final URL must start with http:// or https://');
+      return;
+    }
+
+    if (!window.confirm(
+      `Push "${variant.label}" to ad group "${selectedGroup.adGroupName}"?\n\n` +
+      `${variant.headlines.length} headlines, ${variant.descriptions.length} descriptions.\n` +
+      `Final URL: ${finalUrl}\n\n` +
+      `The new ad will be ENABLED immediately and enter Google's review queue.`
+    )) return;
+
+    setPushingVariant(variantIdx);
+    setPushResult(null);
+    setError(null);
+    try {
+      const r = await fetch(`${API}/apply/create-ad`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          adGroupId: selectedGroup.adGroupId,
+          headlines: variant.headlines,
+          descriptions: variant.descriptions,
+          finalUrl,
+        }),
+      });
+      const data = await r.json();
+      if (!data.ok) {
+        setError(data.message || 'Push failed');
+      } else {
+        setPushResult({ variantIdx, ...data });
+        // Reload ad group list so status badges update
+        loadAdGroups();
+      }
+    } catch (e) {
+      setError(String(e.message || e));
+    } finally {
+      setPushingVariant(null);
+    }
+  }
+
+  const filteredGroups = filter === 'all'
+    ? adGroups
+    : adGroups.filter(g => g.status === filter);
+
+  const statusBadge = (status) => {
+    if (status === 'no_ads') return { emoji: '🔴', label: 'NO ADS', color: 'bg-rose-900/40 text-rose-300 border-rose-800' };
+    if (status === 'weak_ads') return { emoji: '🟡', label: 'WEAK', color: 'bg-amber-900/40 text-amber-300 border-amber-800' };
+    return { emoji: '🟢', label: 'STRONG', color: 'bg-emerald-900/40 text-emerald-300 border-emerald-800' };
+  };
+
+  const sourceBadge = (source) => {
+    const map = {
+      your_history: { label: '🧑 Your history', color: 'bg-blue-900/40 text-blue-300' },
+      competitor:   { label: '🏥 Competitor', color: 'bg-purple-900/40 text-purple-300' },
+      ad_group_kw:  { label: '🔑 Ad group keyword', color: 'bg-emerald-900/40 text-emerald-300' },
+      best_practice:{ label: '💡 Best practice', color: 'bg-amber-900/40 text-amber-300' },
+      clinic_usp:   { label: '⭐ Clinic USP', color: 'bg-pink-900/40 text-pink-300' },
+    };
+    return map[source] || { label: source || 'other', color: 'bg-zinc-800 text-zinc-400' };
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* HEADER */}
+      <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-lg font-semibold text-amber-400 mb-1">🎯 Ad Generator</h3>
+        <p className="text-sm text-zinc-400">
+          Generate fresh ads for any ad group using <strong>your account history</strong>, <strong>competitor research</strong>, and best-practice patterns. Pick an ad group from the list below.
+        </p>
+
+        {summary && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+            <div className="bg-zinc-950/50 rounded p-3 text-center">
+              <div className="text-zinc-500 text-xs">Total ad groups</div>
+              <div className="text-white text-2xl font-semibold">{summary.total}</div>
+            </div>
+            <div className={`rounded p-3 text-center cursor-pointer ${filter === 'no_ads' ? 'ring-2 ring-rose-500' : ''} bg-rose-950/30`} onClick={() => setFilter(filter === 'no_ads' ? 'all' : 'no_ads')}>
+              <div className="text-rose-400 text-xs">🔴 No ads</div>
+              <div className="text-rose-200 text-2xl font-semibold">{summary.noAds}</div>
+            </div>
+            <div className={`rounded p-3 text-center cursor-pointer ${filter === 'weak_ads' ? 'ring-2 ring-amber-500' : ''} bg-amber-950/30`} onClick={() => setFilter(filter === 'weak_ads' ? 'all' : 'weak_ads')}>
+              <div className="text-amber-400 text-xs">🟡 Weak ads</div>
+              <div className="text-amber-200 text-2xl font-semibold">{summary.weakAds}</div>
+            </div>
+            <div className={`rounded p-3 text-center cursor-pointer ${filter === 'strong_ads' ? 'ring-2 ring-emerald-500' : ''} bg-emerald-950/30`} onClick={() => setFilter(filter === 'strong_ads' ? 'all' : 'strong_ads')}>
+              <div className="text-emerald-400 text-xs">🟢 Strong ads</div>
+              <div className="text-emerald-200 text-2xl font-semibold">{summary.strongAds}</div>
+            </div>
+          </div>
+        )}
+
+        <div className="flex items-center gap-3 mt-4">
+          <button onClick={loadAdGroups} disabled={adGroupsLoading}
+            className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3 py-1.5 rounded text-sm">
+            {adGroupsLoading ? 'Loading…' : '🔄 Refresh'}
+          </button>
+          <label className="text-sm text-zinc-300 flex items-center gap-2">
+            <input type="checkbox" checked={includeCompetitor} onChange={e => setIncludeCompetitor(e.target.checked)} />
+            Include competitor research (slower, ~$0.30/click)
+          </label>
+        </div>
+      </div>
+
+      {error && (
+        <div className="bg-rose-950/40 border border-rose-800 rounded-lg p-3 text-rose-300 text-sm">
+          {error}
+        </div>
+      )}
+
+      {/* AD GROUP LIST */}
+      <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4">
+        <div className="text-xs uppercase text-zinc-500 mb-3 px-2">
+          Ad groups {filter !== 'all' ? `· filtered: ${filter}` : ''} ({filteredGroups.length})
+        </div>
+        <div className="space-y-2">
+          {filteredGroups.map(g => {
+            const b = statusBadge(g.status);
+            return (
+              <div key={g.adGroupId} className="bg-zinc-950/40 rounded-lg p-3 flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs border ${b.color}`}>
+                      {b.emoji} {b.label}
+                    </span>
+                    <span className="text-white text-sm truncate">{g.adGroupName}</span>
+                  </div>
+                  <div className="text-xs text-zinc-500 mt-1 truncate">
+                    📁 {g.campaignName} · {g.adCount} ads · CTR {g.weightedCtrPct}% · €{g.cost30dEur}/30d · {g.conversions30d} conv
+                  </div>
+                </div>
+                <button
+                  onClick={() => generateForGroup(g)}
+                  disabled={generating}
+                  className="bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-700 disabled:cursor-not-allowed text-zinc-950 font-semibold px-4 py-2 rounded whitespace-nowrap text-sm"
+                >
+                  {generating && selectedGroup?.adGroupId === g.adGroupId ? '🧠 Generating…' : '⚡ Generate Ads'}
+                </button>
+              </div>
+            );
+          })}
+          {!filteredGroups.length && !adGroupsLoading && (
+            <div className="text-zinc-500 text-sm text-center p-4">No ad groups match this filter</div>
+          )}
+        </div>
+      </div>
+
+      {/* GENERATION PROGRESS */}
+      {generating && selectedGroup && (
+        <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6 text-center">
+          <div className="text-amber-400 text-lg font-semibold mb-2">🧠 Designing ads for "{selectedGroup.adGroupName}"</div>
+          <div className="text-zinc-400 text-sm">
+            Pulling ad group keywords, your top-CTR phrases, {includeCompetitor ? 'researching European dental clinics, ' : ''}then asking Claude to synthesise 2 variants…
+          </div>
+          <div className="text-zinc-500 text-xs mt-2">Usually takes 30-60 seconds.</div>
+        </div>
+      )}
+
+      {/* RESULTS */}
+      {generation && !generating && (
+        <>
+          {/* Context summary */}
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+            <h4 className="text-sm uppercase text-zinc-500 mb-3">📊 Data used in this generation</h4>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
+              <div className="bg-zinc-950/50 rounded p-3"><div className="text-zinc-500 text-xs">Ad group keywords</div><div className="text-amber-300 text-lg">{generation.dataUsed?.keywordCount}</div></div>
+              <div className="bg-zinc-950/50 rounded p-3"><div className="text-zinc-500 text-xs">Existing ads</div><div className="text-amber-300 text-lg">{generation.dataUsed?.existingAdCount}</div></div>
+              <div className="bg-zinc-950/50 rounded p-3"><div className="text-zinc-500 text-xs">Proven headlines</div><div className="text-amber-300 text-lg">{generation.dataUsed?.provenHeadlineCount}</div></div>
+              <div className="bg-zinc-950/50 rounded p-3"><div className="text-zinc-500 text-xs">Competitor research</div><div className="text-amber-300 text-lg">{generation.dataUsed?.competitorResearchUsed ? '✓' : '—'}</div></div>
+              <div className="bg-zinc-950/50 rounded p-3"><div className="text-zinc-500 text-xs">Clinics studied</div><div className="text-amber-300 text-lg">{generation.dataUsed?.clinicsStudied || 0}</div></div>
+            </div>
+            {generation.overallNotes && (
+              <p className="text-zinc-300 text-sm mt-4 italic">{generation.overallNotes}</p>
+            )}
+          </div>
+
+          {/* Competitor insights (collapsed by default) */}
+          {generation.competitorInsights?.clinics_studied?.length > 0 && (
+            <details className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+              <summary className="text-amber-400 font-semibold cursor-pointer">🏥 Competitor insights ({generation.competitorInsights.clinics_studied.length} clinics)</summary>
+              <div className="mt-4 space-y-3">
+                {generation.competitorInsights.clinics_studied.map((c, i) => (
+                  <div key={i} className="bg-zinc-950/50 rounded p-3 text-sm">
+                    <div className="text-white font-medium">{c.name}</div>
+                    <div className="text-zinc-500 text-xs truncate">{c.url}</div>
+                    {c.hero_headline && <div className="text-zinc-300 text-sm italic mt-1">"{c.hero_headline}"</div>}
+                    {c.benefits?.length > 0 && (
+                      <ul className="text-zinc-400 text-xs mt-1 list-disc pl-5">
+                        {c.benefits.map((b, j) => <li key={j}>{b}</li>)}
+                      </ul>
+                    )}
+                    {c.cta && <div className="text-emerald-400 text-xs mt-1">CTA: {c.cta}</div>}
+                  </div>
+                ))}
+                {generation.competitorInsights.common_patterns?.length > 0 && (
+                  <div className="bg-zinc-950/50 rounded p-3 text-sm mt-2">
+                    <div className="text-zinc-400 text-xs uppercase mb-2">Common patterns</div>
+                    <ul className="text-zinc-300 text-sm list-disc pl-5">
+                      {generation.competitorInsights.common_patterns.map((p, i) => <li key={i}>{p}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </details>
+          )}
+
+          {/* Variants */}
+          {(generation.variants || []).map((variant, vIdx) => (
+            <div key={vIdx} className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6">
+              <h4 className="text-amber-400 font-semibold text-lg mb-1">{variant.label || `Variant ${String.fromCharCode(65 + vIdx)}`}</h4>
+              {variant.summary && <p className="text-zinc-400 text-sm italic mb-4">{variant.summary}</p>}
+
+              {/* Final URL editable */}
+              <div className="mb-4">
+                <label className="text-xs uppercase text-zinc-500 block mb-1">Final URL</label>
+                <input
+                  type="text"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-sm text-white"
+                  value={editableFinalUrl[vIdx] || ''}
+                  onChange={e => setEditableFinalUrl({ ...editableFinalUrl, [vIdx]: e.target.value })}
+                />
+              </div>
+
+              {/* Headlines */}
+              <div className="mb-4">
+                <div className="text-xs uppercase text-zinc-500 mb-2">Headlines ({(variant.headlines || []).length})</div>
+                <div className="space-y-1.5">
+                  {(variant.headlines || []).map((h, hi) => {
+                    const src = sourceBadge(h.source);
+                    return (
+                      <div key={hi} className="bg-zinc-950/50 rounded p-2 flex items-start gap-2 text-sm">
+                        <span className="text-zinc-600 text-xs mt-1 w-8">H{hi + 1}</span>
+                        <div className="flex-1">
+                          <div className="text-white">{h.text}</div>
+                          {h.rationale && <div className="text-zinc-500 text-xs italic mt-0.5">{h.rationale}</div>}
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {h.pin && <span className="text-emerald-400 text-xs">📌 P{h.position}</span>}
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${src.color}`}>{src.label}</span>
+                          <span className="text-zinc-500 text-xs w-12 text-right">{(h.text || '').length}/30</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Descriptions */}
+              <div className="mb-4">
+                <div className="text-xs uppercase text-zinc-500 mb-2">Descriptions ({(variant.descriptions || []).length})</div>
+                <div className="space-y-1.5">
+                  {(variant.descriptions || []).map((d, di) => {
+                    const src = sourceBadge(d.source);
+                    return (
+                      <div key={di} className="bg-zinc-950/50 rounded p-2 flex items-start gap-2 text-sm">
+                        <span className="text-zinc-600 text-xs mt-1 w-8">D{di + 1}</span>
+                        <div className="flex-1">
+                          <div className="text-white">{d.text}</div>
+                          {d.rationale && <div className="text-zinc-500 text-xs italic mt-0.5">{d.rationale}</div>}
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${src.color}`}>{src.label}</span>
+                          <span className="text-zinc-500 text-xs w-12 text-right">{(d.text || '').length}/90</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Push button */}
+              <button
+                onClick={() => pushVariant(vIdx)}
+                disabled={pushingVariant === vIdx || pushResult?.variantIdx === vIdx}
+                className={`w-full font-semibold px-4 py-3 rounded mt-2 ${
+                  pushResult?.variantIdx === vIdx
+                    ? 'bg-emerald-700 text-emerald-100'
+                    : pushingVariant === vIdx
+                      ? 'bg-zinc-700 text-zinc-400'
+                      : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                }`}
+              >
+                {pushResult?.variantIdx === vIdx
+                  ? '✅ Pushed — under Google review'
+                  : pushingVariant === vIdx
+                    ? '⏳ Pushing to Google Ads...'
+                    : `🚀 Push "${variant.label || `Variant ${String.fromCharCode(65 + vIdx)}`}" to "${selectedGroup?.adGroupName}"`}
+              </button>
+            </div>
+          ))}
+
+          {/* Validation warnings */}
+          {generation.validationWarnings?.length > 0 && (
+            <div className="bg-amber-950/30 border border-amber-800 rounded-2xl p-4">
+              <h4 className="text-amber-300 font-semibold mb-2">⚠️ Validation warnings (will auto-fail on push)</h4>
+              <ul className="text-amber-200 text-sm list-disc pl-5">
+                {generation.validationWarnings.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Push result toast */}
+      {pushResult && (
+        <div className="bg-emerald-950/40 border border-emerald-800 rounded-2xl p-4 text-emerald-200 text-sm">
+          ✅ {pushResult.message} — {pushResult.headlinesAdded} headlines, {pushResult.descriptionsAdded} descriptions.
+          <div className="text-emerald-400 text-xs mt-1">{pushResult.reviewNotice}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function GoogleAdsStrategyEngine() {
 const POLICY_CACHE_KEY = 'apexdental_policy_audit_v1';
 
@@ -1821,6 +2418,7 @@ function PolicyIssueCard({ issue, issueKey, applied = {}, applying = {}, onApply
         {activeTab === 'advisor'   && <AdvisorTab prefill={advisorPrefill} />}
         {activeTab === 'generator' && <GeneratorTab />}
         {activeTab === 'deepdive'  && <DeepDiveTab />}
+        {activeTab === 'ad_generator' && <AdGeneratorTab API={API} />}
         {activeTab === 'policy'    && <PolicyAuditTab />}
 
         {/* Nav footer */}
