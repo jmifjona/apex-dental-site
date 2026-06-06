@@ -229,6 +229,7 @@ const brand = {
   address:
     'Trident Park, Mdina Road, Mrieħel, Birkirkara, CBD 2010, Malta',
   logo: '/images/orislogo.png',
+  googleMaps: 'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
 };
 
 const siteUrl = 'https://www.apexdentalmalta.com';
@@ -1204,15 +1205,26 @@ function ReviewStrip() {
                 <span className="text-white font-semibold text-lg">4.9</span>
                 <span className="text-slate-400 text-sm">119 Google Reviews</span>
               </div>
-              <a
-                href="https://www.google.com/search?q=Apex+Dental+Malta+reviews"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 text-amber-400 hover:text-amber-300 font-semibold text-sm transition"
-              >
-                Read all reviews on Google
-                <ArrowUpRight size={16} />
-              </a>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <a
+                  href={brand.googleMaps}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-semibold text-sm transition"
+                >
+                  Read all reviews on Google
+                  <ArrowUpRight size={16} />
+                </a>
+                <a
+                  href={brand.googleMaps}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-white/90 hover:text-white font-semibold text-sm transition"
+                >
+                  Leave us a review
+                  <ArrowUpRight size={16} />
+                </a>
+              </div>
             </div>
             <div className="grid gap-4">
               {reviews.map((review) => (
@@ -1457,6 +1469,11 @@ function Footer() {
             <p>
               <a href={`mailto:${brand.email}`} className="hover:text-white">
                 {brand.email}
+              </a>
+            </p>
+            <p className="mt-4">
+              <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2">
+                Find us on Google Maps &amp; read our reviews
               </a>
             </p>
           </div>
