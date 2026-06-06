@@ -467,6 +467,9 @@ function FloatingHeader() {
       title: 'Implant & Restorative',
       items: [
         { to: '/dental-implants/', label: 'Dental Implants' },
+        { to: '/straumann-implants-malta/', label: 'Straumann Implants' },
+        { to: '/all-on-4-malta/', label: 'All-on-4 Implants' },
+        { to: '/all-on-6-malta/', label: 'All-on-6 Implants' },
         { to: '/crowns-and-bridgework/', label: 'Crowns & Bridgework' },
         { to: '/dental-prosthetics/', label: 'Dental Prosthetics' },
         { to: '/removable-prosthesis/', label: 'Removable Prosthesis' },
@@ -486,6 +489,7 @@ function FloatingHeader() {
       items: [
         { to: '/invisalign-malta/', label: 'Clear Aligners' },
         { to: '/orthodontics/', label: 'Orthodontic Treatment' },
+        { to: '/fixed-braces-malta/', label: 'Fixed Braces' },
         { to: '/orthix-aligners/', label: 'Orthix (In-House Aligner)' },
         { to: '/clearcorrect-malta/', label: 'ClearCorrect' },
         { to: '/ordoline-aligners-malta/', label: 'Ordoline' },
@@ -1620,6 +1624,16 @@ function ImplantsPage() {
         text="If you have lost most or all of your teeth, or you are worn down by a denture that slips, All-on-4 fixes a full set of teeth onto just four implants per jaw. The implants are angled to make the most of the bone you already have, which often avoids the need for grafting, and the new teeth are screwed firmly in place. Nothing comes out at night, and nothing covers the roof of your mouth, so taste and comfort come back too. In many cases a fixed temporary set can go on the same day as surgery."
         points={['A full fixed set of teeth on four implants', 'Angled placement often avoids bone grafting', 'Stays put — nothing to remove or soak overnight', 'Leaves the palate free, so taste and comfort improve']}
       />
+      <section className="bg-[#f7f4ef] py-12">
+        <Section>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-slate-700 font-medium">Explore in detail:</span>
+            <Link to="/straumann-implants-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Straumann implants &rarr;</Link>
+            <Link to="/all-on-4-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">All-on-4 &rarr;</Link>
+            <Link to="/all-on-6-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">All-on-6 &rarr;</Link>
+          </div>
+        </Section>
+      </section>
       <PricingHint items={implantPricing} note="Your implant consultation is free when you go ahead with treatment, and the 3D scan is included with surgery, so there is no separate planning fee. From there the cost depends on how many implants you need, whether any grafting is involved, and the type of crown or bridge that goes on top. The full price list lays it all out, with no hidden extras." />
       <FAQSection faqs={implantFaqs} dark />
       <CTASection dark title="Not sure if implants are right for you?" text="Book a consultation with Dr Jonathan Mifsud. He will take a proper look, talk you through what is realistic for your case, and give you a clear plan and price — with no pressure to commit." />
@@ -1680,7 +1694,7 @@ function AlignersPage() {
       <SplitEditorial
         imageLeft={images.aligners.A4}
         title="Consultations in English, Italian or Spanish"
-        text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish and Dr Massimo D'Alessandro in Italian, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
+        text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish, Dr Massimo D'Alessandro in Italian, and Dr Aleksandra Syrico Mallia in Polish, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
         points={['Consultations in English, Italian or Spanish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
       />
       <FAQSection faqs={alignerFaqs} dark />
@@ -1763,7 +1777,7 @@ function AboutPage() {
   usePageTitle('About Apex Dental Malta | Our Dental Team');
   const team = [
     { name: 'Dr Jonathan Mifsud', role: 'Dental Implantologist', flag: null, bio: 'Dr Jonathan Mifsud founded Apex Dental and runs the implant side of the practice. He places everything from single implants to full-arch and All-on-4 cases, and takes on the more complex treatment planning — the cases that need to be thought through carefully before anyone picks up an instrument.' },
-    { name: 'Dr Aleksandra Syrico Mallia', role: 'Orthodontist', flag: null, bio: 'Dr Aleksandra leads orthodontics at Apex Dental. She treats children, teenagers and adults with both fixed braces and clear aligners, and works with our in-house Orthix aligner system as well as Invisalign, ClearCorrect, Ordoline and Cristaline. She plans each case around how your teeth bite together, not just how they look from the front.' },
+    { name: 'Dr Aleksandra Syrico Mallia', role: 'Orthodontist', flag: 'PL', bio: 'Dr Aleksandra Syrico Mallia leads orthodontics at Apex Dental. She treats children, teenagers and adults with both fixed braces and clear aligners, and works with our in-house Orthix aligner system as well as Invisalign, ClearCorrect, Ordoline and Cristaline. She plans each case around how your teeth bite together, not just how they look from the front. Polish-speaking patients are welcome to consult with her in Polish.' },
     { name: 'Dr Charlotte Axisa', role: 'General and Restorative Dentist', flag: null, bio: 'Dr Charlotte Axisa covers general and restorative dentistry — the check-ups, fillings, crowns and preventive care that make up most visits. Patients tend to mention how calm and unhurried she is, which helps if you are someone who has put off the dentist for a while.' },
     { name: "Dr Massimo D'Alessandro", role: 'General Dentist', flag: 'IT', bio: "Dr Massimo D'Alessandro trained and worked in Italy before joining us. If Italian is your first language, you can see him and talk through your treatment in Italian rather than working it out in English." },
     { name: 'Dr Adam Borg', role: 'General Dentist', flag: null, bio: 'Dr Adam Borg handles a broad range of general and restorative treatment. He is straightforward about explaining what he is doing and why, so you leave knowing what was done and what, if anything, needs keeping an eye on.' },
@@ -1779,7 +1793,7 @@ function AboutPage() {
     <>
       <SEO
         title="About Apex Dental Malta | Our Dental Team"
-        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra (Orthodontist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
+        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
@@ -2276,6 +2290,15 @@ function OrthodonticPage() {
         dark
         reverse
       />
+      <section className="bg-[#f7f4ef] py-10">
+        <Section>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-slate-700 font-medium">Read more:</span>
+            <Link to="/fixed-braces-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Fixed braces &rarr;</Link>
+            <Link to="/orthix-aligners/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Orthix in-house aligner &rarr;</Link>
+          </div>
+        </Section>
+      </section>
       <section className="bg-white py-20">
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Clear Aligner Options</div>
@@ -2318,6 +2341,64 @@ function OrthodonticPage() {
         title="Thinking about straightening your teeth?"
         text="Book an orthodontic consultation with Dr Aleksandra. She will check your teeth and bite and talk you through your options — fixed braces, clear aligners, or our in-house Orthix — with a clear plan and timeframe."
       />
+    </>
+  );
+}
+
+function FixedBracesPage() {
+  usePageTitle('Fixed Braces Malta | Metal & Ceramic Braces | Apex Dental');
+  const faqs = [
+    { q: 'Who fits braces at Apex Dental?', a: 'Fixed braces are fitted and adjusted by our orthodontist, Dr Aleksandra Syrico Mallia. She treats children, teenagers and adults, and plans each case around the bite as well as the appearance of the teeth.' },
+    { q: 'What types of fixed braces do you offer?', a: 'We offer traditional metal braces, which are reliable and efficient, and tooth-coloured ceramic braces, which blend in far more and are much less noticeable. Dr Aleksandra will advise which suits your case and how visible each option really is.' },
+    { q: 'Braces or clear aligners?', a: 'Both move teeth, but fixed braces handle some cases more predictably, especially bigger movements, rotations and more complex bites. Aligners are great for many cases and barely visible. We assess your teeth first and recommend on what will actually get you the result, not on a single preferred option.' },
+    { q: 'Do braces hurt?', a: 'There is usually some tightness for a day or two after braces are fitted and after each adjustment, as the teeth begin to move. It settles quickly. Brackets can rub at first, and we give you wax to smooth that over while your mouth gets used to them.' },
+    { q: 'How long will I wear braces?', a: 'Most courses run somewhere between 12 and 24 months depending on how much the teeth need to move. You will get a realistic estimate once Dr Aleksandra has assessed your teeth and bite.' },
+  ];
+  return (
+    <>
+      <SEO
+        title="Fixed Braces Malta | Metal & Ceramic Braces | Apex Dental"
+        description="Fixed dental braces in Malta at Apex Dental. Metal and clear ceramic braces for children, teenagers and adults, fitted by orthodontist Dr Aleksandra Syrico Mallia."
+        canonical={`${siteUrl}/fixed-braces-malta/`}
+        image={`${siteUrl}/images/A2.jpg`}
+        schemas={[
+          serviceSchema('Fixed Braces', 'Fixed orthodontic braces in Malta at Apex Dental, including metal and ceramic braces, fitted by orthodontist Dr Aleksandra Syrico Mallia.', `${siteUrl}/fixed-braces-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Orthodontics', path: '/orthodontics/' }, { name: 'Fixed Braces', path: '/fixed-braces-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.aligners.A2}
+        eyebrow="Fixed Braces Malta"
+        title="Fixed braces: the most reliable way to correct a difficult bite"
+        subtitle="For all the attention clear aligners get, fixed braces still straighten some cases more predictably than anything else. At Apex Dental they are fitted and managed by our orthodontist, Dr Aleksandra Syrico Mallia, for children, teenagers and adults."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A3}
+        title="When braces are the better tool"
+        text="Aligners are excellent for many cases, but certain movements are simply harder to achieve with removable trays — larger shifts, rotating a tooth, and more complex bite corrections among them. Fixed braces stay on the teeth and work continuously, which gives the orthodontist more control over exactly how each tooth moves. Where that control is what your case needs, braces are the honest recommendation."
+        points={[
+          'Reliable for complex movements and bite correction',
+          'Continuous, controlled tooth movement',
+          'Suitable across a wide range of ages',
+          'Nothing to remember to wear',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A4}
+        title="Metal or clear ceramic"
+        text="Braces have come a long way. Modern metal brackets are much smaller and neater than the ones you might remember, and they remain the most efficient option. If you would rather they did not show, tooth-coloured ceramic brackets blend in with your teeth and are far less noticeable from a normal talking distance. Dr Aleksandra will talk you through how visible each really is so you can choose with realistic expectations."
+        points={[
+          'Small, neat modern metal brackets',
+          'Tooth-coloured ceramic for discretion',
+          'Honest guidance on visibility',
+          'Chosen to suit your case and preference',
+        ]}
+        dark
+        reverse
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Considering braces?" text="Book an orthodontic consultation with Dr Aleksandra Syrico Mallia. She will check your teeth and bite and explain whether fixed braces or clear aligners will get you the best result." />
     </>
   );
 }
@@ -2546,6 +2627,239 @@ function CristalinePage() {
       />
       <FAQSection faqs={faqs} dark />
       <CTASection dark title="Interested in Cristaline aligners?" text="Book a consultation with Dr Aleksandra Syrico Mallia to see whether Cristaline is the right clear aligner for your case, with a clear plan and price." />
+    </>
+  );
+}
+
+function StudiesSection({ eyebrow, heading, intro, studies, dark = false }) {
+  const wrap = dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900';
+  const card = dark ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-[#f7f4ef]';
+  const body = dark ? 'text-slate-300' : 'text-slate-600';
+  return (
+    <section className={`${wrap} py-20`}>
+      <Section>
+        <div className={`text-sm uppercase tracking-[0.25em] mb-4 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{eyebrow}</div>
+        <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-6 max-w-3xl">{heading}</h2>
+        <p className={`leading-8 mb-12 max-w-3xl ${body}`}>{intro}</p>
+        <div className="grid md:grid-cols-2 gap-6">
+          {studies.map((st, i) => (
+            <div key={i} className={`rounded-3xl border p-7 ${card}`}>
+              <p className={`leading-7 mb-4 ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{st.finding}</p>
+              <div className="flex items-center justify-between gap-4">
+                <span className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{st.source}</span>
+                <a href={st.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-sky-500 hover:text-sky-400 shrink-0">View study &rarr;</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className={`text-xs mt-8 ${dark ? 'text-slate-500' : 'text-slate-400'}`}>Survival and success figures are drawn from published clinical studies and reflect averages across many patients; your own outcome depends on your case, bone, general health and aftercare.</p>
+      </Section>
+    </section>
+  );
+}
+
+function StraumannImplantsPage() {
+  usePageTitle('Straumann Implants Malta | Premium Swiss Implants | Apex Dental');
+  const faqs = [
+    { q: 'What are Straumann implants?', a: 'Straumann is a Swiss implant manufacturer widely regarded as one of the leading names in dentistry, backed by decades of research. Their implants are known for the SLA and SLActive surfaces, which are designed to help the implant integrate with the bone quickly and reliably.' },
+    { q: 'Why does the implant brand matter?', a: 'The body and surface of an implant affect how well and how quickly it fuses with your bone, and a well-documented brand means replacement parts and components are available for years to come. Straumann has some of the longest published track records in the field, which is reassuring for something meant to last decades.' },
+    { q: 'What is SLActive?', a: 'SLActive is Straumann\'s hydrophilic implant surface, engineered to speed up early healing. In their documentation it is reported to shorten the integration period compared with older surfaces, which can mean a faster route to your final teeth in suitable cases.' },
+    { q: 'Do you use Straumann implants at Apex Dental?', a: 'Yes. Dr Jonathan Mifsud places Straumann implants as part of our implant treatment. During your consultation we will explain which system suits your case and why.' },
+  ];
+  const studies = [
+    { finding: 'A retrospective study of 1,692 Straumann tissue-level implants reported a 10-year cumulative survival rate of around 98% at the implant level.', source: 'PubMed, 10-year radiographic study', url: 'https://pubmed.ncbi.nlm.nih.gov/30110515/' },
+    { finding: 'A cohort of 4,591 Straumann implants placed in a private-practice setting found a survival rate of about 98% with up to 10 years of follow-up.', source: 'PubMed, retrospective cohort', url: 'https://pubmed.ncbi.nlm.nih.gov/25134415/' },
+    { finding: 'A clinical evaluation of Straumann implants reported high clinical performance and survival rates across the patient group studied.', source: 'Scientific Reports (Nature)', url: 'https://www.nature.com/articles/s41598-021-89112-8' },
+  ];
+  return (
+    <>
+      <SEO
+        title="Straumann Implants Malta | Premium Swiss Implants | Apex Dental"
+        description="Straumann dental implants in Malta at Apex Dental. Premium Swiss implants with SLActive surface technology and a long published track record, placed by Dr Jonathan Mifsud."
+        canonical={`${siteUrl}/straumann-implants-malta/`}
+        image={`${siteUrl}/images/I1.jpg`}
+        schemas={[
+          serviceSchema('Straumann Dental Implants', 'Straumann premium Swiss dental implants in Malta at Apex Dental, placed by implantologist Dr Jonathan Mifsud.', `${siteUrl}/straumann-implants-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Dental Implants', path: '/dental-implants/' }, { name: 'Straumann Implants', path: '/straumann-implants-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.implants.I1}
+        eyebrow="Straumann Implants Malta"
+        title="Straumann implants: premium Swiss engineering for a tooth meant to last"
+        subtitle="When you are replacing a tooth root for the long term, the implant you choose matters. At Apex Dental we place Straumann implants — a Swiss system with one of the longest and strongest research records in dentistry — fitted by implantologist Dr Jonathan Mifsud."
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I2}
+        title="Why we place Straumann"
+        text="There are many implant brands, and they are not all equal. Straumann has spent decades researching how implants bond to bone, and the result is a system with predictable healing and a vast body of published evidence behind it. For you that means an implant from a manufacturer that will still be supplying matching components in fifteen or twenty years, which matters for something designed to stay in your jaw for life."
+        points={[
+          'Swiss-made, research-led implant system',
+          'SLA and SLActive surfaces for reliable integration',
+          'Decades of published clinical data',
+          'Components supported long into the future',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I3}
+        title="SLActive: engineered for faster healing"
+        text="The surface of an implant is where it meets your bone, and it is what Straumann has focused much of its research on. Their SLActive surface is hydrophilic, designed to encourage bone cells to attach sooner. In Straumann\'s own documentation this shortens the early healing phase compared with older surfaces, which in suitable cases can bring your final teeth a little closer."
+        points={[
+          'Hydrophilic surface that speeds early healing',
+          'Designed for predictable osseointegration',
+          'Useful in immediate and complex cases',
+          'Backed by the manufacturer\'s research',
+        ]}
+        dark
+        reverse
+      />
+      <StudiesSection
+        eyebrow="What the Research Shows"
+        heading="The evidence behind Straumann implants"
+        intro="Implant success is not a marketing claim — it is measured over years in clinical studies. Here is a selection of published research on Straumann implant survival. We have linked the original sources so you can read them yourself."
+        studies={studies}
+        dark
+      />
+      <FAQSection faqs={faqs} />
+      <CTASection dark title="Considering implants?" text="Book a consultation with Dr Jonathan Mifsud to discuss Straumann implant treatment for your case, with a clear plan and price." />
+    </>
+  );
+}
+
+function AllOn4Page() {
+  usePageTitle('All-on-4 Dental Implants Malta | Full Arch | Apex Dental');
+  const faqs = [
+    { q: 'What is All-on-4?', a: 'All-on-4 replaces a full arch of missing teeth using just four implants to support a fixed bridge. Two implants are placed straight at the front and two are angled at the back, which makes the most of the bone you already have and often avoids the need for grafting.' },
+    { q: 'Can I get teeth on the same day?', a: 'In many All-on-4 cases a fixed temporary set of teeth can be fitted on the day of surgery, so you do not leave without teeth. Your final bridge is made once everything has healed. Whether same-day teeth are right for you depends on your bone and bite, which we assess first.' },
+    { q: 'How long do All-on-4 implants last?', a: 'Published long-term studies report high survival over 10 years and beyond. As with any implant, longevity depends on your gum health, general health and keeping up with maintenance visits.' },
+    { q: 'Is All-on-4 better than dentures?', a: 'For most people, yes. Unlike a denture, All-on-4 is fixed in place — it does not come out at night, does not cover the roof of your mouth, and lets you eat and speak with confidence. It is a bigger investment, but it is a permanent solution rather than an appliance.' },
+  ];
+  const studies = [
+    { finding: 'Maló and colleagues followed 245 patients with 980 All-on-4 implants and reported implant success of 98.1% at five years and 94.8% at up to ten years, with prosthesis survival of 99.2%.', source: 'PubMed, longitudinal study', url: 'https://pubmed.ncbi.nlm.nih.gov/21357865/' },
+    { finding: 'A longer follow-up of 471 patients (1,884 implants) over 10 to 18 years found a prosthetic survival rate of 98.8% and implant survival of 93.0%.', source: 'PubMed, 10–18 year study', url: 'https://pubmed.ncbi.nlm.nih.gov/30924309/' },
+    { finding: 'A systematic review of the All-on-4 treatment concept confirmed it as a predictable option for full-arch rehabilitation.', source: 'PMC, systematic review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5347302/' },
+    { finding: 'Nobel Biocare reports up to 18 years of documented clinical success for the All-on-4 treatment concept.', source: 'Nobel Biocare, science review', url: 'https://www.nobelbiocare.com/en-int/blog/science-first/all-on-4-treatment-concept-high-rates-of-long-term-clinical-success' },
+  ];
+  return (
+    <>
+      <SEO
+        title="All-on-4 Dental Implants Malta | Full Arch | Apex Dental"
+        description="All-on-4 dental implants in Malta at Apex Dental. A fixed full arch of teeth on four implants, often with same-day temporary teeth. Placed by implantologist Dr Jonathan Mifsud."
+        canonical={`${siteUrl}/all-on-4-malta/`}
+        image={`${siteUrl}/images/I4.jpg`}
+        schemas={[
+          serviceSchema('All-on-4 Dental Implants', 'All-on-4 full-arch dental implant treatment in Malta at Apex Dental, placed by implantologist Dr Jonathan Mifsud.', `${siteUrl}/all-on-4-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Dental Implants', path: '/dental-implants/' }, { name: 'All-on-4', path: '/all-on-4-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.implants.I4}
+        eyebrow="All-on-4 Implants Malta"
+        title="A full set of fixed teeth on four implants"
+        subtitle="All-on-4 replaces an entire arch of missing teeth with a fixed bridge anchored on four implants. It is a well-documented solution for people who have lost most of their teeth or are tired of a loose denture, and at Apex Dental it is planned and placed by Dr Jonathan Mifsud."
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I2}
+        title="How All-on-4 works"
+        text="Instead of one implant per missing tooth, All-on-4 uses four. The two at the back are angled to take advantage of the denser bone toward the front of the jaw, which often means treatment can go ahead without bone grafting even when some bone has been lost. A full bridge is fixed onto those four implants, giving you a complete arch of teeth that stays put."
+        points={[
+          'A full fixed arch on four implants',
+          'Angled implants make the most of available bone',
+          'Often avoids the need for bone grafting',
+          'Nothing removable — it stays in place',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I3}
+        title="Often teeth on the same day"
+        text="One of the reasons All-on-4 is so popular is that a fixed set of temporary teeth can frequently be fitted on the day of surgery. You go in with failing teeth or a denture and leave with a fixed set the same day, then return for your permanent bridge once the implants have fully healed. Whether immediate teeth suit you depends on your bone and bite, which we check during planning."
+        points={[
+          'Fixed temporary teeth often fitted same day',
+          'No long gap without teeth',
+          'Permanent bridge after healing',
+          'Suitability confirmed at planning stage',
+        ]}
+        dark
+        reverse
+      />
+      <StudiesSection
+        eyebrow="What the Research Shows"
+        heading="The evidence behind All-on-4"
+        intro="All-on-4 is one of the most studied treatments in implant dentistry, with follow-up now stretching beyond fifteen years. Here is a selection of the published evidence, with links to the original studies."
+        studies={studies}
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Thinking about All-on-4?" text="Book a consultation with Dr Jonathan Mifsud. He will assess your jaw with a 3D scan and explain whether All-on-4 — or All-on-6 — is the right approach for you." />
+    </>
+  );
+}
+
+function AllOn6Page() {
+  usePageTitle('All-on-6 Dental Implants Malta | Full Arch | Apex Dental');
+  const faqs = [
+    { q: 'What is All-on-6?', a: 'All-on-6 replaces a full arch of teeth with a fixed bridge supported by six implants instead of four. The two extra implants spread the chewing load across more points, which can be an advantage in certain cases, particularly in the upper jaw or where more support is wanted.' },
+    { q: 'All-on-4 or All-on-6 — which do I need?', a: 'It comes down to your bone and your case. All-on-4 is enough for many people and makes the most of limited bone. All-on-6 can be the better choice where there is good bone volume and you want to distribute the load more widely. Dr Jonathan Mifsud decides this from your 3D scan, not as a default.' },
+    { q: 'Does All-on-6 last longer than All-on-4?', a: 'Published studies show both designs achieve high survival rates over ten years and more, and the difference in survival is small. The extra implants in All-on-6 mainly help with load distribution and can reduce stress on the prosthesis rather than dramatically changing implant survival.' },
+    { q: 'Can I have same-day teeth with All-on-6?', a: 'Often yes, in the same way as All-on-4 — a fixed temporary set can frequently be placed on the day of surgery, with the final bridge fitted after healing. We confirm whether this is suitable for you during planning.' },
+  ];
+  const studies = [
+    { finding: 'A clinical case series treating full arches with the All-on-4 and All-on-6 concepts using a digital workflow reported an overall implant survival rate of 98.3%.', source: 'Stomatology MFS Journal, case series', url: 'https://stomatology-mfsjournal.com/wp-content/uploads/2026/04/Full-Arch-Implant-Rehabilitation-Using-the-All-on-4%C2%AE-and-All-on-6%C2%AE-Concepts-with-Digital-Workflow-A-Clinical-Case-Series-1-1-2.pdf' },
+    { finding: 'A retrospective study compared immediate full-arch rehabilitation on four or six implants with follow-up of up to 10 years, reporting high survival for both approaches.', source: 'PMC, up to 10-year study', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10092257/' },
+    { finding: 'Systematic reviews report 10-year survival above 95% for both four- and six-implant full-arch designs, with the choice driven by bone volume and load distribution rather than survival alone.', source: 'PMC, systematic review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5347302/' },
+  ];
+  return (
+    <>
+      <SEO
+        title="All-on-6 Dental Implants Malta | Full Arch | Apex Dental"
+        description="All-on-6 dental implants in Malta at Apex Dental. A fixed full arch of teeth on six implants for wider load distribution, placed by implantologist Dr Jonathan Mifsud."
+        canonical={`${siteUrl}/all-on-6-malta/`}
+        image={`${siteUrl}/images/I1.jpg`}
+        schemas={[
+          serviceSchema('All-on-6 Dental Implants', 'All-on-6 full-arch dental implant treatment in Malta at Apex Dental, placed by implantologist Dr Jonathan Mifsud.', `${siteUrl}/all-on-6-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Dental Implants', path: '/dental-implants/' }, { name: 'All-on-6', path: '/all-on-6-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.implants.I1}
+        eyebrow="All-on-6 Implants Malta"
+        title="A full fixed arch on six implants for extra support"
+        subtitle="All-on-6 restores a complete arch of teeth on six implants rather than four, spreading the load across more points of support. It is a strong full-arch option in the right case, planned and placed at Apex Dental by Dr Jonathan Mifsud."
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I2}
+        title="When six implants are the better choice"
+        text="All-on-6 follows the same idea as All-on-4 but adds two more implants. Those extra supports spread the forces of chewing more evenly, which can be useful where there is good bone to work with or where a wider, more heavily loaded bridge is planned — often in the upper jaw. It is not automatically better than All-on-4; it is better for certain cases, and the 3D scan tells us which yours is."
+        points={[
+          'Six implants supporting a fixed full arch',
+          'Load spread more evenly across the jaw',
+          'Often suited to the upper jaw or larger bridges',
+          'Chosen from your scan, not as a default',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.implants.I3}
+        title="All-on-6 versus All-on-4"
+        text="Both are excellent, well-evidenced ways to replace a full arch, and survival rates in the studies are similar. The real question is your bone and how the bite will load the bridge. Where bone is limited, All-on-4 makes the most of it; where there is more to work with, All-on-6 can offer extra support and resilience. We will talk you through the trade-offs honestly so the decision fits your case, not a sales pitch."
+        points={[
+          'Similar implant survival in the research',
+          'All-on-6 adds load distribution and resilience',
+          'All-on-4 maximises limited bone',
+          'Decision based on your 3D scan and bite',
+        ]}
+        dark
+        reverse
+      />
+      <StudiesSection
+        eyebrow="What the Research Shows"
+        heading="The evidence behind full-arch implants"
+        intro="Full-arch rehabilitation on four or six implants is well documented in the literature. Here is a selection of published research on survival and outcomes, with links to the original studies."
+        studies={studies}
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Full-arch implants in Malta" text="Book a consultation with Dr Jonathan Mifsud. A 3D scan will show whether All-on-6 or All-on-4 is the right full-arch solution for your jaw." />
     </>
   );
 }
@@ -4117,6 +4431,9 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us/" element={<AboutPage />} />
         <Route path="/dental-implants/" element={<ImplantsPage />} />
+        <Route path="/straumann-implants-malta/" element={<StraumannImplantsPage />} />
+        <Route path="/all-on-4-malta/" element={<AllOn4Page />} />
+        <Route path="/all-on-6-malta/" element={<AllOn6Page />} />
         <Route path="/invisalign-malta/" element={<AlignersPage />} />
         <Route path="/cosmetic-dentistry-malta" element={<CosmeticPage />} />
         <Route path="/general-dentistry/" element={<GeneralDentistryPage />} />
@@ -4126,6 +4443,7 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/crowns-and-bridgework/" element={<CrownsBridgeworkPage />} />
         <Route path="/periodontology/" element={<PeriodontologyPage />} />
         <Route path="/orthodontics/" element={<OrthodonticPage />} />
+        <Route path="/fixed-braces-malta/" element={<FixedBracesPage />} />
         <Route path="/orthix-aligners/" element={<OrthixPage />} />
         <Route path="/clearcorrect-malta/" element={<ClearCorrectPage />} />
         <Route path="/ordoline-aligners-malta/" element={<OrdolinePage />} />

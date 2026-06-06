@@ -40,6 +40,24 @@ const routes = [
     image: `${siteUrl}/images/I1.jpg`,
   },
   {
+    path: '/straumann-implants-malta/',
+    title: 'Straumann Implants Malta | Premium Swiss Implants | Apex Dental',
+    description: 'Straumann dental implants in Malta at Apex Dental. Premium Swiss implants with SLActive surface technology and a long published track record, placed by Dr Jonathan Mifsud.',
+    image: `${siteUrl}/images/I1.jpg`,
+  },
+  {
+    path: '/all-on-4-malta/',
+    title: 'All-on-4 Dental Implants Malta | Full Arch | Apex Dental',
+    description: 'All-on-4 dental implants in Malta at Apex Dental. A fixed full arch of teeth on four implants, often with same-day temporary teeth. Placed by implantologist Dr Jonathan Mifsud.',
+    image: `${siteUrl}/images/I4.jpg`,
+  },
+  {
+    path: '/all-on-6-malta/',
+    title: 'All-on-6 Dental Implants Malta | Full Arch | Apex Dental',
+    description: 'All-on-6 dental implants in Malta at Apex Dental. A fixed full arch of teeth on six implants for wider load distribution, placed by implantologist Dr Jonathan Mifsud.',
+    image: `${siteUrl}/images/I1.jpg`,
+  },
+  {
     path: '/invisalign-malta/',
     title: 'Invisalign Malta | Clear Aligners | Apex Dental',
     description: 'Invisalign and clear aligner treatment in Malta at Apex Dental. Discreet, removable orthodontics for adults. Digital planning and multilingual consultations available.',
@@ -92,6 +110,12 @@ const routes = [
     title: 'Orthodontist Malta | Braces & Clear Aligners | Apex Dental',
     description: 'Orthodontics in Malta with orthodontist Dr Aleksandra Syrico Mallia at Apex Dental. Fixed braces, clear aligners and our in-house Orthix aligner, plus Invisalign, ClearCorrect, Ordoline and Cristaline.',
     image: `${siteUrl}/images/A3.jpg`,
+  },
+  {
+    path: '/fixed-braces-malta/',
+    title: 'Fixed Braces Malta | Metal & Ceramic Braces | Apex Dental',
+    description: 'Fixed dental braces in Malta at Apex Dental. Metal and clear ceramic braces for children, teenagers and adults, fitted by orthodontist Dr Aleksandra Syrico Mallia.',
+    image: `${siteUrl}/images/A2.jpg`,
   },
   {
     path: '/orthix-aligners/',
