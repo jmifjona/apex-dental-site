@@ -1,9 +1,9 @@
-// Vercel serverless function: fetches live Google reviews via the Places API.
-// Env vars required (Vercel -> Project -> Settings -> Environment Variables):
-//   GOOGLE_PLACES_API_KEY  - Google Cloud API key with "Places API" enabled (billing on)
+// Vercel serverless function: fetches live Google reviews via Places API (New).
+// Env vars (Vercel -> Project -> Settings -> Environment Variables):
+//   GOOGLE_PLACES_API_KEY  - Google Cloud key with "Places API (New)" enabled, billing on,
+//                            application restriction = None (server-side call)
 //   GOOGLE_PLACE_ID        - Place ID of the Apex Dental Google Business listing
-// If env vars are missing or Google errors, responds { ok: false } and the
-// site falls back to its built-in reviews.
+// On any error/misconfig responds { ok:false } and the site uses its built-in reviews.
 
 export default async function handler(req, res) {
   const key = process.env.GOOGLE_PLACES_API_KEY;
@@ -16,34 +16,35 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url =
-      'https://maps.googleapis.com/maps/api/place/details/json' +
-      `?place_id=${encodeURIComponent(placeId)}` +
-      '&fields=rating,user_ratings_total,reviews' +
-      '&reviews_sort=newest&language=en' +
-      `&key=${encodeURIComponent(key)}`;
-
-    const r = await fetch(url);
+    const r = await fetch(
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?languageCode=en`,
+      {
+        headers: {
+          'X-Goog-Api-Key': key,
+          'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
+        },
+      }
+    );
     const data = await r.json();
 
-    if (data.status !== 'OK' || !data.result) {
-      return res.status(200).json({ ok: false, reason: data.status || 'no_result' });
+    if (!r.ok || !data || data.error) {
+      return res.status(200).json({ ok: false, reason: (data && data.error && data.error.status) || 'api_error' });
     }
 
-    const reviews = (data.result.reviews || [])
-      .filter((rv) => rv.rating >= 4 && rv.text)
+    const reviews = (data.reviews || [])
+      .filter((rv) => (rv.rating || 0) >= 4 && rv.text && rv.text.text)
       .slice(0, 6)
       .map((rv) => ({
-        name: rv.author_name,
-        rating: rv.rating,
-        date: rv.relative_time_description,
-        text: rv.text,
+        name: (rv.authorAttribution && rv.authorAttribution.displayName) || 'Google user',
+        rating: rv.rating || 5,
+        date: rv.relativePublishTimeDescription || '',
+        text: rv.text.text,
       }));
 
     return res.status(200).json({
       ok: true,
-      rating: data.result.rating,
-      total: data.result.user_ratings_total,
+      rating: data.rating,
+      total: data.userRatingCount,
       reviews,
     });
   } catch (e) {
