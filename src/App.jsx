@@ -1749,6 +1749,7 @@ function AboutPage() {
   usePageTitle('About Apex Dental Malta | Our Dental Team');
   const team = [
     { name: 'Dr Jonathan Mifsud', role: 'Dental Implantologist', flag: null, bio: 'Dr Jonathan Mifsud founded Apex Dental and runs the implant side of the practice. He places everything from single implants to full-arch and All-on-4 cases, and takes on the more complex treatment planning — the cases that need to be thought through carefully before anyone picks up an instrument.' },
+    { name: 'Dr Alexandra', role: 'Orthodontist', flag: null, bio: 'Dr Alexandra leads orthodontics at Apex Dental. She treats children, teenagers and adults with both fixed braces and clear aligners, and works with our in-house Orthix aligner system as well as Invisalign, ClearCorrect, Ordoline and Crystalline. She plans each case around how your teeth bite together, not just how they look from the front.' },
     { name: 'Dr Charlotte Axisa', role: 'General and Restorative Dentist', flag: null, bio: 'Dr Charlotte Axisa covers general and restorative dentistry — the check-ups, fillings, crowns and preventive care that make up most visits. Patients tend to mention how calm and unhurried she is, which helps if you are someone who has put off the dentist for a while.' },
     { name: "Dr Massimo D'Alessandro", role: 'General Dentist', flag: 'IT', bio: "Dr Massimo D'Alessandro trained and worked in Italy before joining us. If Italian is your first language, you can see him and talk through your treatment in Italian rather than working it out in English." },
     { name: 'Dr Adam Borg', role: 'General Dentist', flag: null, bio: 'Dr Adam Borg handles a broad range of general and restorative treatment. He is straightforward about explaining what he is doing and why, so you leave knowing what was done and what, if anything, needs keeping an eye on.' },
@@ -1764,7 +1765,7 @@ function AboutPage() {
     <>
       <SEO
         title="About Apex Dental Malta | Our Dental Team"
-        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Birkirkara."
+        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Alexandra (Orthodontist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
@@ -2165,44 +2166,108 @@ function PeriodontologyPage() {
 }
 
 function OrthodonticPage() {
-  usePageTitle('Orthodontic Treatment Malta | Apex Dental');
-
+  usePageTitle('Orthodontist Malta | Braces & Clear Aligners | Apex Dental');
+  const orthoFaqs = [
+    { q: 'Who does the orthodontics at Apex Dental?', a: 'Orthodontics is led by Dr Alexandra, our orthodontist. She treats children, teenagers and adults, and works across both fixed braces and clear aligners, so the recommendation you get is based on what your case actually needs rather than the one option a clinic happens to offer.' },
+    { q: 'Braces or clear aligners — which is right for me?', a: 'It depends on the teeth and the bite. Clear aligners suit a lot of adult cases and are barely visible, but some movements and more complex bites are corrected more reliably with fixed braces. Dr Alexandra assesses your case first and explains the trade-offs in plain terms before you decide.' },
+    { q: 'What is Orthix?', a: 'Orthix is our own clear aligner, designed and produced in-house at Apex Dental rather than sent to an overseas lab. Making them ourselves means we control the planning, shorten the wait between scan and starting treatment, and can keep the cost down compared with the big international aligner brands.' },
+    { q: 'Which clear aligner brands do you offer?', a: 'As well as our in-house Orthix aligner, we work with Invisalign, ClearCorrect, Ordoline and Crystalline. Each has its strengths, and Dr Alexandra will match the system to your case and budget rather than push a single brand.' },
+    { q: 'How long does orthodontic treatment take?', a: 'Most cases run somewhere between 6 and 18 months depending on how far the teeth need to move. Minor crowding or a small gap is at the shorter end; a fuller correction takes longer. You get a realistic timeframe once your teeth have been scanned and assessed.' },
+    { q: 'Do you treat children as well as adults?', a: 'Yes. Dr Alexandra sees children and teenagers as well as adults. With younger patients there is often a right window to start, so an early assessment is worthwhile even if treatment itself comes a little later.' },
+    { q: 'Will braces or aligners hurt?', a: 'Expect some tightness for a day or two after braces are adjusted or when you move to a new aligner — that is the teeth being moved, and it settles quickly. Fixed braces can rub at first; aligners are smooth and usually more comfortable day to day.' },
+  ];
+  const orthoSteps = [
+    { title: 'Consultation with Dr Alexandra', text: 'We look at your teeth and, just as importantly, how they bite together. This is where we work out whether fixed braces, clear aligners, or our in-house Orthix would suit your case, and what is realistic to achieve.' },
+    { title: 'Digital scan and plan', text: 'We take a digital scan rather than putty impressions and build a plan that shows how the teeth will move. For aligner cases you can see the projected result before committing.' },
+    { title: 'Starting treatment', text: 'Braces are fitted, or your aligners are made and handed over with instructions on wear and cleaning. Either way you leave knowing exactly what to do and what to expect over the coming weeks.' },
+    { title: 'Reviews and refinement', text: 'You come in periodically so Dr Alexandra can check the teeth are tracking the plan, adjust braces or hand over the next aligners, and make any refinements needed to finish the case properly.' },
+  ];
+  const alignerSystems = [
+    { name: 'Orthix (in-house)', text: 'Our own clear aligner, planned and produced at Apex Dental. Faster to start, fully under our control, and more affordable than the international brands.' },
+    { name: 'Invisalign', text: 'The best-known clear aligner system, with a long track record across a wide range of cases.' },
+    { name: 'ClearCorrect', text: 'A well-established clear aligner option, often a cost-effective route for suitable cases.' },
+    { name: 'Ordoline', text: 'A clear aligner system we use for selected cases where it fits the treatment plan well.' },
+    { name: 'Crystalline', text: 'A discreet aligner option offering another route to straighter teeth without visible braces.' },
+  ];
   return (
     <>
+      <SEO
+        title="Orthodontist Malta | Braces & Clear Aligners | Apex Dental"
+        description="Orthodontics in Malta with Dr Alexandra at Apex Dental. Fixed braces, clear aligners and our in-house Orthix aligner, plus Invisalign, ClearCorrect, Ordoline and Crystalline. For children, teenagers and adults."
+        canonical={`${siteUrl}/orthodontics/`}
+        image={`${siteUrl}/images/A3.jpg`}
+        schemas={[
+          serviceSchema('Orthodontics', 'Orthodontic treatment in Malta at Apex Dental: fixed braces, clear aligners, and the in-house Orthix aligner, led by orthodontist Dr Alexandra.', `${siteUrl}/orthodontics/`),
+          faqSchema(orthoFaqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Orthodontics', path: '/orthodontics/' }]),
+        ]}
+      />
       <PageHero
         image={images.aligners.A3}
-        eyebrow="Orthodontic Treatment Malta"
-        title="Straightening crowded, gappy or crooked teeth — and fixing how they bite"
-        subtitle="Orthodontics moves teeth into better positions. That is partly about how the smile looks, but a bite that meets properly is also easier to clean and less likely to wear teeth down unevenly."
+        eyebrow="Orthodontist Malta"
+        title="Straighter teeth and a better bite, with braces or clear aligners"
+        subtitle="Orthodontics at Apex Dental is led by Dr Alexandra. From fixed braces to clear aligners — including our own in-house Orthix — she treats children, teenagers and adults, choosing the approach that fits your case rather than a one-size-fits-all option."
       />
       <SplitEditorial
-        imageLeft={images.aligners.A4}
-        title="More than just straight teeth"
-        text="Straightening is not only cosmetic. Crowded teeth trap plaque in spots a brush struggles to reach, and a bite that does not meet evenly can wear teeth down or load them in ways they were not built for. Sorting the alignment often makes the teeth easier to keep clean as well as better to look at."
+        imageLeft={images.aligners.AB2 || images.aligners.A4}
+        title="Led by our orthodontist, Dr Alexandra"
+        text="Orthodontics is its own discipline, and it is worth seeing someone who does it day in, day out. Dr Alexandra plans every case around how your teeth meet, not just how they look head-on, because a bite that closes evenly is easier to keep clean and wears far more slowly over the years. She sees children, teenagers and adults, and is straight with you about what each option can and cannot do."
         points={[
-          'Easing crowding and closing gaps',
-          'Correcting how the teeth bite together',
-          'A more balanced smile',
-          'Options to suit different cases',
+          'A dedicated orthodontist, not a general add-on service',
+          'Children, teenagers and adults all treated',
+          'Planning built around your bite, not just appearance',
+          'Honest advice on braces versus aligners',
         ]}
       />
       <SplitEditorial
         imageLeft={images.aligners.A2}
-        title="Fixed braces and modern aligner options"
-        text="Depending on the case, that might mean clear aligners or traditional fixed braces. Aligners suit a lot of adult cases and are far less noticeable; some bites are corrected more reliably with fixed braces. We assess what you need first and recommend on that basis, not the other way round."
+        title="Fixed braces when they are the better tool"
+        text="For all the attention aligners get, fixed braces still correct some cases more predictably — bigger movements, rotations and more complex bites in particular. Modern braces are smaller and neater than the ones you might remember, and clear or tooth-coloured brackets make them far less obvious. Where braces are genuinely the better route for your result, Dr Alexandra will tell you so."
         points={[
-          'Clear aligners for suitable cases',
-          'Fixed braces where they work better',
-          'A proper assessment before deciding',
-          'A recommendation based on your case',
+          'Reliable for complex movements and bites',
+          'Smaller, neater brackets than older systems',
+          'Clear and tooth-coloured options available',
+          'Suitable across a wide range of ages and cases',
         ]}
         dark
         reverse
       />
+      <section className="bg-white py-20">
+        <Section>
+          <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Clear Aligner Options</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6 max-w-3xl">
+            Clear aligners, including our own in-house Orthix
+          </h2>
+          <p className="text-slate-600 leading-8 mb-12 max-w-3xl">
+            Clear aligners straighten teeth using a series of near-invisible removable trays, with no metal on show. We are not tied to a single brand: alongside our own Orthix aligner, made in-house, we work with several established systems and match the right one to your case and budget.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {alignerSystems.map((sys, i) => (
+              <div key={i} className="rounded-3xl border border-slate-200 bg-[#f7f4ef] p-7">
+                <div className="text-lg font-semibold text-slate-900 mb-2">{sys.name}</div>
+                <p className="text-slate-600 leading-7 text-sm">{sys.text}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+      </section>
+      <SplitEditorial
+        imageLeft={images.aligners.A1}
+        title="Why we make Orthix in-house"
+        text="Most clinics send their aligner cases off to a large international lab and wait. We produce Orthix at Apex Dental instead. That means Dr Alexandra controls the planning directly, there is less waiting between your scan and starting treatment, and we can offer aligner treatment at a more accessible price than the big-name brands — without giving up clinical control of your case."
+        points={[
+          'Planned and produced at our own clinic',
+          'Less waiting between scan and starting',
+          'More affordable than international aligner brands',
+          'Full clinical control kept in-house',
+        ]}
+      />
+      <ProcessSteps steps={orthoSteps} />
+      <FAQSection faqs={orthoFaqs} dark />
       <CTASection
         dark
-        title="Interested in orthodontic treatment?"
-        text="Book a consultation and we will check your teeth and bite and explain which approach — aligners or fixed braces — would get you the result you are after."
+        title="Thinking about straightening your teeth?"
+        text="Book an orthodontic consultation with Dr Alexandra. She will check your teeth and bite and talk you through your options — fixed braces, clear aligners, or our in-house Orthix — with a clear plan and timeframe."
       />
     </>
   );
