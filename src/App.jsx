@@ -1691,6 +1691,16 @@ function CosmeticPage() {
 
   return (
     <>
+      <SEO
+        title="Cosmetic Dentistry Malta | Veneers, Whitening &amp; Bonding | Apex Dental"
+        description="Cosmetic dentistry in Malta at Apex Dental — teeth whitening, veneers, bonding and natural-looking smile makeovers. Book a cosmetic consultation today."
+        canonical={`${siteUrl}/cosmetic-dentistry-malta`}
+        image={`${siteUrl}/images/C1.jpg`}
+        schemas={[
+          serviceSchema('Cosmetic Dentistry', 'Cosmetic dentistry in Malta at Apex Dental — teeth whitening, veneers, bonding and natural-looking smile makeovers. Book a cosmetic consultation today.', `${siteUrl}/cosmetic-dentistry-malta`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Cosmetic Dentistry', path: '/cosmetic-dentistry-malta' }]),
+        ]}
+      />
       <PageHero
         image={images.cosmetic.C1}
         eyebrow="Cosmetic Dentistry Malta"
@@ -1863,6 +1873,16 @@ function GeneralDentistryPage() {
 
   return (
     <>
+      <SEO
+        title="General Dentistry Malta | Check-ups &amp; Fillings | Apex Dental"
+        description="General dentistry in Malta at Apex Dental: check-ups, fillings and preventive care for the whole family. Catch problems early — book an appointment today."
+        canonical={`${siteUrl}/general-dentistry/`}
+        image={`${siteUrl}/images/H5.jpg`}
+        schemas={[
+          serviceSchema('General Dentistry', 'General dentistry in Malta at Apex Dental: check-ups, fillings and preventive care for the whole family. Catch problems early — book an appointment today.', `${siteUrl}/general-dentistry/`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'General Dentistry', path: '/general-dentistry/' }]),
+        ]}
+      />
       <PageHero
         image={images.home.H5}
         eyebrow="General Dentistry Malta"
@@ -1909,6 +1929,16 @@ function HygienePage() {
 
   return (
     <>
+      <SEO
+        title="Dental Hygiene Malta | Scale &amp; Polish | Apex Dental"
+        description="Dental hygiene in Malta at Apex Dental. Professional scale and polish to remove tartar, treat bleeding gums and protect your teeth. Book a hygiene visit."
+        canonical={`${siteUrl}/dental-hygiene/`}
+        image={`${siteUrl}/images/H8.jpg`}
+        schemas={[
+          serviceSchema('Dental Hygiene', 'Dental hygiene in Malta at Apex Dental. Professional scale and polish to remove tartar, treat bleeding gums and protect your teeth. Book a hygiene visit.', `${siteUrl}/dental-hygiene/`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Dental Hygiene', path: '/dental-hygiene/' }]),
+        ]}
+      />
       <PageHero
         image={images.home.H8}
         eyebrow="Dental Hygiene Malta"
@@ -2127,6 +2157,16 @@ function PeriodontologyPage() {
 
   return (
     <>
+      <SEO
+        title="Gum Disease Treatment Malta | Periodontology | Apex Dental"
+        description="Gum disease treatment in Malta at Apex Dental. Periodontal care for bleeding, receding or loose teeth, from deep cleaning to maintenance. Book a check-up."
+        canonical={`${siteUrl}/periodontology/`}
+        image={`${siteUrl}/images/H8.jpg`}
+        schemas={[
+          serviceSchema('Periodontology', 'Gum disease treatment in Malta at Apex Dental. Periodontal care for bleeding, receding or loose teeth, from deep cleaning to maintenance. Book a check-up.', `${siteUrl}/periodontology/`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Periodontology', path: '/periodontology/' }]),
+        ]}
+      />
       <PageHero
         image={images.home.H8}
         eyebrow="Periodontology Malta"
@@ -2278,6 +2318,16 @@ function DentalProstheticsPage() {
 
   return (
     <>
+      <SEO
+        title="Dental Prosthetics Malta | Replace Missing Teeth | Apex Dental"
+        description="Dental prosthetics in Malta at Apex Dental — fixed and removable ways to replace missing teeth, from single crowns to full-arch solutions. Book a consultation."
+        canonical={`${siteUrl}/dental-prosthetics/`}
+        image={`${siteUrl}/images/H5.jpg`}
+        schemas={[
+          serviceSchema('Dental Prosthetics', 'Dental prosthetics in Malta at Apex Dental — fixed and removable ways to replace missing teeth, from single crowns to full-arch solutions. Book a consultation.', `${siteUrl}/dental-prosthetics/`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Dental Prosthetics', path: '/dental-prosthetics/' }]),
+        ]}
+      />
       <PageHero
         image={images.home.H5}
         eyebrow="Dental Prosthetics Malta"
@@ -2321,6 +2371,16 @@ function RemovableProsthesisPage() {
 
   return (
     <>
+      <SEO
+        title="Dentures Malta | Removable Prosthesis | Apex Dental"
+        description="Dentures in Malta at Apex Dental. Partial and full removable dentures to replace missing teeth comfortably and affordably. Book a denture consultation today."
+        canonical={`${siteUrl}/removable-prosthesis/`}
+        image={`${siteUrl}/images/H8.jpg`}
+        schemas={[
+          serviceSchema('Removable Prosthesis', 'Dentures in Malta at Apex Dental. Partial and full removable dentures to replace missing teeth comfortably and affordably. Book a denture consultation today.', `${siteUrl}/removable-prosthesis/`),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: 'Removable Prosthesis', path: '/removable-prosthesis/' }]),
+        ]}
+      />
       <PageHero
         image={images.home.H8}
         eyebrow="Removable Prosthesis Malta"
