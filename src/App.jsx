@@ -1517,14 +1517,14 @@ function HomePage() {
         eyebrow="Premium dental care in Malta"
         title={
           <>
-            Beautiful smiles.
+            Healthy teeth.
             <br />
-            Precise dentistry.
+            Honest dentistry.
             <br />
-            A clinic that feels premium.
+            A clinic you will go back to.
           </>
         }
-        subtitle="Apex Dental combines advanced implantology, aesthetic dentistry, clear aligners, and modern digital workflows in a refined clinic environment designed around trust, comfort, and results."
+        subtitle="At Apex Dental you will find implant surgery, cosmetic and everyday dentistry, and clear aligners under one roof at Trident Park, with digital scanning and planning rather than the old putty impressions."
       />
 
       <HomeFeatureGrid />
@@ -1532,13 +1532,13 @@ function HomePage() {
 
       <SplitEditorial
         imageLeft={images.home.H2}
-        title="Dentistry designed to feel calm, modern, and high-end"
-        text="Your website should reflect the quality of the clinic. That means strong photography, elegant spacing, better contrast, and sections that feel intentional rather than assembled from generic blocks. This layout is built to feel more premium and more confident."
+        title="A clinic that is easy to walk into"
+        text="Plenty of people put off the dentist because the last place they went felt rushed or cold. We have tried to build the opposite — a calm space, modern equipment, and dentists who explain things instead of talking over your head. You should leave knowing what was found, what your options are, and what happens next."
         points={[
-          'Clean, high-end visual hierarchy',
-          'Editorial image-led layout',
-          'Stronger luxury clinic atmosphere',
-          'Better mobile browsing and conversion flow',
+          'Calm, unhurried appointments',
+          'Modern equipment and digital scanning',
+          'Plain explanations, not jargon',
+          'A clear plan before any treatment',
         ]}
       />
 
@@ -1546,8 +1546,8 @@ function HomePage() {
       <ReviewStrip />
 
       <CTASection
-        title="Ready to experience Apex Dental?"
-        text="Book your visit for implants, clear aligners, cosmetic dentistry, general care, or an emergency consultation. Our team will guide you clearly through the next steps."
+        title="Ready to visit Apex Dental?"
+        text="Book a visit for implants, clear aligners, cosmetic or everyday dental care, or an emergency. Tell us what you need and we will point you to the right starting point."
       />
     </>
   );
@@ -1627,17 +1627,17 @@ function ImplantsPage() {
 function AlignersPage() {
   usePageTitle('Invisalign Malta | Clear Aligners | Apex Dental');
   const alignerFaqs = [
-    { q: 'How long does Invisalign treatment take?', a: 'Treatment length depends on the complexity of your case. Mild to moderate corrections typically take 6 to 12 months. More complex cases may take up to 18 months. Your exact timeline will be discussed during your consultation.' },
-    { q: 'Is Invisalign suitable for adults?', a: 'Absolutely. Invisalign was designed with adults in mind, particularly professionals who want to straighten their teeth without the visible look of traditional metal braces. It is one of the most popular orthodontic choices for adults at Apex Dental.' },
-    { q: 'How many hours a day do you wear aligners?', a: 'For best results, aligners should be worn for 20 to 22 hours per day. They are removed for eating, drinking anything other than water, and brushing and flossing.' },
-    { q: 'Is Invisalign painful?', a: 'Most patients experience mild pressure or discomfort when switching to a new set of aligners. This is normal and typically settles within a day or two. It is generally considered more comfortable than traditional fixed braces.' },
-    { q: 'Can Invisalign fix my bite as well as straighten my teeth?', a: 'Invisalign can address a range of orthodontic issues including crowding, spacing, overbite, underbite, and crossbite. Whether it is suitable for your specific case will be assessed during your consultation.' },
+    { q: 'How long does Invisalign treatment take?', a: 'It depends on how much your teeth need to move. Minor crowding or a small gap can be sorted in 6 to 12 months, while a bigger correction might run closer to 18 months. We give you a realistic timeframe once we have scanned your teeth, rather than a guess on the day.' },
+    { q: 'Is Invisalign suitable for adults?', a: 'Yes, and most of the people we treat with aligners are adults. A lot of them had braces as teenagers and have watched things drift back, or never got round to it and would rather not wear metal brackets to fix it now. Because the aligners are clear, you can straighten your teeth without it being obvious at work or in photos.' },
+    { q: 'How many hours a day do you wear aligners?', a: 'Plan on 20 to 22 hours a day. In practice that means they are in except when you are eating, drinking anything other than water, or cleaning your teeth. The treatment only works if you are honest with yourself about wearing them — leave them in a drawer and the teeth simply stop moving.' },
+    { q: 'Is Invisalign painful?', a: 'There is some tightness for a day or two each time you change to a new set, because that is the aligner pushing the teeth along. It settles quickly, and most people find it easier than the rubbing and ulcers fixed braces can cause. Switching to a new set at bedtime helps you sleep through the worst of it.' },
+    { q: 'Can Invisalign fix my bite as well as straighten my teeth?', a: 'It can handle a fair amount — crowding, gaps, and many overbite, underbite and crossbite cases. Some bites are too complex for aligners alone and do better with fixed braces, and we will tell you straight if that is your situation rather than start something that will not get you the result you want.' },
   ];
   const alignerSteps = [
-    { title: 'Consultation and scan', text: 'We assess your teeth, bite, and suitability using digital scanning and photographs. No messy impressions required.' },
-    { title: 'Treatment preview', text: 'Digital planning software shows you a simulation of how your teeth will move and what your smile will look like at the end of treatment.' },
-    { title: 'Aligner delivery', text: 'Your custom-made aligner series is fabricated and delivered to the clinic. You receive your first sets with full instructions on wear and care.' },
-    { title: 'Progress check-ups', text: 'Regular short appointments allow us to monitor your progress, issue new aligners, and keep your treatment on track.' },
+    { title: 'Consultation and scan', text: 'We check your teeth and bite and take a digital scan instead of the old putty impressions, so there is nothing to gag on. This also tells us whether aligners can realistically do what you are after.' },
+    { title: 'Treatment preview', text: 'From the scan we build a plan showing, tooth by tooth, how everything will move and where your smile ends up. You see the projected result before you decide to go ahead.' },
+    { title: 'Aligner delivery', text: 'Your full set of aligners is made to fit only your teeth. We fit the first ones, check they sit properly, and show you how to take them in and out and keep them clean.' },
+    { title: 'Progress check-ups', text: 'You come in now and then for a quick check so we can make sure the teeth are tracking the plan and hand over your next aligners. These visits are short, with no tightening involved.' },
   ];
   return (
     <>
@@ -1655,32 +1655,32 @@ function AlignersPage() {
       <PageHero
         image={images.aligners.A1}
         eyebrow="Invisalign and Clear Aligners Malta"
-        title="Straighten your teeth discreetly without fixed braces or obvious hardware"
-        subtitle="Clear aligners are the orthodontic choice for patients who want a better smile without disrupting their lifestyle, appearance, or confidence during treatment."
+        title="Straighten your teeth with clear aligners almost nobody will notice"
+        subtitle="Clear aligners suit people who want straighter teeth without a mouth full of metal. You take them out to eat and clean, and most of the time no one can tell you are wearing them."
       />
       <SplitEditorial
         imageLeft={images.aligners.A2}
         title="Why so many adults choose clear aligners"
-        text="Traditional metal braces are visible, fixed in place, and make eating and cleaning difficult. Clear aligners are transparent, removable, and designed around modern adult life. You can eat what you like, maintain normal oral hygiene, and go about your day without anyone noticing you are in orthodontic treatment."
-        points={['Nearly invisible during wear', 'Removable for meals, drinks and brushing', 'No food restrictions', 'Fewer and shorter clinic appointments']}
+        text="Fixed braces are stuck on, hard to clean around, and there is no hiding the metal. Aligners are a set of clear trays you swap every week or two. You take them out to eat, so there is no list of foods to avoid, and you brush and floss exactly as you normally would. For most people the only giveaway is someone looking very closely."
+        points={['Hard to spot unless someone is right up close', 'Come out for meals, drinks and cleaning', 'Nothing off the menu', 'Shorter, less frequent visits than fixed braces']}
       />
       <SplitEditorial
         imageLeft={images.aligners.A3}
-        title="Digital planning — see your result before you start"
-        text="Digital planning software allows us to show you a simulation of your tooth movement and predicted outcome before treatment begins. You know what you are signing up for before committing to anything."
-        points={['Digital smile simulation before you commit', 'Precise, predictable tooth movement', 'Custom-made aligners for your exact teeth', 'Clear timeline from day one']}
+        title="See where your teeth will end up before you start"
+        text="Before you commit to anything, we use the scan to map out how your teeth will move and show you where they should finish. It means you are not signing up on faith — you can look at the projected result and decide if it is what you want."
+        points={['See the projected result before you start', 'Each aligner moves the teeth a small, planned amount', 'Trays made to fit only your teeth', 'A realistic timeframe from the first visit']}
         dark
         reverse
       />
       <ProcessSteps steps={alignerSteps} />
       <SplitEditorial
         imageLeft={images.aligners.A4}
-        title="Multilingual consultations available"
-        text="At Apex Dental, our team includes Dr Martha Lopez who is Spanish-speaking and Dr Massimo D'Alessandro who is Italian-speaking, making clear aligner treatment accessible to Malta's diverse international community. Consultations are available in your preferred language."
-        points={['English, Italian and Spanish spoken', 'Welcoming to expats and international patients', 'Same high standard of care for every patient', 'Located at Trident Park, Birkirkara']}
+        title="Consultations in English, Italian or Spanish"
+        text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish and Dr Massimo D'Alessandro in Italian, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
+        points={['Consultations in English, Italian or Spanish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Birkirkara']}
       />
       <FAQSection faqs={alignerFaqs} dark />
-      <CTASection title="Interested in clear aligners in Malta?" text="Book a consultation at Apex Dental and we will assess your suitability, show you a digital preview of your result, and walk you through all available options." />
+      <CTASection title="Interested in clear aligners in Malta?" text="Book a consultation and we will check whether aligners can do what you want, show you a preview of the result, and be upfront about the timeframe and the cost." />
     </>
   );
 }
@@ -1694,31 +1694,31 @@ function CosmeticPage() {
       <PageHero
         image={images.cosmetic.C1}
         eyebrow="Cosmetic Dentistry Malta"
-        title="Smile enhancement with a refined, natural-looking result"
-        subtitle="Cosmetic dentistry at Apex Dental is focused on elegance, harmony, and creating results that look polished without looking artificial."
+        title="Cosmetic dentistry that improves your smile without it looking done"
+        subtitle="Most people who come in for cosmetic work want their teeth to look better, not fake. The aim is a smile that suits your face — one people notice without being able to say exactly what changed."
       />
 
       <SplitEditorial
         imageLeft={images.cosmetic.C2}
-        title="Veneers, whitening, and smile refinement"
-        text="Cosmetic treatment may include veneers, whitening, and other aesthetic improvements designed to enhance colour, symmetry, proportion, and smile confidence. The goal is always to elevate the smile while maintaining natural character."
+        title="What cosmetic dentistry can involve"
+        text="Cosmetic treatment covers a few different things — whitening to lift the colour, veneers to change shape and cover chips or gaps, bonding to repair small flaws, and replacing old fillings that have darkened. Which of these you need depends on what is actually bothering you, so we start by working that out rather than reaching for the same answer every time."
         points={[
-          'Porcelain and aesthetic smile solutions',
-          'Refined cosmetic planning',
-          'Natural-looking enhancement',
-          'Tailored to each patient’s features',
+          'Whitening for colour',
+          'Veneers for shape, chips and gaps',
+          'Bonding for smaller repairs',
+          'Matched to what actually bothers you',
         ]}
       />
 
       <SplitEditorial
         imageLeft={images.cosmetic.C3}
-        title="Smile design with attention to detail"
-        text="A high-quality cosmetic result depends on more than bright teeth. It requires attention to facial harmony, proportions, contours, surface texture, and how the final smile fits the patient. Beautiful dentistry is detail-sensitive dentistry."
+        title="The details that stop teeth looking fake"
+        text="A good result is about more than white teeth. The width of each tooth, how the edges follow your lip when you smile, the small differences that stop teeth looking like a row of identical tiles — these are what separate teeth that look natural from teeth that look done. We plan for that before any work starts."
         points={[
-          'Balanced and natural smile design',
-          'Attention to shape, harmony, and proportion',
-          'Premium aesthetic workflow',
-          'Treatment led by visual refinement',
+          'Teeth sized and shaped to suit your face',
+          'Edges that follow your smile line',
+          'Subtle variation so it does not look uniform',
+          'Planned out before treatment begins',
         ]}
         dark
         reverse
@@ -1726,20 +1726,20 @@ function CosmeticPage() {
 
       <SplitEditorial
         imageLeft={images.cosmetic.C4}
-        title="A more elevated cosmetic experience"
-        text="Cosmetic dentistry should feel premium from consultation to result. At Apex Dental, the emphasis is on elegant presentation, careful planning, and outcomes that feel sophisticated rather than excessive. Good veneers should not look like the teeth joined a nightclub."
+        title="Natural beats noticeable, every time"
+        text="There is a version of cosmetic dentistry that turns out blindingly white, perfectly identical teeth that announce themselves from across the room. That is not what we are after. Good veneers should not look like the teeth joined a nightclub — they should look like teeth you could have been born with, just tidier."
         points={[
-          'Elegant and believable final results',
-          'Clear aesthetic consultation process',
-          'Premium clinical environment',
-          'Confidence-focused treatment planning',
+          'Results that look like your own teeth',
+          'A clear consultation so you know what to expect',
+          'No pressure to do more than you want',
+          'Shade and shape kept believable',
         ]}
       />
 
       <CTASection
         dark
         title="Considering cosmetic dentistry?"
-        text="Book a consultation to discuss veneers, whitening, smile enhancement, and the most suitable aesthetic options for your case."
+        text="Book a consultation and we will go through what is bothering you, what can realistically be improved, and which treatment makes sense — whitening, veneers, bonding, or a mix."
       />
     </>
   );
@@ -1748,17 +1748,17 @@ function CosmeticPage() {
 function AboutPage() {
   usePageTitle('About Apex Dental Malta | Our Dental Team');
   const team = [
-    { name: 'Dr Jonathan Mifsud', role: 'Dental Implantologist', flag: null, bio: 'Dr Jonathan Mifsud is the founder and lead clinician at Apex Dental. Specialising in dental implantology and restorative dentistry, he leads all implant cases and complex treatment planning at the clinic, including single implants, All-on-4, and full-arch restorations.' },
-    { name: 'Dr Charlotte Axisa', role: 'General and Restorative Dentist', flag: null, bio: 'Dr Charlotte Axisa is a skilled general and restorative dentist with experience across a broad range of treatments. She provides routine care, fillings, crowns, and preventive dentistry with a calm and patient-focused manner.' },
-    { name: "Dr Massimo D'Alessandro", role: 'General Dentist', flag: 'IT', bio: "Dr Massimo D'Alessandro brings his Italian dental training and background to Apex Dental. Italian-speaking patients are welcome to consult with Dr D'Alessandro in their preferred language." },
-    { name: 'Dr Adam Borg', role: 'General Dentist', flag: null, bio: 'Dr Adam Borg provides a wide range of general dental treatments at Apex Dental, with a focus on clear communication, patient comfort, and delivering consistent quality care across routine and restorative procedures.' },
-    { name: 'Dr Martha Lopez', role: 'General and Cosmetic Dentist', flag: 'ES', bio: 'Dr Martha Lopez joins Apex Dental from Spain, bringing international dental expertise and a particular interest in cosmetic and aesthetic dentistry. Spanish-speaking patients are warmly welcome to consult with Dr Lopez in their first language.' },
+    { name: 'Dr Jonathan Mifsud', role: 'Dental Implantologist', flag: null, bio: 'Dr Jonathan Mifsud founded Apex Dental and runs the implant side of the practice. He places everything from single implants to full-arch and All-on-4 cases, and takes on the more complex treatment planning — the cases that need to be thought through carefully before anyone picks up an instrument.' },
+    { name: 'Dr Charlotte Axisa', role: 'General and Restorative Dentist', flag: null, bio: 'Dr Charlotte Axisa covers general and restorative dentistry — the check-ups, fillings, crowns and preventive care that make up most visits. Patients tend to mention how calm and unhurried she is, which helps if you are someone who has put off the dentist for a while.' },
+    { name: "Dr Massimo D'Alessandro", role: 'General Dentist', flag: 'IT', bio: "Dr Massimo D'Alessandro trained and worked in Italy before joining us. If Italian is your first language, you can see him and talk through your treatment in Italian rather than working it out in English." },
+    { name: 'Dr Adam Borg', role: 'General Dentist', flag: null, bio: 'Dr Adam Borg handles a broad range of general and restorative treatment. He is straightforward about explaining what he is doing and why, so you leave knowing what was done and what, if anything, needs keeping an eye on.' },
+    { name: 'Dr Martha Lopez', role: 'General and Cosmetic Dentist', flag: 'ES', bio: 'Dr Martha Lopez joined us from Spain and has a particular interest in cosmetic and aesthetic work. Spanish-speaking patients are welcome to consult with her in Spanish.' },
   ];
   const milestones = [
-    { year: '2023', label: 'Apex Dental founded at Trident Park, Birkirkara, Malta' },
-    { year: '2024', label: 'Expanded to full implant surgery, All-on-4, and clear aligner therapy' },
-    { year: '2024', label: 'Compliance recognition for high-level professional standards' },
-    { year: '2025', label: "Continued growth as one of Malta's leading private dental clinics" },
+    { year: '2023', label: 'Apex Dental opens its doors at Trident Park, Birkirkara' },
+    { year: '2024', label: 'Added full implant surgery, All-on-4 and clear aligner treatment' },
+    { year: '2024', label: 'Recognised for meeting professional compliance standards' },
+    { year: '2025', label: 'Steady growth in our patient base across Malta' },
   ];
   return (
     <>
@@ -1771,8 +1771,8 @@ function AboutPage() {
       <PageHero
         image={images.about.AB1}
         eyebrow="About Apex Dental"
-        title="A modern dental clinic in Malta built around precision, clarity, and patient confidence"
-        subtitle="Apex Dental is a private dental clinic at Trident Park, Birkirkara, with a multilingual team of five dentists. Consultations available in English, Italian, and Spanish."
+        title="A private dental clinic in Malta, with five dentists under one roof"
+        subtitle="We are a private clinic at Trident Park, Birkirkara. Five dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian or Spanish."
       />
       <section className="bg-white py-20">
         <Section>
@@ -1814,7 +1814,7 @@ function AboutPage() {
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our dentists</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
-            A multilingual team — English, Italian and Spanish spoken
+            Five dentists, three languages spoken
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.slice(1).map((doctor) => (
@@ -1838,7 +1838,7 @@ function AboutPage() {
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our journey</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
-            Building a clinic patients trust, year by year
+            How the clinic has grown
           </h2>
           <div className="space-y-0">
             {milestones.map((m, i) => (
@@ -1851,7 +1851,7 @@ function AboutPage() {
         </Section>
       </section>
       <ComplianceTrustSection />
-      <CTASection title="Would you like to visit Apex Dental?" text="Book an appointment online, call us on 27016017, or send a WhatsApp message to 79854037. We are based at Trident Park, Birkirkara, Malta." />
+      <CTASection title="Would you like to visit Apex Dental?" text="Book online, call us on 27016017, or message us on WhatsApp at 79854037. You will find us at Trident Park, Birkirkara." />
     </>
   );
 }
@@ -1865,39 +1865,39 @@ function GeneralDentistryPage() {
       <PageHero
         image={images.home.H5}
         eyebrow="General Dentistry Malta"
-        title="Modern everyday dental care delivered with the same attention to quality as advanced treatment"
-        subtitle="General dentistry at Apex Dental focuses on oral health, prevention, function, and maintaining a smile that stays healthy and stable over time."
+        title="Check-ups, fillings and everyday dental care, done properly"
+        subtitle="This is the everyday side of dentistry — the regular check-ups, fillings and small repairs that stop problems turning into big ones. Most people see us for this more than anything else."
       />
 
       <SplitEditorial
         imageLeft={images.home.H6}
-        title="Routine care that protects long-term oral health"
-        text="General dentistry includes examinations, fillings, maintenance care, diagnosis of dental problems, and monitoring of the teeth and gums. The goal is to identify concerns early and treat them before they become more complex."
+        title="What a routine visit covers"
+        text="A general appointment usually means an examination, a look at any specific niggle, and treatment of whatever needs it — most often a filling. We are also checking the things you cannot see yourself: early decay between teeth, a cracked filling, the start of gum trouble. Catching those early is almost always simpler and cheaper than dealing with them later."
         points={[
-          'Routine dental check-ups',
-          'Fillings and restorative care',
-          'Assessment of teeth and gums',
-          'Early diagnosis of dental issues',
+          'Examinations and check-ups',
+          'Fillings and everyday repairs',
+          'A proper look at teeth and gums',
+          'Catching small problems early',
         ]}
       />
 
       <SplitEditorial
         imageLeft={images.home.H7}
-        title="A better standard of everyday dental care"
-        text="At Apex Dental, routine dentistry is approached with the same professionalism and detail as cosmetic and implant treatment. Preventive and restorative care should still feel thorough, clear, and well-managed."
+        title="The same care whether it is a filling or an implant"
+        text="A routine appointment should not feel like you are being rushed through. We give a check-up or a filling the same attention we would a bigger case — taking the time to explain what we have found, what your options are, and what we would do in your position."
         points={[
-          'Professional, patient-focused approach',
-          'Clear communication and guidance',
-          'Careful diagnosis and treatment planning',
-          'Long-term oral health mindset',
+          'Time taken to explain what we find',
+          'Clear options, not just instructions',
+          'Careful diagnosis before treatment',
+          'Looking after teeth for the long run',
         ]}
         dark
         reverse
       />
 
       <CTASection
-        title="Looking for a trusted dentist in Malta?"
-        text="Book a routine visit at Apex Dental for examination, diagnosis, preventive care, or treatment planning."
+        title="Looking for a dentist in Malta?"
+        text="Book a check-up at Apex Dental — whether you are due a routine visit, have a specific problem, or just want to get back into seeing a dentist regularly."
       />
     </>
   );
@@ -1911,31 +1911,31 @@ function HygienePage() {
       <PageHero
         image={images.home.H8}
         eyebrow="Dental Hygiene Malta"
-        title="Preventive dentistry and hygiene care that keeps your smile healthy, fresh, and easier to maintain"
-        subtitle="Dental hygiene is one of the most important parts of long-term oral health. It helps reduce plaque, tartar buildup, gum inflammation, and future treatment needs."
+        title="A professional clean that gets at what brushing cannot reach"
+        subtitle="However well you brush, hardened deposits build up in spots a toothbrush misses. A hygiene visit clears them away and gives your gums a chance to settle, which is a big part of avoiding more serious work later."
       />
 
       <SplitEditorial
         imageLeft={images.home.H9}
         title="Why hygiene visits matter"
-        text="Professional hygiene appointments help remove deposits that regular brushing and flossing cannot always manage effectively. They also support gum health, fresher breath, cleaner teeth, and early identification of potential problems."
+        text="Plaque that is not cleaned off hardens into tartar, and once it does, brushing will not shift it — it has to be removed with instruments. Left there, it irritates the gums, which is how bleeding, bad breath and eventually gum disease start. A scale and polish clears that build-up and lets the gums firm up again."
         points={[
-          'Plaque and tartar removal',
-          'Improved gum health',
-          'Fresher breath and cleaner teeth',
-          'Support for long-term oral stability',
+          'Removes hardened tartar brushing cannot',
+          'Calms down sore, bleeding gums',
+          'Fresher breath and a cleaner feel',
+          'Heads off bigger gum problems',
         ]}
       />
 
       <SplitEditorial
         imageLeft={images.home.H10}
-        title="Preventive care is smarter care"
-        text="Patients often focus on treatment only when something hurts, but preventive dentistry is what helps avoid larger problems. Regular hygiene visits are one of the best ways to protect both oral health and future treatment costs."
+        title="Cheaper to prevent than to fix"
+        text="Most people only book in when something hurts, but by then the easy window has usually passed. Coming in for a clean and check on a regular basis is one of the cheapest things you can do for your teeth — it catches issues while they are still small and keeps any existing work in good shape."
         points={[
-          'Helps reduce future dental problems',
-          'Supports maintenance after treatment',
-          'Useful before cosmetic work',
-          'Important for implant and restorative care',
+          'Stops small issues becoming big ones',
+          'Keeps fillings, crowns and implants healthy',
+          'Worth doing before cosmetic work',
+          'Especially important if you have implants',
         ]}
         dark
         reverse
@@ -1943,7 +1943,7 @@ function HygienePage() {
 
       <CTASection
         title="Time for a hygiene visit?"
-        text="Book a preventive dental hygiene appointment at Apex Dental and keep your smile in better long-term condition."
+        text="Book a hygiene appointment at Apex Dental. If it has been a while, that is all the more reason to come in — we will get your teeth clean and tell you honestly how your gums are doing."
       />
     </>
   );
@@ -1952,17 +1952,17 @@ function HygienePage() {
 function VeneersPage() {
   usePageTitle('Dental Veneers Malta | Apex Dental');
   const veneerFaqs = [
-    { q: 'What are dental veneers made of?', a: 'At Apex Dental we primarily use porcelain veneers, which are thin ceramic shells custom-made to fit over the front surface of your teeth. Porcelain is preferred for its durability, stain resistance, and natural light-reflecting properties that closely mimic real tooth enamel.' },
-    { q: 'How long do veneers last?', a: 'Porcelain veneers typically last 10 to 15 years or longer with proper care. This includes regular brushing, flossing, avoiding biting very hard objects, and attending routine dental check-ups.' },
-    { q: 'Is the veneer procedure painful?', a: 'The procedure involves minimal discomfort. Local anaesthesia is used during the tooth preparation stage. Some patients experience mild sensitivity for a few days after placement, which settles quickly.' },
-    { q: 'How many teeth can be treated with veneers?', a: 'Veneers can be placed on one tooth or across an entire smile. Some patients choose veneers for just one or two teeth affected by staining or chips, while others opt for a full smile makeover covering six to ten front teeth.' },
-    { q: 'Can veneers be combined with whitening?', a: 'Yes, but the sequencing matters. Whitening should be done first if you are also whitening natural teeth. The veneers are then shade-matched to your newly whitened teeth for a consistent, natural result.' },
+    { q: 'What are dental veneers made of?', a: 'We mostly use porcelain veneers — thin ceramic shells made to fit over the front of your teeth. Porcelain holds up well, resists staining, and catches the light much like natural enamel, which is why it tends to look convincing. We also offer composite and 3D-printed options, and which suits you comes down to your goals and budget.' },
+    { q: 'How long do veneers last?', a: 'Porcelain veneers usually last somewhere between 10 and 15 years, often longer. What shortens that is the obvious stuff: using your teeth to open things, grinding at night without a guard, or skipping check-ups so a small problem at the edge goes unnoticed.' },
+    { q: 'Is the veneer procedure painful?', a: 'Not really. We numb the tooth while preparing it, so you do not feel that part. Afterwards some people notice a few days of mild sensitivity to hot and cold, which settles on its own.' },
+    { q: 'How many teeth can be treated with veneers?', a: 'Anything from a single tooth to a full smile. Some people just want to fix one chipped or stained front tooth; others have six to ten of the front teeth done together so the colour and shape all match. We talk through which makes sense for what you want to change.' },
+    { q: 'Can veneers be combined with whitening?', a: 'Yes, and the order matters. If you are whitening your natural teeth too, we do that first, let the colour settle, then match the veneers to the lighter shade. Done the other way round, the veneers would no longer match once the natural teeth brightened.' },
   ];
   const veneerSteps = [
-    { title: 'Smile design consultation', text: 'We discuss your aesthetic goals and plan the shape, size and shade of your veneers using photos and digital references.' },
-    { title: 'Tooth preparation', text: 'A thin layer of enamel is removed from the front of the teeth to make room for the veneer. Temporary veneers are placed while your permanent ones are made.' },
-    { title: 'Veneer fabrication', text: 'Your custom porcelain veneers are precision-made by a dental technician based on detailed impressions and shade information.' },
-    { title: 'Bonding and final fitting', text: 'The veneers are checked for fit, shape and colour before being permanently bonded to your teeth. The result is immediately visible.' },
+    { title: 'Smile design consultation', text: 'We talk through what you want to change and plan the shape, size and shade of the veneers using photos and, where it helps, a mock-up so you are not guessing at the result.' },
+    { title: 'Tooth preparation', text: 'A thin layer of the front surface is removed to make room for the veneer so it sits flush rather than bulky. We fit temporaries to wear while the lab makes the final ones.' },
+    { title: 'Veneer fabrication', text: 'A dental technician makes your veneers from detailed impressions and the shade we agreed, getting the thickness and translucency right so they read as natural.' },
+    { title: 'Bonding and final fitting', text: 'We try the veneers in first to check the fit, shape and colour with you, and only bond them once you are happy. The change is there the moment you look in the mirror.' },
   ];
   const veneerPricing = [
     { label: 'Composite veneers — freehand', price: '€90 / tooth' },
@@ -1987,20 +1987,20 @@ function VeneersPage() {
       <PageHero
         image={images.cosmetic.C1}
         eyebrow="Dental Veneers Malta"
-        title="Transform the shape, colour and symmetry of your smile with porcelain veneers"
-        subtitle="Veneers are one of the most effective cosmetic dental treatments available, covering imperfections and redesigning your smile in a way that looks completely natural."
+        title="Reshape, brighten and even out your smile with veneers"
+        subtitle="Veneers sit over the front of your teeth to change their colour, shape and how evenly they line up. Planned and made well, the result looks like your own teeth rather than something stuck on top."
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C2}
         title="What veneers can correct"
-        text="Porcelain veneers are used to address a wide range of aesthetic concerns from minor chips and staining to more significant issues with shape, size, or symmetry. Unlike whitening, which only affects colour, veneers can change the entire appearance of a tooth."
+        text="Veneers deal with the things whitening cannot. Whitening only changes colour, so if a tooth is chipped, worn, slightly out of line, or simply too small, no amount of bleaching will fix it. A veneer changes the shape and the shade together, which is why it can sort out several problems on one tooth at once."
         points={['Discoloured or stained teeth that do not whiten', 'Chipped, cracked or worn teeth', 'Slight misalignment or gaps between teeth', 'Teeth that are too small or irregularly shaped']}
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C3}
-        title="Porcelain is the premium choice"
-        text="Porcelain veneers are the gold standard in cosmetic dentistry. They are stronger than composite resin alternatives, highly resistant to staining, and have a translucency that mirrors natural tooth enamel under light. When crafted well, they are virtually indistinguishable from your natural teeth."
-        points={['Durable and long-lasting 10 to 15 years plus', 'Highly stain resistant', 'Natural light-reflecting appearance', 'Custom-fabricated for your smile']}
+        title="Why we usually reach for porcelain"
+        text="Porcelain is stronger than composite, shrugs off staining from coffee and wine far better, and has a slight translucency that makes it catch the light like real enamel. Composite has its place and costs less, but for veneers meant to last and keep looking right, porcelain is usually what we recommend."
+        points={['Typically lasts 10 to 15 years or more', 'Holds its colour against coffee and wine', 'Catches the light like natural enamel', 'Made to fit your teeth exactly']}
         dark
         reverse
       />
@@ -2010,7 +2010,7 @@ function VeneersPage() {
         note="Choose the veneer option that suits your goals and budget, all priced per tooth: composite freehand at €90, composite with a lab wax-up at €130, very stain-resistant 3D-printed ceramic resin at €220, and premium porcelain or zirconia at €450. Not sure which is right for you? For €50 we create a mockup so you can see and try the final look before committing — and that fee is deducted from your bill if you proceed with resin or porcelain/zirconia veneers. To book a consultation we take a €20 booking fee, which is deducted from your final bill."
       />
       <FAQSection faqs={veneerFaqs} />
-      <CTASection dark title="Ready to improve your smile with veneers?" text="Book a cosmetic consultation at Apex Dental and we will discuss your goals, assess suitability, and walk you through your options with complete transparency." />
+      <CTASection dark title="Ready to improve your smile with veneers?" text="Book a cosmetic consultation and we will talk through what you want changed, whether veneers are the right way to get there, and exactly what each option costs." />
     </>
   );
 }
@@ -2019,17 +2019,17 @@ function VeneersPage() {
 function TeethWhiteningPage() {
   usePageTitle('Teeth Whitening Malta | Apex Dental');
   const whiteningFaqs = [
-    { q: 'How white can my teeth get?', a: 'Results vary depending on your natural tooth colour and the type of staining present. Most patients achieve a noticeably brighter result. Professional whitening is more effective than over-the-counter products because it uses higher-concentration gels under controlled conditions.' },
-    { q: 'Is teeth whitening safe?', a: 'Yes, when carried out by a dental professional. Whitening at Apex Dental uses regulated, clinically appropriate bleaching agents. Your gums and soft tissues are protected during treatment, and custom trays ensure the gel only contacts your teeth.' },
-    { q: 'How long do whitening results last?', a: 'Most patients maintain good results for 12 to 24 months with regular brushing and occasional top-up treatments using their custom trays.' },
-    { q: 'Does whitening work on crowns or veneers?', a: 'No. Whitening agents only affect natural tooth enamel and will not change the colour of crowns, veneers, or composite fillings. If you have existing restorations, we will discuss this during your consultation so your treatment is planned appropriately.' },
-    { q: 'Will whitening make my teeth sensitive?', a: 'Some patients experience mild, temporary sensitivity during or after whitening. This typically resolves within a few days. Sensitivity toothpaste used during the whitening period can help manage this.' },
+    { q: 'How white can my teeth get?', a: 'It depends where you are starting from and what is causing the discolouration. Most people get a clear, visible lift in shade. Professional whitening goes further than shop-bought kits because the gel is stronger and we control how it is used, but it works on natural enamel — it will not take teeth past their natural limit.' },
+    { q: 'Is teeth whitening safe?', a: 'Yes, when a dentist is overseeing it. We use regulated bleaching gels and custom trays that keep the gel on the teeth and off the gums. The main side effect is some temporary sensitivity, which we can manage. The risk goes up with unregulated online kits and salon treatments, which is worth bearing in mind.' },
+    { q: 'How long do whitening results last?', a: 'Usually 12 to 24 months, depending on how much coffee, tea, red wine and tobacco come into the picture. Because you keep your custom trays, topping up is cheap and easy — a night or two with fresh gel brings the colour back when it starts to drift.' },
+    { q: 'Does whitening work on crowns or veneers?', a: 'No. The gel only lightens natural enamel, so crowns, veneers and white fillings stay the colour they already are. If you have these at the front, we factor that in — sometimes whitening first and then replacing a filling to match is the better order.' },
+    { q: 'Will whitening make my teeth sensitive?', a: 'Some people get mild, short-lived sensitivity during the whitening period, and it usually fades within a few days of finishing. Using a sensitivity toothpaste while you whiten takes the edge off it.' },
   ];
   const whiteningSteps = [
-    { title: 'Consultation', text: 'We assess your tooth colour, existing restorations, and suitability for whitening, and discuss whether home or in-clinic treatment is the better fit for your goals.' },
-    { title: 'Custom tray impressions', text: 'For home whitening, we take impressions to create precision-fitted trays that hold the bleaching gel against your teeth for even, predictable results.' },
-    { title: 'Whitening treatment', text: 'You apply the whitening gel in your custom trays at home for the prescribed duration each day, typically one to two weeks.' },
-    { title: 'Review and top-ups', text: 'We review your result and provide guidance on maintaining it. Your custom trays can be used for future top-up treatments to keep your smile bright.' },
+    { title: 'Consultation', text: 'We look at the shade you are starting from and any crowns, veneers or fillings that will not whiten, then talk through whether home trays or an in-clinic session suits you better.' },
+    { title: 'Custom tray impressions', text: 'For home whitening we take impressions and make trays moulded to your teeth, so the gel sits evenly against every tooth instead of pooling or leaking onto the gums.' },
+    { title: 'Whitening treatment', text: 'You wear the trays with the gel for a set time each day at home, usually over one to two weeks. The colour lifts gradually, which also keeps sensitivity down compared with rushing it.' },
+    { title: 'Review and top-ups', text: 'We check the result and how it settled, and you keep the trays. When the colour fades over the months ahead, a little fresh gel tops it straight back up.' },
   ];
   return (
     <>
@@ -2047,26 +2047,26 @@ function TeethWhiteningPage() {
       <PageHero
         image={images.cosmetic.C2}
         eyebrow="Teeth Whitening Malta"
-        title="Professional whitening for a brighter, more confident smile done safely and effectively"
-        subtitle="At Apex Dental, whitening is supervised and tailored to your teeth. Custom trays and professional-grade gels deliver better, more predictable results than anything available off the shelf."
+        title="Professional whitening that lifts the colour safely, under a dentist’s eye"
+        subtitle="Whitening here is fitted to your teeth and overseen by a dentist. Custom trays and proper-strength gel give a more even, longer-lasting result than the strips and kits you buy off the shelf."
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C3}
-        title="Why professional whitening outperforms DIY"
-        text="Over-the-counter whitening strips and kits use low-concentration gels and generic trays that do not fit properly. Professional whitening uses regulated, higher-strength bleaching agents with custom trays that hold the gel precisely where it needs to be."
+        title="Why a kit from the shop falls short"
+        text="High-street strips and kits use weak gel and one-size trays that do not match your teeth, so the gel spreads unevenly and often onto the gums. With professional whitening the gel is stronger and the trays are made for your mouth, which means the colour comes up evenly and you are not guessing at how much to use."
         points={['Higher-strength regulated whitening gels', 'Custom trays for even, precise application', 'Supervised treatment with professional guidance', 'More consistent, longer-lasting results']}
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C4}
         title="Home whitening with custom trays"
-        text="Apex Dental home whitening includes custom-fitted trays made from impressions of your teeth, along with professional whitening gel. You wear the trays for a set period each day and the results build gradually. The trays can be kept for future top-up treatments."
+        text="Our home whitening comes with trays made from impressions of your teeth plus professional gel. You wear them for a set period each day and watch the shade lighten over a week or two. The trays are yours to keep, so future top-ups cost only a tube of gel."
         points={['Precision-fitted custom trays included', 'Gradual, controlled whitening at home', 'Flexible and fits around your schedule', 'Trays reusable for long-term maintenance']}
         dark
         reverse
       />
       <ProcessSteps steps={whiteningSteps} dark />
       <FAQSection faqs={whiteningFaqs} />
-      <CTASection title="Ready for a brighter smile?" text="Book a whitening consultation at Apex Dental and we will recommend the most suitable option for your teeth, lifestyle, and goals." />
+      <CTASection title="Ready for a brighter smile?" text="Book a whitening consultation and we will look at your teeth, flag anything that will not whiten, and recommend the option that fits your routine." />
     </>
   );
 }
@@ -2075,11 +2075,11 @@ function TeethWhiteningPage() {
 function CrownsBridgeworkPage() {
   usePageTitle('Crowns and Bridges Malta | Apex Dental');
   const crownFaqs = [
-    { q: 'When is a crown needed?', a: 'A crown is typically recommended when a tooth is too damaged or decayed to be reliably restored with a filling alone, for example after root canal treatment, a large fracture, or severe wear. Crowns are also used to improve the appearance of misshapen or heavily discoloured teeth.' },
-    { q: 'What are dental crowns made of?', a: 'At Apex Dental we use high-quality ceramic and zirconia crowns, which are strong, tooth-coloured, and virtually indistinguishable from natural teeth. Metal-fused options are available for specific clinical situations.' },
-    { q: 'How long do crowns last?', a: 'With proper care, crowns typically last 10 to 15 years or more. Regular dental check-ups, good oral hygiene, and avoiding habits like grinding or biting very hard objects help maximise crown longevity.' },
-    { q: 'What is a dental bridge?', a: 'A dental bridge replaces one or more missing teeth by anchoring to the teeth on either side of the gap. The adjacent teeth are prepared and crowned, with an artificial tooth suspended between them. It is a fixed, non-removable solution for missing teeth.' },
-    { q: 'Crown or implant — which is better for a missing tooth?', a: 'An implant is generally the preferred long-term solution for a single missing tooth because it does not require altering adjacent healthy teeth. However, a bridge may be more appropriate in certain situations. Your dentist will advise based on your specific case.' },
+    { q: 'When is a crown needed?', a: 'A crown goes on when a tooth has lost too much structure for a filling to hold reliably — after a root canal, a big fracture, or years of heavy wear or grinding. By wrapping the whole tooth it holds what is left together and takes the bite force that would otherwise crack it. Crowns also tidy up badly shaped or deeply discoloured teeth.' },
+    { q: 'What are dental crowns made of?', a: 'Most of ours are ceramic or zirconia — strong, tooth-coloured, and hard to tell apart from the real thing. There are still a few situations where a metal-bonded crown is the sensible choice, and we will say so if yours is one of them.' },
+    { q: 'How long do crowns last?', a: 'Looked after, a crown commonly lasts 10 to 15 years or more. What helps is keeping the edge where crown meets tooth clean, not using your teeth as tools, and wearing a night guard if you grind — most crowns that fail early do so for one of those reasons.' },
+    { q: 'What is a dental bridge?', a: 'A bridge fills a gap by crowning the teeth either side of it and joining them with a false tooth in between. It is fixed in place, so unlike a denture it does not come out. The trade-off is that the neighbouring teeth have to be prepared, which is part of why an implant is sometimes the better option.' },
+    { q: 'Crown or implant — which is better for a missing tooth?', a: 'For a single gap, an implant is usually the better long-term answer because it stands on its own and leaves the neighbouring teeth alone. A bridge can still make sense — for instance when those neighbouring teeth already need crowns anyway. We will lay out both for your case rather than push one.' },
   ];
   return (
     <>
@@ -2097,25 +2097,25 @@ function CrownsBridgeworkPage() {
       <PageHero
         image={images.cosmetic.C4}
         eyebrow="Crowns and Bridges Malta"
-        title="Protect damaged teeth and replace missing ones with strong, natural-looking restorations"
-        subtitle="Dental crowns and bridges are among the most reliable restorative options available, restoring function, protecting weakened teeth, and improving appearance with durable ceramic materials."
+        title="Rebuild a damaged tooth or fill a gap with a crown or bridge"
+        subtitle="Crowns cap and protect a tooth that has been weakened; bridges fill the gap left by a missing one. Both are long-standing, dependable ways to get teeth working and looking right again, and we make ours in tooth-coloured ceramic."
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C1}
         title="Dental crowns — when a filling is not enough"
-        text="A crown covers the entire visible surface of a tooth, providing protection and restoring shape, strength and appearance. It is used when a tooth has been significantly weakened by decay, fracture, or previous treatment and needs more support than a filling alone can provide."
+        text="A filling rebuilds part of a tooth; a crown covers the whole of it. Once a tooth has lost a lot of structure to decay, a crack, or an old large filling, a fresh filling has little to grip and tends to come loose or take the tooth with it when it fails. A crown wraps over the top and holds everything together so the tooth can take normal biting again."
         points={['Protects teeth after root canal treatment', 'Restores badly broken or worn teeth', 'Covers misshapen or heavily stained teeth', 'High-quality ceramic and zirconia materials']}
       />
       <SplitEditorial
         imageLeft={images.cosmetic.C2}
         title="Dental bridges — a fixed solution for missing teeth"
-        text="A dental bridge replaces one or more missing teeth using the support of adjacent teeth. The teeth on either side of the gap are prepared and crowned, with an artificial tooth connecting them. The result is a fixed, non-removable restoration that looks and functions like natural teeth."
+        text="A bridge replaces a missing tooth by borrowing support from the teeth on either side. Those teeth are crowned, and a false tooth is joined between them to fill the space. The result is fixed in place and used like your own teeth — nothing to take out at night, and the gap is closed so the other teeth cannot drift into it."
         points={['Replaces one or more missing teeth', 'Fixed and not removable like a denture', 'Restores chewing function and smile aesthetics', 'Prevents remaining teeth from shifting']}
         dark
         reverse
       />
       <FAQSection faqs={crownFaqs} />
-      <CTASection title="Need a crown or bridge in Malta?" text="Book a consultation at Apex Dental. We will assess your tooth and recommend the most appropriate and cost-effective restoration for your situation." />
+      <CTASection title="Need a crown or bridge in Malta?" text="Book a consultation and we will look at the tooth, explain whether a crown, bridge or implant fits best, and give you the cost before you decide." />
     </>
   );
 }
@@ -2129,36 +2129,36 @@ function PeriodontologyPage() {
       <PageHero
         image={images.home.H8}
         eyebrow="Periodontology Malta"
-        title="Gum care and periodontal treatment to support the foundation of a healthy smile"
-        subtitle="Periodontology focuses on the gums and supporting tissues around the teeth. Healthy gums are essential for long-term oral stability."
+        title="Treatment for gums that bleed, recede or no longer hold teeth firmly"
+        subtitle="Your gums and the bone under them are what hold your teeth in place. When that support starts to break down it is often quiet at first, which is why gum problems are worth catching and treating early."
       />
       <SplitEditorial
         imageLeft={images.home.H9}
         title="Why gum health matters"
-        text="Periodontal problems can affect the gums, bone support, and the long-term stability of teeth. Early diagnosis and maintenance can make a major difference."
+        text="Gum disease creeps up slowly. It usually starts as bleeding when you brush and, left alone, can progress to the bone that anchors the teeth shrinking back — at which point teeth loosen and can eventually be lost. The earlier we pick it up, the more support we can save, and in the early stages a thorough clean and better home care often turns it around."
         points={[
-          'Gum health monitoring',
-          'Periodontal treatment where needed',
-          'Support for long-term tooth stability',
-          'Important before and after advanced treatment',
+          'Checking gums for early signs of disease',
+          'Deeper cleaning and treatment when needed',
+          'Protecting the bone that holds teeth in',
+          'Important before and after bigger treatment',
         ]}
       />
       <SplitEditorial
         imageLeft={images.home.H10}
-        title="Prevention, treatment, and maintenance"
-        text="At Apex Dental, gum care is part of the wider long-term health strategy. Healthy supporting tissues are critical for natural teeth, restorations, and implants alike."
+        title="Get it under control, then keep it there"
+        text="Gum disease is rarely cured once and forgotten — it is managed. After the initial treatment, regular maintenance cleans keep it from creeping back. This matters as much for implants as for natural teeth, since the same infection that loosens teeth can affect the gum and bone around an implant."
         points={[
-          'Prevention-focused care',
-          'Maintenance for ongoing stability',
-          'Useful for implant patients too',
-          'Long-term oral health mindset',
+          'Catching problems before they spread',
+          'Regular upkeep to hold the result',
+          'Applies to implants as well as teeth',
+          'Looking after gums for the long run',
         ]}
         dark
         reverse
       />
       <CTASection
         title="Concerned about your gums?"
-        text="Book an assessment so Apex Dental can evaluate gum health and guide you clearly on next steps."
+        text="If your gums bleed, feel sore, or have started to pull back from your teeth, book an assessment. We will tell you where things stand and what, if anything, needs doing."
       />
     </>
   );
@@ -2172,29 +2172,29 @@ function OrthodonticPage() {
       <PageHero
         image={images.aligners.A3}
         eyebrow="Orthodontic Treatment Malta"
-        title="Orthodontic care for alignment, bite improvement, and a better-balanced smile"
-        subtitle="Orthodontic treatment can help improve crowding, spacing, bite issues, and overall smile positioning for both function and aesthetics."
+        title="Straightening crowded, gappy or crooked teeth — and fixing how they bite"
+        subtitle="Orthodontics moves teeth into better positions. That is partly about how the smile looks, but a bite that meets properly is also easier to clean and less likely to wear teeth down unevenly."
       />
       <SplitEditorial
         imageLeft={images.aligners.A4}
         title="More than just straight teeth"
-        text="Orthodontics helps improve alignment and bite relationships, which can influence oral health, smile aesthetics, and how comfortably the teeth function together."
+        text="Straightening is not only cosmetic. Crowded teeth trap plaque in spots a brush struggles to reach, and a bite that does not meet evenly can wear teeth down or load them in ways they were not built for. Sorting the alignment often makes the teeth easier to keep clean as well as better to look at."
         points={[
-          'Crowding and spacing correction',
-          'Bite improvement',
-          'Smile and facial balance',
-          'Treatment options for different needs',
+          'Easing crowding and closing gaps',
+          'Correcting how the teeth bite together',
+          'A more balanced smile',
+          'Options to suit different cases',
         ]}
       />
       <SplitEditorial
         imageLeft={images.aligners.A2}
-        title="Fixed appliances and modern aligner options"
-        text="Apex Dental can present orthodontic options ranging from more traditional approaches to discreet aligner-based treatment, depending on the case."
+        title="Fixed braces and modern aligner options"
+        text="Depending on the case, that might mean clear aligners or traditional fixed braces. Aligners suit a lot of adult cases and are far less noticeable; some bites are corrected more reliably with fixed braces. We assess what you need first and recommend on that basis, not the other way round."
         points={[
-          'Traditional orthodontic options',
-          'Clear aligner alternatives',
-          'Assessment-led treatment planning',
-          'Tailored recommendations',
+          'Clear aligners for suitable cases',
+          'Fixed braces where they work better',
+          'A proper assessment before deciding',
+          'A recommendation based on your case',
         ]}
         dark
         reverse
@@ -2202,7 +2202,7 @@ function OrthodonticPage() {
       <CTASection
         dark
         title="Interested in orthodontic treatment?"
-        text="Book a consultation to find out which type of treatment best fits your case and lifestyle."
+        text="Book a consultation and we will check your teeth and bite and explain which approach — aligners or fixed braces — would get you the result you are after."
       />
     </>
   );
@@ -2216,36 +2216,36 @@ function DentalProstheticsPage() {
       <PageHero
         image={images.home.H5}
         eyebrow="Dental Prosthetics Malta"
-        title="Prosthetic solutions designed to restore missing teeth, function, and confidence"
-        subtitle="Dental prosthetics include a range of restorative options used to replace missing teeth and improve daily comfort, support, and smile aesthetics."
+        title="Replacing missing teeth so you can eat and smile normally again"
+        subtitle="Prosthetics is the umbrella term for the ways of replacing teeth you have lost — from a single tooth to a whole arch. The right one depends on how many teeth are gone, how much bone is left, and how you want it to feel day to day."
       />
       <SplitEditorial
         imageLeft={images.home.H6}
-        title="Restorative solutions tailored to the patient"
-        text="Prosthetic treatment may include fixed or removable options depending on the number of missing teeth, bone support, comfort needs, and long-term goals."
+        title="Fixed or removable, depending on your case"
+        text="Some replacements are fixed in place — crowns, bridges, or teeth on implants — and stay put like natural teeth. Others are removable, which can be quicker and more affordable. Which way we go comes down to the number of missing teeth, the bone supporting them, and what you can live with comfortably."
         points={[
-          'Fixed and removable solutions',
-          'Replacement of missing teeth',
-          'Functional and aesthetic planning',
-          'Patient-specific treatment selection',
+          'Fixed and removable options',
+          'Replacing one tooth or many',
+          'Planned for function and looks',
+          'Chosen to fit your situation',
         ]}
       />
       <SplitEditorial
         imageLeft={images.home.H7}
-        title="Designed for comfort and usability"
-        text="Good prosthetic treatment should not only fill a space, but also feel practical, stable, and manageable in everyday life."
+        title="It has to work in everyday life"
+        text="A replacement that looks fine but is awkward to eat with or hard to keep clean is not much use. So as much as the look, we think about how it sits, how stable it is when you chew, and how easy it is to maintain — because that is what decides whether you actually get on with it."
         points={[
-          'Focus on fit and function',
-          'Comfort in daily use',
-          'Clear treatment explanation',
-          'Long-term maintenance guidance',
+          'Stable and comfortable to chew on',
+          'Manageable to keep clean',
+          'Explained clearly before you commit',
+          'Advice on looking after it',
         ]}
         dark
         reverse
       />
       <CTASection
         title="Need advice on prosthetic options?"
-        text="Book a consultation and Apex Dental can guide you through the restorative solutions most suitable for your case."
+        text="Book a consultation and we will go through the ways of replacing your missing teeth — fixed and removable — and which would suit you best."
       />
     </>
   );
@@ -2259,29 +2259,29 @@ function RemovableProsthesisPage() {
       <PageHero
         image={images.home.H8}
         eyebrow="Removable Prosthesis Malta"
-        title="Removable tooth replacement options designed for support, comfort, and function"
-        subtitle="Removable prostheses can help patients replace missing teeth in a practical and often cost-effective way, with options depending on support, fit, and case complexity."
+        title="Dentures and removable replacements when fixed options are not the right fit"
+        subtitle="A removable denture replaces missing teeth and comes out for cleaning. It is often the more affordable route, and sometimes the most sensible one, depending on how many teeth are missing and the state of the gums and bone supporting it."
       />
       <SplitEditorial
         imageLeft={images.home.H9}
         title="A practical restorative option"
-        text="Removable prostheses can be used for partial or full tooth replacement and may be appropriate where fixed alternatives are not preferred or not indicated."
+        text="Removable options cover both a partial denture, which fills in around teeth you still have, and a full denture when all the teeth in an arch are gone. They suit cases where fixed work is not possible or not the priority, and they can usually be made faster and for less than implants or bridges."
         points={[
-          'Partial and full removable options',
-          'Different material choices',
-          'Practical restorative pathway',
-          'Adapted to individual needs',
+          'Partial and full dentures',
+          'A range of materials to choose from',
+          'A practical, affordable route',
+          'Made to suit your case',
         ]}
       />
       <SplitEditorial
         imageLeft={images.home.H10}
-        title="Support, maintenance, and realistic planning"
-        text="A good removable solution balances fit, support, ease of use, maintenance needs, and patient expectations. Proper planning makes a major difference."
+        title="Getting the fit right, and being straight about it"
+        text="A denture lives or dies on its fit. A well-made one is stable and comfortable; a poor one moves and rubs. It also helps to be realistic — even a good denture feels different from natural teeth and takes some getting used to. We would rather tell you that up front than have you find out afterwards."
         points={[
-          'Focus on fit and support',
-          'Ease of cleaning and use',
-          'Expectation management',
-          'Long-term maintenance advice',
+          'Built for fit and stability',
+          'Straightforward to clean and wear',
+          'Honest about what to expect',
+          'Guidance on upkeep and relines',
         ]}
         dark
         reverse
@@ -2289,7 +2289,7 @@ function RemovableProsthesisPage() {
       <CTASection
         dark
         title="Considering denture options?"
-        text="Book a consultation to discuss removable prosthesis solutions and which option may suit you best."
+        text="Book a consultation and we will look at what you have to work with and talk you through the removable options and how they would feel."
       />
     </>
   );
@@ -2298,17 +2298,17 @@ function RemovableProsthesisPage() {
 function RootCanalPage() {
   usePageTitle('Root Canal Treatment Malta | Apex Dental');
   const rootCanalFaqs = [
-    { q: 'Is root canal treatment painful?', a: 'Root canal treatment is performed under local anaesthesia, so you should not feel pain during the procedure. Most patients are surprised by how comfortable it is. The treatment relieves the pain caused by infection rather than causing it.' },
-    { q: 'How do I know if I need a root canal?', a: 'Signs that may indicate root canal treatment include persistent toothache, sensitivity to hot or cold that lingers, a darkening tooth, swelling or tenderness in the gum near a tooth, or a persistent pimple on the gum. An X-ray is needed to confirm the diagnosis.' },
-    { q: 'How long does root canal treatment take?', a: 'Most root canal treatments are completed in one to two appointments, each lasting approximately 60 to 90 minutes. Complex cases or teeth with multiple canals may require additional time.' },
-    { q: 'What happens after root canal treatment?', a: 'After root canal treatment, the tooth is typically restored with a crown to protect it from fracture. A tooth that has had its pulp removed is more brittle without a crown. Your dentist will discuss the restoration plan with you.' },
-    { q: 'Can a root-treated tooth last a lifetime?', a: 'Yes. With proper restoration and good oral hygiene, a root-treated tooth can last as long as your natural teeth. The key is having the tooth properly crowned after treatment and maintaining regular dental check-ups.' },
+    { q: 'Is root canal treatment painful?', a: 'The procedure itself is done under local anaesthetic, so you should not feel pain while it is happening — most people are surprised how ordinary it is, not far off having a filling. The pain people associate with root canals is really the infection beforehand, and the treatment is what gets rid of it.' },
+    { q: 'How do I know if I need a root canal?', a: 'Common signs are a toothache that will not let up, hot or cold that hurts and then lingers, a tooth going darker than its neighbours, swelling or tenderness in the gum, or a recurring little spot on the gum. None of these is a certainty on its own, so we take an X-ray to confirm what is happening inside the tooth.' },
+    { q: 'How long does root canal treatment take?', a: 'Most are done in one or two visits of about 60 to 90 minutes. A front tooth with a single canal is quicker; a back molar with several canals, or a badly infected tooth, takes longer or a second appointment.' },
+    { q: 'What happens after root canal treatment?', a: 'A tooth that has had its nerve removed gets more brittle over time, so we usually crown it afterwards to stop it cracking under normal biting. We will go through that plan with you — the root canal saves the tooth, and the crown is what keeps it in service.' },
+    { q: 'Can a root-treated tooth last a lifetime?', a: 'It can. Properly sealed, crowned, and kept clean, a root-treated tooth can serve you for the rest of your life. The two things that matter most are getting a crown on it so it does not fracture, and keeping up your regular check-ups.' },
   ];
   const rootCanalSteps = [
-    { title: 'Assessment and X-ray', text: 'We examine the tooth, take X-rays to assess the root canals and extent of infection, and confirm whether root canal treatment is the appropriate option.' },
-    { title: 'Cleaning the canals', text: 'Under local anaesthesia, the infected pulp is removed and the root canals are carefully cleaned, shaped, and disinfected to eliminate bacteria.' },
-    { title: 'Sealing the tooth', text: 'The cleaned canals are filled and sealed with a biocompatible material. A temporary or permanent filling is placed to close the tooth.' },
-    { title: 'Crown placement', text: 'In most cases, a crown is recommended to protect the treated tooth from fracture and restore full function and appearance.' },
+    { title: 'Assessment and X-ray', text: 'We examine the tooth and take X-rays to see the canals and how far the infection has reached, and to confirm a root canal is the right call rather than an extraction.' },
+    { title: 'Cleaning the canals', text: 'With the tooth numbed, we remove the infected pulp and clean, shape and disinfect the canals to clear out the bacteria causing the trouble.' },
+    { title: 'Sealing the tooth', text: 'The cleaned canals are filled with a sealing material to keep bacteria from getting back in, and a filling closes the tooth.' },
+    { title: 'Crown placement', text: 'In most cases we follow up with a crown, which protects the now more brittle tooth from cracking and gets it back to full strength.' },
   ];
   return (
     <>
@@ -2326,26 +2326,26 @@ function RootCanalPage() {
       <PageHero
         image={images.implants.I2}
         eyebrow="Root Canal Treatment Malta"
-        title="Save your natural tooth with comfortable, effective treatment for infected teeth"
-        subtitle="Root canal treatment has a reputation far worse than the reality. At Apex Dental, treatment is carried out under local anaesthesia and most patients are surprised by how manageable the experience is."
+        title="Stop the pain and keep the tooth with root canal treatment"
+        subtitle="Root canals have a worse reputation than they deserve. The tooth is fully numbed for it, and most people walk out saying it was nothing like as bad as they had braced themselves for."
       />
       <SplitEditorial
         imageLeft={images.implants.I3}
         title="When is root canal treatment needed?"
-        text="Root canal treatment becomes necessary when the inner pulp of a tooth becomes infected or inflamed. This can happen as a result of deep decay, a crack or fracture, repeated dental procedures on the same tooth, or trauma. Left untreated, the infection can spread and the tooth may be lost entirely."
+        text="The trouble starts when the soft pulp inside a tooth — the nerve and blood supply — gets infected or inflamed. That can follow deep decay, a crack, repeated work on the same tooth, or a knock. Once the pulp is infected it does not recover on its own, and if it is ignored the infection spreads down to the bone and the tooth is often lost."
         points={['Severe or persistent toothache', 'Prolonged sensitivity to hot or cold', 'Darkening of the tooth', 'Swelling or a gum abscess near the tooth']}
       />
       <SplitEditorial
         imageLeft={images.implants.I4}
         title="The goal is to save your natural tooth"
-        text="Wherever possible, saving a natural tooth is the better long-term outcome. A tooth that has been root-treated, properly crowned, and maintained with good oral hygiene can last a lifetime. Preserving what you have is always the first priority."
+        text="Nothing replaces a natural tooth quite as well as the tooth itself, so wherever it is sensible we try to save it. A root canal followed by a crown, with decent hygiene afterwards, can keep that tooth working for life — usually a simpler and cheaper path than taking it out and replacing it later."
         points={['Preserves your natural tooth and root', 'Avoids the cost and recovery of extraction and replacement', 'Treated tooth restored with a crown for strength', 'Normal eating and function restored']}
         dark
         reverse
       />
       <ProcessSteps steps={rootCanalSteps} />
       <FAQSection faqs={rootCanalFaqs} />
-      <CTASection title="Concerned about a painful tooth?" text="Do not leave toothache or swelling untreated. Book an appointment at Apex Dental and we will assess the situation promptly and recommend the right treatment for your case." />
+      <CTASection title="Concerned about a painful tooth?" text="Toothache and swelling do not sort themselves out, and waiting usually makes the treatment bigger. Book an appointment and we will find out what is going on and deal with it." />
     </>
   );
 }
@@ -2354,17 +2354,17 @@ function RootCanalPage() {
 function EmergencyPage() {
   usePageTitle('Emergency Dentist Malta | Apex Dental');
   const emergencyFaqs = [
-    { q: 'What counts as a dental emergency?', a: 'A dental emergency is any situation causing severe pain, swelling, bleeding, or significant damage that needs prompt professional attention. This includes severe toothache, a knocked-out or broken tooth, a dental abscess, a lost crown or filling causing pain, and facial swelling.' },
-    { q: 'What should I do if a tooth is knocked out?', a: 'Pick up the tooth by the crown not the root, rinse it gently with milk or clean water, and try to reposition it in the socket if possible. If not, store it in milk or between your cheek and gum to keep it moist. Contact Apex Dental immediately as time is critical for saving a knocked-out tooth.' },
-    { q: 'How quickly can I be seen at Apex Dental for an emergency?', a: 'We aim to accommodate genuine dental emergencies as quickly as possible. Contact us directly by phone or WhatsApp to explain your situation and we will arrange an appointment at the earliest available slot.' },
-    { q: 'What can I do at home while waiting to be seen?', a: 'For pain, take over-the-counter pain relief such as ibuprofen or paracetamol as directed. For swelling, apply a cold compress to the outside of the cheek. Avoid very hot, cold, or hard foods. For a lost filling or crown, temporary dental cement from a pharmacy can provide short-term protection.' },
-    { q: 'Is a dental abscess a dental emergency?', a: 'Yes. A dental abscess is an infection that can spread if left untreated and should be assessed promptly. Signs include severe throbbing pain, swelling of the face or jaw, fever, and difficulty swallowing. Contact Apex Dental or seek urgent care if you suspect an abscess.' },
+    { q: 'What counts as a dental emergency?', a: 'Roughly, anything causing a lot of pain, swelling, bleeding, or sudden serious damage that should not wait. That covers severe toothache, a knocked-out or badly broken tooth, an abscess, a lost crown or filling that is now painful, and any swelling of the face. If you are unsure, it is better to ring and ask than to sit on it.' },
+    { q: 'What should I do if a tooth is knocked out?', a: 'Pick it up by the crown, not the root, and rinse it gently with milk or clean water without scrubbing it. If you can, slot it back into the socket and bite gently on a tissue to hold it there. If you cannot, keep it in milk or tucked between your cheek and gum. Then contact us straight away — the sooner a knocked-out tooth goes back in, the better the chance of saving it.' },
+    { q: 'How quickly can I be seen at Apex Dental for an emergency?', a: 'We do our best to fit genuine emergencies in as quickly as possible. The fastest thing is to call or WhatsApp, tell us what has happened, and we will find you the earliest slot we can.' },
+    { q: 'What can I do at home while waiting to be seen?', a: 'For pain, take ibuprofen or paracetamol as directed on the packet. For swelling, hold a cold compress against the cheek. Steer clear of very hot, cold, or hard foods. If a filling or crown has come out, a pharmacy sells temporary dental cement that will protect the tooth until we see you.' },
+    { q: 'Is a dental abscess a dental emergency?', a: 'Yes. An abscess is an infection that can spread if it is left, so it needs looking at promptly. The warning signs are severe throbbing pain, a swollen face or jaw, fever, and trouble swallowing. If you have those, contact us or seek urgent care without waiting.' },
   ];
   const emergencyTypes = [
-    { title: 'Severe toothache', text: 'Persistent or severe tooth pain that does not settle with pain relief may indicate infection, a deep crack, or an abscess requiring urgent assessment.' },
-    { title: 'Swelling or abscess', text: 'Facial swelling, gum swelling, or a painful lump near a tooth can indicate infection. This should be assessed promptly to prevent the infection from spreading.' },
-    { title: 'Broken or knocked-out tooth', text: 'A knocked-out tooth has the best chance of being saved if you act within the hour. Broken teeth with sharp edges or exposed nerve tissue also require urgent attention.' },
-    { title: 'Lost crown, bridge, or filling', text: 'If a restoration has come off and is causing pain or leaving a tooth vulnerable, contact us to arrange a prompt appointment to protect the tooth.' },
+    { title: 'Severe toothache', text: 'Pain that keeps you up at night or will not ease with painkillers usually means something is going on inside the tooth — an infection, a deep crack, or an abscess — and it needs looking at rather than riding out.' },
+    { title: 'Swelling or abscess', text: 'Swelling of the face or gum, or a tender lump near a tooth, points to infection. This is the kind of thing to deal with quickly, because dental infections can spread to the surrounding tissue.' },
+    { title: 'Broken or knocked-out tooth', text: 'A knocked-out tooth stands the best chance if it is back in place within the hour, so do not wait. A broken tooth with a sharp edge or exposed nerve also needs seeing soon, even if the pain is bearable.' },
+    { title: 'Lost crown, bridge, or filling', text: 'If a crown, bridge or filling has come away and the tooth is now sore or exposed, get in touch. Left open, the tooth is vulnerable to damage and sensitivity, and the longer it is gone the more can go wrong.' },
   ];
   return (
     <>
@@ -2382,25 +2382,25 @@ function EmergencyPage() {
       <PageHero
         image={images.contact.CT1}
         eyebrow="Emergency Dentist Malta"
-        title="Urgent dental care when you need it — fast assessment, clear guidance, prompt treatment"
-        subtitle="Apex Dental provides emergency appointments for dental pain, swelling, broken teeth, trauma, and lost restorations. Open Sunday 9am to 12pm for emergencies. Contact us by phone or WhatsApp."
+        title="Urgent dental care when something has gone wrong and cannot wait"
+        subtitle="We keep room for emergencies — bad toothache, swelling, a broken or knocked-out tooth, or a lost crown or filling. We are open Sunday 9am to 12pm for emergencies; call or WhatsApp and tell us what has happened."
       />
       <SplitEditorial
         imageLeft={images.contact.CT2}
         title="When should you contact us urgently?"
-        text="Not every dental problem is an emergency, but some situations need to be assessed promptly to prevent complications, manage infection, or save a tooth. If you are in significant pain, have swelling, or have suffered dental trauma, contact Apex Dental without delay. When in doubt, it is always safer to call."
+        text="Not everything is an emergency, but some things should not wait — pain that is hard to control, swelling, or an injury to a tooth. If you are in real pain, your face is swelling, or you have had a knock to the mouth, get in touch the same day. When you are not sure how serious it is, ring anyway and we will tell you."
         points={['Severe or persistent toothache', 'Facial or gum swelling — possible infection or abscess', 'Knocked-out, broken, or cracked tooth', 'Lost crown, bridge, or filling causing pain']}
       />
       <ProcessSteps steps={emergencyTypes} dark />
       <SplitEditorial
         imageLeft={images.contact.CT3}
         title="What to do before you reach us"
-        text="Take over-the-counter pain relief as directed. Apply a cold compress to the outside of the cheek for swelling. Avoid very hot, cold, hard, or chewy foods. If a tooth has been knocked out, keep it moist in milk or saliva and contact us immediately."
+        text="Take ibuprofen or paracetamol as directed for the pain. A cold compress on the outside of the cheek helps with swelling. Keep off very hot, cold, hard or chewy food in the meantime. And if a tooth has been knocked out, keep it moist in milk or your own saliva — never let it dry out — and contact us straight away."
         points={['Pain relief: ibuprofen or paracetamol as directed', 'Cold compress to reduce external swelling', 'Keep a knocked-out tooth moist in milk', 'Temporary dental cement for a lost crown from pharmacy']}
         reverse
       />
       <FAQSection faqs={emergencyFaqs} />
-      <CTASection dark title="Dental emergency in Malta? Contact us now." text="Call or WhatsApp Apex Dental directly. We are open Sunday 9am to 12pm for emergencies. Our team will assess your situation and arrange an appointment as quickly as possible." />
+      <CTASection dark title="Dental emergency in Malta? Contact us now." text="Call or WhatsApp us and tell us what has happened. We are open Sunday 9am to 12pm for emergencies, and we will assess things and get you seen as soon as we can." />
     </>
   );
 }
@@ -3027,8 +3027,8 @@ function ContactPage() {
       <PageHero
         image={images.contact.CT1}
         eyebrow="Contact Apex Dental"
-        title="Get in touch — we are based at Trident Park, Birkirkara, Malta"
-        subtitle="Call, WhatsApp, or send a message below. We will get back to you quickly to confirm your appointment or answer any questions about your treatment."
+        title="Get in touch — we are at Trident Park, Birkirkara"
+        subtitle="Call us, send a WhatsApp, or fill in the form below. We will get back to you quickly to sort out an appointment or answer anything you are wondering about."
       />
       <section className="bg-white py-20">
         <Section>
@@ -3134,36 +3134,36 @@ function ServicesPage() {
     {
       title: 'Implant & Restorative Dentistry',
       description:
-        'Advanced restorative solutions designed to replace missing teeth, rebuild damaged teeth, and restore function with stability and aesthetics in mind.',
+        'Replacing teeth you have lost and rebuilding ones that are damaged — from implants and crowns through to dentures and root canal work.',
       items: [
         {
           title: 'Dental Implants',
           to: '/dental-implants/',
-          text: 'Single-tooth to advanced implant solutions for long-term replacement of missing teeth.',
+          text: 'From a single missing tooth to a full arch on implants, planned and placed in-house.',
           image: images.implants.I1,
         },
         {
           title: 'Crowns & Bridgework',
           to: '/crowns-and-bridgework/',
-          text: 'Carefully planned restorations to rebuild damaged teeth and replace missing spaces.',
+          text: 'Crowns to cap weakened teeth and bridges to fill the gap where one is missing.',
           image: images.home.H4,
         },
         {
           title: 'Dental Prosthetics',
           to: '/dental-prosthetics/',
-          text: 'Restorative prosthetic options tailored for function, comfort, and daily usability.',
+          text: 'Ways to replace missing teeth, fixed or removable, chosen around how they feel day to day.',
           image: images.home.H5,
         },
         {
           title: 'Removable Prosthesis',
           to: '/removable-prosthesis/',
-          text: 'Practical removable tooth replacement solutions planned around support and fit.',
+          text: 'Partial and full dentures, made to fit and sit as stably as they can.',
           image: images.home.H8,
         },
         {
           title: 'Root Canal Treatment',
           to: '/root-canal-treatment/',
-          text: 'Treatment focused on relieving pain and helping preserve natural teeth where possible.',
+          text: 'Clearing infection inside a tooth to settle the pain and save the tooth itself.',
           image: images.home.H6,
         },
       ],
@@ -3171,24 +3171,24 @@ function ServicesPage() {
     {
       title: 'Cosmetic & Smile Enhancement',
       description:
-        'Aesthetic treatments designed to improve colour, harmony, shape, and confidence while keeping results elegant and natural-looking.',
+        'Changing how your smile looks — its colour, shape and how evenly the teeth line up — while keeping the result believable rather than obvious.',
       items: [
         {
           title: 'Cosmetic Dentistry',
           to: '/cosmetic-dentistry-malta',
-          text: 'Smile enhancement planned with attention to proportion, harmony, and refined results.',
+          text: 'Whitening, veneers and bonding to improve a smile without making it look done.',
           image: images.cosmetic.C1,
         },
         {
           title: 'Veneers',
           to: '/veneers/',
-          text: 'Porcelain or composite veneer options for shape, symmetry, and aesthetic refinement.',
+          text: 'Porcelain or composite shells that change the shape, colour and line of your front teeth.',
           image: images.cosmetic.C2,
         },
         {
           title: 'Teeth Whitening',
           to: '/teeth-whitening/',
-          text: 'Professional whitening options for a brighter, cleaner, more confident smile.',
+          text: 'Custom-tray and in-clinic whitening that lifts the colour evenly and safely.',
           image: images.cosmetic.C3,
         },
       ],
@@ -3196,18 +3196,18 @@ function ServicesPage() {
     {
       title: 'Orthodontic & Alignment Treatments',
       description:
-        'Tooth alignment and bite improvement options for patients looking for a straighter, more balanced smile.',
+        'Moving crowded, gappy or crooked teeth into better positions, and correcting how they bite together.',
       items: [
         {
           title: 'Clear Aligners',
           to: '/invisalign-malta/',
-          text: 'Discreet modern aligner treatment designed for comfort and adult-friendly lifestyles.',
+          text: 'Clear, removable trays that straighten teeth without the metal of fixed braces.',
           image: images.aligners.A1,
         },
         {
           title: 'Orthodontic Treatment',
           to: '/orthodontics/',
-          text: 'Orthodontic care for spacing, crowding, bite improvement, and smile positioning.',
+          text: 'Aligners or fixed braces to sort crowding, gaps and an uneven bite.',
           image: images.aligners.A3,
         },
       ],
@@ -3215,24 +3215,24 @@ function ServicesPage() {
     {
       title: 'Preventive & Gum Care',
       description:
-        'Preventive dentistry helps protect long-term oral health and reduce the need for more complex treatment later on.',
+        'The routine care that keeps problems small — check-ups, professional cleans, and looking after your gums.',
       items: [
         {
           title: 'General Dentistry',
           to: '/general-dentistry/',
-          text: 'Routine examinations, diagnosis, maintenance, and everyday dental care.',
+          text: 'Check-ups, fillings and the everyday care most visits are about.',
           image: images.home.H5,
         },
         {
           title: 'Dental Hygiene',
           to: '/dental-hygiene/',
-          text: 'Professional hygiene care to support gum health, fresh breath, and long-term maintenance.',
+          text: 'A professional clean that gets at the tartar brushing leaves behind.',
           image: images.home.H9,
         },
         {
           title: 'Periodontology',
           to: '/periodontology/',
-          text: 'Gum-focused care supporting the health of the tissues around teeth and implants.',
+          text: 'Treatment for gums that bleed, recede or have started to loosen teeth.',
           image: images.home.H10,
         },
       ],
@@ -3240,12 +3240,12 @@ function ServicesPage() {
     {
       title: 'Urgent Dental Care',
       description:
-        'Fast support for pain, swelling, trauma, and unexpected dental issues that need prompt attention.',
+        'Prompt help when something has gone wrong — pain, swelling, a broken tooth, or a knock to the mouth.',
       items: [
         {
           title: 'Emergency Dentist',
           to: '/emergency-dental-service-malta/',
-          text: 'Urgent assessment and guidance for dental pain, swelling, broken teeth, and trauma.',
+          text: 'Prompt help for toothache, swelling, broken teeth and knocks to the mouth.',
           image: images.contact.CT1,
         },
       ],
@@ -3267,8 +3267,8 @@ function ServicesPage() {
       <PageHero
         image={images.home.H2}
         eyebrow="Dental Services Malta"
-        title="Comprehensive dental care in Malta, presented clearly and organised properly"
-        subtitle="Explore Apex Dental's treatment range across implants, cosmetic dentistry, aligners, preventive care, restorative treatment, prosthetics, and emergency dental services."
+        title="Everything we treat, in one place"
+        subtitle="From routine check-ups to implants, cosmetic work, aligners and emergencies — here is the full range of what we do and where to read more on each."
       />
 
       <section className="bg-white py-20">
@@ -3278,12 +3278,12 @@ function ServicesPage() {
               Apex Dental Services
             </div>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
-              A cleaner service structure for patients and a much smarter one for the website
+              Not sure which treatment you need? Start here
             </h2>
             <p className="mt-6 text-lg text-slate-600 leading-8">
-              This page acts as the main service hub for the clinic. It gives patients a clear
-              overview of treatment options and helps search engines understand the relationship
-              between your key treatment pages.
+              This is the place to get your bearings. The treatments are grouped by what they are
+              for, so you can find the right one and read more about it — and if you are still not
+              sure, that is exactly what a consultation is for.
             </p>
           </div>
         </Section>
@@ -3344,7 +3344,7 @@ function ServicesPage() {
 
       <CTASection
         title="Not sure which treatment is right for you?"
-        text="Book a consultation with Apex Dental and we'll guide you toward the most suitable option based on your oral health, goals, and priorities."
+        text="Book a consultation and we will look at your teeth, listen to what you want sorted, and point you to the treatment that actually fits."
       />
     </>
   );
