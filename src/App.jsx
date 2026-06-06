@@ -1556,25 +1556,25 @@ function HomePage() {
 function ImplantsPage() {
   usePageTitle('Dental Implants Malta | Apex Dental');
   const implantFaqs = [
-    { q: 'How long do dental implants last?', a: 'With proper care and regular maintenance, dental implants can last a lifetime. The crown on top may need replacement after 15 to 20 years due to normal wear, but the implant itself, once fully integrated with the bone, is designed to be a permanent solution.' },
-    { q: 'Am I suitable for dental implants?', a: 'Most adults with good general health are suitable candidates. Key factors include having sufficient jawbone density, healthy gums, and no uncontrolled systemic conditions. A 3D scan and thorough assessment at Apex Dental will confirm suitability for your specific case.' },
-    { q: 'Is the implant procedure painful?', a: 'The procedure is carried out under local anaesthesia, so you should not feel pain during treatment. Post-operative discomfort is normal for a few days and is typically managed with standard pain relief. Most patients find the experience more straightforward than expected.' },
-    { q: 'How long does the full implant process take?', a: 'The full treatment from implant placement to the final crown typically takes between 3 and 6 months. This allows time for osseointegration, where the implant fuses with the jawbone before the final restoration is fitted.' },
-    { q: 'What is the cost of dental implants in Malta?', a: 'At Apex Dental, the implant consultation is free if implant treatment is carried out, or the fee is deducted from your treatment bill. A 3D scan is also included at no extra cost when you proceed with implant surgery. View our full price list for detailed pricing.' },
-    { q: 'What is All-on-4 and is it available at Apex Dental?', a: 'All-on-4 is a full-arch restoration technique where four implants support a complete fixed bridge, often called a Toronto bridge. It is a well-established solution for patients who have lost most or all of their teeth and want a fixed, non-removable result. Apex Dental offers All-on-4 treatment.' },
+    { q: 'How long do dental implants actually last?', a: 'The implant itself is designed to be permanent. Once it has fused to the bone there is no reason it cannot last for decades. The part that wears over time is the crown on top, which you might expect to replace somewhere around the 15 to 20 year mark, much like any tooth that does a lot of chewing. What really decides the lifespan is how well you look after your gums and keep up with hygiene visits.' },
+    { q: 'Will the procedure hurt?', a: 'Not during it. The area is completely numbed with local anaesthetic, so placing the implant feels like pressure rather than pain. Afterwards you can expect some swelling and tenderness for a few days, similar to having a tooth taken out, and ordinary painkillers manage it well. Most patients tell us it was easier than they had braced themselves for.' },
+    { q: 'How long does the whole process take?', a: 'From placing the implant to fitting the final tooth is usually three to six months. Most of that is simply the implant healing into the bone, which cannot be rushed. Your actual chair time is only a couple of short appointments; the rest is healing you barely notice.' },
+    { q: 'Am I too old, or is my bone not good enough?', a: 'Age on its own is rarely the deciding factor. What matters more is your general health and how much bone you have to work with. If the bone is thin, a graft or a sinus lift can often rebuild it before the implant goes in. The 3D scan tells us for certain, and we will be honest with you if implants are not the right choice for your case.' },
+    { q: 'What do dental implants cost in Malta?', a: 'There is no single price because it depends on the case, but the consultation is free when you proceed with treatment and the 3D scan is included with surgery. A single implant costs far less than a full-arch case. Our price list sets out current figures so you can see where you stand before committing.' },
+    { q: 'What is All-on-4, and do you offer it?', a: 'All-on-4 replaces a full arch of teeth on just four implants rather than one per tooth. The new teeth are fixed in permanently, often called a Toronto bridge, so they do not come out at night like a denture. We provide it for both the upper and lower jaw.' },
   ];
   const implantSteps = [
-    { title: 'Consultation and 3D scan', text: 'We assess your bone volume, gum health, and overall suitability with a detailed clinical examination and a 3D CBCT scan at no extra cost when you proceed with treatment.' },
-    { title: 'Implant placement', text: 'The titanium implant is placed into the jawbone under local anaesthesia. This is a precise surgical procedure carried out in our modern clinical environment.' },
-    { title: 'Healing and integration', text: 'The implant is given time to integrate with the surrounding bone, a process called osseointegration. This typically takes 3 to 4 months and is essential for long-term stability.' },
-    { title: 'Final restoration', text: 'Once integration is confirmed, the abutment and custom crown are fitted. The result is a natural-looking, fully functional tooth cared for just like your natural teeth.' },
+    { title: 'Consultation and 3D scan', text: 'We go through your medical history, examine your mouth, and take a CBCT scan. If there is not enough bone, this is where we would talk through grafting or a sinus lift before any implant is placed. You leave knowing whether implants suit you, what the plan looks like, and what it will cost.' },
+    { title: 'Placing the implant', text: 'On the day, the area is fully numbed. The titanium implant is placed into the jaw, which for a single tooth usually takes around an hour. There are no general anaesthetics involved and you can drive yourself home afterwards.' },
+    { title: 'Healing and integration', text: 'The implant now needs time to fuse with the bone, a process called osseointegration, which takes roughly three to four months. You carry on as normal during this time, and where a gap would show we can fit a temporary tooth so you are never left without one.' },
+    { title: 'Fitting your new tooth', text: 'Once we have confirmed the implant is solid, we take impressions and fit the final crown, bridge or denture, colour-matched to your other teeth. From there it is cared for like any natural tooth: brush, floss, and keep up your hygiene visits.' },
   ];
   const implantPricing = [
     { label: 'Implant consultation', price: 'Free with treatment' },
-    { label: '3D CBCT scan', price: 'Free with implant surgery' },
-    { label: 'Single implant + crown', price: 'From price list' },
-    { label: 'All-on-4 (Toronto bridge)', price: 'From price list' },
-    { label: 'Implant-retained denture', price: 'From price list' },
+    { label: '3D CBCT scan', price: 'Included with surgery' },
+    { label: 'Single implant + crown', price: 'See price list' },
+    { label: 'Full arch (All-on-4 / Toronto bridge)', price: 'See price list' },
+    { label: 'Implant-retained denture', price: 'See price list' },
   ];
   return (
     <>
@@ -1592,33 +1592,33 @@ function ImplantsPage() {
       <PageHero
         image={images.implants.I1}
         eyebrow="Dental Implants Malta"
-        title="Replace missing teeth with a stable, long-lasting solution that looks and feels natural"
-        subtitle="At Apex Dental, implant treatment is planned with precision from the initial 3D scan to the final crown. Led by Dr Jonathan Mifsud, a specialist implantologist based at Trident Park, Malta."
+        title="Dental implants that restore how your teeth look, feel and work"
+        subtitle="Missing one tooth or a whole arch, your implant treatment is planned and placed in-house by Dr Jonathan Mifsud, an implantologist at our Trident Park clinic in Malta — from the first 3D scan to the final tooth."
       />
       <SplitEditorial
         imageLeft={images.implants.I2}
-        title="Why implants are the gold standard for missing teeth"
-        text="A dental implant replaces both the root and the crown of a missing tooth. Unlike a bridge, it does not rely on adjacent teeth for support. It integrates directly with the jawbone, providing stability that feels and functions like a natural tooth and helps preserve the bone around it."
-        points={['No damage to adjacent healthy teeth', 'Preserves jawbone and prevents bone loss', 'Feels, looks, and functions like a natural tooth', 'Suitable for single teeth, multiple teeth, or full-arch cases']}
+        title="Why an implant beats the alternatives"
+        text="A missing tooth is more than a gap. The bone that used to hold the root starts to shrink within months, the teeth on either side begin to drift, and your bite shifts onto places it was not built for. An implant is the one option that replaces the root itself — a small titanium post that fuses to the jaw — so it actually halts that bone loss rather than just hiding the space. A bridge means cutting down the healthy teeth beside the gap, and a denture rests on the gums and can move when you eat."
+        points={['Leaves the neighbouring teeth untouched', 'Keeps the jawbone loaded so it does not waste away', 'Bites and feels like a real tooth, not an appliance', 'Works for a single gap or a complete arch']}
       />
       <SplitEditorial
         imageLeft={images.implants.I3}
-        title="Precision planning with 3D imaging"
-        text="Successful implant treatment starts well before surgery. At Apex Dental, every implant case begins with a thorough assessment and a 3D CBCT scan included at no extra cost when you proceed with treatment. This allows us to evaluate bone volume, plan implant position accurately, and avoid complications before they arise."
-        points={['Free 3D scan with implant surgery', 'Accurate bone and anatomy assessment', 'Precise surgical planning', 'Reduced risk and better long-term outcomes']}
+        title="We plan the surgery before picking up an instrument"
+        text="Every case starts with a CBCT scan, a low-dose 3D X-ray that shows your jaw in cross-section instead of the flat picture an ordinary X-ray gives. It tells us how much bone you have, exactly where the nerve and sinus sit, and the safest angle and depth for each implant. We plan the whole thing digitally first, which means fewer surprises on the day and a result we can predict with confidence. The scan is included at no extra cost when you go ahead with surgery."
+        points={['Low-dose 3D imaging, not a flat X-ray', 'Shows bone, nerve and sinus position before we start', 'Implant position planned digitally in advance', 'Scan included when you proceed with treatment']}
         dark
         reverse
       />
       <ProcessSteps steps={implantSteps} />
       <SplitEditorial
         imageLeft={images.implants.I4}
-        title="All-on-4 and full-arch implant solutions"
-        text="For patients who have lost most or all of their teeth, All-on-4, also known as the Toronto bridge, provides a fixed full-arch restoration supported by just four implants. It avoids the need for a removable denture and can often be completed in fewer appointments than traditional full-arch implant approaches."
-        points={['Fixed non-removable full-arch bridge', 'Supported by four strategically placed implants', 'No need for a removable denture', 'Restores function, confidence, and aesthetics']}
+        title="Replacing a whole arch with All-on-4"
+        text="If you have lost most or all of your teeth, or you are worn down by a denture that slips, All-on-4 fixes a full set of teeth onto just four implants per jaw. The implants are angled to make the most of the bone you already have, which often avoids the need for grafting, and the new teeth are screwed firmly in place. Nothing comes out at night, and nothing covers the roof of your mouth, so taste and comfort come back too. In many cases a fixed temporary set can go on the same day as surgery."
+        points={['A full fixed set of teeth on four implants', 'Angled placement often avoids bone grafting', 'Stays put — nothing to remove or soak overnight', 'Leaves the palate free, so taste and comfort improve']}
       />
-      <PricingHint items={implantPricing} note="At Apex Dental, the implant consultation is free when you proceed with treatment and your 3D scan is also included at no additional cost. We believe in transparent pricing with no unexpected fees. View our full price list for detailed figures on all implant options." />
+      <PricingHint items={implantPricing} note="Your implant consultation is free when you go ahead with treatment, and the 3D scan is included with surgery, so there is no separate planning fee. From there the cost depends on how many implants you need, whether any grafting is involved, and the type of crown or bridge that goes on top. The full price list lays it all out, with no hidden extras." />
       <FAQSection faqs={implantFaqs} dark />
-      <CTASection dark title="Thinking about dental implants?" text="Book a free implant consultation at Apex Dental in Malta. Dr Jonathan Mifsud will assess your suitability and walk you through all available options for your case." />
+      <CTASection dark title="Not sure if implants are right for you?" text="Book a consultation with Dr Jonathan Mifsud. He will take a proper look, talk you through what is realistic for your case, and give you a clear plan and price — with no pressure to commit." />
     </>
   );
 }
