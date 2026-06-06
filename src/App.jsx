@@ -1964,6 +1964,13 @@ function VeneersPage() {
     { title: 'Veneer fabrication', text: 'Your custom porcelain veneers are precision-made by a dental technician based on detailed impressions and shade information.' },
     { title: 'Bonding and final fitting', text: 'The veneers are checked for fit, shape and colour before being permanently bonded to your teeth. The result is immediately visible.' },
   ];
+  const veneerPricing = [
+    { label: 'Composite veneers — freehand', price: '€90 / tooth' },
+    { label: 'Composite veneers — lab wax-up', price: '€130 / tooth' },
+    { label: '3D-printed ceramic resin (very stain resistant)', price: '€220 / tooth' },
+    { label: 'Porcelain / zirconia', price: '€450 / tooth' },
+    { label: 'Smile mockup / try-in', price: '€50' },
+  ];
   return (
     <>
       <SEO
@@ -1998,6 +2005,10 @@ function VeneersPage() {
         reverse
       />
       <ProcessSteps steps={veneerSteps} />
+      <PricingHint
+        items={veneerPricing}
+        note="Choose the veneer option that suits your goals and budget, all priced per tooth: composite freehand at €90, composite with a lab wax-up at €130, very stain-resistant 3D-printed ceramic resin at €220, and premium porcelain or zirconia at €450. Not sure which is right for you? For €50 we create a mockup so you can see and try the final look before committing — and that fee is deducted from your bill if you proceed with resin or porcelain/zirconia veneers. To book a consultation we take a €20 booking fee, which is deducted from your final bill."
+      />
       <FAQSection faqs={veneerFaqs} />
       <CTASection dark title="Ready to improve your smile with veneers?" text="Book a cosmetic consultation at Apex Dental and we will discuss your goals, assess suitability, and walk you through your options with complete transparency." />
     </>
@@ -2564,6 +2575,11 @@ function PriceListPage() {
     {
       title: 'Examination / Diagnosis',
       items: [
+        {
+          name: 'Booking Fee (new patients, emergency & long appointments)',
+          price: '€20.00',
+          note: 'Secures your appointment and is deducted from your final bill. Non-refundable if the appointment is cancelled less than 5 hours beforehand.',
+        },
         { name: 'Routine Checkup', price: '€10.00' },
         { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
         {
@@ -2644,16 +2660,30 @@ function PriceListPage() {
     {
       title: 'Cosmetic Veneers',
       items: [
-        { name: 'Porcelain Veneers', price: '€450.00' },
-        {
-          name: 'Composite Veneers (Lab Wax-Up Replica)',
-          price: '€130.00',
-          note: 'Includes a lab-made wax-up.',
-        },
         {
           name: 'Composite Veneers (Freehand)',
           price: '€90.00',
-          note: 'Done with highly aesthetic composite.',
+          note: 'Done chairside with highly aesthetic composite. Price per tooth.',
+        },
+        {
+          name: 'Composite Veneers (Lab Wax-Up Replica)',
+          price: '€130.00',
+          note: 'Includes a lab-made wax-up. Price per tooth.',
+        },
+        {
+          name: '3D-Printed Ceramic Resin Veneers',
+          price: '€220.00',
+          note: 'Very stain resistant. Price per tooth.',
+        },
+        {
+          name: 'Porcelain / Zirconia Veneers',
+          price: '€450.00',
+          note: 'The premium, longest-lasting option. Price per tooth.',
+        },
+        {
+          name: 'Veneer Mockup / Try-In',
+          price: '€50.00',
+          note: 'See and try the final look before starting. Deducted from your bill if you proceed with resin or porcelain/zirconia veneers.',
         },
       ],
     },
@@ -2952,6 +2982,25 @@ function AppointmentBookingPage() {
             </div>
 
             <BookingFormCard serviceOptions={serviceOptions} />
+          </div>
+        </Section>
+      </section>
+
+      <section className="bg-[#f7f4ef] py-16">
+        <Section>
+          <div className="rounded-[2.5rem] bg-white border border-slate-200 p-8 md:p-10 shadow-sm max-w-3xl">
+            <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">
+              Booking Fee &amp; Cancellation Policy
+            </div>
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-4">
+              A €20 booking fee secures your appointment
+            </h2>
+            <p className="text-slate-600 leading-8">
+              For new patients, emergency appointments, and long appointments we take a
+              €20 booking fee to secure your slot. This fee is deducted from your final
+              bill when you attend. Please note that the booking fee is non-refundable if
+              the appointment is cancelled less than 5 hours before the scheduled time.
+            </p>
           </div>
         </Section>
       </section>
