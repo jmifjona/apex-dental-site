@@ -1166,7 +1166,7 @@ function HomeGallery() {
 }
 
 function ReviewStrip() {
-  const reviews = [
+  const fallbackReviews = [
     {
       name: 'Sarah Jane',
       date: 'March 2025',
@@ -1183,6 +1183,23 @@ function ReviewStrip() {
       text: 'The team here is amazing! From the moment you walk in, the staff is incredibly friendly and welcoming, instantly making you feel at ease. I usually get very nervous about dental visits, but they are so patient and understanding. They take the time to ensure you feel calm and comfortable throughout. I highly recommend them!',
     },
   ];
+
+  const [live, setLive] = useState(null);
+  useEffect(() => {
+    let active = true;
+    fetch('/api/reviews')
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && d && d.ok && Array.isArray(d.reviews) && d.reviews.length) setLive(d);
+      })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
+
+  const displayReviews = live && live.reviews.length ? live.reviews : fallbackReviews;
+  const rating = live && live.rating ? live.rating.toFixed(1) : '4.9';
+  const total = live && live.total ? live.total : 119;
+
   return (
     <section className="bg-slate-950 text-white py-20">
       <Section>
@@ -1202,8 +1219,8 @@ function ReviewStrip() {
                     <Star key={i} size={18} fill="currentColor" />
                   ))}
                 </div>
-                <span className="text-white font-semibold text-lg">4.9</span>
-                <span className="text-slate-400 text-sm">119 Google Reviews</span>
+                <span className="text-white font-semibold text-lg">{rating}</span>
+                <span className="text-slate-400 text-sm">{total} Google Reviews</span>
               </div>
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
@@ -1227,7 +1244,7 @@ function ReviewStrip() {
               </div>
             </div>
             <div className="grid gap-4">
-              {reviews.map((review) => (
+              {displayReviews.map((review) => (
                 <div key={review.name} className="rounded-[1.5rem] bg-white text-slate-900 p-6 shadow-xl">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
@@ -1241,7 +1258,7 @@ function ReviewStrip() {
                     </div>
                     <div className="flex items-center gap-0.5 text-amber-500">
                       {[1,2,3,4,5].map(i => (
-                        <Star key={i} size={13} fill="currentColor" />
+                        <Star key={i} size={13} fill={i <= (review.rating || 5) ? 'currentColor' : 'none'} />
                       ))}
                     </div>
                   </div>
