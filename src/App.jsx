@@ -227,7 +227,7 @@ const brand = {
   whatsapp: '79854037',
   email: 'info@apexdental.com.mt',
   address:
-    'Trident Park, Imdina Road, Central Business District, Imrieħel, CBD 2010, Malta',
+    'Trident Park, Mdina Road, Mrieħel, Birkirkara, CBD 2010, Malta',
   logo: '/images/orislogo.png',
 };
 
@@ -244,8 +244,8 @@ function localBusinessSchema(pageUrl) {
     email: brand.email,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Trident Park, Imdina Road, Central Business District',
-      addressLocality: 'Imrieħel',
+      streetAddress: 'Trident Park, Mdina Road, Mrieħel',
+      addressLocality: 'Birkirkara',
       postalCode: 'CBD 2010',
       addressCountry: 'MT',
     },
@@ -1677,7 +1677,7 @@ function AlignersPage() {
         imageLeft={images.aligners.A4}
         title="Consultations in English, Italian or Spanish"
         text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish and Dr Massimo D'Alessandro in Italian, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
-        points={['Consultations in English, Italian or Spanish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Birkirkara']}
+        points={['Consultations in English, Italian or Spanish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
       />
       <FAQSection faqs={alignerFaqs} dark />
       <CTASection title="Interested in clear aligners in Malta?" text="Book a consultation and we will check whether aligners can do what you want, show you a preview of the result, and be upfront about the timeframe and the cost." />
@@ -1756,7 +1756,7 @@ function AboutPage() {
     { name: 'Dr Martha Lopez', role: 'General and Cosmetic Dentist', flag: 'ES', bio: 'Dr Martha Lopez joined us from Spain and has a particular interest in cosmetic and aesthetic work. Spanish-speaking patients are welcome to consult with her in Spanish.' },
   ];
   const milestones = [
-    { year: '2023', label: 'Apex Dental opens its doors at Trident Park, Birkirkara' },
+    { year: '2023', label: 'Apex Dental opens its doors at Trident Park, Mrieħel, Birkirkara' },
     { year: '2024', label: 'Added full implant surgery, All-on-4 and clear aligner treatment' },
     { year: '2024', label: 'Recognised for meeting professional compliance standards' },
     { year: '2025', label: 'Steady growth in our patient base across Malta' },
@@ -1765,7 +1765,7 @@ function AboutPage() {
     <>
       <SEO
         title="About Apex Dental Malta | Our Dental Team"
-        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra (Orthodontist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Birkirkara."
+        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra (Orthodontist), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
@@ -1773,7 +1773,7 @@ function AboutPage() {
         image={images.about.AB1}
         eyebrow="About Apex Dental"
         title="A private dental clinic in Malta, with five dentists under one roof"
-        subtitle="We are a private clinic at Trident Park, Birkirkara. Five dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian or Spanish."
+        subtitle="We are a private clinic at Trident Park, Mrieħel, Birkirkara. Five dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian or Spanish."
       />
       <section className="bg-white py-20">
         <Section>
@@ -1852,7 +1852,7 @@ function AboutPage() {
         </Section>
       </section>
       <ComplianceTrustSection />
-      <CTASection title="Would you like to visit Apex Dental?" text="Book online, call us on 27016017, or message us on WhatsApp at 79854037. You will find us at Trident Park, Birkirkara." />
+      <CTASection title="Would you like to visit Apex Dental?" text="Book online, call us on 27016017, or message us on WhatsApp at 79854037. You will find us at Trident Park, Mrieħel, Birkirkara." />
     </>
   );
 }
@@ -3033,7 +3033,7 @@ function AppointmentBookingPage() {
                   <div className="font-semibold text-slate-900">Working Hours</div>
                   <div className="mt-1">Monday - Friday: 9 am - 7 pm</div>
                   <div>Saturday: 9 am - 12:30 pm</div>
-                  <div>Sunday: Closed</div>
+                  <div>Sunday: 9 am - 12 pm (emergency only)</div>
                 </div>
               </div>
 
@@ -3085,14 +3085,14 @@ function ContactPage() {
     <>
       <SEO
         title="Contact Apex Dental Malta | Book an Appointment"
-        description="Contact Apex Dental Malta at Trident Park, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment."
+        description="Contact Apex Dental Malta at Trident Park, Mrieħel, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment."
         canonical={`${siteUrl}/contact-us/`}
         schema={localBusinessSchema(`${siteUrl}/contact-us/`)}
       />
       <PageHero
         image={images.contact.CT1}
         eyebrow="Contact Apex Dental"
-        title="Get in touch — we are at Trident Park, Birkirkara"
+        title="Get in touch — we are at Trident Park, Mrieħel, Birkirkara"
         subtitle="Call us, send a WhatsApp, or fill in the form below. We will get back to you quickly to sort out an appointment or answer anything you are wondering about."
       />
       <section className="bg-white py-20">
@@ -3129,8 +3129,8 @@ function ContactPage() {
                     <div>
                       <div className="font-medium text-slate-900">Opening hours</div>
                       <div className="text-slate-600 mt-1 leading-7">
-                        Monday to Friday: 9:00 to 18:00<br />
-                        Saturday: 9:00 to 13:00<br />
+                        Monday to Friday: 9:00 to 19:00<br />
+                        Saturday: 9:00 to 12:30<br />
                         Sunday: 9:00 to 12:00 (emergency only)<br />
                         <span className="text-sm text-slate-500">For Sunday emergencies call or WhatsApp us directly</span>
                       </div>
@@ -3140,7 +3140,7 @@ function ContactPage() {
               </div>
               <div className="rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm">
                 <iframe
-                  title="Apex Dental Malta — Trident Park, Birkirkara"
+                  title="Apex Dental Malta — Trident Park, Mrieħel, Birkirkara"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.2!2d14.45876!3d35.89618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e51a910f3489f%3A0x6cb52257e336786f!2sApex+Dental!5e0!3m2!1sen!2smt!4v1"
                   width="100%"
                   height="320"
