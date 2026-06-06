@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://apexdentalmalta.com/sitemap.xml
+Sitemap: https://www.apexdentalmalta.com/sitemap.xml

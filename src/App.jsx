@@ -385,6 +385,7 @@ const images = {
     I2: '/images/I2.jpg',
     I3: '/images/I3.jpg',
     I4: '/images/I4.jpg',
+    straumann: '/images/straumann.jpg',
   },
   aligners: {
     A1: '/images/A1.jpg',
@@ -2685,7 +2686,7 @@ function StraumannImplantsPage() {
         ]}
       />
       <PageHero
-        image={images.implants.I1}
+        image={images.implants.straumann}
         eyebrow="Straumann Implants Malta"
         title="Straumann implants: premium Swiss engineering for a tooth meant to last"
         subtitle="When you are replacing a tooth root for the long term, the implant you choose matters. At Apex Dental we place Straumann implants — a Swiss system with one of the longest and strongest research records in dentistry — fitted by implantologist Dr Jonathan Mifsud."
