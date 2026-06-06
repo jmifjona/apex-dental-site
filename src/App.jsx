@@ -2640,7 +2640,7 @@ function PriceListPage() {
       items: [
         {
           name: 'Crowns, Metal/Porcelain',
-          price: '€350.00',
+          price: '€450.00',
           note: 'Porcelain outer shell with metal inside.',
         },
         { name: 'Lab Made Temporary Crowns', price: '€50.00' },
