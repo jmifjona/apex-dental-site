@@ -89,9 +89,33 @@ const routes = [
   },
   {
     path: '/orthodontics/',
-    title: 'Orthodontic Treatment Malta | Apex Dental',
-    description: 'Orthodontic treatment in Malta at Apex Dental for alignment, bite improvement, and a better-balanced smile.',
+    title: 'Orthodontist Malta | Braces & Clear Aligners | Apex Dental',
+    description: 'Orthodontics in Malta with orthodontist Dr Aleksandra Syrico Mallia at Apex Dental. Fixed braces, clear aligners and our in-house Orthix aligner, plus Invisalign, ClearCorrect, Ordoline and Cristaline.',
     image: `${siteUrl}/images/A3.jpg`,
+  },
+  {
+    path: '/orthix-aligners/',
+    title: 'Orthix Clear Aligners Malta | Made In-House | Apex Dental',
+    description: "Orthix is Apex Dental's own clear aligner, designed and produced in-house in Malta. Faster to start and more affordable than international brands, planned by our orthodontist.",
+    image: `${siteUrl}/images/A1.jpg`,
+  },
+  {
+    path: '/clearcorrect-malta/',
+    title: 'ClearCorrect Malta | Clear Aligners | Apex Dental',
+    description: 'ClearCorrect clear aligners in Malta at Apex Dental. A Straumann Group aligner system for discreet teeth straightening, planned and monitored by our orthodontist.',
+    image: `${siteUrl}/images/A2.jpg`,
+  },
+  {
+    path: '/ordoline-aligners-malta/',
+    title: 'Ordoline Aligners Malta | Clear Aligners for Complex Cases | Apex Dental',
+    description: 'Ordoline clear aligners in Malta at Apex Dental. A clinician-led aligner system with hybrid mechanics for more complex orthodontic cases, planned by our orthodontist.',
+    image: `${siteUrl}/images/A3.jpg`,
+  },
+  {
+    path: '/cristaline-aligners-malta/',
+    title: 'Cristaline Aligners Malta | German-Made Clear Aligners | Apex Dental',
+    description: 'Cristaline clear aligners in Malta at Apex Dental. German-made, ISO 13485 aligners in a three-layer biocompatible material with a 3D treatment preview, planned by our orthodontist.',
+    image: `${siteUrl}/images/A4.jpg`,
   },
   {
     path: '/dental-prosthetics/',

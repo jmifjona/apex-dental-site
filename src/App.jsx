@@ -486,6 +486,10 @@ function FloatingHeader() {
       items: [
         { to: '/invisalign-malta/', label: 'Clear Aligners' },
         { to: '/orthodontics/', label: 'Orthodontic Treatment' },
+        { to: '/orthix-aligners/', label: 'Orthix (In-House Aligner)' },
+        { to: '/clearcorrect-malta/', label: 'ClearCorrect' },
+        { to: '/ordoline-aligners-malta/', label: 'Ordoline' },
+        { to: '/cristaline-aligners-malta/', label: 'Cristaline' },
       ],
     },
     {
@@ -2223,11 +2227,11 @@ function OrthodonticPage() {
     { title: 'Reviews and refinement', text: 'You come in periodically so Dr Aleksandra can check the teeth are tracking the plan, adjust braces or hand over the next aligners, and make any refinements needed to finish the case properly.' },
   ];
   const alignerSystems = [
-    { name: 'Orthix (in-house)', text: 'Our own clear aligner, planned and produced at Apex Dental. Faster to start, fully under our control, and more affordable than the international brands.' },
-    { name: 'Invisalign', text: 'The best-known clear aligner system, with a long track record across a wide range of cases.' },
-    { name: 'ClearCorrect', text: 'A well-established clear aligner option, often a cost-effective route for suitable cases.' },
-    { name: 'Ordoline', text: 'A clinician-led aligner system built for more demanding cases. It combines aligners with auxiliaries such as mini-screws and segmental mechanics to achieve movements aligners alone often cannot.' },
-    { name: 'Cristaline', text: 'German-made clear aligners produced to ISO 13485 standards in a three-layer biocompatible material, with a 3D preview of your result before treatment starts.' },
+    { name: 'Orthix (in-house)', to: '/orthix-aligners/', text: 'Our own clear aligner, planned and produced at Apex Dental. Faster to start, fully under our control, and more affordable than the international brands.' },
+    { name: 'Invisalign', to: '/invisalign-malta/', text: 'The best-known clear aligner system, with a long track record across a wide range of cases.' },
+    { name: 'ClearCorrect', to: '/clearcorrect-malta/', text: 'A well-established clear aligner option from the Straumann Group, often a cost-effective route for suitable cases.' },
+    { name: 'Ordoline', to: '/ordoline-aligners-malta/', text: 'A clinician-led aligner system built for more demanding cases. It combines aligners with auxiliaries such as mini-screws and segmental mechanics to achieve movements aligners alone often cannot.' },
+    { name: 'Cristaline', to: '/cristaline-aligners-malta/', text: 'German-made clear aligners produced to ISO 13485 standards in a three-layer biocompatible material, with a 3D preview of your result before treatment starts.' },
   ];
   return (
     <>
@@ -2283,9 +2287,14 @@ function OrthodonticPage() {
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {alignerSystems.map((sys, i) => (
-              <div key={i} className="rounded-3xl border border-slate-200 bg-[#f7f4ef] p-7">
+              <div key={i} className="rounded-3xl border border-slate-200 bg-[#f7f4ef] p-7 flex flex-col">
                 <div className="text-lg font-semibold text-slate-900 mb-2">{sys.name}</div>
                 <p className="text-slate-600 leading-7 text-sm">{sys.text}</p>
+                {sys.to && (
+                  <Link to={sys.to} className="mt-4 text-sm font-medium text-sky-700 hover:text-sky-900">
+                    Learn more about {sys.name.replace(' (in-house)', '')} &rarr;
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -2309,6 +2318,234 @@ function OrthodonticPage() {
         title="Thinking about straightening your teeth?"
         text="Book an orthodontic consultation with Dr Aleksandra. She will check your teeth and bite and talk you through your options — fixed braces, clear aligners, or our in-house Orthix — with a clear plan and timeframe."
       />
+    </>
+  );
+}
+
+function OrthixPage() {
+  usePageTitle('Orthix Clear Aligners Malta | Made In-House | Apex Dental');
+  const faqs = [
+    { q: 'What is Orthix?', a: 'Orthix is our own clear aligner, designed and produced in-house at Apex Dental rather than ordered from an overseas lab. Your case is planned by our orthodontist, Dr Aleksandra Syrico Mallia, and the aligners are made here in Malta.' },
+    { q: 'How is Orthix more affordable than the big brands?', a: 'Most clinics pay an international lab for every aligner case, and that markup ends up on your bill. Because we plan and produce Orthix ourselves, we cut out that middle step and pass the saving on, without handing clinical control to a company abroad.' },
+    { q: 'Is Orthix as good as Invisalign?', a: 'Clear aligners all work on the same principle — a series of trays that move your teeth a little at a time. What really decides the result is the planning and the clinician behind it. With Orthix that planning stays in-house with our orthodontist, who follows your case from the first scan to the final tray.' },
+    { q: 'How long does Orthix treatment take?', a: 'Most cases run between 6 and 18 months depending on how far the teeth need to move. You get a realistic timeframe once your teeth have been scanned and Dr Aleksandra has assessed what is involved.' },
+  ];
+  return (
+    <>
+      <SEO
+        title="Orthix Clear Aligners Malta | Made In-House | Apex Dental"
+        description="Orthix is Apex Dental's own clear aligner, designed and produced in-house in Malta. Faster to start and more affordable than international brands, planned by our orthodontist."
+        canonical={`${siteUrl}/orthix-aligners/`}
+        image={`${siteUrl}/images/A1.jpg`}
+        schemas={[
+          serviceSchema('Orthix Clear Aligners', 'Orthix is the in-house clear aligner designed and produced at Apex Dental in Malta, planned by orthodontist Dr Aleksandra Syrico Mallia.', `${siteUrl}/orthix-aligners/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Orthodontics', path: '/orthodontics/' }, { name: 'Orthix Aligners', path: '/orthix-aligners/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.aligners.A1}
+        eyebrow="Orthix — In-House Clear Aligners"
+        title="Orthix: our own clear aligner, designed and made here in Malta"
+        subtitle="Orthix is Apex Dental's in-house aligner. Planned by our orthodontist and produced on site rather than sent to a lab abroad, it brings the cost of clear-aligner treatment down without giving up clinical control of your case."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A2}
+        title="Why we built our own aligner"
+        text="We treated enough aligner cases to know the weak point in the usual setup: the case gets shipped to a large international lab, you wait, and the lab's fee lands on the patient's bill. Producing Orthix ourselves removes that step. Dr Aleksandra plans every case directly, there is less waiting between your scan and starting, and the price comes down because there is no overseas markup to cover."
+        points={[
+          'Planned and produced at our own clinic in Malta',
+          'No overseas lab fee, so a lower price',
+          'Less waiting between scan and starting treatment',
+          'Full clinical control kept in-house with our orthodontist',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A4}
+        title="What treatment looks like"
+        text="It starts with a digital scan of your teeth — no putty impressions. From that we build a plan showing how your teeth will move and where they finish, so you can see the projected result before committing. You then wear a series of near-invisible trays, swapping to the next set as your teeth shift, with short check-ups along the way to keep things on track."
+        points={[
+          'Digital scan instead of putty impressions',
+          'See your projected result before you start',
+          'Near-invisible removable trays',
+          'Short progress reviews with the orthodontist',
+        ]}
+        dark
+        reverse
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Interested in Orthix aligners?" text="Book a consultation with Dr Aleksandra Syrico Mallia. She will scan your teeth, tell you whether Orthix suits your case, and give you a clear plan, timeframe and price." />
+    </>
+  );
+}
+
+function ClearCorrectPage() {
+  usePageTitle('ClearCorrect Malta | Clear Aligners | Apex Dental');
+  const faqs = [
+    { q: 'What is ClearCorrect?', a: 'ClearCorrect is a clear aligner system made by the Straumann Group, one of the best-known names in dentistry. Like other aligners it straightens teeth with a series of clear removable trays, and at Apex Dental every ClearCorrect case is planned and monitored by our orthodontist.' },
+    { q: 'How discreet are ClearCorrect aligners?', a: 'Very. The trays are clear and sit closely over your teeth, so for everyday situations most people will not notice you are wearing them. They are removable too, so there is nothing on show when you eat or clean your teeth.' },
+    { q: 'How does ClearCorrect compare with Invisalign or Orthix?', a: 'All three are clear aligner systems and the day-to-day experience is similar. ClearCorrect is often a cost-effective route for suitable cases, Invisalign has the longest track record, and our in-house Orthix keeps planning and production with us. Dr Aleksandra will recommend the one that fits your case and budget.' },
+    { q: 'How long will treatment take?', a: 'Typically somewhere between 6 and 18 months depending on how much movement is needed. We give you a realistic estimate once your teeth have been scanned and assessed.' },
+  ];
+  return (
+    <>
+      <SEO
+        title="ClearCorrect Malta | Clear Aligners | Apex Dental"
+        description="ClearCorrect clear aligners in Malta at Apex Dental. A Straumann Group aligner system for discreet teeth straightening, planned and monitored by our orthodontist."
+        canonical={`${siteUrl}/clearcorrect-malta/`}
+        image={`${siteUrl}/images/A2.jpg`}
+        schemas={[
+          serviceSchema('ClearCorrect Clear Aligners', 'ClearCorrect clear aligner treatment in Malta at Apex Dental, planned by orthodontist Dr Aleksandra Syrico Mallia.', `${siteUrl}/clearcorrect-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Orthodontics', path: '/orthodontics/' }, { name: 'ClearCorrect', path: '/clearcorrect-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.aligners.A2}
+        eyebrow="ClearCorrect Aligners Malta"
+        title="ClearCorrect: discreet clear aligners from the Straumann Group"
+        subtitle="ClearCorrect is a well-established clear aligner system made by Straumann, a name dentists know and trust. At Apex Dental your treatment is planned and followed through by our orthodontist, Dr Aleksandra Syrico Mallia."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A3}
+        title="Straighten your teeth without anyone noticing"
+        text="ClearCorrect uses a series of clear, removable trays that move your teeth gradually into a better position. There is no metal and nothing fixed to your teeth, so for most everyday situations the aligners go unnoticed. You take them out to eat and to clean your teeth, which keeps things simple day to day."
+        points={[
+          'Clear, removable trays — no visible braces',
+          'Made by the Straumann Group',
+          'Comes out for eating and cleaning',
+          'Planned and monitored by our orthodontist',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A4}
+        title="Planned around your case, not a one-size approach"
+        text="Aligners only work well when the plan behind them is right. We scan your teeth, work out whether ClearCorrect is the best fit for what you need, and map the movement out before you start. If another system or fixed braces would serve you better, Dr Aleksandra will tell you straight rather than push a single option."
+        points={[
+          'Digital scan and a planned tooth-by-tooth result',
+          'Honest advice on whether it is the right system',
+          'Comparable options including in-house Orthix',
+          'Reviews along the way to keep on track',
+        ]}
+        dark
+        reverse
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Considering ClearCorrect?" text="Book a consultation with Dr Aleksandra Syrico Mallia to find out whether ClearCorrect is the right aligner for your case, with a clear plan and price." />
+    </>
+  );
+}
+
+function OrdolinePage() {
+  usePageTitle('Ordoline Aligners Malta | Clear Aligners for Complex Cases | Apex Dental');
+  const faqs = [
+    { q: 'What is Ordoline?', a: 'Ordoline is a clinician-led clear aligner system designed to handle more demanding cases. Rather than relying on aligners alone, it combines them with orthodontic auxiliaries — small additions that give the control usually associated with fixed braces.' },
+    { q: 'What makes Ordoline suited to complex cases?', a: 'Aligners on their own struggle with certain movements. Ordoline integrates tools such as mini-screws, power arms and segmental mechanics, which lets us treat rotations, larger movements and trickier bites more predictably than aligners alone typically manage.' },
+    { q: 'Is Ordoline right for me?', a: 'It depends on your case. For straightforward crowding or spacing, a simpler aligner like our in-house Orthix may be all you need. Where the bite or the movements are more involved, Ordoline can be the better tool. Dr Aleksandra assesses this before recommending anything.' },
+    { q: 'How long does treatment take?', a: 'It varies with the complexity of the case, but most run between 6 and 18 months. You will get a realistic estimate after your teeth are scanned and assessed.' },
+  ];
+  return (
+    <>
+      <SEO
+        title="Ordoline Aligners Malta | Clear Aligners for Complex Cases | Apex Dental"
+        description="Ordoline clear aligners in Malta at Apex Dental. A clinician-led aligner system with hybrid mechanics for more complex orthodontic cases, planned by our orthodontist."
+        canonical={`${siteUrl}/ordoline-aligners-malta/`}
+        image={`${siteUrl}/images/A3.jpg`}
+        schemas={[
+          serviceSchema('Ordoline Clear Aligners', 'Ordoline clinician-led clear aligner treatment in Malta at Apex Dental for more complex cases, planned by orthodontist Dr Aleksandra Syrico Mallia.', `${siteUrl}/ordoline-aligners-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Orthodontics', path: '/orthodontics/' }, { name: 'Ordoline Aligners', path: '/ordoline-aligners-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.aligners.A3}
+        eyebrow="Ordoline Aligners Malta"
+        title="Ordoline: clear aligners built for the harder cases"
+        subtitle="Some cases are more than a simple aligner can handle. Ordoline is a clinician-led system that combines aligners with orthodontic auxiliaries, giving the kind of control normally associated with fixed braces — used at Apex Dental for more complex corrections."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A4}
+        title="When aligners alone are not enough"
+        text="Clear aligners are excellent for a lot of cases, but certain movements — rotations, larger shifts, more difficult bites — are hard to achieve with trays on their own. Ordoline is designed for exactly these situations, integrating tools such as mini-screws, power arms and segmental mechanics so more demanding cases can still be treated predictably."
+        points={[
+          'Built for rotations, larger movements and tricky bites',
+          'Combines aligners with orthodontic auxiliaries',
+          'Control closer to fixed braces',
+          'Clinician-led planning throughout',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A2}
+        title="The right system for the right case"
+        text="Not everyone needs a system like this. For simpler crowding or spacing, our in-house Orthix or another aligner may be all that is required. Where the case is more involved, Ordoline earns its place. Dr Aleksandra assesses your teeth and bite first and recommends on that basis, so you are matched to the system your case actually needs."
+        points={[
+          'Honest assessment before recommending',
+          'Simpler options offered where they suit',
+          'Reserved for cases that genuinely benefit',
+          'Planned and followed by our orthodontist',
+        ]}
+        dark
+        reverse
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Have a more complex case?" text="Book a consultation with Dr Aleksandra Syrico Mallia. She will assess your teeth and bite and tell you whether Ordoline, another aligner, or fixed braces is the best route." />
+    </>
+  );
+}
+
+function CristalinePage() {
+  usePageTitle('Cristaline Aligners Malta | German-Made Clear Aligners | Apex Dental');
+  const faqs = [
+    { q: 'What is Cristaline?', a: 'Cristaline is a German-made clear aligner system, produced to ISO 13485 medical-device standards. The aligners are clear and made from a three-layer biocompatible material designed to deliver steady, consistent force as your teeth move.' },
+    { q: 'What does German manufacturing mean for me?', a: 'It means the aligners are made under strict European quality controls, with consistent materials and finishing. For you that translates into reliable, comfortable trays and a treatment plan you can trust.' },
+    { q: 'Do I see the result before starting?', a: 'Yes. Cristaline provides a 3D visualisation of how your teeth will move, so you can see the projected end result before committing to treatment. We go through it with you at the planning stage.' },
+    { q: 'How long does treatment take?', a: 'Most cases run between 6 and 18 months depending on how much the teeth need to move. We give you a realistic timeframe once your teeth are scanned and assessed.' },
+  ];
+  return (
+    <>
+      <SEO
+        title="Cristaline Aligners Malta | German-Made Clear Aligners | Apex Dental"
+        description="Cristaline clear aligners in Malta at Apex Dental. German-made, ISO 13485 aligners in a three-layer biocompatible material with a 3D treatment preview, planned by our orthodontist."
+        canonical={`${siteUrl}/cristaline-aligners-malta/`}
+        image={`${siteUrl}/images/A4.jpg`}
+        schemas={[
+          serviceSchema('Cristaline Clear Aligners', 'Cristaline German-made clear aligner treatment in Malta at Apex Dental, planned by orthodontist Dr Aleksandra Syrico Mallia.', `${siteUrl}/cristaline-aligners-malta/`),
+          faqSchema(faqs),
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Orthodontics', path: '/orthodontics/' }, { name: 'Cristaline Aligners', path: '/cristaline-aligners-malta/' }]),
+        ]}
+      />
+      <PageHero
+        image={images.aligners.A4}
+        eyebrow="Cristaline Aligners Malta"
+        title="Cristaline: German-made clear aligners with a quality pedigree"
+        subtitle="Cristaline aligners are produced in Germany to ISO 13485 medical-device standards, in a three-layer biocompatible material built for steady, predictable tooth movement. At Apex Dental they are planned and monitored by our orthodontist."
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A1}
+        title="Quality you can feel"
+        text="Cristaline aligners are made under strict German manufacturing standards, certified to ISO 13485. The three-layer material is designed to keep a constant, gentle force on the teeth with minimal loss between changes, which makes for comfortable trays and movement you can rely on through the course of treatment."
+        points={[
+          'Made in Germany to ISO 13485 standards',
+          'Three-layer biocompatible material',
+          'Consistent, gentle force as teeth move',
+          'Clear and removable — discreet day to day',
+        ]}
+      />
+      <SplitEditorial
+        imageLeft={images.aligners.A2}
+        title="See the result before you commit"
+        text="Cristaline cases come with a 3D visualisation of the planned tooth movement, so before you start you can see where your smile is heading. We talk it through with you at the planning stage, and Dr Aleksandra confirms it is the right system for your case rather than starting something that will not get you the result you want."
+        points={[
+          '3D preview of your projected result',
+          'Planned with our orthodontist',
+          'Matched to your case and goals',
+          'Reviews along the way to stay on track',
+        ]}
+        dark
+        reverse
+      />
+      <FAQSection faqs={faqs} dark />
+      <CTASection dark title="Interested in Cristaline aligners?" text="Book a consultation with Dr Aleksandra Syrico Mallia to see whether Cristaline is the right clear aligner for your case, with a clear plan and price." />
     </>
   );
 }
@@ -3889,6 +4126,10 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/crowns-and-bridgework/" element={<CrownsBridgeworkPage />} />
         <Route path="/periodontology/" element={<PeriodontologyPage />} />
         <Route path="/orthodontics/" element={<OrthodonticPage />} />
+        <Route path="/orthix-aligners/" element={<OrthixPage />} />
+        <Route path="/clearcorrect-malta/" element={<ClearCorrectPage />} />
+        <Route path="/ordoline-aligners-malta/" element={<OrdolinePage />} />
+        <Route path="/cristaline-aligners-malta/" element={<CristalinePage />} />
         <Route path="/dental-prosthetics/" element={<DentalProstheticsPage />} />
         <Route path="/removable-prosthesis/" element={<RemovableProsthesisPage />} />
         <Route path="/root-canal-treatment/" element={<RootCanalPage />} />
