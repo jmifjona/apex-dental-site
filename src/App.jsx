@@ -2614,7 +2614,7 @@ function PriceListPage() {
         { name: 'Fluoride Application', price: '€40.00' },
         {
           name: 'In House Teeth Whitening',
-          price: '€350.00',
+          price: '€400.00',
           note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.',
         },
       ],
