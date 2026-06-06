@@ -2701,7 +2701,7 @@ function PriceListPage() {
         },
         {
           name: 'Composite Filling',
-          price: '€90.00',
+          price: 'From €70.00',
           note: 'Does not include posts if required.',
         },
       ],
