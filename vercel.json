@@ -1,4 +1,39 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "apexdental.com.mt"
+        }
+      ],
+      "destination": "https://www.apexdentalmalta.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.apexdental.com.mt"
+        }
+      ],
+      "destination": "https://www.apexdentalmalta.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "apexdentalmalta.com"
+        }
+      ],
+      "destination": "https://www.apexdentalmalta.com/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/about-us",
@@ -111,6 +146,38 @@
     {
       "source": "/blog/all-on-4-dental-implants-malta",
       "destination": "/blog/all-on-4-dental-implants-malta/index.html"
+    },
+    {
+      "source": "/straumann-implants-malta",
+      "destination": "/straumann-implants-malta/index.html"
+    },
+    {
+      "source": "/all-on-4-malta",
+      "destination": "/all-on-4-malta/index.html"
+    },
+    {
+      "source": "/all-on-6-malta",
+      "destination": "/all-on-6-malta/index.html"
+    },
+    {
+      "source": "/fixed-braces-malta",
+      "destination": "/fixed-braces-malta/index.html"
+    },
+    {
+      "source": "/orthix-aligners",
+      "destination": "/orthix-aligners/index.html"
+    },
+    {
+      "source": "/clearcorrect-malta",
+      "destination": "/clearcorrect-malta/index.html"
+    },
+    {
+      "source": "/ordoline-aligners-malta",
+      "destination": "/ordoline-aligners-malta/index.html"
+    },
+    {
+      "source": "/cristaline-aligners-malta",
+      "destination": "/cristaline-aligners-malta/index.html"
     },
     {
       "source": "/(.*)",
