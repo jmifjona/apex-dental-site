@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
@@ -633,7 +633,7 @@ function FloatingHeader() {
               </Link>
 
               <a
-                href="/consultation-prep.html"
+                href=""
                 className="text-sm font-medium text-amber-300 hover:text-amber-200 transition"
               >
                 Prepare for your visit
@@ -750,7 +750,7 @@ function FloatingHeader() {
               </Link>
 
               <a
-                href="/consultation-prep.html"
+                href=""
                 onClick={() => setOpen(false)}
                 className="text-amber-300 hover:text-amber-200"
               >
