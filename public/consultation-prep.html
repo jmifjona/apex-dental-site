@@ -3,6 +3,7 @@
   Static page served at /consultation-prep.html
   Styled to match the main site (slate-950 / amber-400, Arial).
   Not a diagnosis. Reflects the patient's own description back to them.
+  The WhatsApp button opens a pre-filled message the PATIENT reviews and sends.
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +24,7 @@
     --accent-d: #f59e0b;
     --accent-ink: #0f172a;
     --eyebrow: #fcd34d;
+    --wa: #25D366;
     --alert: #fca5a5;
     --alert-bg: #1c1310;
     --alert-line: #7c2d12;
@@ -35,7 +37,6 @@
   a { color: var(--eyebrow); }
   .wrap { max-width:680px; margin:0 auto; padding:44px 20px 90px; }
   .brandbar { display:flex; align-items:center; gap:12px; margin-bottom:34px; }
-  .brandbar img { height:40px; width:auto; }
   .brandbar .bn { font-weight:700; letter-spacing:.02em; font-size:15px; }
   .brandbar .bt { font-size:12px; color:var(--ink-soft); }
   .brandbar a.back { margin-left:auto; font-size:13px; color:var(--ink-soft); text-decoration:none; }
@@ -71,7 +72,7 @@
     border-radius:10px; font-family:var(--font); font-size:16px; color:var(--ink);
     resize:vertical; margin-bottom:22px; background:#0b1327; }
   textarea::placeholder { color:#64748b; }
-  textarea:focus, .opt:focus-within, button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  textarea:focus, .opt:focus-within, button:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   .nav { display:flex; gap:12px; align-items:center; }
   button { font-family:var(--font); font-size:15px; font-weight:700; border-radius:999px;
     cursor:pointer; border:1px solid transparent; padding:12px 26px; transition:background .15s, color .15s; }
@@ -105,7 +106,12 @@
   .footer-block { background:#0b1327; border-top:1px solid var(--line); padding:20px 26px;
     font-size:14px; color:var(--ink-soft); }
   .footer-block strong { color:var(--ink); }
-  .after { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .after { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; align-items:center; }
+  .after a { text-decoration:none; display:inline-block; font-size:15px; font-weight:700;
+    border-radius:999px; padding:12px 26px; border:1px solid transparent; }
+  .wa { background:var(--wa); color:#04240f; }
+  .wa:hover { background:#1fb757; }
+  .sendnote { font-size:13px; color:var(--ink-soft); margin:14px 0 0; max-width:56ch; }
   @media print {
     body { background:#fff; color:#000; font-size:12pt; }
     .wrap { padding:0; max-width:none; }
@@ -121,7 +127,6 @@
 
 <div class="wrap">
   <div class="brandbar">
-    <img src="/images/logo.svg" alt="" onerror="this.style.display='none'">
     <div>
       <div class="bn">Apex Dental</div>
       <div class="bt">Advanced Dentistry in Malta</div>
@@ -132,7 +137,7 @@
   <header class="masthead">
     <p class="eyebrow">Before your appointment</p>
     <h1>Get more out of your first appointment</h1>
-    <p class="standfirst">Five short questions. At the end you get a summary to bring with you, the questions worth asking, and what a first visit actually involves.</p>
+    <p class="standfirst">Five short questions. At the end you get a summary you can send to us on WhatsApp or bring with you, the questions worth asking, and what a first visit actually involves.</p>
     <p class="disclaimer">This is not a diagnosis and it does not suggest treatment. It puts your own description on paper so the dentist has it from the first minute. Nothing here replaces an examination.</p>
   </header>
 
@@ -146,12 +151,12 @@ var CONFIG = {
   clinic: "Apex Dental",
   phone: "+356 7985 4037",
   phoneHref: "+35679854037",
+  whatsapp: "35679854037",
   altPhone: "+356 2701 6017",
   email: "info@apexdental.com.mt",
   address: "Trident Park, Mdina Road, Mriehel, Birkirkara, CBD 2010",
   hospital: "Mater Dei Hospital",
-  newPatientMinutes: 30,
-  bookingUrl: ""
+  newPatientMinutes: 30
 };
 
 var STEPS = [
@@ -277,9 +282,25 @@ var REASON_WORDS = {
   routine: "a check-up and clean",
   unsure: "something that doesn't feel right, without being sure what"
 };
+var REASON_SHORT = {
+  pain: "Pain or discomfort",
+  broken: "A broken or missing tooth",
+  look: "The appearance of my teeth",
+  straight: "Crooked or crowded teeth",
+  routine: "A check-up and clean",
+  unsure: "Not sure — something does not feel right"
+};
 var TIMING_WORDS = {
   now: "and it's a problem today", weeks: "for the last few days or weeks",
   months: "for a few months", years: "for a year or more", na: ""
+};
+var TIMING_SHORT = {
+  now: "a problem today", weeks: "days or weeks", months: "a few months",
+  years: "a year or more", na: ""
+};
+var LASTVISIT_SHORT = {
+  "6m": "within the last 6 months", "2y": "1 to 2 years ago",
+  "5y": "several years ago", "long": "cannot remember"
 };
 var QUESTIONS = {
   pain: [
@@ -325,11 +346,23 @@ var PRIORITY_WORDS = {
   nosurg: "avoiding surgery if there is a choice", time: "as few appointments as possible",
   comfort: "being comfortable during treatment"
 };
+var PRIORITY_MINE = {
+  cost: "a clear cost before starting", speed: "getting it resolved quickly",
+  look: "the final appearance", keep: "keeping my own teeth where possible",
+  nosurg: "avoiding surgery if there is a choice", time: "as few appointments as possible",
+  comfort: "being comfortable during treatment"
+};
 var CONTEXT_WORDS = {
   anxious: "anxious about dental treatment", badpast: "had a difficult experience in the past",
   meds: "taking regular medication", medical: "living with a medical condition",
   grind: "grinding or clenching", smoke: "a smoker or vaper",
   preg: "pregnant or breastfeeding"
+};
+var CONTEXT_MINE = {
+  anxious: "I am anxious about dental treatment", badpast: "I have had a difficult experience in the past",
+  meds: "I take regular medication", medical: "I have a medical condition",
+  grind: "I grind or clench my teeth", smoke: "I smoke or vape",
+  preg: "I am pregnant or breastfeeding"
 };
 
 function listify(arr) {
@@ -354,6 +387,19 @@ function urgentBlock() {
     '<li>A high temperature alongside facial swelling</li>' +
     '<li>A significant injury to the face or jaw</li>' +
     '</ul><p>These need a hospital, not a dental chair.</p></div>';
+}
+
+function whatsappLink(prio, ctx, note) {
+  var r = answers.reason;
+  var L = [];
+  L.push("Hello Apex Dental. I filled in the visit preparation on your website and would like to book an appointment.");
+  L.push("");
+  L.push("Reason: " + REASON_SHORT[r] + (TIMING_SHORT[answers.timing] ? " (" + TIMING_SHORT[answers.timing] + ")" : ""));
+  if (prio.length) { L.push("Most important to me: " + listify(prio.map(function(p) { return PRIORITY_MINE[p]; }))); }
+  if (ctx.length) { L.push("Please note: " + listify(ctx.map(function(cx) { return CONTEXT_MINE[cx]; }))); }
+  L.push("Last dental visit: " + (LASTVISIT_SHORT[answers.lastvisit] || ""));
+  if (note) { L.push("In my words: " + note); }
+  return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(L.join("\n"));
 }
 
 function finish() {
@@ -404,8 +450,10 @@ function finish() {
     '<p style="margin:12px 0 0">This summary is a record of what you told us. It is not a diagnosis, and no treatment has been recommended.</p>' +
     '</div></div>' +
     '<div class="after noprint">' +
+    '<a class="wa" href="' + whatsappLink(prio, ctx, note) + '" target="_blank" rel="noopener">Send this to the clinic on WhatsApp</a>' +
     '<button type="button" class="primary" id="printbtn">Print or save as PDF</button>' +
-    '<button type="button" class="ghost" id="restart">Start again</button></div>';
+    '<button type="button" class="ghost" id="restart">Start again</button></div>' +
+    '<p class="sendnote noprint">The WhatsApp button opens a message with your answers already written out, including anything you ticked under “anything we should know”. Read it before you send it, and delete anything you would rather tell us in person.</p>';
 
   form.style.display = "none";
   progress.style.display = "none";
