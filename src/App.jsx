@@ -633,7 +633,7 @@ function FloatingHeader() {
               </Link>
 
               <a
-                href=""
+                href="/contact-us/#prepare"
                 className="text-sm font-medium text-amber-300 hover:text-amber-200 transition"
               >
                 Prepare for your visit
@@ -750,7 +750,7 @@ function FloatingHeader() {
               </Link>
 
               <a
-                href=""
+                href="/contact-us/#prepare"
                 onClick={() => setOpen(false)}
                 className="text-amber-300 hover:text-amber-200"
               >
