@@ -627,6 +627,13 @@ function FloatingHeader() {
               >
                 Contact
               </Link>
+
+              <a
+                href="/consultation-prep.html"
+                className="text-sm font-medium text-amber-300 hover:text-amber-200 transition"
+              >
+                Prepare for your visit
+              </a>
             </nav>
 
             <div className="hidden xl:flex items-center gap-4">
@@ -737,6 +744,14 @@ function FloatingHeader() {
               >
                 Contact
               </Link>
+
+              <a
+                href="/consultation-prep.html"
+                onClick={() => setOpen(false)}
+                className="text-amber-300 hover:text-amber-200"
+              >
+                Prepare for your visit
+              </a>
 
               <div className="pt-2 flex flex-col gap-3">
                 <a href={`tel:${brand.phone}`} className="text-slate-300">
