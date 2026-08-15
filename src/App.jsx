@@ -231,6 +231,9 @@ const brand = {
     'Trident Park, Mdina Road, Mrieħel, Birkirkara, CBD 2010, Malta',
   logo: '/images/orislogo.png',
   googleMaps: 'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
+  stAnnesName: "Apex Dental @ St Anne's Clinic",
+  addressStAnnes: 'Level 3, Triq Kanonku Karm Pirotta, Birkirkara BKR 1111',
+  googleMapsStAnnes: 'https://maps.google.com/?cid=3534893952217415551',
 };
 
 const siteUrl = 'https://www.apexdentalmalta.com';
@@ -1509,6 +1512,18 @@ function Footer() {
                 Find us on Google Maps &amp; read our reviews
               </a>
             </p>
+                <p className="mt-4 pt-4 border-t border-slate-800">
+                  <span className="block text-slate-200 font-medium">{brand.stAnnesName}</span>
+                  <span className="block">{brand.addressStAnnes}</span>
+                  <a
+                    href={brand.googleMapsStAnnes}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white"
+                  >
+                    Get directions
+                  </a>
+                </p>
           </div>
         </div>
       </Section>
@@ -3772,6 +3787,25 @@ function ContactPage() {
                       <div className="font-medium text-slate-900">Address</div>
                       <div className="text-slate-600 mt-1 leading-7">{brand.address}</div>
                       <a href="https://maps.google.com/?q=Apex+Dental+Trident+Park+Birkirkara+Malta" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:text-sky-700 text-sm font-medium mt-1 inline-block">Get directions</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <div className="font-medium text-slate-900">{brand.stAnnesName}</div>
+                      <div className="text-slate-600 mt-1 leading-7">{brand.addressStAnnes}</div>
+                      <div className="text-sm text-slate-500 mt-1">
+                        An independent Apex Dental practice on Level 3.
+                      </div>
+                      <a
+                        href={brand.googleMapsStAnnes}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sky-700 hover:text-sky-900 text-sm inline-block mt-1"
+                      >
+                        Get directions
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
