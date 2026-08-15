@@ -3872,6 +3872,21 @@ function ContactPage() {
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
+                  <p className="text-sm text-slate-500 mt-4 mb-2">
+                    {brand.stAnnesName} — Level 3
+                  </p>
+                  <div className="rounded-[2rem] overflow-hidden border border-slate-200">
+                    <iframe
+                      title="Apex Dental at St Anne&rsquo;s Clinic, Level 3, Birkirkara"
+                      src={'https://www.google.com/maps?q=35.9028887,14.4595558&z=17&output=embed'}
+                      width="100%"
+                      height="320"
+                      style={{ border: 0, display: 'block' }}
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
             </div>
             <ContactFormCard />
           </div>
