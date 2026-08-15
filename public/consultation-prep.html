@@ -1,132 +1,160 @@
 <!--
   Apex Dental — Consultation prep
   Static page served at /consultation-prep.html
+  Styled to match the main site (slate-950 / amber-400, Arial).
   Not a diagnosis. Reflects the patient's own description back to them.
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prepare for your consultation | Apex Dental</title>
+<title>Prepare for your visit | Apex Dental</title>
 <meta name="description" content="Answer five short questions before your visit to Apex Dental and bring a summary to your appointment.">
 <meta name="robots" content="noindex">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg">
 
 <style>
   :root {
-    --ink: #0E2E29; --ink-soft: #4A6560; --paper: #EEF3F0; --card: #FFFFFF;
-    --line: #D3DFDA; --accent: #14746A; --accent-d: #0B554D;
-    --alert: #A9481C; --alert-bg: #FBF0E9; --radius: 14px;
-    --display: "Fraunces", Georgia, serif;
-    --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+    --ink: #e2e8f0;
+    --ink-soft: #94a3b8;
+    --paper: #020617;
+    --card: #0f172a;
+    --line: #1e293b;
+    --line-soft: #334155;
+    --accent: #fbbf24;
+    --accent-d: #f59e0b;
+    --accent-ink: #0f172a;
+    --eyebrow: #fcd34d;
+    --alert: #fca5a5;
+    --alert-bg: #1c1310;
+    --alert-line: #7c2d12;
+    --radius: 14px;
+    --font: Arial, Helvetica, sans-serif;
   }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--body);
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--font);
     font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:660px; margin:0 auto; padding:40px 20px 80px; }
+  a { color: var(--eyebrow); }
+  .wrap { max-width:680px; margin:0 auto; padding:44px 20px 90px; }
+  .brandbar { display:flex; align-items:center; gap:12px; margin-bottom:34px; }
+  .brandbar img { height:40px; width:auto; }
+  .brandbar .bn { font-weight:700; letter-spacing:.02em; font-size:15px; }
+  .brandbar .bt { font-size:12px; color:var(--ink-soft); }
+  .brandbar a.back { margin-left:auto; font-size:13px; color:var(--ink-soft); text-decoration:none; }
+  .brandbar a.back:hover { color:var(--ink); }
   .eyebrow { font-size:12px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--accent); font-weight:700; margin:0 0 14px; }
-  h1 { font-family:var(--display); font-weight:600; font-size:clamp(30px,6vw,44px);
-    line-height:1.1; letter-spacing:-.01em; margin:0 0 14px; }
-  .standfirst { color:var(--ink-soft); margin:0 0 8px; max-width:46ch; }
-  .disclaimer { font-size:14px; color:var(--ink-soft); border-left:2px solid var(--line);
+    color:var(--eyebrow); font-weight:700; margin:0 0 14px; }
+  h1 { font-weight:600; font-size:clamp(30px,6vw,42px); line-height:1.12;
+    letter-spacing:-.015em; margin:0 0 14px; color:#f8fafc; }
+  .standfirst { color:var(--ink-soft); margin:0 0 8px; max-width:48ch; }
+  .disclaimer { font-size:14px; color:var(--ink-soft); border-left:2px solid var(--line-soft);
     padding-left:14px; margin:24px 0 34px; }
-  .progress { display:flex; gap:6px; margin-bottom:28px; }
+  .progress { display:flex; gap:6px; margin-bottom:26px; }
   .progress span { height:3px; flex:1; background:var(--line); border-radius:2px; transition:background .3s ease; }
   .progress span.done { background:var(--accent); }
   .step { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
     padding:26px 24px; animation:rise .28s ease both; }
   @keyframes rise { from { opacity:0; transform:translateY(8px); } }
   @media (prefers-reduced-motion: reduce) { .step { animation:none; } }
-  .step-no { font-family:var(--display); font-size:13px; color:var(--accent); letter-spacing:.04em; margin:0 0 6px; }
-  .step h2 { font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; margin:0 0 4px; }
+  .step-no { font-size:12px; color:var(--eyebrow); letter-spacing:.12em;
+    text-transform:uppercase; font-weight:700; margin:0 0 8px; }
+  .step h2 { font-weight:600; font-size:23px; line-height:1.25; margin:0 0 4px; color:#f8fafc; }
   .hint { font-size:14px; color:var(--ink-soft); margin:0 0 20px; }
   .options { display:grid; gap:9px; margin-bottom:22px; }
   .opt { display:flex; align-items:flex-start; gap:11px; border:1px solid var(--line);
-    border-radius:10px; padding:13px 15px; cursor:pointer; background:#fff;
+    border-radius:10px; padding:13px 15px; cursor:pointer; background:#0b1327;
     transition:border-color .15s, background .15s; }
-  .opt:hover { border-color:var(--accent); }
+  .opt:hover { border-color:var(--line-soft); background:#101c38; }
   .opt input { margin:4px 0 0; accent-color:var(--accent); flex:none; }
-  .opt.sel { border-color:var(--accent); background:#F1F8F6; }
-  .opt-label { font-weight:500; }
+  .opt.sel { border-color:var(--accent); background:#141d33; }
+  .opt-label { font-weight:600; font-size:16px; }
   .opt-note { display:block; font-size:13.5px; color:var(--ink-soft); font-weight:400; }
   textarea { width:100%; min-height:88px; padding:12px 14px; border:1px solid var(--line);
-    border-radius:10px; font-family:var(--body); font-size:16px; color:var(--ink);
-    resize:vertical; margin-bottom:22px; background:#fff; }
+    border-radius:10px; font-family:var(--font); font-size:16px; color:var(--ink);
+    resize:vertical; margin-bottom:22px; background:#0b1327; }
+  textarea::placeholder { color:#64748b; }
   textarea:focus, .opt:focus-within, button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   .nav { display:flex; gap:12px; align-items:center; }
-  button { font-family:var(--body); font-size:16px; font-weight:700; border-radius:999px;
+  button { font-family:var(--font); font-size:15px; font-weight:700; border-radius:999px;
     cursor:pointer; border:1px solid transparent; padding:12px 26px; transition:background .15s, color .15s; }
-  .primary { background:var(--accent); color:#fff; }
+  .primary { background:var(--accent); color:var(--accent-ink); }
   .primary:hover { background:var(--accent-d); }
-  .primary[disabled] { background:var(--line); color:var(--ink-soft); cursor:not-allowed; }
-  .ghost { background:none; color:var(--ink-soft); border-color:var(--line); }
+  .primary[disabled] { background:var(--line); color:#64748b; cursor:not-allowed; }
+  .ghost { background:none; color:var(--ink-soft); border-color:var(--line-soft); }
   .ghost:hover { color:var(--ink); border-color:var(--ink-soft); }
-  .urgent { background:var(--alert-bg); border:1px solid #E8CBB8; border-radius:var(--radius);
+  .urgent { background:var(--alert-bg); border:1px solid var(--alert-line); border-radius:var(--radius);
     padding:20px 22px; margin-bottom:22px; }
-  .urgent h3 { font-family:var(--display); font-size:19px; margin:0 0 8px; color:var(--alert); }
+  .urgent h3 { font-size:18px; margin:0 0 8px; color:var(--alert); font-weight:700; }
   .urgent p, .urgent li { font-size:15px; margin:0 0 8px; }
   .urgent ul { padding-left:18px; margin:0 0 12px; }
-  .call { display:inline-block; background:var(--alert); color:#fff; text-decoration:none;
-    font-weight:700; padding:11px 22px; border-radius:999px; }
+  .call { display:inline-block; background:var(--accent); color:var(--accent-ink);
+    text-decoration:none; font-weight:700; padding:11px 22px; border-radius:999px; }
   .result { display:none; }
   .result.on { display:block; }
   .sheet { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
-  .sheet-head { background:var(--ink); color:#fff; padding:22px 26px; }
-  .sheet-head p { margin:0; font-size:13px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
-  .sheet-head h2 { font-family:var(--display); font-weight:600; font-size:26px; margin:6px 0 0; }
+  .sheet-head { background:#0b1327; border-bottom:1px solid var(--line); padding:22px 26px; }
+  .sheet-head p { margin:0; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--eyebrow); font-weight:700; }
+  .sheet-head h2 { font-weight:600; font-size:25px; margin:6px 0 0; color:#f8fafc; }
   .sheet-body { padding:8px 26px 26px; }
-  .block { padding:22px 0; border-bottom:1px dashed var(--line); }
+  .block { padding:22px 0; border-bottom:1px solid var(--line); }
   .block:last-child { border-bottom:0; }
-  .block h3 { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  .block h3 { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--eyebrow);
     margin:0 0 10px; font-weight:700; }
   .block p { margin:0 0 10px; }
   .block ul { margin:0; padding-left:20px; }
   .block li { margin-bottom:7px; }
-  .quote { font-family:var(--display); font-size:19px; line-height:1.45; margin:0; }
-  .footer-block { background:var(--paper); border-top:1px solid var(--line); padding:20px 26px;
+  .quote { font-size:18px; line-height:1.5; margin:0; color:#f8fafc; }
+  .footer-block { background:#0b1327; border-top:1px solid var(--line); padding:20px 26px;
     font-size:14px; color:var(--ink-soft); }
   .footer-block strong { color:var(--ink); }
-  .footer-block a { color:var(--accent); }
   .after { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
-  .after a.primary { text-decoration:none; display:inline-block; }
   @media print {
-    body { background:#fff; font-size:12pt; }
+    body { background:#fff; color:#000; font-size:12pt; }
     .wrap { padding:0; max-width:none; }
-    .noprint, .progress, .step, header.masthead { display:none !important; }
+    .noprint, .progress, .step, header.masthead, .brandbar a.back { display:none !important; }
+    .sheet, .sheet-head, .footer-block { background:#fff; border-color:#000; }
     .sheet { border:0; }
-    .sheet-head { background:#fff; color:#000; border-bottom:2px solid #000; padding-left:0; }
-    .sheet-body, .footer-block { padding-left:0; padding-right:0; }
-    .footer-block { background:#fff; }
+    .sheet-head { border-bottom:2px solid #000; padding-left:0; }
+    .sheet-head p, .sheet-head h2, .quote, .block h3 { color:#000; }
+    .sheet-body, .footer-block { padding-left:0; padding-right:0; color:#000; }
+    .block { border-bottom:1px dashed #999; }
   }
 </style>
 
 <div class="wrap">
+  <div class="brandbar">
+    <img src="/images/logo.svg" alt="" onerror="this.style.display='none'">
+    <div>
+      <div class="bn">Apex Dental</div>
+      <div class="bt">Advanced Dentistry in Malta</div>
+    </div>
+    <a class="back" href="/">Back to site</a>
+  </div>
+
   <header class="masthead">
-    <p class="eyebrow">Apex Dental · Trident Park</p>
+    <p class="eyebrow">Before your appointment</p>
     <h1>Get more out of your first appointment</h1>
     <p class="standfirst">Five short questions. At the end you get a summary to bring with you, the questions worth asking, and what a first visit actually involves.</p>
     <p class="disclaimer">This is not a diagnosis and it does not suggest treatment. It puts your own description on paper so the dentist has it from the first minute. Nothing here replaces an examination.</p>
   </header>
+
   <div class="progress" id="progress" aria-hidden="true"></div>
   <form id="form"></form>
   <section class="result" id="result" aria-live="polite"></section>
 </div>
+
 <script>
-const CONFIG = {
+var CONFIG = {
   clinic: "Apex Dental",
   phone: "+356 7985 4037",
   phoneHref: "+35679854037",
   altPhone: "+356 2701 6017",
   email: "info@apexdental.com.mt",
-  address: "Trident Park, Notabile Gardens, Mdina Road, Zone 2, CBD, Birkirkara",
+  address: "Trident Park, Mdina Road, Mriehel, Birkirkara, CBD 2010",
   hospital: "Mater Dei Hospital",
   newPatientMinutes: 30,
   bookingUrl: ""
 };
 
-const STEPS = [
+var STEPS = [
   { key: "reason", type: "single",
     title: "What's bringing you in?",
     hint: "Pick the closest one. You can add detail later.",
@@ -185,17 +213,16 @@ const STEPS = [
     ] }
 ];
 
-const answers = {};
-let current = 0;
-const form = document.getElementById("form");
-const progress = document.getElementById("progress");
-const result = document.getElementById("result");
+var answers = {};
+var current = 0;
+var form = document.getElementById("form");
+var progress = document.getElementById("progress");
+var result = document.getElementById("result");
 progress.innerHTML = STEPS.map(function(){ return "<span></span>"; }).join("");
 
 function paintProgress() {
   Array.prototype.forEach.call(progress.children, function(el, i) { el.classList.toggle("done", i <= current); });
 }
-
 function isSel(chosen, v) { return Array.isArray(chosen) ? chosen.indexOf(v) > -1 : chosen === v; }
 
 function render() {
@@ -229,8 +256,8 @@ function render() {
       Array.prototype.forEach.call(form.querySelectorAll(".opt"), function(el) {
         el.classList.toggle("sel", el.querySelector("input").checked);
       });
-      var c = answers[s.key];
-      form.querySelector("#next").disabled = !c || c.length === 0;
+      var cc = answers[s.key];
+      form.querySelector("#next").disabled = !cc || cc.length === 0;
     });
   });
   var free = form.querySelector("#free");
@@ -241,6 +268,7 @@ function render() {
     if (current === STEPS.length - 1) { finish(); } else { current++; render(); }
   });
 }
+
 var REASON_WORDS = {
   pain: "pain or discomfort",
   broken: "a broken or missing tooth",
@@ -308,16 +336,14 @@ function listify(arr) {
   if (arr.length === 1) { return arr[0]; }
   return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
 }
-
 function escapeHtml(s) {
-  return String(s).replace(/[&<>\"']/g, function(c) {
-    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;", "'": "&#39;" }[c];
+  return String(s).replace(/[&<>\"']/g, function(ch) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;", "'": "&#39;" }[ch];
   });
 }
-
 function urgentBlock() {
   return '<div class="urgent noprint">' +
-    '<h3>Call us rather than waiting for an online booking</h3>' +
+    '<h3>Call us rather than booking online</h3>' +
     '<p>You have said this is a problem today. Phone the clinic and we will find you the earliest slot.</p>' +
     '<p><a class="call" href="tel:' + CONFIG.phoneHref + '">Call ' + CONFIG.phone + '</a></p>' +
     '<p style="margin-top:16px"><strong>Go straight to ' + CONFIG.hospital + ' if any of these apply:</strong></p>' +
@@ -340,19 +366,14 @@ function finish() {
   var summary = "You're coming in about " + REASON_WORDS[r];
   if (TIMING_WORDS[answers.timing]) { summary += ", " + TIMING_WORDS[answers.timing]; }
   summary += ".";
-  if (prio.length) {
-    summary += " What matters most to you is " + listify(prio.map(function(p) { return PRIORITY_WORDS[p]; })) + ".";
-  }
-  if (ctx.length) {
-    summary += " You've told us you're " + listify(ctx.map(function(c) { return CONTEXT_WORDS[c]; })) + ".";
-  }
+  if (prio.length) { summary += " What matters most to you is " + listify(prio.map(function(p) { return PRIORITY_WORDS[p]; })) + "."; }
+  if (ctx.length) { summary += " You've told us you're " + listify(ctx.map(function(cx) { return CONTEXT_WORDS[cx]; })) + "."; }
 
   var bring = [];
   if (ctx.indexOf("meds") > -1) { bring.push("Your medication list, or a photo of the boxes"); }
   if (ctx.indexOf("medical") > -1) { bring.push("Any recent letters or reports from your doctor"); }
   bring.push("Any previous x-rays or scans, if you have them");
   bring.push("This summary — printed or on your phone");
-
   var anxious = ctx.indexOf("anxious") > -1 || ctx.indexOf("badpast") > -1;
 
   result.innerHTML = (urgent ? urgentBlock() : "") +
@@ -379,12 +400,11 @@ function finish() {
     (anxious ? '<p>Tell reception when you book that you would like a longer, unhurried appointment. It is a common request and it makes a difference.</p>' : "") +
     '</div></div>' +
     '<div class="footer-block"><strong>' + CONFIG.clinic + '</strong><br>' + CONFIG.address + '<br>' +
-    CONFIG.phone + ' · ' + CONFIG.altPhone + ' · <a href="mailto:' + CONFIG.email + '">' + CONFIG.email + '</a>' +
+    CONFIG.phone + ' · ' + CONFIG.altPhone + ' · ' + CONFIG.email +
     '<p style="margin:12px 0 0">This summary is a record of what you told us. It is not a diagnosis, and no treatment has been recommended.</p>' +
     '</div></div>' +
     '<div class="after noprint">' +
     '<button type="button" class="primary" id="printbtn">Print or save as PDF</button>' +
-    (CONFIG.bookingUrl ? '<a class="primary" href="' + CONFIG.bookingUrl + '">Book an appointment</a>' : "") +
     '<button type="button" class="ghost" id="restart">Start again</button></div>';
 
   form.style.display = "none";
@@ -406,3 +426,4 @@ function finish() {
 
 render();
 </script>
+
