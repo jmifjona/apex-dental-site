@@ -1,14 +1,13 @@
 <!--
   Apex Dental — Consultation prep
   Static page served at /consultation-prep.html
-  Styled to match the main site (slate-950 / amber-400, Arial).
-  Not a diagnosis. Reflects the patient's own description back to them.
-  The WhatsApp button opens a pre-filled message the PATIENT reviews and sends.
+  Nothing is transmitted by this page. The WhatsApp button opens a pre-filled
+  message that the PATIENT reviews and sends from their own device.
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prepare for your visit | Apex Dental</title>
-<meta name="description" content="Answer five short questions before your visit to Apex Dental and bring a summary to your appointment.">
+<meta name="description" content="Answer a few short questions before your visit to Apex Dental and send us a summary or bring it with you.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.svg">
 
@@ -68,11 +67,17 @@
   .opt.sel { border-color:var(--accent); background:#141d33; }
   .opt-label { font-weight:600; font-size:16px; }
   .opt-note { display:block; font-size:13.5px; color:var(--ink-soft); font-weight:400; }
+  .fields { display:grid; gap:16px; margin-bottom:22px; }
+  .field label { display:block; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--ink); }
+  .field .req { color:var(--eyebrow); }
+  .field input { width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:10px;
+    font-family:var(--font); font-size:16px; color:var(--ink); background:#0b1327; }
+  .field input::placeholder { color:#64748b; }
   textarea { width:100%; min-height:88px; padding:12px 14px; border:1px solid var(--line);
     border-radius:10px; font-family:var(--font); font-size:16px; color:var(--ink);
     resize:vertical; margin-bottom:22px; background:#0b1327; }
   textarea::placeholder { color:#64748b; }
-  textarea:focus, .opt:focus-within, button:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  textarea:focus, input:focus, .opt:focus-within, button:focus-visible, a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   .nav { display:flex; gap:12px; align-items:center; }
   button { font-family:var(--font); font-size:15px; font-weight:700; border-radius:999px;
     cursor:pointer; border:1px solid transparent; padding:12px 26px; transition:background .15s, color .15s; }
@@ -103,6 +108,10 @@
   .block ul { margin:0; padding-left:20px; }
   .block li { margin-bottom:7px; }
   .quote { font-size:18px; line-height:1.5; margin:0; color:#f8fafc; }
+  .dl { margin:0; font-size:15px; }
+  .dl div { display:flex; gap:10px; margin-bottom:6px; }
+  .dl dt { color:var(--ink-soft); min-width:130px; }
+  .dl dd { margin:0; color:#f8fafc; font-weight:600; }
   .footer-block { background:#0b1327; border-top:1px solid var(--line); padding:20px 26px;
     font-size:14px; color:var(--ink-soft); }
   .footer-block strong { color:var(--ink); }
@@ -119,7 +128,7 @@
     .sheet, .sheet-head, .footer-block { background:#fff; border-color:#000; }
     .sheet { border:0; }
     .sheet-head { border-bottom:2px solid #000; padding-left:0; }
-    .sheet-head p, .sheet-head h2, .quote, .block h3 { color:#000; }
+    .sheet-head p, .sheet-head h2, .quote, .block h3, .dl dd { color:#000; }
     .sheet-body, .footer-block { padding-left:0; padding-right:0; color:#000; }
     .block { border-bottom:1px dashed #999; }
   }
@@ -137,7 +146,7 @@
   <header class="masthead">
     <p class="eyebrow">Before your appointment</p>
     <h1>Get more out of your first appointment</h1>
-    <p class="standfirst">Five short questions. At the end you get a summary you can send to us on WhatsApp or bring with you, the questions worth asking, and what a first visit actually involves.</p>
+    <p class="standfirst">A few short questions. At the end you get a summary you can send to us on WhatsApp or bring with you, the questions worth asking, and what a first visit actually involves.</p>
     <p class="disclaimer">This is not a diagnosis and it does not suggest treatment. It puts your own description on paper so the dentist has it from the first minute. Nothing here replaces an examination.</p>
   </header>
 
@@ -215,10 +224,20 @@ var STEPS = [
       { v:"2y", l:"1 to 2 years ago" },
       { v:"5y", l:"Several years ago" },
       { v:"long", l:"I honestly can't remember" }
+    ] },
+  { key: "details", type: "fields",
+    title: "Your details",
+    hint: "So reception can find your file or open a new one before you arrive. This stays on your phone until you choose to send it.",
+    fields: [
+      { k:"pname",  l:"Full name", req:true, ph:"First and last name" },
+      { k:"pdob",   l:"Date of birth", ph:"DD/MM/YYYY" },
+      { k:"pphone", l:"Best number to call", ph:"Only if different from your WhatsApp number" },
+      { k:"pemail", l:"Email", ph:"Optional" }
     ] }
 ];
 
 var answers = {};
+var details = {};
 var current = 0;
 var form = document.getElementById("form");
 var progress = document.getElementById("progress");
@@ -229,44 +248,78 @@ function paintProgress() {
   Array.prototype.forEach.call(progress.children, function(el, i) { el.classList.toggle("done", i <= current); });
 }
 function isSel(chosen, v) { return Array.isArray(chosen) ? chosen.indexOf(v) > -1 : chosen === v; }
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>\"']/g, function(ch) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;", "'": "&#39;" }[ch];
+  });
+}
 
-function render() {
-  var s = STEPS[current];
-  var chosen = answers[s.key] || (s.type === "multi" ? [] : null);
-  var opts = s.options.map(function(o) {
+function stepBodyOptions(s, chosen) {
+  return '<div class="options">' + s.options.map(function(o) {
     return '<label class="opt ' + (isSel(chosen, o.v) ? "sel" : "") + '">' +
       '<input type="' + (s.type === "multi" ? "checkbox" : "radio") + '" name="' + s.key + '" value="' + o.v + '" ' +
       (isSel(chosen, o.v) ? "checked" : "") + '>' +
       '<span class="opt-label">' + o.l + (o.n ? '<span class="opt-note">' + o.n + '</span>' : "") + '</span></label>';
-  }).join("");
+  }).join("") + '</div>' +
+  (s.freeText ? '<textarea id="free" placeholder="' + s.freeText + '">' + esc(answers[s.key + "_text"] || "") + '</textarea>' : "");
+}
+
+function stepBodyFields(s) {
+  return '<div class="fields">' + s.fields.map(function(f) {
+    return '<div class="field"><label for="' + f.k + '">' + f.l +
+      (f.req ? ' <span class="req">*</span>' : '') + '</label>' +
+      '<input id="' + f.k + '" type="text" placeholder="' + esc(f.ph || "") + '" value="' + esc(details[f.k] || "") + '">' +
+      '</div>';
+  }).join("") + '</div>';
+}
+
+function canAdvance(s) {
+  if (s.type === "fields") { return !!(details.pname && details.pname.trim()); }
+  var chosen = answers[s.key];
+  return !!(chosen && chosen.length !== 0);
+}
+
+function render() {
+  var s = STEPS[current];
+  var chosen = answers[s.key] || (s.type === "multi" ? [] : null);
   form.innerHTML = '<div class="step">' +
-    '<p class="step-no">Question ' + (current + 1) + ' of ' + STEPS.length + '</p>' +
+    '<p class="step-no">Step ' + (current + 1) + ' of ' + STEPS.length + '</p>' +
     '<h2>' + s.title + '</h2><p class="hint">' + s.hint + '</p>' +
-    '<div class="options">' + opts + '</div>' +
-    (s.freeText ? '<textarea id="free" placeholder="' + s.freeText + '">' + (answers[s.key + "_text"] || "") + '</textarea>' : "") +
+    (s.type === "fields" ? stepBodyFields(s) : stepBodyOptions(s, chosen)) +
     '<div class="nav">' +
     (current > 0 ? '<button type="button" class="ghost" id="back">Back</button>' : "") +
-    '<button type="button" class="primary" id="next" ' + (chosen && chosen.length !== 0 ? "" : "disabled") + '>' +
+    '<button type="button" class="primary" id="next" ' + (canAdvance(s) ? "" : "disabled") + '>' +
     (current === STEPS.length - 1 ? "See my summary" : "Next") + '</button></div></div>';
   paintProgress();
-  Array.prototype.forEach.call(form.querySelectorAll("input"), function(input) {
-    input.addEventListener("change", function() {
-      if (s.type === "multi") {
-        var vals = Array.prototype.map.call(form.querySelectorAll("input:checked"), function(i) { return i.value; });
-        if (input.value === "none" && input.checked) { vals = ["none"]; }
-        else { vals = vals.filter(function(v) { return v !== "none"; }); }
-        answers[s.key] = vals;
-        Array.prototype.forEach.call(form.querySelectorAll("input"), function(i) { i.checked = vals.indexOf(i.value) > -1; });
-      } else { answers[s.key] = input.value; }
-      Array.prototype.forEach.call(form.querySelectorAll(".opt"), function(el) {
-        el.classList.toggle("sel", el.querySelector("input").checked);
+
+  if (s.type === "fields") {
+    s.fields.forEach(function(f) {
+      var el = document.getElementById(f.k);
+      el.addEventListener("input", function() {
+        details[f.k] = el.value;
+        form.querySelector("#next").disabled = !canAdvance(s);
       });
-      var cc = answers[s.key];
-      form.querySelector("#next").disabled = !cc || cc.length === 0;
     });
-  });
-  var free = form.querySelector("#free");
-  if (free) { free.addEventListener("input", function() { answers[s.key + "_text"] = free.value.trim(); }); }
+  } else {
+    Array.prototype.forEach.call(form.querySelectorAll(".opt input"), function(input) {
+      input.addEventListener("change", function() {
+        if (s.type === "multi") {
+          var vals = Array.prototype.map.call(form.querySelectorAll(".opt input:checked"), function(i) { return i.value; });
+          if (input.value === "none" && input.checked) { vals = ["none"]; }
+          else { vals = vals.filter(function(v) { return v !== "none"; }); }
+          answers[s.key] = vals;
+          Array.prototype.forEach.call(form.querySelectorAll(".opt input"), function(i) { i.checked = vals.indexOf(i.value) > -1; });
+        } else { answers[s.key] = input.value; }
+        Array.prototype.forEach.call(form.querySelectorAll(".opt"), function(el) {
+          el.classList.toggle("sel", el.querySelector("input").checked);
+        });
+        form.querySelector("#next").disabled = !canAdvance(s);
+      });
+    });
+    var free = form.querySelector("#free");
+    if (free) { free.addEventListener("input", function() { answers[s.key + "_text"] = free.value.trim(); }); }
+  }
+
   var back = form.querySelector("#back");
   if (back) { back.addEventListener("click", function() { current--; render(); }); }
   form.querySelector("#next").addEventListener("click", function() {
@@ -275,20 +328,15 @@ function render() {
 }
 
 var REASON_WORDS = {
-  pain: "pain or discomfort",
-  broken: "a broken or missing tooth",
-  look: "the appearance of your teeth",
-  straight: "crooked or crowded teeth",
+  pain: "pain or discomfort", broken: "a broken or missing tooth",
+  look: "the appearance of your teeth", straight: "crooked or crowded teeth",
   routine: "a check-up and clean",
   unsure: "something that doesn't feel right, without being sure what"
 };
 var REASON_SHORT = {
-  pain: "Pain or discomfort",
-  broken: "A broken or missing tooth",
-  look: "The appearance of my teeth",
-  straight: "Crooked or crowded teeth",
-  routine: "A check-up and clean",
-  unsure: "Not sure — something does not feel right"
+  pain: "Pain or discomfort", broken: "A broken or missing tooth",
+  look: "The appearance of my teeth", straight: "Crooked or crowded teeth",
+  routine: "A check-up and clean", unsure: "Not sure — something does not feel right"
 };
 var TIMING_WORDS = {
   now: "and it's a problem today", weeks: "for the last few days or weeks",
@@ -369,11 +417,6 @@ function listify(arr) {
   if (arr.length === 1) { return arr[0]; }
   return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
 }
-function escapeHtml(s) {
-  return String(s).replace(/[&<>\"']/g, function(ch) {
-    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;", "'": "&#39;" }[ch];
-  });
-}
 function urgentBlock() {
   return '<div class="urgent noprint">' +
     '<h3>Call us rather than booking online</h3>' +
@@ -394,12 +437,25 @@ function whatsappLink(prio, ctx, note) {
   var L = [];
   L.push("Hello Apex Dental. I filled in the visit preparation on your website and would like to book an appointment.");
   L.push("");
+  L.push("Name: " + (details.pname || "").trim());
+  if (details.pdob && details.pdob.trim()) { L.push("Date of birth: " + details.pdob.trim()); }
+  if (details.pphone && details.pphone.trim()) { L.push("Best number: " + details.pphone.trim()); }
+  if (details.pemail && details.pemail.trim()) { L.push("Email: " + details.pemail.trim()); }
+  L.push("");
   L.push("Reason: " + REASON_SHORT[r] + (TIMING_SHORT[answers.timing] ? " (" + TIMING_SHORT[answers.timing] + ")" : ""));
   if (prio.length) { L.push("Most important to me: " + listify(prio.map(function(p) { return PRIORITY_MINE[p]; }))); }
   if (ctx.length) { L.push("Please note: " + listify(ctx.map(function(cx) { return CONTEXT_MINE[cx]; }))); }
   L.push("Last dental visit: " + (LASTVISIT_SHORT[answers.lastvisit] || ""));
   if (note) { L.push("In my words: " + note); }
   return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(L.join("\n"));
+}
+
+function detailRows() {
+  var rows = [["Name", details.pname], ["Date of birth", details.pdob],
+              ["Best number", details.pphone], ["Email", details.pemail]];
+  return '<dl class="dl">' + rows.filter(function(x) { return x[1] && x[1].trim(); })
+    .map(function(x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1].trim()) + '</dd></div>'; })
+    .join("") + '</dl>';
 }
 
 function finish() {
@@ -426,8 +482,9 @@ function finish() {
     '<div class="sheet"><div class="sheet-head">' +
     '<p>Bring this to your appointment</p><h2>Consultation summary</h2></div>' +
     '<div class="sheet-body">' +
-    '<div class="block"><h3>In your words</h3><p class="quote">' + escapeHtml(summary) + '</p>' +
-    (note ? '<p style="margin-top:12px">You also added: “' + escapeHtml(note) + '”</p>' : "") + '</div>' +
+    '<div class="block"><h3>Your details</h3>' + detailRows() + '</div>' +
+    '<div class="block"><h3>In your words</h3><p class="quote">' + esc(summary) + '</p>' +
+    (note ? '<p style="margin-top:12px">You also added: “' + esc(note) + '”</p>' : "") + '</div>' +
     '<div class="block"><h3>Ask the dentist</h3><ul>' +
     QUESTIONS[r].map(function(q) { return '<li>' + q + '</li>'; }).join("") + '</ul></div>' +
     '<div class="block"><h3>What a first visit involves</h3><ul>' +
@@ -453,7 +510,7 @@ function finish() {
     '<a class="wa" href="' + whatsappLink(prio, ctx, note) + '" target="_blank" rel="noopener">Send this to the clinic on WhatsApp</a>' +
     '<button type="button" class="primary" id="printbtn">Print or save as PDF</button>' +
     '<button type="button" class="ghost" id="restart">Start again</button></div>' +
-    '<p class="sendnote noprint">The WhatsApp button opens a message with your answers already written out, including anything you ticked under “anything we should know”. Read it before you send it, and delete anything you would rather tell us in person.</p>';
+    '<p class="sendnote noprint">The WhatsApp button opens a message with your details and answers already written out, including anything you ticked under “anything we should know”. Read it before you send it, and delete anything you would rather tell us in person.</p>';
 
   form.style.display = "none";
   progress.style.display = "none";
@@ -463,6 +520,7 @@ function finish() {
   document.getElementById("printbtn").addEventListener("click", function() { window.print(); });
   document.getElementById("restart").addEventListener("click", function() {
     Object.keys(answers).forEach(function(k) { delete answers[k]; });
+    Object.keys(details).forEach(function(k) { delete details[k]; });
     current = 0;
     result.classList.remove("on");
     form.style.display = "";
