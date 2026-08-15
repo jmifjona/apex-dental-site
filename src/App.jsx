@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import GoogleAdsAppPage from './GoogleAdsAppPage';
 import GoogleAdsDashboard from './GoogleAdsDashboard.jsx';
+import ConsultationPrep from './ConsultationPrep.jsx';
 import GoogleAdsCampaignCreator from './GoogleAdsCampaignCreator';
 import GoogleAdsCampaignManager from './GoogleAdsCampaignManager';
 import GoogleAdsStrategyEngine from './GoogleAdsStrategyEngine';
@@ -3756,6 +3757,8 @@ function ContactPage() {
         title="Get in touch — we are at Trident Park, Mrieħel, Birkirkara"
         subtitle="Call us, send a WhatsApp, or fill in the form below. We will get back to you quickly to sort out an appointment or answer anything you are wondering about."
       />
+
+        <ConsultationPrep />
       <section className="bg-white py-20">
         <Section>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
