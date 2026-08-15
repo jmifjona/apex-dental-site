@@ -81,6 +81,16 @@ const STEPS = [
     ],
   },
   {
+    key: 'clinic', type: 'single',
+    title: 'Which clinic suits you better?',
+    hint: 'Both are in Birkirkara. Trident Park is our main clinic and the only one open on Sundays.',
+    options: [
+      { v: 'trident', l: 'Trident Park, Mrieħel', n: 'Our main clinic — Mdina Road, CBD 2010' },
+      { v: 'stannes', l: "St Anne's Clinic, Level 3", n: 'Triq Kanonku Karm Pirotta, BKR 1111 — closed Sundays' },
+      { v: 'either', l: 'Either — whichever gives me the sooner appointment' },
+    ],
+  },
+  {
     key: 'details', type: 'fields',
     title: 'Your details',
     hint: 'So reception can find your file or open a new one before you arrive. This stays on your device until you choose to send it.',
@@ -119,6 +129,11 @@ const TIMING_SHORT = {
 const LASTVISIT_SHORT = {
   '6m': 'within the last 6 months', '2y': '1 to 2 years ago',
   '5y': 'several years ago', long: 'cannot remember',
+};
+const CLINIC_LABEL = {
+  trident: 'Trident Park, Mrieħel (main clinic)',
+  stannes: "St Anne's Clinic, Level 3",
+  either: 'Either clinic — whichever is sooner',
 };
 const QUESTIONS = {
   pain: [
@@ -244,6 +259,7 @@ export default function ConsultationPrep() {
     if (details.pphone && details.pphone.trim()) L.push('Best number: ' + details.pphone.trim());
     if (details.pemail && details.pemail.trim()) L.push('Email: ' + details.pemail.trim());
     L.push('');
+    L.push('Preferred clinic: ' + (CLINIC_LABEL[answers.clinic] || ''));
     L.push('Reason: ' + REASON_SHORT[reason] + (TIMING_SHORT[answers.timing] ? ' (' + TIMING_SHORT[answers.timing] + ')' : ''));
     if (prio.length) L.push('Most important to me: ' + listify(prio.map((p) => PRIORITY_MINE[p])));
     if (ctx.length) L.push('Please note: ' + listify(ctx.map((c) => CONTEXT_MINE[c])));
@@ -260,6 +276,7 @@ export default function ConsultationPrep() {
   const anxious = ctx.indexOf('anxious') > -1 || ctx.indexOf('badpast') > -1;
 
   const detailRows = [
+    ['Preferred clinic', CLINIC_LABEL[answers.clinic]],
     ['Name', details.pname], ['Date of birth', details.pdob],
     ['Best number', details.pphone], ['Email', details.pemail],
   ].filter((r) => r[1] && r[1].trim());
