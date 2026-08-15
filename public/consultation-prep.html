@@ -1,0 +1,408 @@
+<!--
+  Apex Dental — Consultation prep
+  Static page served at /consultation-prep.html
+  Not a diagnosis. Reflects the patient's own description back to them.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prepare for your consultation | Apex Dental</title>
+<meta name="description" content="Answer five short questions before your visit to Apex Dental and bring a summary to your appointment.">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0E2E29; --ink-soft: #4A6560; --paper: #EEF3F0; --card: #FFFFFF;
+    --line: #D3DFDA; --accent: #14746A; --accent-d: #0B554D;
+    --alert: #A9481C; --alert-bg: #FBF0E9; --radius: 14px;
+    --display: "Fraunces", Georgia, serif;
+    --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--body);
+    font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:660px; margin:0 auto; padding:40px 20px 80px; }
+  .eyebrow { font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); font-weight:700; margin:0 0 14px; }
+  h1 { font-family:var(--display); font-weight:600; font-size:clamp(30px,6vw,44px);
+    line-height:1.1; letter-spacing:-.01em; margin:0 0 14px; }
+  .standfirst { color:var(--ink-soft); margin:0 0 8px; max-width:46ch; }
+  .disclaimer { font-size:14px; color:var(--ink-soft); border-left:2px solid var(--line);
+    padding-left:14px; margin:24px 0 34px; }
+  .progress { display:flex; gap:6px; margin-bottom:28px; }
+  .progress span { height:3px; flex:1; background:var(--line); border-radius:2px; transition:background .3s ease; }
+  .progress span.done { background:var(--accent); }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 24px; animation:rise .28s ease both; }
+  @keyframes rise { from { opacity:0; transform:translateY(8px); } }
+  @media (prefers-reduced-motion: reduce) { .step { animation:none; } }
+  .step-no { font-family:var(--display); font-size:13px; color:var(--accent); letter-spacing:.04em; margin:0 0 6px; }
+  .step h2 { font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; margin:0 0 4px; }
+  .hint { font-size:14px; color:var(--ink-soft); margin:0 0 20px; }
+  .options { display:grid; gap:9px; margin-bottom:22px; }
+  .opt { display:flex; align-items:flex-start; gap:11px; border:1px solid var(--line);
+    border-radius:10px; padding:13px 15px; cursor:pointer; background:#fff;
+    transition:border-color .15s, background .15s; }
+  .opt:hover { border-color:var(--accent); }
+  .opt input { margin:4px 0 0; accent-color:var(--accent); flex:none; }
+  .opt.sel { border-color:var(--accent); background:#F1F8F6; }
+  .opt-label { font-weight:500; }
+  .opt-note { display:block; font-size:13.5px; color:var(--ink-soft); font-weight:400; }
+  textarea { width:100%; min-height:88px; padding:12px 14px; border:1px solid var(--line);
+    border-radius:10px; font-family:var(--body); font-size:16px; color:var(--ink);
+    resize:vertical; margin-bottom:22px; background:#fff; }
+  textarea:focus, .opt:focus-within, button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .nav { display:flex; gap:12px; align-items:center; }
+  button { font-family:var(--body); font-size:16px; font-weight:700; border-radius:999px;
+    cursor:pointer; border:1px solid transparent; padding:12px 26px; transition:background .15s, color .15s; }
+  .primary { background:var(--accent); color:#fff; }
+  .primary:hover { background:var(--accent-d); }
+  .primary[disabled] { background:var(--line); color:var(--ink-soft); cursor:not-allowed; }
+  .ghost { background:none; color:var(--ink-soft); border-color:var(--line); }
+  .ghost:hover { color:var(--ink); border-color:var(--ink-soft); }
+  .urgent { background:var(--alert-bg); border:1px solid #E8CBB8; border-radius:var(--radius);
+    padding:20px 22px; margin-bottom:22px; }
+  .urgent h3 { font-family:var(--display); font-size:19px; margin:0 0 8px; color:var(--alert); }
+  .urgent p, .urgent li { font-size:15px; margin:0 0 8px; }
+  .urgent ul { padding-left:18px; margin:0 0 12px; }
+  .call { display:inline-block; background:var(--alert); color:#fff; text-decoration:none;
+    font-weight:700; padding:11px 22px; border-radius:999px; }
+  .result { display:none; }
+  .result.on { display:block; }
+  .sheet { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .sheet-head { background:var(--ink); color:#fff; padding:22px 26px; }
+  .sheet-head p { margin:0; font-size:13px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
+  .sheet-head h2 { font-family:var(--display); font-weight:600; font-size:26px; margin:6px 0 0; }
+  .sheet-body { padding:8px 26px 26px; }
+  .block { padding:22px 0; border-bottom:1px dashed var(--line); }
+  .block:last-child { border-bottom:0; }
+  .block h3 { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+    margin:0 0 10px; font-weight:700; }
+  .block p { margin:0 0 10px; }
+  .block ul { margin:0; padding-left:20px; }
+  .block li { margin-bottom:7px; }
+  .quote { font-family:var(--display); font-size:19px; line-height:1.45; margin:0; }
+  .footer-block { background:var(--paper); border-top:1px solid var(--line); padding:20px 26px;
+    font-size:14px; color:var(--ink-soft); }
+  .footer-block strong { color:var(--ink); }
+  .footer-block a { color:var(--accent); }
+  .after { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .after a.primary { text-decoration:none; display:inline-block; }
+  @media print {
+    body { background:#fff; font-size:12pt; }
+    .wrap { padding:0; max-width:none; }
+    .noprint, .progress, .step, header.masthead { display:none !important; }
+    .sheet { border:0; }
+    .sheet-head { background:#fff; color:#000; border-bottom:2px solid #000; padding-left:0; }
+    .sheet-body, .footer-block { padding-left:0; padding-right:0; }
+    .footer-block { background:#fff; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Apex Dental · Trident Park</p>
+    <h1>Get more out of your first appointment</h1>
+    <p class="standfirst">Five short questions. At the end you get a summary to bring with you, the questions worth asking, and what a first visit actually involves.</p>
+    <p class="disclaimer">This is not a diagnosis and it does not suggest treatment. It puts your own description on paper so the dentist has it from the first minute. Nothing here replaces an examination.</p>
+  </header>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <form id="form"></form>
+  <section class="result" id="result" aria-live="polite"></section>
+</div>
+<script>
+const CONFIG = {
+  clinic: "Apex Dental",
+  phone: "+356 7985 4037",
+  phoneHref: "+35679854037",
+  altPhone: "+356 2701 6017",
+  email: "info@apexdental.com.mt",
+  address: "Trident Park, Notabile Gardens, Mdina Road, Zone 2, CBD, Birkirkara",
+  hospital: "Mater Dei Hospital",
+  newPatientMinutes: 30,
+  bookingUrl: ""
+};
+
+const STEPS = [
+  { key: "reason", type: "single",
+    title: "What's bringing you in?",
+    hint: "Pick the closest one. You can add detail later.",
+    options: [
+      { v:"pain", l:"Pain or discomfort", n:"A tooth, a gum, or the jaw" },
+      { v:"broken", l:"A broken or missing tooth", n:"Including a lost filling, crown or denture" },
+      { v:"look", l:"How my teeth look", n:"Colour, shape, gaps, chips" },
+      { v:"straight", l:"Crooked or crowded teeth", n:"Braces or clear aligners" },
+      { v:"routine", l:"A check-up and clean", n:"Nothing wrong that I know of" },
+      { v:"unsure", l:"I'm not sure", n:"Something feels off and I'd like it looked at" }
+    ] },
+  { key: "timing", type: "single",
+    title: "How long has this been going on?",
+    hint: "A rough answer is fine.",
+    options: [
+      { v:"now", l:"It's a problem right now", n:"Pain, swelling or damage today" },
+      { v:"weeks", l:"Days or weeks" },
+      { v:"months", l:"Months" },
+      { v:"years", l:"A year or more" },
+      { v:"na", l:"Not applicable" }
+    ] },
+  { key: "priorities", type: "multi",
+    title: "What matters most to you?",
+    hint: "Choose as many as apply. This shapes how the options get explained to you.",
+    options: [
+      { v:"cost", l:"Knowing the cost up front" },
+      { v:"speed", l:"Getting it sorted quickly" },
+      { v:"look", l:"How it will look" },
+      { v:"keep", l:"Keeping my own teeth if possible" },
+      { v:"nosurg", l:"Avoiding surgery if there's a choice" },
+      { v:"time", l:"As few appointments as possible" },
+      { v:"comfort", l:"Not being in pain during treatment" }
+    ] },
+  { key: "context", type: "multi",
+    title: "Anything we should know before you sit down?",
+    hint: "These are the things patients often only mention halfway through. Knowing them first changes how we plan the appointment.",
+    options: [
+      { v:"anxious", l:"I'm anxious about dentists" },
+      { v:"badpast", l:"I've had a bad experience before" },
+      { v:"meds", l:"I take regular medication", n:"Bring the list or a photo of the boxes" },
+      { v:"medical", l:"I have a medical condition", n:"Heart, diabetes, bleeding, bone or immune-related" },
+      { v:"grind", l:"I grind or clench my teeth" },
+      { v:"smoke", l:"I smoke or vape" },
+      { v:"preg", l:"I'm pregnant or breastfeeding" },
+      { v:"none", l:"None of these" }
+    ],
+    freeText: "Anything else in your own words — optional" },
+  { key: "lastvisit", type: "single",
+    title: "When did you last see a dentist?",
+    hint: "No wrong answer. It only tells us how much time to leave.",
+    options: [
+      { v:"6m", l:"Within the last 6 months" },
+      { v:"2y", l:"1 to 2 years ago" },
+      { v:"5y", l:"Several years ago" },
+      { v:"long", l:"I honestly can't remember" }
+    ] }
+];
+
+const answers = {};
+let current = 0;
+const form = document.getElementById("form");
+const progress = document.getElementById("progress");
+const result = document.getElementById("result");
+progress.innerHTML = STEPS.map(function(){ return "<span></span>"; }).join("");
+
+function paintProgress() {
+  Array.prototype.forEach.call(progress.children, function(el, i) { el.classList.toggle("done", i <= current); });
+}
+
+function isSel(chosen, v) { return Array.isArray(chosen) ? chosen.indexOf(v) > -1 : chosen === v; }
+
+function render() {
+  var s = STEPS[current];
+  var chosen = answers[s.key] || (s.type === "multi" ? [] : null);
+  var opts = s.options.map(function(o) {
+    return '<label class="opt ' + (isSel(chosen, o.v) ? "sel" : "") + '">' +
+      '<input type="' + (s.type === "multi" ? "checkbox" : "radio") + '" name="' + s.key + '" value="' + o.v + '" ' +
+      (isSel(chosen, o.v) ? "checked" : "") + '>' +
+      '<span class="opt-label">' + o.l + (o.n ? '<span class="opt-note">' + o.n + '</span>' : "") + '</span></label>';
+  }).join("");
+  form.innerHTML = '<div class="step">' +
+    '<p class="step-no">Question ' + (current + 1) + ' of ' + STEPS.length + '</p>' +
+    '<h2>' + s.title + '</h2><p class="hint">' + s.hint + '</p>' +
+    '<div class="options">' + opts + '</div>' +
+    (s.freeText ? '<textarea id="free" placeholder="' + s.freeText + '">' + (answers[s.key + "_text"] || "") + '</textarea>' : "") +
+    '<div class="nav">' +
+    (current > 0 ? '<button type="button" class="ghost" id="back">Back</button>' : "") +
+    '<button type="button" class="primary" id="next" ' + (chosen && chosen.length !== 0 ? "" : "disabled") + '>' +
+    (current === STEPS.length - 1 ? "See my summary" : "Next") + '</button></div></div>';
+  paintProgress();
+  Array.prototype.forEach.call(form.querySelectorAll("input"), function(input) {
+    input.addEventListener("change", function() {
+      if (s.type === "multi") {
+        var vals = Array.prototype.map.call(form.querySelectorAll("input:checked"), function(i) { return i.value; });
+        if (input.value === "none" && input.checked) { vals = ["none"]; }
+        else { vals = vals.filter(function(v) { return v !== "none"; }); }
+        answers[s.key] = vals;
+        Array.prototype.forEach.call(form.querySelectorAll("input"), function(i) { i.checked = vals.indexOf(i.value) > -1; });
+      } else { answers[s.key] = input.value; }
+      Array.prototype.forEach.call(form.querySelectorAll(".opt"), function(el) {
+        el.classList.toggle("sel", el.querySelector("input").checked);
+      });
+      var c = answers[s.key];
+      form.querySelector("#next").disabled = !c || c.length === 0;
+    });
+  });
+  var free = form.querySelector("#free");
+  if (free) { free.addEventListener("input", function() { answers[s.key + "_text"] = free.value.trim(); }); }
+  var back = form.querySelector("#back");
+  if (back) { back.addEventListener("click", function() { current--; render(); }); }
+  form.querySelector("#next").addEventListener("click", function() {
+    if (current === STEPS.length - 1) { finish(); } else { current++; render(); }
+  });
+}
+var REASON_WORDS = {
+  pain: "pain or discomfort",
+  broken: "a broken or missing tooth",
+  look: "the appearance of your teeth",
+  straight: "crooked or crowded teeth",
+  routine: "a check-up and clean",
+  unsure: "something that doesn't feel right, without being sure what"
+};
+var TIMING_WORDS = {
+  now: "and it's a problem today", weeks: "for the last few days or weeks",
+  months: "for a few months", years: "for a year or more", na: ""
+};
+var QUESTIONS = {
+  pain: [
+    "What is actually causing the pain?",
+    "Can this tooth be saved, or is removing it the better option?",
+    "What happens if I leave it as it is?",
+    "What will settle the pain today, and what is the longer-term fix?"
+  ],
+  broken: [
+    "What are my options for replacing or repairing this?",
+    "How long does the whole process take from start to finish?",
+    "What is the total cost including every stage, not just the first appointment?",
+    "What happens to the bone and the neighbouring teeth if I wait?"
+  ],
+  look: [
+    "What is realistically achievable with my teeth?",
+    "How long do the results last, and what maintenance do they need?",
+    "Does any of this involve removing healthy tooth structure?",
+    "Can I see photographs of cases similar to mine?"
+  ],
+  straight: [
+    "Which approach suits my case, and why?",
+    "How long will treatment take, and how often would I come in?",
+    "What do I need to wear afterwards to stop the teeth moving back?",
+    "What is the total cost including retainers and reviews?"
+  ],
+  routine: [
+    "How is my gum health?",
+    "Is there anything you're watching that isn't a problem yet?",
+    "How often should I be coming in?",
+    "Is there anything I should change in how I clean at home?"
+  ],
+  unsure: [
+    "What did you find on examination?",
+    "What needs attention now, and what can safely wait?",
+    "If it were you, what would you do first?",
+    "What does the whole plan cost, and can it be staged?"
+  ]
+};
+var PRIORITY_WORDS = {
+  cost: "a clear cost before starting", speed: "getting it resolved quickly",
+  look: "the final appearance", keep: "keeping your own teeth where possible",
+  nosurg: "avoiding surgery if there is a choice", time: "as few appointments as possible",
+  comfort: "being comfortable during treatment"
+};
+var CONTEXT_WORDS = {
+  anxious: "anxious about dental treatment", badpast: "had a difficult experience in the past",
+  meds: "taking regular medication", medical: "living with a medical condition",
+  grind: "grinding or clenching", smoke: "a smoker or vaper",
+  preg: "pregnant or breastfeeding"
+};
+
+function listify(arr) {
+  if (arr.length === 1) { return arr[0]; }
+  return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>\"']/g, function(c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '\"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+function urgentBlock() {
+  return '<div class="urgent noprint">' +
+    '<h3>Call us rather than waiting for an online booking</h3>' +
+    '<p>You have said this is a problem today. Phone the clinic and we will find you the earliest slot.</p>' +
+    '<p><a class="call" href="tel:' + CONFIG.phoneHref + '">Call ' + CONFIG.phone + '</a></p>' +
+    '<p style="margin-top:16px"><strong>Go straight to ' + CONFIG.hospital + ' if any of these apply:</strong></p>' +
+    '<ul>' +
+    '<li>Swelling of the face that is spreading towards the eye or down the neck</li>' +
+    '<li>Difficulty swallowing, breathing, or opening your mouth</li>' +
+    '<li>Bleeding that will not stop with firm pressure</li>' +
+    '<li>A high temperature alongside facial swelling</li>' +
+    '<li>A significant injury to the face or jaw</li>' +
+    '</ul><p>These need a hospital, not a dental chair.</p></div>';
+}
+
+function finish() {
+  var r = answers.reason;
+  var urgent = r === "pain" && answers.timing === "now";
+  var prio = (answers.priorities || []).filter(function(v) { return v !== "none"; });
+  var ctx = (answers.context || []).filter(function(v) { return v !== "none"; });
+  var note = answers.context_text;
+
+  var summary = "You're coming in about " + REASON_WORDS[r];
+  if (TIMING_WORDS[answers.timing]) { summary += ", " + TIMING_WORDS[answers.timing]; }
+  summary += ".";
+  if (prio.length) {
+    summary += " What matters most to you is " + listify(prio.map(function(p) { return PRIORITY_WORDS[p]; })) + ".";
+  }
+  if (ctx.length) {
+    summary += " You've told us you're " + listify(ctx.map(function(c) { return CONTEXT_WORDS[c]; })) + ".";
+  }
+
+  var bring = [];
+  if (ctx.indexOf("meds") > -1) { bring.push("Your medication list, or a photo of the boxes"); }
+  if (ctx.indexOf("medical") > -1) { bring.push("Any recent letters or reports from your doctor"); }
+  bring.push("Any previous x-rays or scans, if you have them");
+  bring.push("This summary — printed or on your phone");
+
+  var anxious = ctx.indexOf("anxious") > -1 || ctx.indexOf("badpast") > -1;
+
+  result.innerHTML = (urgent ? urgentBlock() : "") +
+    '<div class="sheet"><div class="sheet-head">' +
+    '<p>Bring this to your appointment</p><h2>Consultation summary</h2></div>' +
+    '<div class="sheet-body">' +
+    '<div class="block"><h3>In your words</h3><p class="quote">' + escapeHtml(summary) + '</p>' +
+    (note ? '<p style="margin-top:12px">You also added: “' + escapeHtml(note) + '”</p>' : "") + '</div>' +
+    '<div class="block"><h3>Ask the dentist</h3><ul>' +
+    QUESTIONS[r].map(function(q) { return '<li>' + q + '</li>'; }).join("") + '</ul></div>' +
+    '<div class="block"><h3>What a first visit involves</h3><ul>' +
+    '<li>A conversation about what you have described here, and your medical history.</li>' +
+    '<li>An examination of the teeth, gums and bite.</li>' +
+    '<li>Photographs, a digital scan or x-rays if they are needed to see the whole picture.</li>' +
+    '<li>A written plan with costs, so you can take it away and decide in your own time.</li>' +
+    '<li>Around ' + CONFIG.newPatientMinutes + ' minutes in total. Nothing irreversible happens at a first visit without discussing it with you first.</li>' +
+    '</ul></div>' +
+    '<div class="block"><h3>Bring with you</h3><ul>' +
+    bring.map(function(b) { return '<li>' + b + '</li>'; }).join("") + '</ul></div>' +
+    '<div class="block"><h3>What to book</h3><p>' +
+    (urgent ? 'Call the clinic today rather than booking online, so we can find you the soonest slot.'
+            : 'A new patient consultation' + (answers.lastvisit === "6m" ? "" : ", with time allowed for a full assessment") + '.') +
+    '</p>' +
+    (anxious ? '<p>Tell reception when you book that you would like a longer, unhurried appointment. It is a common request and it makes a difference.</p>' : "") +
+    '</div></div>' +
+    '<div class="footer-block"><strong>' + CONFIG.clinic + '</strong><br>' + CONFIG.address + '<br>' +
+    CONFIG.phone + ' · ' + CONFIG.altPhone + ' · <a href="mailto:' + CONFIG.email + '">' + CONFIG.email + '</a>' +
+    '<p style="margin:12px 0 0">This summary is a record of what you told us. It is not a diagnosis, and no treatment has been recommended.</p>' +
+    '</div></div>' +
+    '<div class="after noprint">' +
+    '<button type="button" class="primary" id="printbtn">Print or save as PDF</button>' +
+    (CONFIG.bookingUrl ? '<a class="primary" href="' + CONFIG.bookingUrl + '">Book an appointment</a>' : "") +
+    '<button type="button" class="ghost" id="restart">Start again</button></div>';
+
+  form.style.display = "none";
+  progress.style.display = "none";
+  result.classList.add("on");
+  result.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  document.getElementById("printbtn").addEventListener("click", function() { window.print(); });
+  document.getElementById("restart").addEventListener("click", function() {
+    Object.keys(answers).forEach(function(k) { delete answers[k]; });
+    current = 0;
+    result.classList.remove("on");
+    form.style.display = "";
+    progress.style.display = "";
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+render();
+</script>
