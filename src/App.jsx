@@ -3679,9 +3679,16 @@ function AppointmentBookingPage() {
               </h2>
               <div className="mt-6 space-y-5 text-slate-700">
                 <div>
-                  <div className="font-semibold text-slate-900">Address</div>
+                    <div className="font-semibold text-slate-900">Trident Park &mdash; main clinic</div>
                   <div className="mt-1">{brand.address}</div>
                 </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">{brand.stAnnesName}</div>
+                    <div className="mt-1">{brand.addressStAnnes}</div>
+                    <div className="mt-1 text-sm text-slate-500">
+                      An independent Apex Dental practice on Level 3. Closed Sundays.
+                    </div>
+                  </div>
                 <div>
                   <div className="font-semibold text-slate-900">Phone</div>
                   <a
@@ -3784,7 +3791,7 @@ function ContactPage() {
                   <div className="flex items-start gap-3">
                     <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">Address</div>
+                      <div className="font-medium text-slate-900">Trident Park &mdash; main clinic</div>
                       <div className="text-slate-600 mt-1 leading-7">{brand.address}</div>
                       <a href="https://maps.google.com/?q=Apex+Dental+Trident+Park+Birkirkara+Malta" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:text-sky-700 text-sm font-medium mt-1 inline-block">Get directions</a>
                     </div>
@@ -3825,12 +3832,29 @@ function ContactPage() {
                   <div className="flex items-start gap-3">
                     <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">Opening hours</div>
+                      <div className="font-medium text-slate-900">Trident Park opening hours</div>
                       <div className="text-slate-600 mt-1 leading-7">
                         Monday to Friday: 9:00 to 19:00<br />
                         Saturday: 9:00 to 12:30<br />
                         Sunday: 9:00 to 12:00 (emergency only)<br />
                         <span className="text-sm text-slate-500">For Sunday emergencies call or WhatsApp us directly</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <div>
+                      <div className="font-medium text-slate-900">
+                        St Anne&rsquo;s Clinic opening hours
+                      </div>
+                      <div className="text-slate-600 mt-1 leading-7">
+                        Monday to Friday: 9:00 to 19:00<br />
+                        Saturday: 9:00 to 12:30<br />
+                        Sunday: closed<br />
+                        <span className="text-sm text-slate-500">
+                          For Sunday emergencies please contact Trident Park
+                        </span>
                       </div>
                     </div>
                   </div>
