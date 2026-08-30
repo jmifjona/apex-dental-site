@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { brand, CLINIC_OPTIONS, CLINIC_LABEL } from './data/clinics.js';
 
 // Patient visit-preparation questionnaire, shown above the contact form.
 // Nothing is transmitted from this component. The WhatsApp button opens a
@@ -8,7 +9,7 @@ const CONFIG = {
   clinic: 'Apex Dental',
   phone: '+356 7985 4037',
   phoneHref: '+35679854037',
-  whatsapp: '35679854037',
+  whatsapp: brand.whatsappIntl,
   hospital: 'Mater Dei Hospital',
   newPatientMinutes: 30,
 };
@@ -84,11 +85,7 @@ const STEPS = [
     key: 'clinic', type: 'single',
     title: 'Which clinic suits you better?',
     hint: 'Both are in Birkirkara. Trident Park is our main clinic and the only one open on Sundays.',
-    options: [
-      { v: 'trident', l: 'Trident Park, Mrieħel', n: 'Our main clinic — Mdina Road, CBD 2010' },
-      { v: 'stannes', l: "St Anne's Clinic, Level 3", n: 'Triq Kanonku Karm Pirotta, BKR 1111 — closed Sundays' },
-      { v: 'either', l: 'Either — whichever gives me the sooner appointment' },
-    ],
+    options: CLINIC_OPTIONS,
   },
   {
     key: 'details', type: 'fields',
@@ -129,11 +126,6 @@ const TIMING_SHORT = {
 const LASTVISIT_SHORT = {
   '6m': 'within the last 6 months', '2y': '1 to 2 years ago',
   '5y': 'several years ago', long: 'cannot remember',
-};
-const CLINIC_LABEL = {
-  trident: 'Trident Park, Mrieħel (main clinic)',
-  stannes: "St Anne's Clinic, Level 3",
-  either: 'Either clinic — whichever is sooner',
 };
 const QUESTIONS = {
   pain: [

@@ -32,6 +32,11 @@
       ],
       "destination": "https://www.apexdentalmalta.com/$1",
       "permanent": true
+    },
+    {
+      "source": "/consultation-prep.html",
+      "destination": "/contact-us/#prepare",
+      "permanent": true
     }
   ],
   "rewrites": [
