@@ -21,14 +21,16 @@ export const brand = {
   addressStAnnes: 'Level 3, Triq Kanonku Karm Pirotta, Birkirkara BKR 1111',
   googleMapsStAnnes: 'https://maps.google.com/?cid=3534893952217415551',
   // Map embed sources. Trident is a full Google business embed and carries the
-  // labelled Apex Dental pin. St Anne's is currently a plain-coordinate embed:
-  // it shows the right spot but has NO business pin.
-  // TODO: replace mapEmbedStAnnes with the iframe `src` from the St Anne's
-  // Google listing (Share -> Embed a map) so the pin appears.
+  // labelled Apex Dental pin. St Anne's uses a name+address search embed derived
+  // from Dr Mifsud's shared listing (maps.app.goo.gl/2eMpMXEo5iRveBU29 ->
+  // feature id 0x130e4f0918af4333:0x310e775224987f7f, CID 3534893952217415551):
+  // Google resolves the query to the listing and drops the labelled pin.
+  // To pin the exact listing byte-for-byte, replace mapEmbedStAnnes with the
+  // iframe `src` from desktop Google Maps (Share -> Embed a map) when available.
   mapEmbedTrident:
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.2!2d14.45876!3d35.89618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e51a910f3489f%3A0x6cb52257e336786f!2sApex+Dental!5e0!3m2!1sen!2smt!4v1',
   mapEmbedStAnnes:
-    'https://www.google.com/maps?q=35.9028887,14.4595558&z=17&output=embed',
+    "https://maps.google.com/maps?q=Apex+Dental+@+St+Anne%27s+Clinic,+Triq+Kanonku+Karm+Pirotta,+Birkirkara+BKR+1111&z=17&output=embed",
 };
 
 // The clinic-choice options, defined once and shared by the questionnaire
