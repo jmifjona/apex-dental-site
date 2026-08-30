@@ -11,6 +11,7 @@ import GoogleAdsCampaignBuilder from './GoogleAdsCampaignBuilder';
 import { trackAppointmentBookingConversion } from './lib/googleAds';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
+import { brand, CLINIC_OPTIONS } from './data/clinics.js';
 import {
   Phone,
   MapPin,
@@ -111,6 +112,24 @@ function ContactFormCard() {
           className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
         />
         <ValidationError prefix="Email" field="email" errors={contactState.errors} />
+
+        <div>
+          <label htmlFor="contact-clinic" className="block text-sm text-slate-300 mb-1">
+            Preferred clinic
+          </label>
+          <select
+            id="contact-clinic"
+            name="Preferred clinic"
+            defaultValue="Either — whichever gives me the sooner appointment"
+            className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+          >
+            {CLINIC_OPTIONS.map((o) => (
+              <option key={o.v} value={o.l} className="text-slate-900">
+                {o.l}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <textarea
           rows="5"
@@ -220,21 +239,8 @@ function BookingFormCard({ serviceOptions }) {
   );
 }
 
-const brand = {
-  name: 'Apex Dental',
-  tagline: 'Advanced Dentistry in Malta',
-  phone: '27016017',
-  mobile: '79854037',
-  whatsapp: '79854037',
-  email: 'info@apexdental.com.mt',
-  address:
-    'Trident Park, Mdina Road, Mrieħel, Birkirkara, CBD 2010, Malta',
-  logo: '/images/orislogo.png',
-  googleMaps: 'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
-  stAnnesName: "Apex Dental @ St Anne's Clinic",
-  addressStAnnes: 'Level 3, Triq Kanonku Karm Pirotta, Birkirkara BKR 1111',
-  googleMapsStAnnes: 'https://maps.google.com/?cid=3534893952217415551',
-};
+// `brand` (both clinics' identity data) now lives in src/data/clinics.js so it
+// can only be edited in one place — imported at the top of this file.
 
 const siteUrl = 'https://www.apexdentalmalta.com';
 
@@ -278,6 +284,42 @@ function localBusinessSchema(pageUrl) {
         opens: '09:00',
         closes: '12:00',
         description: 'Emergency appointments only',
+      },
+    ],
+    department: [
+      {
+        '@type': 'Dentist',
+        name: brand.stAnnesName,
+        image: `${siteUrl}/images/H1.jpg`,
+        telephone: brand.phone,
+        email: brand.email,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Level 3, Triq Kanonku Karm Pirotta',
+          addressLocality: 'Birkirkara',
+          postalCode: 'BKR 1111',
+          addressCountry: 'MT',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 35.9028887,
+          longitude: 14.4595558,
+        },
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '19:00',
+          },
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: 'Saturday',
+            opens: '09:00',
+            closes: '12:30',
+          },
+        ],
+        url: siteUrl,
       },
     ],
     priceRange: '€€',
@@ -3860,10 +3902,13 @@ function ContactPage() {
                   </div>
                 </div>
               </div>
+              <p className="text-sm text-slate-500 mt-4 mb-2">
+                {brand.name} — Trident Park (main clinic)
+              </p>
               <div className="rounded-[2rem] overflow-hidden border border-slate-200 shadow-sm">
                 <iframe
                   title="Apex Dental Malta — Trident Park, Mrieħel, Birkirkara"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.2!2d14.45876!3d35.89618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e51a910f3489f%3A0x6cb52257e336786f!2sApex+Dental!5e0!3m2!1sen!2smt!4v1"
+                  src={brand.mapEmbedTrident}
                   width="100%"
                   height="320"
                   style={{ border: 0, display: 'block' }}
@@ -3878,7 +3923,7 @@ function ContactPage() {
                   <div className="rounded-[2rem] overflow-hidden border border-slate-200">
                     <iframe
                       title="Apex Dental at St Anne&rsquo;s Clinic, Level 3, Birkirkara"
-                      src={'https://www.google.com/maps?q=35.9028887,14.4595558&z=17&output=embed'}
+                      src={brand.mapEmbedStAnnes}
                       width="100%"
                       height="320"
                       style={{ border: 0, display: 'block' }}
