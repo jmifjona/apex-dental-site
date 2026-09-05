@@ -3500,8 +3500,8 @@ function PriceListPage() {
         },
         {
           name: 'Toronto Bridge All on 4',
-          price: '€9999.99',
-          note: 'Full-arch bridge prosthesis on 4 implants.',
+          price: '€10,000.00',
+          note: 'Full-arch fixed bridge on 4 implants, with zirconia teeth and Straumann BLX implants.',
         },
         {
           name: 'Implant Retained Removable Denture with 3 Implants and Bar',
