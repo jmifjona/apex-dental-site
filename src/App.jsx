@@ -1541,7 +1541,7 @@ function Footer() {
                 href={`https://wa.me/356${brand.whatsapp}`}
                 className="hover:text-white"
               >
-                WhatsApp: {brand.mobile}
+                WhatsApp: {brand.whatsapp}
               </a>
             </p>
             <p>
@@ -1988,7 +1988,7 @@ function AboutPage() {
         </Section>
       </section>
       <ComplianceTrustSection />
-      <CTASection title="Would you like to visit Apex Dental?" text="Book online, call us on 27016017, or message us on WhatsApp at 79854037. You will find us at Trident Park, Mrieħel, Birkirkara." />
+      <CTASection title="Would you like to visit Apex Dental?" text="Book online, call us on 27016017, or message us on WhatsApp at 99722185. You will find us at Trident Park, Mrieħel, Birkirkara." />
     </>
   );
 }
@@ -3811,7 +3811,7 @@ function ContactPage() {
     <>
       <SEO
         title="Contact Apex Dental Malta | Book an Appointment"
-        description="Contact Apex Dental Malta at Trident Park, Mrieħel, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment."
+        description="Contact Apex Dental Malta at Trident Park, Mrieħel, Birkirkara. Call 27016017, WhatsApp 99722185 or fill in our contact form to book your appointment."
         canonical={`${siteUrl}/contact-us/`}
         schema={localBusinessSchema(`${siteUrl}/contact-us/`)}
       />
@@ -3868,7 +3868,7 @@ function ContactPage() {
                     <MessageCircle className="text-sky-600 mt-1 shrink-0" size={20} />
                     <div>
                       <div className="font-medium text-slate-900">WhatsApp</div>
-                      <a href={`https://wa.me/356${brand.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium">{brand.mobile}</a>
+                      <a href={`https://wa.me/356${brand.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium">{brand.whatsapp}</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">

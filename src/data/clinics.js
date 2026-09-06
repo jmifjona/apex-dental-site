@@ -9,9 +9,9 @@ export const brand = {
   tagline: 'Advanced Dentistry in Malta',
   phone: '27016017',
   mobile: '79854037',
-  whatsapp: '79854037',
+  whatsapp: '99722185',
   // International format for wa.me links (e.g. the questionnaire's WhatsApp button)
-  whatsappIntl: '35679854037',
+  whatsappIntl: '35699722185',
   email: 'info@apexdental.com.mt',
   address:
     'Trident Park, Mdina Road, Mrieħel, Birkirkara, CBD 2010, Malta',
