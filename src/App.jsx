@@ -69,6 +69,49 @@ function GoogleAdsPageTracker() {
   return null;
 }
 
+// Also hand the enquiry straight to Jarvis (api/enquiry.js), so the patient gets a WhatsApp at
+// once. Fire-and-forget: it never blocks or breaks the Formspree submit, which stays the email backup.
+function sendToJarvis(form, formEl) {
+  try {
+    const data = new FormData(formEl);
+    const get = (key) => {
+      const v = data.get(key);
+      return typeof v === 'string' ? v : '';
+    };
+    const id =
+      window.crypto && typeof window.crypto.randomUUID === 'function'
+        ? window.crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    fetch('/api/enquiry', {
+      method: 'POST',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        form,
+        name: get('name'),
+        email: get('email'),
+        phone: get('phone'),
+        clinic: get('Preferred clinic'),
+        service: get('service'),
+        preferredDate: get('preferredDate'),
+        subject: get('subject'),
+        message: get('message'),
+        company: get('company'),
+        id,
+        sent_at: new Date().toISOString(),
+      }),
+    }).catch(() => {});
+  } catch {
+    // never let this touch the Formspree submit
+  }
+}
+
+// Spam trap: hidden from people (and from browser autofill), filled only by bots. First in the
+// form, so Formspree's email lists it above the patient's fields.
+function HoneypotField() {
+  return <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" hidden />;
+}
+
 function ContactFormCard() {
   const [contactState, handleContactSubmit] = useForm('myknrvqq');
 
@@ -87,7 +130,14 @@ function ContactFormCard() {
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Contact Us</h2>
 
-      <form onSubmit={handleContactSubmit} className="mt-8 space-y-4">
+      <form
+        onSubmit={(e) => {
+          sendToJarvis('contact', e.currentTarget);
+          return handleContactSubmit(e);
+        }}
+        className="mt-8 space-y-4"
+      >
+        <HoneypotField />
         <input
           type="text"
           name="name"
@@ -168,7 +218,14 @@ function BookingFormCard({ serviceOptions }) {
     <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Request an Appointment</h2>
 
-      <form onSubmit={handleAppointmentSubmit} className="mt-8 space-y-4">
+      <form
+        onSubmit={(e) => {
+          sendToJarvis('appointment', e.currentTarget);
+          return handleAppointmentSubmit(e);
+        }}
+        className="mt-8 space-y-4"
+      >
+        <HoneypotField />
         <input
           type="text"
           name="name"
