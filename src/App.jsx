@@ -374,13 +374,8 @@ function localBusinessSchema(pageUrl) {
       },
     ],
     priceRange: '€€',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '119',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    // No aggregateRating here: a hard-coded rating goes stale (it said 4.9/119 while Google
+    // showed 4.8/112), and Google ignores self-serving review markup on a LocalBusiness anyway.
     areaServed: 'Malta',
     sameAs: [
       'https://maps.app.goo.gl/F9LpeRvHAuzB2Qva9',
@@ -1309,8 +1304,9 @@ function ReviewStrip() {
   }, []);
 
   const displayReviews = live && live.reviews.length ? live.reviews : fallbackReviews;
-  const rating = live && live.rating ? live.rating.toFixed(1) : '4.9';
-  const total = live && live.total ? live.total : 119;
+  // The rating and review count are shown only when /api/reviews has answered with Google's live
+  // figures - never a typed-in fallback number that can go stale.
+  const hasLiveRating = Boolean(live && typeof live.rating === 'number' && live.total);
 
   return (
     <section className="bg-slate-950 text-white py-20">
@@ -1323,17 +1319,19 @@ function ReviewStrip() {
                 What our patients say about Apex Dental
               </h2>
               <p className="mt-6 text-slate-300 leading-8">
-                Rated 5 stars by patients across Malta. Read more reviews on our Google Business Profile.
+                Read more reviews on our Google Business Profile.
               </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex items-center gap-1 text-amber-400">
-                  {[1,2,3,4,5].map(i => (
-                    <Star key={i} size={18} fill="currentColor" />
-                  ))}
+              {hasLiveRating && (
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-amber-400" aria-hidden="true">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} size={18} fill={i <= Math.round(live.rating) ? 'currentColor' : 'none'} />
+                    ))}
+                  </div>
+                  <span className="text-white font-semibold text-lg">{live.rating.toFixed(1)}</span>
+                  <span className="text-slate-400 text-sm">{live.total} Google Reviews</span>
                 </div>
-                <span className="text-white font-semibold text-lg">{rating}</span>
-                <span className="text-slate-400 text-sm">{total} Google Reviews</span>
-              </div>
+              )}
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
                   href={brand.googleMaps}
