@@ -27,4 +27,10 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    // Vercel serverless functions run in Node, not the browser.
+    files: ['api/**/*.js'],
+    languageOptions: { globals: globals.node },
+    rules: { 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]', caughtErrors: 'none' }] },
+  },
 ])
