@@ -1847,9 +1847,9 @@ function AlignersPage() {
       <ProcessSteps steps={alignerSteps} />
       <SplitEditorial
         imageLeft={images.aligners.A4}
-        title="Consultations in English, Italian or Spanish"
+        title="Consultations in English, Italian, Spanish or Polish"
         text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish, Dr Massimo D'Alessandro in Italian, and Dr Aleksandra Syrico Mallia in Polish, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
-        points={['Consultations in English, Italian or Spanish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
+        points={['Consultations in English, Italian, Spanish or Polish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
       />
       <FAQSection faqs={alignerFaqs} dark />
       <CTASection title="Interested in clear aligners in Malta?" text="Book a consultation and we will check whether aligners can do what you want, show you a preview of the result, and be upfront about the timeframe and the cost." />
@@ -1954,8 +1954,8 @@ function AboutPage() {
       <PageHero
         image={images.about.AB1}
         eyebrow="About Apex Dental"
-        title="A private dental clinic in Malta, with five dentists under one roof"
-        subtitle="We are a private clinic at Trident Park, Mrieħel, Birkirkara. Five dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian or Spanish."
+        title="A private dental clinic in Malta, with six dentists under one roof"
+        subtitle="We are a private clinic at Trident Park, Mrieħel, Birkirkara. Six dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian, Spanish or Polish."
       />
       <section className="bg-white py-20">
         <Section>
@@ -1997,7 +1997,7 @@ function AboutPage() {
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our dentists</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
-            Five dentists, three languages spoken
+            Six dentists, four languages spoken
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.slice(1).map((doctor) => (
@@ -2009,6 +2009,7 @@ function AboutPage() {
                   <h3 className="font-semibold text-slate-900">{doctor.name}</h3>
                   {doctor.flag === 'IT' && <span className="text-sm font-bold text-green-700">IT</span>}
                   {doctor.flag === 'ES' && <span className="text-sm font-bold text-red-600">ES</span>}
+                  {doctor.flag === 'PL' && <span className="text-sm font-bold text-rose-700">PL</span>}
                 </div>
                 <div className="text-sky-600 font-medium text-sm mb-3">{doctor.role}</div>
                 <p className="text-slate-600 leading-7 text-sm">{doctor.bio}</p>
