@@ -1,8 +1,9 @@
 /**
  * publish-next-blog.mjs
  * Picks the next due blog post from blog-queue.json,
- * appends it to src/data/blogPosts.js, updates sitemap.xml,
- * updates vercel.json rewrites, and updates scripts/prerender-meta.mjs.
+ * appends it to src/data/blogPosts.js, updates sitemap.xml and
+ * updates vercel.json rewrites. src/data/blogPosts.js is the one source for
+ * the blog list, the post routes and the prerendered meta.
  * 
  * Run: node scripts/publish-next-blog.mjs
  */
@@ -19,7 +20,6 @@ const queuePath = join(__dirname, 'blog-queue.json');
 const blogDataPath = join(root, 'src/data/blogPosts.js');
 const sitemapPath = join(root, 'public/sitemap.xml');
 const vercelPath = join(root, 'vercel.json');
-const prerenderPath = join(__dirname, 'prerender-meta.mjs');
 
 // Load queue
 const queue = JSON.parse(readFileSync(queuePath, 'utf-8'));
@@ -83,18 +83,9 @@ vercel.rewrites.splice(catchAllIdx, 0, { source: slugNoTrailing, destination: ht
 writeFileSync(vercelPath, JSON.stringify(vercel, null, 2), 'utf-8');
 console.log('  ✅ Updated vercel.json');
 
-// ── 4. Update prerender-meta.mjs ──────────────────────────
-const prerender = readFileSync(prerenderPath, 'utf-8');
-const prerenderEntry = `
-  {
-    path: '${post.slug}',
-    title: '${post.title.replace(/'/g, "\\'")} | Apex Dental Malta',
-    description: '${post.excerpt.replace(/'/g, "\\'")}',
-    image: \`\${siteUrl}${post.image}\`,
-  },`;
-const updatedPrerender = prerender.replace('];', `${prerenderEntry}\n];`);
-writeFileSync(prerenderPath, updatedPrerender, 'utf-8');
-console.log('  ✅ Updated prerender-meta.mjs');
+// ── 4. Prerendered meta ────────────────────────────────────
+// Nothing to do: scripts/prerender-meta.mjs reads src/data/blogPosts.js, so the new post gets its
+// page, its route (src/App.jsx maps the same data) and its meta from step 1 alone.
 
 // ── 5. Remove from queue ───────────────────────────────────
 queue.shift();

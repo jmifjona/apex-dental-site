@@ -1,5 +1,8 @@
-// Blog post data — managed by scripts/publish-next-blog.mjs
-// Do not edit manually; use the queue system
+// Blog post data: the ONE source for the blog list, the blog post routes, the post pages and
+// their prerendered meta (scripts/prerender-meta.mjs reads this file). New posts are appended
+// by scripts/publish-next-blog.mjs from scripts/blog-queue.json.
+// Optional per post: seoTitle (default "<title> | Apex Dental Malta"), description (default
+// the excerpt) and breadcrumb (default the category).
 
 export const blogPosts = [
   {
@@ -10,6 +13,9 @@ export const blogPosts = [
     category: 'Implants',
     readTime: '4 min read',
     datePublished: '2025-03-01',
+    seoTitle: "How much do dental implants cost in Malta? | Apex Dental",
+    description: "A clear guide to what influences dental implant costs in Malta, from the initial 3D scan to the final crown. Learn what's included at Apex Dental.",
+    breadcrumb: "Dental Implants Cost Malta",
     image: '/images/I1.jpg',
     content: [
       { type: 'p', text: 'Dental implant costs in Malta vary depending on the complexity of your case, the number of implants required, and the type of restoration placed on top. Understanding what is included in the price is just as important as the headline figure.' },
@@ -32,6 +38,9 @@ export const blogPosts = [
     category: 'Cosmetic Dentistry',
     readTime: '3 min read',
     datePublished: '2025-03-05',
+    seoTitle: "Veneers vs Teeth Whitening — What's the Difference? | Apex Dental",
+    description: "Veneers and whitening are often confused. One changes colour only. The other transforms shape, size and symmetry. Find out which is right for you.",
+    breadcrumb: "Veneers vs Whitening",
     image: '/images/C1.jpg',
     content: [
       { type: 'p', text: 'Teeth whitening and dental veneers are both popular cosmetic treatments, but they work in completely different ways and achieve very different results. Choosing the right one depends on what you are trying to improve.' },
@@ -52,6 +61,9 @@ export const blogPosts = [
     category: 'Emergency Care',
     readTime: '3 min read',
     datePublished: '2025-03-10',
+    seoTitle: "When Is a Dental Problem a Dental Emergency? | Apex Dental Malta",
+    description: "Not every dental issue needs same-day care. Here's how to tell the difference — and what Apex Dental can do for you urgently in Malta.",
+    breadcrumb: "Dental Emergency Malta",
     image: '/images/CT1.jpg',
     content: [
       { type: 'p', text: 'Knowing when to seek urgent dental care can make the difference between saving a tooth and losing it. Some situations genuinely require same-day attention, while others can safely wait for a routine appointment.' },
@@ -72,6 +84,9 @@ export const blogPosts = [
     category: 'Aligners',
     readTime: '4 min read',
     datePublished: '2025-03-15',
+    seoTitle: "Are Clear Aligners Suitable for Adults? | Apex Dental Malta",
+    description: "More adults than ever are choosing aligners over fixed braces. Find out why and what to expect from Invisalign and clear aligner treatment in Malta.",
+    breadcrumb: "Clear Aligners Adults",
     image: '/images/A1.jpg',
     content: [
       { type: 'p', text: 'Clear aligners were originally designed with adults in mind. Unlike traditional metal braces, which are more commonly associated with teenagers, aligners are discreet, removable, and designed around the practical demands of adult life.' },
@@ -94,6 +109,9 @@ export const blogPosts = [
     category: 'Preventive Dentistry',
     readTime: '3 min read',
     datePublished: '2025-03-20',
+    seoTitle: "Why Dental Hygiene Appointments Matter | Apex Dental Malta",
+    description: "Prevention is almost always cheaper and easier than treatment. Find out what happens at a hygiene visit and how often you should attend.",
+    breadcrumb: "Dental Hygiene",
     image: '/images/H9.jpg',
     content: [
       { type: 'p', text: 'Many people only visit the dentist when something hurts. The problem with this approach is that by the time dental problems cause pain, they are often significantly more advanced — and more expensive to treat — than they would have been if caught earlier.' },
@@ -114,6 +132,9 @@ export const blogPosts = [
     category: 'Restorative Dentistry',
     readTime: '3 min read',
     datePublished: '2025-03-25',
+    seoTitle: "How Dental Crowns Protect Damaged Teeth | Apex Dental Malta",
+    description: "Crowns are one of the most reliable ways to save a tooth that would otherwise be lost. Here's how they work and when they're needed.",
+    breadcrumb: "Dental Crowns",
     image: '/images/C4.jpg',
     content: [
       { type: 'p', text: 'A dental crown is a cap that fits over the entire visible portion of a tooth, restoring its shape, size, strength, and appearance. Crowns are one of the most versatile and long-lasting restorations in dentistry, used in a wide range of situations where a tooth needs protection or reconstruction.' },
@@ -245,13 +266,16 @@ export const blogPosts = [
 ];
 
 // Derived meta map for SEO + routing
+const SITE_URL = 'https://www.apexdentalmalta.com';
+
 export const blogPostMeta = Object.fromEntries(
   blogPosts.map(p => [p.id, {
     slug: p.slug,
     title: p.title,
-    description: p.excerpt,
-    image: `https://apexdentalmalta.com${p.image}`,
+    seoTitle: p.seoTitle || `${p.title} | Apex Dental Malta`,
+    description: p.description || p.excerpt,
+    image: `${SITE_URL}${p.image}`,
     datePublished: p.datePublished,
-    breadcrumb: p.category,
+    breadcrumb: p.breadcrumb || p.category,
   }])
 );

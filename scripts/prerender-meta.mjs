@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { blogPosts, blogPostMeta } from '../src/data/blogPosts.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, '../dist');
@@ -189,56 +190,12 @@ const routes = [
     description: 'Contact Apex Dental Malta at Trident Park, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment.',
     image: `${siteUrl}/images/CT1.jpg`,
   },
-  {
-    path: '/blog/dental-implants-cost-malta/',
-    title: 'How much do dental implants cost in Malta? | Apex Dental',
-    description: 'A clear guide to what influences dental implant costs in Malta, from the initial 3D scan to the final crown. Learn what\'s included at Apex Dental.',
-    image: `${siteUrl}/images/I1.jpg`,
-  },
-  {
-    path: '/blog/veneers-vs-teeth-whitening/',
-    title: 'Veneers vs Teeth Whitening — What\'s the Difference? | Apex Dental',
-    description: 'Veneers and whitening are often confused. One changes colour only. The other transforms shape, size and symmetry. Find out which is right for you.',
-    image: `${siteUrl}/images/C1.jpg`,
-  },
-  {
-    path: '/blog/dental-emergency-malta/',
-    title: 'When Is a Dental Problem a Dental Emergency? | Apex Dental Malta',
-    description: 'Not every dental issue needs same-day care. Here\'s how to tell the difference — and what Apex Dental can do for you urgently in Malta.',
-    image: `${siteUrl}/images/CT1.jpg`,
-  },
-  {
-    path: '/blog/clear-aligners-adults-malta/',
-    title: 'Are Clear Aligners Suitable for Adults? | Apex Dental Malta',
-    description: 'More adults than ever are choosing aligners over fixed braces. Find out why and what to expect from Invisalign and clear aligner treatment in Malta.',
-    image: `${siteUrl}/images/A1.jpg`,
-  },
-  {
-    path: '/blog/dental-hygiene-appointments/',
-    title: 'Why Dental Hygiene Appointments Matter | Apex Dental Malta',
-    description: 'Prevention is almost always cheaper and easier than treatment. Find out what happens at a hygiene visit and how often you should attend.',
-    image: `${siteUrl}/images/H9.jpg`,
-  },
-  {
-    path: '/blog/dental-crowns-protect-teeth/',
-    title: 'How Dental Crowns Protect Damaged Teeth | Apex Dental Malta',
-    description: 'Crowns are one of the most reliable ways to save a tooth that would otherwise be lost. Here\'s how they work and when they\'re needed.',
-    image: `${siteUrl}/images/C4.jpg`,
-  },
-
-  {
-    path: '/blog/dental-implants-vs-bridges/',
-    title: 'Dental implants vs bridges — which is better for a missing tooth? | Apex Dental Malta',
-    description: 'Both replace missing teeth, but they work very differently. Here is an honest comparison to help you decide.',
-    image: `${siteUrl}/images/I2.jpg`,
-  },
-
-  {
-    path: '/blog/all-on-4-dental-implants-malta/',
-    title: 'All-on-4 dental implants explained — what you need to know | Apex Dental Malta',
-    description: 'All-on-4 gives patients with significant tooth loss a fixed, non-removable full arch of teeth on just four implants. Here is how it works.',
-    image: `${siteUrl}/images/I3.jpg`,
-  },
+  // Blog posts: one entry per post in src/data/blogPosts.js (the same data the pages and routes
+  // use), so a published post can never be in the sitemap without its page.
+  ...blogPosts.map((post) => {
+    const meta = blogPostMeta[post.id];
+    return { path: meta.slug, title: meta.seoTitle, description: meta.description, image: meta.image };
+  }),
 ];
 
 function buildHtml(template, route) {
