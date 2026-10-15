@@ -348,4 +348,36 @@ for (const route of routes.slice(1)) {
   console.log(`✅ ${route.path} → dist/${routePath}/index.html`);
 }
 
+// Not-found page. With no catch-all rewrite in vercel.json, Vercel answers any URL that is not a
+// file, a function or a listed rewrite with HTTP 404 and this file; the app then shows NotFoundPage.
+writeFileSync(
+  join(distDir, '404.html'),
+  buildHtml(template, {
+    path: '/404',
+    title: 'Page not found | Apex Dental',
+    description: 'This page could not be found on the Apex Dental Malta website.',
+    noindex: true,
+  }),
+);
+console.log('✅ 404 page → dist/404.html (noindex, no canonical)');
+
+// Every prerendered page must be reachable with and without its trailing slash, and nothing may
+// send unknown URLs to the homepage again (that made every typo a 200 "soft 404").
+const vercel = JSON.parse(readFileSync(join(__dirname, '../vercel.json'), 'utf-8'));
+const rewrites = new Map((vercel.rewrites || []).map((r) => [r.source, r.destination]));
+const problems = [];
+for (const route of routes.slice(1)) {
+  const bare = route.path.replace(/\/$/, '');
+  for (const source of [bare, `${bare}/`]) {
+    if (rewrites.get(source) !== `${bare}/index.html`) problems.push(`no rewrite ${source} -> ${bare}/index.html`);
+  }
+}
+for (const [source, destination] of rewrites) {
+  if (destination === '/index.html' && source !== '/') problems.push(`catch-all rewrite ${source} -> /index.html`);
+}
+if (problems.length) {
+  console.error(`❌ vercel.json does not match the prerendered pages:\n  ${problems.join('\n  ')}`);
+  process.exit(1);
+}
+
 console.log(`\n🎉 Done — ${routes.length} pages pre-rendered with meta tags`);

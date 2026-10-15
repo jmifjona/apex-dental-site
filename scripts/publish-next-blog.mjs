@@ -77,10 +77,14 @@ console.log('  ✅ Updated sitemap.xml');
 const vercel = JSON.parse(readFileSync(vercelPath, 'utf-8'));
 const slugNoTrailing = post.slug.replace(/\/$/, '');
 const htmlPath = `${slugNoTrailing}/index.html`;
-// Insert before the catch-all
-const catchAllIdx = vercel.rewrites.findIndex(r => r.source === '/(.*)');;
-vercel.rewrites.splice(catchAllIdx, 0, { source: slugNoTrailing, destination: htmlPath });
-writeFileSync(vercelPath, JSON.stringify(vercel, null, 2), 'utf-8');
+// Both URL forms, appended. There is deliberately no catch-all rewrite any more: unknown URLs get
+// a real 404 (dist/404.html), and prerender-meta.mjs fails the build if a page lacks either form.
+for (const source of [slugNoTrailing, `${slugNoTrailing}/`]) {
+  if (!vercel.rewrites.some(r => r.source === source)) {
+    vercel.rewrites.push({ source, destination: htmlPath });
+  }
+}
+writeFileSync(vercelPath, JSON.stringify(vercel, null, 2) + '\n', 'utf-8');
 console.log('  ✅ Updated vercel.json');
 
 // ── 4. Prerendered meta ────────────────────────────────────

@@ -4310,6 +4310,71 @@ function BlogPostPage({ postId }) {
   );
 }
 
+// Unknown URLs. Vercel answers them with HTTP 404 and dist/404.html (written by
+// scripts/prerender-meta.mjs); this is what that page, or a broken in-site link, shows.
+function NotFoundPage() {
+  useEffect(() => {
+    document.title = 'Page not found | Apex Dental';
+    // Not a page to index or to name as canonical: drop the previous page's canonical and say
+    // noindex while this view is shown. Other pages' SEO component recreates the canonical.
+    document.head.querySelectorAll('link[rel="canonical"]').forEach((el) => el.remove());
+    let robots = document.head.querySelector('meta[name="robots"]');
+    const added = !robots;
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.setAttribute('name', 'robots');
+      document.head.appendChild(robots);
+    }
+    const previous = robots.getAttribute('content');
+    robots.setAttribute('content', 'noindex');
+    return () => {
+      if (added) robots.remove();
+      else robots.setAttribute('content', previous || '');
+    };
+  }, []);
+
+  const links = [
+    { label: 'Home', to: '/' },
+    { label: 'Our services', to: '/services/' },
+    { label: 'Price list', to: '/price-list/' },
+    { label: 'Emergency dentist', to: '/emergency-dental-service-malta/' },
+    { label: 'Contact us', to: '/contact-us/' },
+  ];
+
+  return (
+    <section className="bg-white pt-40 pb-24">
+      <Section>
+        <div className="max-w-2xl">
+          <div className="text-sm uppercase tracking-[0.25em] text-slate-500">Error 404</div>
+          <h1 className="mt-4 text-4xl md:text-5xl font-semibold text-slate-900 leading-tight">
+            Sorry, we cannot find that page
+          </h1>
+          <p className="mt-6 text-lg text-slate-600 leading-8">
+            The link may be old or mistyped. These pages should help, or call us on{' '}
+            <a href={`tel:${brand.phone}`} className="font-semibold text-slate-900 underline">
+              {brand.phone}
+            </a>
+            .
+          </p>
+          <ul className="mt-8 grid sm:grid-cols-2 gap-3">
+            {links.map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-[#f7f4ef] px-5 py-4 font-medium text-slate-900 hover:bg-slate-100 transition"
+                >
+                  <ChevronRight className="text-sky-600 shrink-0" size={18} />
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+    </section>
+  );
+}
+
 export default function ApexDentalWebsitePremium() {
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
@@ -4376,6 +4441,7 @@ export default function ApexDentalWebsitePremium() {
             </>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <Footer />
