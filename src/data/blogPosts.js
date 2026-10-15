@@ -1,5 +1,5 @@
 // Blog post data: the ONE source for the blog list, the blog post routes, the post pages and
-// their prerendered meta (scripts/prerender-meta.mjs reads this file). New posts are appended
+// their prerendered pages (scripts/prerender.mjs renders every post in the sitemap). New posts are appended
 // by scripts/publish-next-blog.mjs from scripts/blog-queue.json.
 // Optional per post: seoTitle (default "<title> | Apex Dental Malta"), description (default
 // the excerpt) and breadcrumb (default the category).

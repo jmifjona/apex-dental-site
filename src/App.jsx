@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import ConsultationPrep from './ConsultationPrep.jsx';
@@ -12,6 +12,9 @@ import { blogPosts, blogPostMeta } from './data/blogPosts.js';
 import { IMAGE_SIZES } from './data/imageSizes.js';
 import { team } from './data/team.js';
 import { priceSections } from './data/priceList.js';
+import { HeadContext } from './seo/context.js';
+import { buildHead, applyHead, SITE_URL } from './seo/head.js';
+import { useAfterHydration, useHydrated } from './lib/hydration.js';
 import {
   Phone,
   MapPin,
@@ -31,18 +34,18 @@ import {
   Stethoscope,
 } from 'lucide-react';
 
-function usePageTitle(title) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-}
-
+// Back to the top when the visitor moves to another page. Not on the first load: the page is
+// already on screen from the prerendered HTML, so the visitor may have scrolled (or followed a
+// #link) before the script arrived, and jumping back would undo that.
 function ScrollToTop() {
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const shownPath = useRef(pathname);
 
   useEffect(() => {
+    if (shownPath.current === pathname) return;
+    shownPath.current = pathname;
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [pathname]);
 
   return null;
 }
@@ -366,7 +369,7 @@ function BookingFormCard({ serviceOptions }) {
 // `brand` (both clinics' identity data) now lives in src/data/clinics.js so it
 // can only be edited in one place — imported at the top of this file.
 
-const siteUrl = 'https://www.apexdentalmalta.com';
+const siteUrl = SITE_URL;
 
 function localBusinessSchema(pageUrl) {
   return {
@@ -705,14 +708,16 @@ const NAV_AFTER_SERVICES = [
 
 const samePath = (a, b) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
 
+// Whether the page is scrolled down. "Not scrolled" in the prerendered HTML and during
+// hydration; the real position from the next render on.
+function subscribeToScroll(onChange) {
+  window.addEventListener('scroll', onChange, { passive: true });
+  return () => window.removeEventListener('scroll', onChange);
+}
+
 function useScrolled(threshold = 8) {
-  const [scrolled, setScrolled] = useState(() => window.scrollY > threshold);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > threshold);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [threshold]);
-  return scrolled;
+  const isScrolled = useCallback(() => window.scrollY > threshold, [threshold]);
+  return useSyncExternalStore(subscribeToScroll, isScrolled, () => false);
 }
 
 // Sticky header: navy on white, the existing links, the phone number and the primary action.
@@ -988,7 +993,11 @@ function SiteHeader({ menuOpen, setMenuOpen }) {
 // The page keeps bottom padding (App) so the bar never covers the last lines of content.
 function MobileStickyBar({ menuOpen }) {
   const { pathname } = useLocation();
-  const [bannerOpen, setBannerOpen] = useState(() => !isCookieChoiceMade());
+  const hydrated = useHydrated();
+  // The cookie choice is stored in the visitor's browser, so the prerendered HTML has no bar; it
+  // appears on hydration (as it always appeared once the script ran) unless the banner is open.
+  const [bannerOpenEvent, setBannerOpen] = useState(null);
+  const bannerOpen = bannerOpenEvent ?? (!hydrated || !isCookieChoiceMade());
   const [formInViewOn, setFormInViewOn] = useState(null);
 
   useEffect(() => onCookieBannerChange(setBannerOpen), []);
@@ -1032,6 +1041,7 @@ function MobileStickyBar({ menuOpen }) {
 }
 
 function WhatsAppFloat() {
+  const hydrated = useHydrated();
   const [showTooltip, setShowTooltip] = React.useState(true);
   React.useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 5000);
@@ -1039,7 +1049,8 @@ function WhatsAppFloat() {
   }, []);
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden md:block">
-      {showTooltip && (
+      {/* The tooltip shows for the first 5 seconds once the script runs (not in the prerendered HTML). */}
+      {hydrated && showTooltip && (
         <div className="absolute bottom-16 right-0 mb-2 whitespace-nowrap rounded-2xl bg-navy-900 px-4 py-2 text-sm text-white shadow-lg">
           Chat with us on WhatsApp
           <div className="absolute bottom-[-6px] right-5 h-3 w-3 rotate-45 bg-navy-900" />
@@ -1319,7 +1330,11 @@ const FOOTER_PRACTICE_LINKS = [
   { to: '/contact-us/', label: 'Contact' },
 ];
 
+const currentYear = () => new Date().getFullYear();
+
 function Footer() {
+  // The build's year in the prerendered HTML (and while hydrating), the visitor's year after that.
+  const year = useAfterHydration(currentYear, __BUILD_YEAR__);
   const headingClass = 'font-sans text-xs font-semibold uppercase tracking-[0.18em] text-gold-300';
   const linkClass = 'text-slate-300 hover:text-white hover:underline hover:underline-offset-4';
 
@@ -1413,7 +1428,7 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <Section className="flex flex-col gap-4 py-6 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Apex Dental Malta. All rights reserved.</p>
+          <p>© {year} Apex Dental Malta. All rights reserved.</p>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link to="/privacy-policy" className="hover:text-white">
               Privacy Policy
@@ -2012,7 +2027,6 @@ function FinalCallToAction() {
 }
 
 function HomePage() {
-  usePageTitle('Apex Dental Malta | Premium Dentistry, Implants, Aligners & Cosmetic Care');
 
   return (
     <>
@@ -2035,7 +2049,6 @@ function HomePage() {
 }
 
 function ImplantsPage() {
-  usePageTitle('Dental Implants Malta | Apex Dental');
   const implantFaqs = [
     { q: 'How long do dental implants actually last?', a: 'The implant itself is designed to be permanent. Once it has fused to the bone there is no reason it cannot last for decades. The part that wears over time is the crown on top, which you might expect to replace somewhere around the 15 to 20 year mark, much like any tooth that does a lot of chewing. What really decides the lifespan is how well you look after your gums and keep up with hygiene visits.' },
     { q: 'Will the procedure hurt?', a: 'Not during it. The area is completely numbed with local anaesthetic, so placing the implant feels like pressure rather than pain. Afterwards you can expect some swelling and tenderness for a few days, similar to having a tooth taken out, and ordinary painkillers manage it well. Most patients tell us it was easier than they had braced themselves for.' },
@@ -2116,7 +2129,6 @@ function ImplantsPage() {
 
 
 function AlignersPage() {
-  usePageTitle('Invisalign Malta | Clear Aligners | Apex Dental');
   const alignerFaqs = [
     { q: 'How long does Invisalign treatment take?', a: 'It depends on how much your teeth need to move. Minor crowding or a small gap can be sorted in 6 to 12 months, while a bigger correction might run closer to 18 months. We give you a realistic timeframe once we have scanned your teeth, rather than a guess on the day.' },
     { q: 'Is Invisalign suitable for adults?', a: 'Yes, and most of the people we treat with aligners are adults. A lot of them had braces as teenagers and have watched things drift back, or never got round to it and would rather not wear metal brackets to fix it now. Because the aligners are clear, you can straighten your teeth without it being obvious at work or in photos.' },
@@ -2178,7 +2190,6 @@ function AlignersPage() {
 
 
 function CosmeticPage() {
-  usePageTitle('Cosmetic Dentistry Malta | Apex Dental');
 
   return (
     <>
@@ -2247,7 +2258,6 @@ function CosmeticPage() {
 }
 
 function AboutPage() {
-  usePageTitle('About Apex Dental Malta | Our Dental Team');
   const milestones = [
     { year: '2023', label: 'Apex Dental opens its doors at Trident Park, Mrieħel, Birkirkara' },
     { year: '2024', label: 'Added full implant surgery, All-on-4 and clear aligner treatment' },
@@ -2260,6 +2270,7 @@ function AboutPage() {
         title="About Apex Dental Malta | Our Dental Team"
         description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish- and German-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
+        image={`${siteUrl}/images/AB1.jpg`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
       <PageHero
@@ -2355,7 +2366,6 @@ function AboutPage() {
 
 
 function GeneralDentistryPage() {
-  usePageTitle('General Dentistry Malta | Apex Dental');
 
   return (
     <>
@@ -2411,7 +2421,6 @@ function GeneralDentistryPage() {
 }
 
 function HygienePage() {
-  usePageTitle('Dental Hygiene Malta | Apex Dental');
 
   return (
     <>
@@ -2467,7 +2476,6 @@ function HygienePage() {
 }
 
 function VeneersPage() {
-  usePageTitle('Dental Veneers Malta | Apex Dental');
   const veneerFaqs = [
     { q: 'What are dental veneers made of?', a: 'We mostly use porcelain veneers — thin ceramic shells made to fit over the front of your teeth. Porcelain holds up well, resists staining, and catches the light much like natural enamel, which is why it tends to look convincing. We also offer composite and 3D-printed options, and which suits you comes down to your goals and budget.' },
     { q: 'How long do veneers last?', a: 'Porcelain veneers usually last somewhere between 10 and 15 years, often longer. What shortens that is the obvious stuff: using your teeth to open things, grinding at night without a guard, or skipping check-ups so a small problem at the edge goes unnoticed.' },
@@ -2533,7 +2541,6 @@ function VeneersPage() {
 
 
 function TeethWhiteningPage() {
-  usePageTitle('Teeth Whitening Malta | Apex Dental');
   const whiteningFaqs = [
     { q: 'How white can my teeth get?', a: 'It depends where you are starting from and what is causing the discolouration. Most people get a clear, visible lift in shade. Professional whitening goes further than shop-bought kits because the gel is stronger and we control how it is used, but it works on natural enamel — it will not take teeth past their natural limit.' },
     { q: 'Is teeth whitening safe?', a: 'Yes, when a dentist is overseeing it. We use regulated bleaching gels and custom trays that keep the gel on the teeth and off the gums. The main side effect is some temporary sensitivity, which we can manage. The risk goes up with unregulated online kits and salon treatments, which is worth bearing in mind.' },
@@ -2589,7 +2596,6 @@ function TeethWhiteningPage() {
 
 
 function CrownsBridgeworkPage() {
-  usePageTitle('Crowns and Bridges Malta | Apex Dental');
   const crownFaqs = [
     { q: 'When is a crown needed?', a: 'A crown goes on when a tooth has lost too much structure for a filling to hold reliably — after a root canal, a big fracture, or years of heavy wear or grinding. By wrapping the whole tooth it holds what is left together and takes the bite force that would otherwise crack it. Crowns also tidy up badly shaped or deeply discoloured teeth.' },
     { q: 'What are dental crowns made of?', a: 'Most of ours are ceramic or zirconia — strong, tooth-coloured, and hard to tell apart from the real thing. There are still a few situations where a metal-bonded crown is the sensible choice, and we will say so if yours is one of them.' },
@@ -2638,7 +2644,6 @@ function CrownsBridgeworkPage() {
 
 
 function PeriodontologyPage() {
-  usePageTitle('Periodontology Malta | Apex Dental');
 
   return (
     <>
@@ -2691,7 +2696,6 @@ function PeriodontologyPage() {
 }
 
 function OrthodonticPage() {
-  usePageTitle('Orthodontist Malta | Braces & Clear Aligners | Apex Dental');
   const orthoFaqs = [
     { q: 'Who does the orthodontics at Apex Dental?', a: 'Orthodontics is led by Dr Aleksandra, our orthodontist. She treats children, teenagers and adults, and works across both fixed braces and clear aligners, so the recommendation you get is based on what your case actually needs rather than the one option a clinic happens to offer.' },
     { q: 'Braces or clear aligners — which is right for me?', a: 'It depends on the teeth and the bite. Clear aligners suit a lot of adult cases and are barely visible, but some movements and more complex bites are corrected more reliably with fixed braces. Dr Aleksandra assesses your case first and explains the trade-offs in plain terms before you decide.' },
@@ -2813,7 +2817,6 @@ function OrthodonticPage() {
 }
 
 function FixedBracesPage() {
-  usePageTitle('Fixed Braces Malta | Metal & Ceramic Braces | Apex Dental');
   const faqs = [
     { q: 'Who fits braces at Apex Dental?', a: 'Fixed braces are fitted and adjusted by our orthodontist, Dr Aleksandra Syrico Mallia. She treats children, teenagers and adults, and plans each case around the bite as well as the appearance of the teeth.' },
     { q: 'What types of fixed braces do you offer?', a: 'We offer traditional metal braces, which are reliable and efficient, and tooth-coloured ceramic braces, which blend in far more and are much less noticeable. Dr Aleksandra will advise which suits your case and how visible each option really is.' },
@@ -2871,7 +2874,6 @@ function FixedBracesPage() {
 }
 
 function OrthixPage() {
-  usePageTitle('Orthix Clear Aligners Malta | Made In-House | Apex Dental');
   const faqs = [
     { q: 'What is Orthix?', a: 'Orthix is our own clear aligner, designed and produced in-house at Apex Dental rather than ordered from an overseas lab. Your case is planned by our orthodontist, Dr Aleksandra Syrico Mallia, and the aligners are made here in Malta.' },
     { q: 'How is Orthix more affordable than the big brands?', a: 'Most clinics pay an international lab for every aligner case, and that markup ends up on your bill. Because we plan and produce Orthix ourselves, we cut out that middle step and pass the saving on, without handing clinical control to a company abroad.' },
@@ -2928,7 +2930,6 @@ function OrthixPage() {
 }
 
 function ClearCorrectPage() {
-  usePageTitle('ClearCorrect Malta | Clear Aligners | Apex Dental');
   const faqs = [
     { q: 'What is ClearCorrect?', a: 'ClearCorrect is a clear aligner system made by the Straumann Group, one of the best-known names in dentistry. Like other aligners it straightens teeth with a series of clear removable trays, and at Apex Dental every ClearCorrect case is planned and monitored by our orthodontist.' },
     { q: 'How discreet are ClearCorrect aligners?', a: 'Very. The trays are clear and sit closely over your teeth, so for everyday situations most people will not notice you are wearing them. They are removable too, so there is nothing on show when you eat or clean your teeth.' },
@@ -2985,7 +2986,6 @@ function ClearCorrectPage() {
 }
 
 function OrdolinePage() {
-  usePageTitle('Ordoline Aligners Malta | Clear Aligners for Complex Cases | Apex Dental');
   const faqs = [
     { q: 'What is Ordoline?', a: 'Ordoline is a clinician-led clear aligner system designed to handle more demanding cases. Rather than relying on aligners alone, it combines them with orthodontic auxiliaries — small additions that give the control usually associated with fixed braces.' },
     { q: 'What makes Ordoline suited to complex cases?', a: 'Aligners on their own struggle with certain movements. Ordoline integrates tools such as mini-screws, power arms and segmental mechanics, which lets us treat rotations, larger movements and trickier bites more predictably than aligners alone typically manage.' },
@@ -3042,7 +3042,6 @@ function OrdolinePage() {
 }
 
 function CristalinePage() {
-  usePageTitle('Cristaline Aligners Malta | German-Made Clear Aligners | Apex Dental');
   const faqs = [
     { q: 'What is Cristaline?', a: 'Cristaline is a German-made clear aligner system, produced to ISO 13485 medical-device standards. The aligners are clear and made from a three-layer biocompatible material designed to deliver steady, consistent force as your teeth move.' },
     { q: 'What does German manufacturing mean for me?', a: 'It means the aligners are made under strict European quality controls, with consistent materials and finishing. For you that translates into reliable, comfortable trays and a treatment plan you can trust.' },
@@ -3126,7 +3125,6 @@ function StudiesSection({ eyebrow, heading, intro, studies, dark = false }) {
 }
 
 function StraumannImplantsPage() {
-  usePageTitle('Straumann Implants Malta | Premium Swiss Implants | Apex Dental');
   const faqs = [
     { q: 'What are Straumann implants?', a: 'Straumann is a Swiss implant manufacturer widely regarded as one of the leading names in dentistry, backed by decades of research. Their implants are known for the SLA and SLActive surfaces, which are designed to help the implant integrate with the bone quickly and reliably.' },
     { q: 'Why does the implant brand matter?', a: 'The body and surface of an implant affect how well and how quickly it fuses with your bone, and a well-documented brand means replacement parts and components are available for years to come. Straumann has some of the longest published track records in the field, which is reassuring for something meant to last decades.' },
@@ -3195,7 +3193,6 @@ function StraumannImplantsPage() {
 }
 
 function AllOn4Page() {
-  usePageTitle('All-on-4 Dental Implants Malta | Full Arch | Apex Dental');
   const faqs = [
     { q: 'What is All-on-4?', a: 'All-on-4 replaces a full arch of missing teeth using just four implants to support a fixed bridge. Two implants are placed straight at the front and two are angled at the back, which makes the most of the bone you already have and often avoids the need for grafting.' },
     { q: 'Can I get teeth on the same day?', a: 'In many All-on-4 cases a fixed temporary set of teeth can be fitted on the day of surgery, so you do not leave without teeth. Your final bridge is made once everything has healed. Whether same-day teeth are right for you depends on your bone and bite, which we assess first.' },
@@ -3264,7 +3261,6 @@ function AllOn4Page() {
 }
 
 function AllOn6Page() {
-  usePageTitle('All-on-6 Dental Implants Malta | Full Arch | Apex Dental');
   const faqs = [
     { q: 'What is All-on-6?', a: 'All-on-6 replaces a full arch of teeth with a fixed bridge supported by six implants instead of four. The two extra implants spread the chewing load across more points, which can be an advantage in certain cases, particularly in the upper jaw or where more support is wanted.' },
     { q: 'All-on-4 or All-on-6 — which do I need?', a: 'It comes down to your bone and your case. All-on-4 is enough for many people and makes the most of limited bone. All-on-6 can be the better choice where there is good bone volume and you want to distribute the load more widely. Dr Jonathan Mifsud decides this from your 3D scan, not as a default.' },
@@ -3332,7 +3328,6 @@ function AllOn6Page() {
 }
 
 function DentalProstheticsPage() {
-  usePageTitle('Dental Prosthetics Malta | Apex Dental');
 
   return (
     <>
@@ -3385,7 +3380,6 @@ function DentalProstheticsPage() {
 }
 
 function RemovableProsthesisPage() {
-  usePageTitle('Removable Prosthesis Malta | Apex Dental');
 
   return (
     <>
@@ -3439,7 +3433,6 @@ function RemovableProsthesisPage() {
 }
 
 function RootCanalPage() {
-  usePageTitle('Root Canal Treatment Malta | Apex Dental');
   const rootCanalFaqs = [
     { q: 'Is root canal treatment painful?', a: 'The procedure itself is done under local anaesthetic, so you should not feel pain while it is happening — most people are surprised how ordinary it is, not far off having a filling. The pain people associate with root canals is really the infection beforehand, and the treatment is what gets rid of it.' },
     { q: 'How do I know if I need a root canal?', a: 'Common signs are a toothache that will not let up, hot or cold that hurts and then lingers, a tooth going darker than its neighbours, swelling or tenderness in the gum, or a recurring little spot on the gum. None of these is a certainty on its own, so we take an X-ray to confirm what is happening inside the tooth.' },
@@ -3457,7 +3450,7 @@ function RootCanalPage() {
     <>
       <SEO
         title="Root Canal Treatment Malta | Apex Dental"
-        description="Root canal treatment in Malta at Apex Dental. Comfortable, effective treatment for infected or damaged teeth saving your natural tooth and relieving pain."
+        description="Root canal treatment in Malta at Apex Dental. Comfortable, effective treatment for infected or damaged teeth — saving your natural tooth and relieving pain."
         canonical={`${siteUrl}/root-canal-treatment/`}
         image={`${siteUrl}/images/I2.jpg`}
         schemas={[
@@ -3495,7 +3488,6 @@ function RootCanalPage() {
 
 
 function EmergencyPage() {
-  usePageTitle('Emergency Dentist Malta | Apex Dental');
   const emergencyFaqs = [
     { q: 'What counts as a dental emergency?', a: 'Roughly, anything causing a lot of pain, swelling, bleeding, or sudden serious damage that should not wait. That covers severe toothache, a knocked-out or badly broken tooth, an abscess, a lost crown or filling that is now painful, and any swelling of the face. If you are unsure, it is better to ring and ask than to sit on it.' },
     { q: 'What should I do if a tooth is knocked out?', a: 'Pick it up by the crown, not the root, and rinse it gently with milk or clean water without scrubbing it. If you can, slot it back into the socket and bite gently on a tissue to hold it there. If you cannot, keep it in milk or tucked between your cheek and gum. Then contact us straight away — the sooner a knocked-out tooth goes back in, the better the chance of saving it.' },
@@ -3550,7 +3542,6 @@ function EmergencyPage() {
 
 
 function BlogPage() {
-  usePageTitle('Dental Blog Malta | Apex Dental');
 
   return (
     <>
@@ -3558,6 +3549,7 @@ function BlogPage() {
         title="Dental Blog Malta | Apex Dental"
         description="Helpful dental articles from Apex Dental Malta. Read about implant costs, veneers vs whitening, emergency dental care, clear aligners, and preventive dentistry."
         canonical={`${siteUrl}/blog/`}
+        image={`${siteUrl}/images/H5.jpg`}
         schema={localBusinessSchema(`${siteUrl}/blog/`)}
       />
       <PageHero
@@ -3602,7 +3594,6 @@ function BlogPage() {
 
 
 function PriceListPage() {
-  usePageTitle('Dental Services Price List Malta | Apex Dental');
 
 
   return (
@@ -3611,6 +3602,7 @@ function PriceListPage() {
         title="Dental Price List Malta | Apex Dental"
         description="View Apex Dental's price list in Malta for checkups, hygiene, whitening, crowns, veneers, implants, root canal treatment, dentures, and orthodontics."
         canonical={`${siteUrl}/price-list/`}
+        image={`${siteUrl}/images/CT1.jpg`}
         schema={serviceSchema(
           'Dental Price List',
           'Dental treatment price list in Malta for common consultations and procedures.',
@@ -3681,7 +3673,6 @@ function PriceListPage() {
 }
 
 function AppointmentBookingPage() {
-  usePageTitle('Appointment Booking | Apex Dental Malta');
 
   const serviceOptions = [
     'Cosmetic Dentistry',
@@ -3702,6 +3693,7 @@ function AppointmentBookingPage() {
         title="Book a Dentist Appointment Malta | Apex Dental"
         description="Book a dental appointment at Apex Dental Malta for implants, Invisalign, veneers, hygiene, restorative treatment, and emergency dental care."
         canonical={`${siteUrl}/appointment-booking/`}
+        image={`${siteUrl}/images/CT2.jpg`}
         schema={serviceSchema(
           'Dental Appointment Booking',
           'Book a dentist appointment in Malta for consultations, emergency care, cosmetic dentistry, implants, and aligners.',
@@ -3805,7 +3797,6 @@ function AppointmentBookingPage() {
 }
 
 function ContactPage() {
-  usePageTitle('Contact Apex Dental Malta | Book an Appointment');
   const quickLinks = [
     { label: 'Book appointment', to: '/appointment-booking/' },
     { label: 'Dental implants', to: '/dental-implants/' },
@@ -3818,6 +3809,7 @@ function ContactPage() {
         title="Contact Apex Dental Malta | Book an Appointment"
         description="Contact Apex Dental Malta at Trident Park, Mrieħel, Birkirkara. Call 27016017, WhatsApp 99722185 or fill in our contact form to book your appointment."
         canonical={`${siteUrl}/contact-us/`}
+        image={`${siteUrl}/images/CT1.jpg`}
         schema={localBusinessSchema(`${siteUrl}/contact-us/`)}
       />
       <PageHero
@@ -3963,7 +3955,6 @@ function ContactPage() {
 
 
 function ServicesPage() {
-  usePageTitle('Dental Services Malta | Apex Dental');
 
   const serviceGroups = [
     {
@@ -4093,6 +4084,7 @@ function ServicesPage() {
         title="Dental Services Malta | Apex Dental"
         description="Explore Apex Dental's services in Malta including dental implants, Invisalign, veneers, whitening, crowns, root canal treatment, prosthetics, hygiene, and emergency dentistry."
         canonical={`${siteUrl}/services/`}
+        image={`${siteUrl}/images/H2.jpg`}
         schema={serviceSchema(
           'Dental Services',
           'Comprehensive dental services in Malta including implants, cosmetic dentistry, aligners, restorative care, and emergency treatment.',
@@ -4240,79 +4232,19 @@ function ComplianceTrustSection() {
   );
 }
 
-function SEO({
-  title,
-  description,
-  canonical,
-  type = 'website',
-  schema = null,
-  schemas = null,
-  image = `${siteUrl}/images/H1.jpg`,
-}) {
+// The page's <head>: title, description, canonical, Open Graph / Twitter tags and JSON-LD. Every
+// page renders exactly one <SEO>. The tags come from buildHead() in src/seo/head.js, which the build
+// also uses to write them into the page's prerendered HTML, so the two cannot differ.
+function SEO(props) {
+  const head = buildHead(props);
+  // Build time (src/entry-server.jsx): hand the head to the prerender script. null in the browser.
+  const collectHead = useContext(HeadContext);
+  if (collectHead) collectHead(head);
+
+  const headKey = JSON.stringify(head);
   useEffect(() => {
-    document.title = title;
-
-    const ensureMeta = (attr, key, value) => {
-      let el = document.head.querySelector(`meta[${attr}="${key}"]`);
-      if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute(attr, key);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('content', value);
-    };
-
-    const ensureLink = (rel, href) => {
-      let el = document.head.querySelector(`link[rel="${rel}"]`);
-      if (!el) {
-        el = document.createElement('link');
-        el.setAttribute('rel', rel);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('href', href);
-    };
-
-    ensureMeta('name', 'description', description);
-    ensureMeta('property', 'og:title', title);
-    ensureMeta('property', 'og:description', description);
-    ensureMeta('property', 'og:type', type);
-    ensureMeta('property', 'og:url', canonical);
-    // The prerendered HTML declares the real size of its own og:image. If this page shows a
-    // different image, drop that size rather than leave a wrong one (the old code claimed
-    // 1200x630 for every image).
-    const currentImage = document.head.querySelector('meta[property="og:image"]');
-    if (currentImage && currentImage.getAttribute('content') !== image) {
-      document.head
-        .querySelectorAll('meta[property="og:image:width"], meta[property="og:image:height"]')
-        .forEach((el) => el.remove());
-    }
-    ensureMeta('property', 'og:image', image);
-    ensureMeta('property', 'og:locale', 'en_MT');
-    ensureMeta('name', 'twitter:card', 'summary_large_image');
-    ensureMeta('name', 'twitter:title', title);
-    ensureMeta('name', 'twitter:description', description);
-    ensureMeta('name', 'twitter:image', image);
-
-    ensureLink('canonical', canonical);
-
-    // Remove old single schema tag
-    document.head.querySelectorAll('[id^="seo-schema"]').forEach(el => el.remove());
-
-    // Collect all schemas
-    const allSchemas = [];
-    if (schema) allSchemas.push(schema);
-    if (schemas) allSchemas.push(...schemas);
-
-    allSchemas.forEach((s, i) => {
-      const tag = document.createElement('script');
-      tag.type = 'application/ld+json';
-      tag.id = `seo-schema-${i}`;
-      tag.textContent = JSON.stringify(s);
-      document.head.appendChild(tag);
-    });
-
-    return () => {};
-  }, [title, description, canonical, type, schema, schemas, image]);
+    applyHead(JSON.parse(headKey));
+  }, [headKey]);
 
   return null;
 }
@@ -4323,7 +4255,6 @@ function BlogPostPage({ postId }) {
   const post = blogPosts.find((p) => p.id === postId);
   const canonical = `${siteUrl}${meta.slug}`;
 
-  usePageTitle(meta.seoTitle);
 
   return (
     <>
@@ -4379,29 +4310,9 @@ function BlogPostPage({ postId }) {
   );
 }
 
-// Unknown URLs. Vercel answers them with HTTP 404 and dist/404.html (written by
-// scripts/prerender-meta.mjs); this is what that page, or a broken in-site link, shows.
+// Unknown URLs. Vercel answers them with HTTP 404 and dist/404.html (prerendered from this page by
+// scripts/prerender.mjs); this is what that page, or a broken in-site link, shows.
 function NotFoundPage() {
-  useEffect(() => {
-    document.title = 'Page not found | Apex Dental';
-    // Not a page to index or to name as canonical: drop the previous page's canonical and say
-    // noindex while this view is shown. Other pages' SEO component recreates the canonical.
-    document.head.querySelectorAll('link[rel="canonical"]').forEach((el) => el.remove());
-    let robots = document.head.querySelector('meta[name="robots"]');
-    const added = !robots;
-    if (!robots) {
-      robots = document.createElement('meta');
-      robots.setAttribute('name', 'robots');
-      document.head.appendChild(robots);
-    }
-    const previous = robots.getAttribute('content');
-    robots.setAttribute('content', 'noindex');
-    return () => {
-      if (added) robots.remove();
-      else robots.setAttribute('content', previous || '');
-    };
-  }, []);
-
   const links = [
     { label: 'Home', to: '/' },
     { label: 'Our services', to: '/services/' },
@@ -4412,6 +4323,12 @@ function NotFoundPage() {
 
   return (
     <section className="bg-white pt-20 pb-24">
+      {/* Not a page to index or to name as canonical: noindex, no canonical, no og:url. */}
+      <SEO
+        title="Page not found | Apex Dental"
+        description="This page could not be found on the Apex Dental Malta website."
+        noindex
+      />
       <Section>
         <div className="max-w-2xl">
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500">Error 404</div>

@@ -78,7 +78,7 @@ const vercel = JSON.parse(readFileSync(vercelPath, 'utf-8'));
 const slugNoTrailing = post.slug.replace(/\/$/, '');
 const htmlPath = `${slugNoTrailing}/index.html`;
 // Both URL forms, appended. There is deliberately no catch-all rewrite any more: unknown URLs get
-// a real 404 (dist/404.html), and prerender-meta.mjs fails the build if a page lacks either form.
+// a real 404 (dist/404.html), and prerender.mjs fails the build if a page lacks either form.
 for (const source of [slugNoTrailing, `${slugNoTrailing}/`]) {
   if (!vercel.rewrites.some(r => r.source === source)) {
     vercel.rewrites.push({ source, destination: htmlPath });
@@ -87,9 +87,9 @@ for (const source of [slugNoTrailing, `${slugNoTrailing}/`]) {
 writeFileSync(vercelPath, JSON.stringify(vercel, null, 2) + '\n', 'utf-8');
 console.log('  ✅ Updated vercel.json');
 
-// ── 4. Prerendered meta ────────────────────────────────────
-// Nothing to do: scripts/prerender-meta.mjs reads src/data/blogPosts.js, so the new post gets its
-// page, its route (src/App.jsx maps the same data) and its meta from step 1 alone.
+// ── 4. Prerendered page ────────────────────────────────────
+// Nothing to do: scripts/prerender.mjs prerenders every URL in the sitemap (step 2), so the new post gets its
+// static page, its route (src/App.jsx maps the same data) and its meta from steps 1 and 2 alone.
 
 // ── 5. Remove from queue ───────────────────────────────────
 queue.shift();

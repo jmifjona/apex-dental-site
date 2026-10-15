@@ -6,7 +6,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
   // internal-tools/ is kept for reference only: not bundled, not deployed (see its README).
-  globalIgnores(['dist', 'internal-tools']),
+  // dist-ssr/ is the build-time renderer bundle (npm run build), deleted after prerendering.
+  globalIgnores(['dist', 'dist-ssr', 'internal-tools']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -16,7 +17,10 @@ export default defineConfig([
     ],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        __BUILD_YEAR__: 'readonly', // vite.config.js define
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -32,5 +36,10 @@ export default defineConfig([
     files: ['api/**/*.js'],
     languageOptions: { globals: globals.node },
     rules: { 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]', caughtErrors: 'none' }] },
+  },
+  {
+    // The build-time renderer exports render(), not a component, and is never hot-reloaded.
+    files: ['src/entry-server.jsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
   },
 ])

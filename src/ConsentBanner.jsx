@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  readChoice,
+  isCookieChoiceMade,
   saveChoice,
   updateConsent,
   clearGoogleCookies,
   onOpenCookieSettings,
   announceCookieBanner,
 } from './lib/consent.js';
+import { useHydrated } from './lib/hydration.js';
 
 // Cookie banner for Google Consent Mode v2: analytics and ads stay denied (public/gtag-init.js)
 // until the visitor accepts here. Shown until a choice is stored; "Cookie settings" in the footer
 // reopens it.
+//
+// The stored choice lives in the visitor's browser, so the prerendered HTML never contains the
+// banner: it appears when the page's script runs (hydration), as it always has. Consent is denied
+// until then either way, because public/gtag-init.js sets the default before anything else.
 export default function ConsentBanner() {
-  const [open, setOpen] = useState(() => {
-    const choice = readChoice();
-    return choice !== 'granted' && choice !== 'denied';
-  });
+  const hydrated = useHydrated();
+  // null = follow the stored choice; true / false once the visitor acts in this page view.
+  const [openOverride, setOpen] = useState(null);
+  const open = openOverride ?? (hydrated && !isCookieChoiceMade());
 
   useEffect(() => onOpenCookieSettings(() => setOpen(true)), []);
   // The phone booking bar steps aside while this banner is open (src/App.jsx MobileStickyBar).
   useEffect(() => {
-    announceCookieBanner(open);
-  }, [open]);
+    if (hydrated) announceCookieBanner(open);
+  }, [hydrated, open]);
 
   if (!open) return null;
 
