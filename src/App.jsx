@@ -4208,9 +4208,16 @@ function SEO({
     ensureMeta('property', 'og:description', description);
     ensureMeta('property', 'og:type', type);
     ensureMeta('property', 'og:url', canonical);
+    // The prerendered HTML declares the real size of its own og:image. If this page shows a
+    // different image, drop that size rather than leave a wrong one (the old code claimed
+    // 1200x630 for every image).
+    const currentImage = document.head.querySelector('meta[property="og:image"]');
+    if (currentImage && currentImage.getAttribute('content') !== image) {
+      document.head
+        .querySelectorAll('meta[property="og:image:width"], meta[property="og:image:height"]')
+        .forEach((el) => el.remove());
+    }
     ensureMeta('property', 'og:image', image);
-    ensureMeta('property', 'og:image:width', '1200');
-    ensureMeta('property', 'og:image:height', '630');
     ensureMeta('property', 'og:locale', 'en_MT');
     ensureMeta('name', 'twitter:card', 'summary_large_image');
     ensureMeta('name', 'twitter:title', title);
@@ -4236,7 +4243,7 @@ function SEO({
     });
 
     return () => {};
-  }, [title, description, canonical, type, schema, schemas]);
+  }, [title, description, canonical, type, schema, schemas, image]);
 
   return null;
 }
@@ -4343,8 +4350,32 @@ export default function ApexDentalWebsitePremium() {
         <Route path="/appointment-booking/" element={<AppointmentBookingPage />} />
         <Route path="/services/" element={<ServicesPage />} />
         <Route path="/contact-us/" element={<ContactPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<Terms />} />
+        <Route
+          path="/privacy-policy"
+          element={
+            <>
+              <SEO
+                title="Privacy Policy | Apex Dental"
+                description="Privacy policy for the internal Google Ads management application used by Apex Dental Malta."
+                canonical={`${siteUrl}/privacy-policy`}
+              />
+              <PrivacyPolicy />
+            </>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <>
+              <SEO
+                title="Terms of Service | Apex Dental"
+                description="Terms of service for the internal Google Ads management application used by Apex Dental Malta."
+                canonical={`${siteUrl}/terms`}
+              />
+              <Terms />
+            </>
+          }
+        />
       </Routes>
 
       <Footer />

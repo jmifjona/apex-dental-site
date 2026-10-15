@@ -1,7 +1,8 @@
 /**
  * Meta-tag prerender script for Apex Dental
  * After `vite build`, this creates a static index.html per route with
- * correct <title>, <meta description>, <og:*>, <canonical> filled in.
+ * exactly one page-specific <title>, <meta description>, set of og:/twitter: tags and
+ * <canonical> (the template's homepage tags are replaced, not appended to).
  * Google executes JS anyway; this ensures crawlers + social previews work.
  */
 
@@ -187,47 +188,132 @@ const routes = [
   {
     path: '/contact-us/',
     title: 'Contact Apex Dental Malta | Book an Appointment',
-    description: 'Contact Apex Dental Malta at Trident Park, Birkirkara. Call 27016017, WhatsApp 79854037 or fill in our contact form to book your appointment.',
+    description: 'Contact Apex Dental Malta at Trident Park, Mrieħel, Birkirkara. Call 27016017, WhatsApp 99722185 or fill in our contact form to book your appointment.',
     image: `${siteUrl}/images/CT1.jpg`,
+  },
+  {
+    path: '/privacy-policy',
+    title: 'Privacy Policy | Apex Dental',
+    description: 'Privacy policy for the internal Google Ads management application used by Apex Dental Malta.',
+    image: `${siteUrl}/images/H1.jpg`,
+  },
+  {
+    path: '/terms',
+    title: 'Terms of Service | Apex Dental',
+    description: 'Terms of service for the internal Google Ads management application used by Apex Dental Malta.',
+    image: `${siteUrl}/images/H1.jpg`,
   },
   // Blog posts: one entry per post in src/data/blogPosts.js (the same data the pages and routes
   // use), so a published post can never be in the sitemap without its page.
   ...blogPosts.map((post) => {
     const meta = blogPostMeta[post.id];
-    return { path: meta.slug, title: meta.seoTitle, description: meta.description, image: meta.image };
+    return { path: meta.slug, title: meta.seoTitle, description: meta.description, image: meta.image, type: 'article' };
   }),
 ];
 
+// Intrinsic width/height of a JPEG or PNG, read from its header (no dependencies). Used so og:image
+// declares the image's REAL size - the old tags claimed 1200x630 for every image, including the
+// 469x892 portrait H1.jpg.
+function imageSize(buf) {
+  if (buf.length > 24 && buf[0] === 0x89 && buf.toString('ascii', 1, 4) === 'PNG') {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  if (buf[0] === 0xff && buf[1] === 0xd8) {
+    let i = 2;
+    while (i + 9 < buf.length) {
+      if (buf[i] !== 0xff) { i++; continue; }
+      const marker = buf[i + 1];
+      const len = buf.readUInt16BE(i + 2);
+      // SOF0..SOF15 carry the frame size (C4/C8/CC are other tables)
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+      }
+      i += 2 + len;
+    }
+  }
+  return null;
+}
+
+const sizeCache = new Map();
+function ogImageSize(imageUrl) {
+  if (!sizeCache.has(imageUrl)) {
+    let size = null;
+    if (imageUrl.startsWith(`${siteUrl}/`)) {
+      const file = join(distDir, decodeURIComponent(imageUrl.slice(siteUrl.length + 1)));
+      if (existsSync(file)) size = imageSize(readFileSync(file));
+    }
+    if (!size) console.warn(`⚠️  og:image size unknown for ${imageUrl} - width/height left out`);
+    sizeCache.set(imageUrl, size);
+  }
+  return sizeCache.get(imageUrl);
+}
+
+// The template (Vite's dist/index.html, built from /index.html) carries the homepage's SEO tags.
+// They are REMOVED here and one page-specific set is written in their place, so every page has
+// exactly one title, description, canonical and set of og:/twitter: tags. (The old script appended
+// a second set, so crawlers and link previews saw the homepage's canonical and description first.)
+const SEO_TAG_PATTERNS = [
+  /[ \t]*<meta\s+name="description"[^>]*>\r?\n?/gi,
+  /[ \t]*<meta\s+name="robots"[^>]*>\r?\n?/gi,
+  /[ \t]*<meta\s+property="og:[^"]*"[^>]*>\r?\n?/gi,
+  /[ \t]*<meta\s+name="twitter:[^"]*"[^>]*>\r?\n?/gi,
+  /[ \t]*<link\s+rel="canonical"[^>]*>\r?\n?/gi,
+  /[ \t]*<!-- Prerendered meta:[^>]*-->\r?\n?/gi,
+];
+
 function buildHtml(template, route) {
-  const canonical = `${siteUrl}${route.path}`;
+  const canonical = route.noindex ? null : `${siteUrl}${route.path}`;
   const image = route.image || defaultImage;
+  const size = ogImageSize(image);
 
-  // Replace the default title
-  let html = template.replace(
-    /<title>[^<]*<\/title>/,
-    `<title>${escapeHtml(route.title)}</title>`
-  );
+  let html = template;
+  for (const re of SEO_TAG_PATTERNS) html = html.replace(re, '');
 
-  // Inject pre-filled meta tags before </head>
-  const metaTags = `
-  <!-- Prerendered meta: ${route.path} -->
-  <meta name="description" content="${escapeAttr(route.description)}" />
-  <meta property="og:title" content="${escapeAttr(route.title)}" />
-  <meta property="og:description" content="${escapeAttr(route.description)}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="${canonical}" />
-  <meta property="og:image" content="${image}" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:locale" content="en_MT" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${escapeAttr(route.title)}" />
-  <meta name="twitter:description" content="${escapeAttr(route.description)}" />
-  <meta name="twitter:image" content="${image}" />
-  <link rel="canonical" href="${canonical}" />`;
+  const tags = [
+    `<title>${escapeHtml(route.title)}</title>`,
+    `<meta name="description" content="${escapeAttr(route.description)}" />`,
+    route.noindex ? '<meta name="robots" content="noindex" />' : null,
+    `<meta property="og:title" content="${escapeAttr(route.title)}" />`,
+    `<meta property="og:description" content="${escapeAttr(route.description)}" />`,
+    `<meta property="og:type" content="${route.type || 'website'}" />`,
+    canonical ? `<meta property="og:url" content="${canonical}" />` : null,
+    `<meta property="og:image" content="${image}" />`,
+    size ? `<meta property="og:image:width" content="${size.width}" />` : null,
+    size ? `<meta property="og:image:height" content="${size.height}" />` : null,
+    '<meta property="og:locale" content="en_MT" />',
+    '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:title" content="${escapeAttr(route.title)}" />`,
+    `<meta name="twitter:description" content="${escapeAttr(route.description)}" />`,
+    `<meta name="twitter:image" content="${image}" />`,
+    canonical ? `<link rel="canonical" href="${canonical}" />` : null,
+  ].filter(Boolean);
 
-  html = html.replace('</head>', `${metaTags}\n</head>`);
+  const titleRe = /([ \t]*)<title>[^<]*<\/title>/;
+  const m = html.match(titleRe);
+  if (!m) throw new Error('template has no <title>');
+  const indent = m[1] || '    ';
+  html = html.replace(titleRe, tags.map((t) => indent + t).join('\n'));
+
+  checkOnce(html, route.path, canonical !== null);
   return html;
+}
+
+// Fail the build rather than ship a page with duplicate or missing head tags.
+function checkOnce(html, path, wantCanonical) {
+  const count = (re) => (html.match(re) || []).length;
+  const checks = {
+    title: count(/<title>/g),
+    description: count(/<meta\s+name="description"/g),
+    canonical: count(/<link\s+rel="canonical"/g),
+    'og:title': count(/<meta\s+property="og:title"/g),
+    'og:description': count(/<meta\s+property="og:description"/g),
+    'og:image': count(/<meta\s+property="og:image"/g),
+    'twitter:title': count(/<meta\s+name="twitter:title"/g),
+  };
+  for (const [tag, n] of Object.entries(checks)) {
+    const want = tag === 'canonical' && !wantCanonical ? 0 : 1;
+    if (n !== want) throw new Error(`${path}: ${n} ${tag} tag(s), expected ${want}`);
+  }
 }
 
 function escapeHtml(str) {
