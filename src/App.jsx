@@ -1555,8 +1555,8 @@ const TRUST_FACTS = [
   },
   {
     icon: Languages,
-    title: 'Four languages',
-    text: 'Consultations in English, Italian, Spanish or Polish',
+    title: 'Five languages',
+    text: 'Consultations in English, Italian, Spanish, Polish or German',
   },
   {
     icon: ShieldCheck,
@@ -1705,7 +1705,8 @@ function TreatmentsOverview() {
   );
 }
 
-const EXTRA_LANGUAGE = { PL: 'Polish', IT: 'Italian', ES: 'Spanish' };
+const EXTRA_LANGUAGE = { PL: 'Polish', IT: 'Italian', ES: 'Spanish', DE: 'German' };
+const LANGUAGE_BADGE = { IT: 'text-green-700', ES: 'text-red-600', PL: 'text-rose-700', DE: 'text-slate-800' };
 
 function initialsOf(name) {
   const parts = name.replace(/^Dr\.?\s+/, '').split(/\s+/);
@@ -1718,7 +1719,7 @@ function TeamSection() {
       <Section className="py-20 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>
-            <SectionIntro eyebrow="Our dentists" title="Six dentists, four languages spoken">
+            <SectionIntro eyebrow="Our dentists" title="Six dentists, five languages spoken">
               Plenty of people put off the dentist because the last place they went felt rushed or cold.
               We have tried to build the opposite — a calm space, modern equipment, and dentists who
               explain things instead of talking over your head.
@@ -1753,9 +1754,9 @@ function TeamSection() {
                     <p className="mt-0.5 text-sm text-slate-600">{doctor.role}</p>
                   </div>
                 </div>
-                {doctor.flag && EXTRA_LANGUAGE[doctor.flag] && (
+                {doctor.langs.length > 0 && (
                   <p className="mt-4 inline-flex rounded-full bg-ivory-100 px-3 py-1 text-sm text-navy-900">
-                    Consultations also in {EXTRA_LANGUAGE[doctor.flag]}
+                    Consultations also in {doctor.langs.map((code) => EXTRA_LANGUAGE[code]).join(' and ')}
                   </p>
                 )}
               </li>
@@ -2165,9 +2166,9 @@ function AlignersPage() {
       <ProcessSteps steps={alignerSteps} />
       <SplitEditorial
         imageLeft={images.aligners.A4}
-        title="Consultations in English, Italian, Spanish or Polish"
-        text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish, Dr Massimo D'Alessandro in Italian, and Dr Aleksandra Syrico Mallia in Polish, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
-        points={['Consultations in English, Italian, Spanish or Polish', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
+        title="Consultations in English, Italian, Spanish, Polish or German"
+        text="We see a lot of patients who have moved to Malta from abroad. Dr Martha Lopez consults in Spanish, Dr Massimo D'Alessandro in Italian, and Dr Aleksandra Syrico Mallia in Polish and German, so you can talk through your treatment in your own language instead of translating dental terms on the spot."
+        points={['Consultations in English, Italian, Spanish, Polish or German', 'Used to treating expats and visitors', 'The same standard of care whoever you are', 'At Trident Park, Mrieħel, Birkirkara']}
       />
       <FAQSection faqs={alignerFaqs} dark />
       <CTASection title="Interested in clear aligners in Malta?" text="Book a consultation and we will check whether aligners can do what you want, show you a preview of the result, and be upfront about the timeframe and the cost." />
@@ -2257,7 +2258,7 @@ function AboutPage() {
     <>
       <SEO
         title="About Apex Dental Malta | Our Dental Team"
-        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
+        description="Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish- and German-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara."
         canonical={`${siteUrl}/about-us/`}
         schema={localBusinessSchema(`${siteUrl}/about-us/`)}
       />
@@ -2265,7 +2266,7 @@ function AboutPage() {
         image={images.about.AB1}
         eyebrow="About Apex Dental"
         title="A private dental clinic in Malta, with six dentists under one roof"
-        subtitle="We are a private clinic at Trident Park, Mrieħel, Birkirkara. Six dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian, Spanish or Polish."
+        subtitle="We are a private clinic at Trident Park, Mrieħel, Birkirkara. Six dentists work here, between us covering routine care, cosmetic work, gum treatment and implant surgery, with consultations in English, Italian, Spanish, Polish or German."
       />
       <section className="bg-white py-20">
         <Section>
@@ -2307,7 +2308,7 @@ function AboutPage() {
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our dentists</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-navy-900 leading-tight mb-12 max-w-2xl">
-            Six dentists, four languages spoken
+            Six dentists, five languages spoken
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.slice(1).map((doctor) => (
@@ -2317,9 +2318,11 @@ function AboutPage() {
                 </div>
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-semibold text-navy-900">{doctor.name}</h3>
-                  {doctor.flag === 'IT' && <span className="text-sm font-bold text-green-700">IT</span>}
-                  {doctor.flag === 'ES' && <span className="text-sm font-bold text-red-600">ES</span>}
-                  {doctor.flag === 'PL' && <span className="text-sm font-bold text-rose-700">PL</span>}
+                  {doctor.langs.map((code) => (
+                    <span key={code} className={`text-sm font-bold ${LANGUAGE_BADGE[code]}`} title={EXTRA_LANGUAGE[code]}>
+                      {code}
+                    </span>
+                  ))}
                 </div>
                 <div className="text-gold-700 font-medium text-sm mb-3">{doctor.role}</div>
                 <p className="text-slate-600 leading-7 text-sm">{doctor.bio}</p>

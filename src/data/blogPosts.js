@@ -97,7 +97,7 @@ export const blogPosts = [
       { type: 'h3', text: 'How long does aligner treatment take for adults?' },
       { type: 'p', text: 'Most adult cases are completed in 6 to 18 months depending on the complexity of the tooth movement required. The process begins with digital scanning and a treatment simulation, which means you can see a preview of your expected outcome before committing to treatment.' },
       { type: 'h3', text: 'Multilingual consultations available at Apex Dental' },
-      { type: 'p', text: "Apex Dental offers aligner consultations in English, Italian, and Spanish. Dr Martha Lopez (Spanish-speaking) and Dr Massimo D'Alessandro (Italian-speaking) are both available for patients who prefer to consult in their first language." },
+      { type: 'p', text: "Apex Dental offers aligner consultations in English, Italian, Spanish, Polish and German. Our orthodontist Dr Aleksandra Syrico Mallia (Polish- and German-speaking), Dr Martha Lopez (Spanish-speaking) and Dr Massimo D'Alessandro (Italian-speaking) are all available for patients who prefer to consult in their first language." },
       { type: 'cta', text: 'Book an aligner consultation', to: '/invisalign-malta/' },
     ],
   },

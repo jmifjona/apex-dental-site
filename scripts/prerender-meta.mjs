@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/about-us/',
     title: 'About Apex Dental Malta | Our Dental Team',
-    description: "Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara.",
+    description: "Meet the team at Apex Dental Malta. Dr Jonathan Mifsud (Implantologist), Dr Aleksandra Syrico Mallia (Orthodontist, Polish- and German-speaking), Dr Charlotte Axisa, Dr Massimo D'Alessandro (Italian-speaking), Dr Adam Borg and Dr Martha Lopez (Spanish-speaking). Trident Park, Mrieħel, Birkirkara.",
     image: `${siteUrl}/images/AB1.jpg`,
   },
   {
