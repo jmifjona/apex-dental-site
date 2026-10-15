@@ -3620,7 +3620,7 @@ function PriceListPage() {
         },
         {
           name: 'Fixed Upper and Lower Orthodontic Appliance',
-          price: 'From €2500.00',
+          price: 'From €2800.00',
         },
       ],
     },
