@@ -2262,8 +2262,7 @@ function VeneersPage() {
     { title: 'Bonding and final fitting', text: 'We try the veneers in first to check the fit, shape and colour with you, and only bond them once you are happy. The change is there the moment you look in the mirror.' },
   ];
   const veneerPricing = [
-    { label: 'Composite veneers — freehand', price: '€90 / tooth' },
-    { label: 'Composite veneers — lab wax-up', price: '€130 / tooth' },
+    { label: 'Composite veneers', price: '€130 / tooth' },
     { label: '3D-printed ceramic resin (very stain resistant)', price: '€220 / tooth' },
     { label: 'Porcelain / zirconia', price: '€450 / tooth' },
     { label: 'Smile mockup / try-in', price: '€50' },
@@ -2304,7 +2303,7 @@ function VeneersPage() {
       <ProcessSteps steps={veneerSteps} />
       <PricingHint
         items={veneerPricing}
-        note="Choose the veneer option that suits your goals and budget, all priced per tooth: composite freehand at €90, composite with a lab wax-up at €130, very stain-resistant 3D-printed ceramic resin at €220, and premium porcelain or zirconia at €450. Not sure which is right for you? For €50 we create a mockup so you can see and try the final look before committing — and that fee is deducted from your bill if you proceed with resin or porcelain/zirconia veneers. To book a consultation we take a €20 booking fee, which is deducted from your final bill."
+        note="Choose the veneer option that suits your goals and budget, all priced per tooth: composite at €130, very stain-resistant 3D-printed ceramic resin at €220, and premium porcelain or zirconia at €450. Not sure which is right for you? For €50 we create a mockup so you can see and try the final look before committing — and that fee is deducted from your bill if you proceed with resin or porcelain/zirconia veneers. To book a consultation we take a €20 booking fee, which is deducted from your final bill."
       />
       <FAQSection faqs={veneerFaqs} />
       <CTASection dark title="Ready to improve your smile with veneers?" text="Book a cosmetic consultation and we will talk through what you want changed, whether veneers are the right way to get there, and exactly what each option costs." />
@@ -3394,7 +3393,7 @@ function PriceListPage() {
           price: '€20.00',
           note: 'Secures your appointment and is deducted from your final bill. Non-refundable if the appointment is cancelled less than 5 hours beforehand.',
         },
-        { name: 'Routine Checkup', price: '€10.00' },
+        { name: 'Routine Checkup', price: '€30.00' },
         { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
         {
           name: 'Periapical or one side Bitewing X-Ray',
@@ -3432,9 +3431,9 @@ function PriceListPage() {
           note: 'Preventive measure, mostly for molars; price per tooth.',
         },
         {
-          name: 'Whitening Home Kits',
+          name: 'Home Whitening Kit (custom trays)',
           price: '€250.00',
-          note: 'Custom trays included.',
+          note: 'Custom trays included; worn at home, usually over one to two weeks.',
         },
         {
           name: 'Removal of Fixed Prosthesis and Cleaning',
@@ -3443,7 +3442,7 @@ function PriceListPage() {
         },
         { name: 'Fluoride Application', price: '€40.00' },
         {
-          name: 'In House Teeth Whitening',
+          name: 'In-Clinic Whitening (Beyond or Zoom)',
           price: '€400.00',
           note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.',
         },
@@ -3475,14 +3474,9 @@ function PriceListPage() {
       title: 'Cosmetic Veneers',
       items: [
         {
-          name: 'Composite Veneers (Freehand)',
-          price: '€90.00',
-          note: 'Done chairside with highly aesthetic composite. Price per tooth.',
-        },
-        {
-          name: 'Composite Veneers (Lab Wax-Up Replica)',
+          name: 'Composite Veneers',
           price: '€130.00',
-          note: 'Includes a lab-made wax-up. Price per tooth.',
+          note: 'Highly aesthetic composite. Price per tooth.',
         },
         {
           name: '3D-Printed Ceramic Resin Veneers',
