@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import ConsultationPrep from './ConsultationPrep.jsx';
+import ConsentBanner from './ConsentBanner.jsx';
+import { openCookieSettings } from './lib/consent.js';
 import { trackAppointmentBookingConversion } from './lib/googleAds';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
@@ -1545,6 +1547,9 @@ function Footer() {
             <Link to="/terms" className="hover:text-white">
               Terms of Service
             </Link>
+            <button type="button" onClick={openCookieSettings} className="hover:text-white">
+              Cookie settings
+            </button>
           </div>
         </div>
 
@@ -4379,6 +4384,7 @@ export default function ApexDentalWebsitePremium() {
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
       <ScrollToTop />
+      <ConsentBanner />
       <GoogleAdsPageTracker />
       <FloatingHeader />
 
