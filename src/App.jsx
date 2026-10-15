@@ -3,28 +3,32 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useForm, ValidationError } from '@formspree/react';
 import ConsultationPrep from './ConsultationPrep.jsx';
 import ConsentBanner from './ConsentBanner.jsx';
-import { openCookieSettings } from './lib/consent.js';
+import { openCookieSettings, onCookieBannerChange, isCookieChoiceMade } from './lib/consent.js';
 import { trackAppointmentBookingConversion } from './lib/googleAds';
 import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
-import { brand, CLINIC_OPTIONS } from './data/clinics.js';
+import { brand, CLINIC_OPTIONS, CLINIC_HOURS } from './data/clinics.js';
 import { blogPosts, blogPostMeta } from './data/blogPosts.js';
 import { IMAGE_SIZES } from './data/imageSizes.js';
+import { team } from './data/team.js';
+import { priceSections } from './data/priceList.js';
 import {
   Phone,
   MapPin,
   MessageCircle,
   ChevronRight,
+  ChevronDown,
   Menu,
   X,
   Star,
   ShieldCheck,
   Sparkles,
   Clock3,
+  ArrowRight,
   ArrowUpRight,
-  ScanLine,
-  HeartHandshake,
   BadgeCheck,
+  Languages,
+  Stethoscope,
 } from 'lucide-react';
 
 function usePageTitle(title) {
@@ -113,9 +117,9 @@ function HoneypotField() {
 // Shared look for both forms' fields. Every field has a visible <label>; field NAMES are read by
 // Formspree and by Jarvis (api/enquiry.js), so they must not change.
 const fieldClass =
-  'w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-300/60';
+  'w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-gold-300 focus:ring-2 focus:ring-gold-300/60';
 const labelClass = 'block text-sm text-slate-300 mb-1';
-const optionalMark = <span className="text-slate-500"> (optional)</span>;
+const optionalMark = <span className="text-slate-400"> (optional)</span>;
 
 function FormSuccess({ title, children }) {
   const headingRef = React.useRef(null);
@@ -126,9 +130,9 @@ function FormSuccess({ title, children }) {
   return (
     <div
       role="status"
-      className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]"
+      className="rounded-[2.5rem] bg-navy-900 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]"
     >
-      <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-amber-400 text-slate-950">
+      <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold-400 text-navy-900">
         <BadgeCheck size={24} aria-hidden="true" />
       </div>
       <h2 ref={headingRef} tabIndex={-1} className="mt-6 text-3xl font-semibold leading-tight outline-none">
@@ -151,7 +155,7 @@ function ContactFormCard() {
   }
 
   return (
-    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+    <div className="rounded-[2.5rem] bg-navy-900 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Contact Us</h2>
 
       <form
@@ -206,7 +210,7 @@ function ContactFormCard() {
             className={fieldClass}
           >
             {CLINIC_OPTIONS.map((o) => (
-              <option key={o.v} value={o.l} className="text-slate-900">
+              <option key={o.v} value={o.l} className="text-navy-900">
                 {o.l}
               </option>
             ))}
@@ -224,7 +228,7 @@ function ContactFormCard() {
         <button
           type="submit"
           disabled={contactState.submitting}
-          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          className="rounded-full bg-gold-400 text-navy-900 px-6 py-3.5 font-semibold hover:bg-gold-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
         >
           {contactState.submitting ? 'Sending...' : 'Send Request'}
         </button>
@@ -267,7 +271,7 @@ function BookingFormCard({ serviceOptions }) {
   }
 
   return (
-    <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
+    <div className="rounded-[2.5rem] bg-navy-900 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
       <h2 className="text-3xl font-semibold">Request an Appointment</h2>
 
       <form
@@ -323,9 +327,9 @@ function BookingFormCard({ serviceOptions }) {
             Service{optionalMark}
           </label>
           <select id="booking-service" name="service" className={fieldClass}>
-            <option className="text-slate-900">Select Service</option>
+            <option className="text-navy-900">Select Service</option>
             {serviceOptions.map((service) => (
-              <option key={service} className="text-slate-900">
+              <option key={service} className="text-navy-900">
                 {service}
               </option>
             ))}
@@ -350,7 +354,7 @@ function BookingFormCard({ serviceOptions }) {
         <button
           type="submit"
           disabled={appointmentState.submitting}
-          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          className="rounded-full bg-gold-400 text-navy-900 px-6 py-3.5 font-semibold hover:bg-gold-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
         >
           {appointmentState.submitting ? 'Sending...' : 'Send Booking Request'}
         </button>
@@ -533,6 +537,7 @@ const images = {
   home: {
     H1: '/images/H1.jpg',
     H2: '/images/H2.jpg',
+    H2_1280: '/images/H2-1280.jpg',
     H3: '/images/H3.jpg',
     H4: '/images/H4.jpg',
     H5: '/images/H5.jpg',
@@ -609,15 +614,14 @@ function Button({
   className = '',
 }) {
   const base =
-    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300';
+    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-colors duration-200';
 
   const variants = {
-    dark: 'bg-slate-950 text-white hover:bg-slate-800',
-    light: 'bg-white text-slate-900 hover:bg-slate-100',
-    outline: 'border border-slate-300 text-slate-900 hover:bg-slate-100',
-    glass:
-      'border border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white/15',
-    gold: 'bg-amber-400 text-slate-950 hover:bg-amber-300',
+    dark: 'bg-navy-900 text-white hover:bg-navy-800',
+    light: 'bg-white text-navy-900 hover:bg-ivory-100',
+    outline: 'border border-navy-200 bg-white text-navy-900 hover:border-navy-900 hover:bg-ivory',
+    glass: 'border border-white/25 bg-white/10 text-white hover:bg-white/15',
+    gold: 'bg-gold-400 text-navy-900 hover:bg-gold-300',
   };
 
   const classes = `${base} ${variants[variant]} ${className}`;
@@ -637,350 +641,395 @@ function Button({
   );
 }
 
-function FloatingHeader() {
-  const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+const whatsappUrl = `https://wa.me/356${brand.whatsapp}`;
 
-  const serviceGroups = [
-    {
-      title: 'Implant & Restorative',
-      items: [
-        { to: '/dental-implants/', label: 'Dental Implants' },
-        { to: '/straumann-implants-malta/', label: 'Straumann Implants' },
-        { to: '/all-on-4-malta/', label: 'All-on-4 Implants' },
-        { to: '/all-on-6-malta/', label: 'All-on-6 Implants' },
-        { to: '/crowns-and-bridgework/', label: 'Crowns & Bridgework' },
-        { to: '/dental-prosthetics/', label: 'Dental Prosthetics' },
-        { to: '/removable-prosthesis/', label: 'Removable Prosthesis' },
-        { to: '/root-canal-treatment/', label: 'Root Canal Treatment' },
-      ],
-    },
-    {
-      title: 'Cosmetic',
-      items: [
-        { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
-        { to: '/veneers/', label: 'Veneers' },
-        { to: '/teeth-whitening/', label: 'Teeth Whitening' },
-      ],
-    },
-    {
-      title: 'Orthodontic',
-      items: [
-        { to: '/invisalign-malta/', label: 'Clear Aligners' },
-        { to: '/orthodontics/', label: 'Orthodontic Treatment' },
-        { to: '/fixed-braces-malta/', label: 'Fixed Braces' },
-        { to: '/orthix-aligners/', label: 'Orthix (In-House Aligner)' },
-        { to: '/clearcorrect-malta/', label: 'ClearCorrect' },
-        { to: '/ordoline-aligners-malta/', label: 'Ordoline' },
-        { to: '/cristaline-aligners-malta/', label: 'Cristaline' },
-      ],
-    },
-    {
-      title: 'Preventive',
-      items: [
-        { to: '/general-dentistry/', label: 'General Dentistry' },
-        { to: '/dental-hygiene/', label: 'Dental Hygiene' },
-        { to: '/periodontology/', label: 'Periodontology' },
-      ],
-    },
-    {
-      title: 'Urgent Care',
-      items: [{ to: '/emergency-dental-service-malta/', label: 'Emergency Dentist' }],
-    },
-  ];
+// The services menu (header) - one list, shown as the desktop dropdown and the phone menu.
+const SERVICE_GROUPS = [
+  {
+    title: 'Implant & Restorative',
+    items: [
+      { to: '/dental-implants/', label: 'Dental Implants' },
+      { to: '/straumann-implants-malta/', label: 'Straumann Implants' },
+      { to: '/all-on-4-malta/', label: 'All-on-4 Implants' },
+      { to: '/all-on-6-malta/', label: 'All-on-6 Implants' },
+      { to: '/crowns-and-bridgework/', label: 'Crowns & Bridgework' },
+      { to: '/dental-prosthetics/', label: 'Dental Prosthetics' },
+      { to: '/removable-prosthesis/', label: 'Removable Prosthesis' },
+      { to: '/root-canal-treatment/', label: 'Root Canal Treatment' },
+    ],
+  },
+  {
+    title: 'Cosmetic',
+    items: [
+      { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
+      { to: '/veneers/', label: 'Veneers' },
+      { to: '/teeth-whitening/', label: 'Teeth Whitening' },
+    ],
+  },
+  {
+    title: 'Orthodontic',
+    items: [
+      { to: '/invisalign-malta/', label: 'Clear Aligners' },
+      { to: '/orthodontics/', label: 'Orthodontic Treatment' },
+      { to: '/fixed-braces-malta/', label: 'Fixed Braces' },
+      { to: '/orthix-aligners/', label: 'Orthix (In-House Aligner)' },
+      { to: '/clearcorrect-malta/', label: 'ClearCorrect' },
+      { to: '/ordoline-aligners-malta/', label: 'Ordoline' },
+      { to: '/cristaline-aligners-malta/', label: 'Cristaline' },
+    ],
+  },
+  {
+    title: 'Preventive',
+    items: [
+      { to: '/general-dentistry/', label: 'General Dentistry' },
+      { to: '/dental-hygiene/', label: 'Dental Hygiene' },
+      { to: '/periodontology/', label: 'Periodontology' },
+    ],
+  },
+  {
+    title: 'Urgent Care',
+    items: [{ to: '/emergency-dental-service-malta/', label: 'Emergency Dentist' }],
+  },
+];
+
+// Header links, in the order the site has always shown them (Services sits after About).
+const NAV_BEFORE_SERVICES = [
+  { to: '/', label: 'Home' },
+  { to: '/about-us/', label: 'About' },
+];
+const NAV_AFTER_SERVICES = [
+  { to: '/price-list', label: 'Prices' },
+  { to: '/blog', label: 'Blog' },
+  { to: '/contact-us/', label: 'Contact' },
+];
+
+const samePath = (a, b) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
+
+function useScrolled(threshold = 8) {
+  const [scrolled, setScrolled] = useState(() => window.scrollY > threshold);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [threshold]);
+  return scrolled;
+}
+
+// Sticky header: navy on white, the existing links, the phone number and the primary action.
+// The menus remember the page they were opened on, so moving to another page closes them. The phone
+// menu's state lives in App, because the booking bar steps aside while it is open.
+function SiteHeader({ menuOpen, setMenuOpen }) {
+  const { pathname } = useLocation();
+  const scrolled = useScrolled();
+  const [servicesPath, setServicesPath] = useState(null);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const servicesButtonRef = React.useRef(null);
+  const servicesOpen = servicesPath === pathname;
 
   useEffect(() => {
-    function handleClickOutside() {
-      setServicesOpen(false);
-    }
-
-    if (servicesOpen) {
-      document.addEventListener('click', handleClickOutside);
-    }
-
+    if (!servicesOpen) return undefined;
+    const close = () => setServicesPath(null);
+    const onKey = (event) => {
+      if (event.key === 'Escape') {
+        setServicesPath(null);
+        if (servicesButtonRef.current) servicesButtonRef.current.focus();
+      }
+    };
+    document.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('click', close);
+      document.removeEventListener('keydown', onKey);
     };
   }, [servicesOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen, setMenuOpen]);
+
+  const closeAll = () => {
+    setMenuOpen(false);
+    setServicesPath(null);
+    setMobileServicesOpen(false);
+  };
+
+  const navLinkClass = (to) =>
+    `relative py-2 text-[15px] font-medium transition-colors ${
+      samePath(pathname, to)
+        ? 'text-navy-900 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-gold-400'
+        : 'text-navy-900/75 hover:text-navy-900'
+    }`;
+
+  const renderNavLink = (link) => (
+    <Link
+      key={link.to}
+      to={link.to}
+      onClick={closeAll}
+      aria-current={samePath(pathname, link.to) ? 'page' : undefined}
+      className={navLinkClass(link.to)}
+    >
+      {link.label}
+    </Link>
+  );
+
+  const mobileLinkBase = 'block rounded-xl px-3 py-3 text-base font-medium hover:bg-ivory';
+  const mobileLinkClass = `${mobileLinkBase} text-navy-900`;
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="rounded-full border border-white/15 bg-slate-950/70 backdrop-blur-2xl text-white px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-          <div className="flex items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-3 min-w-0">
-              <img
-                src={brand.logo}
-                alt="Apex Dental logo"
-                width={IMAGE_SIZES[brand.logo][0]}
-                height={IMAGE_SIZES[brand.logo][1]}
-                className="h-11 w-auto shrink-0"
-              />
-              <div className="hidden md:block min-w-0">
-                <div className="font-semibold tracking-wide">{brand.name}</div>
-                <div className="text-xs text-slate-300">{brand.tagline}</div>
-              </div>
-            </Link>
+    <header
+      className={`sticky top-0 z-50 border-b bg-white transition-shadow ${
+        scrolled ? 'border-navy-100 shadow-[0_6px_24px_-12px_rgba(15,33,64,0.25)]' : 'border-transparent'
+      }`}
+    >
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link to="/" onClick={closeAll} className="flex min-w-0 items-center gap-3">
+          <img
+            src={brand.logo}
+            alt="Apex Dental logo"
+            width={IMAGE_SIZES[brand.logo][0]}
+            height={IMAGE_SIZES[brand.logo][1]}
+            className="h-10 w-auto shrink-0"
+          />
+          <span className="hidden min-w-0 sm:block">
+            <span className="block font-semibold tracking-wide text-navy-900">{brand.name}</span>
+            <span className="block text-xs text-slate-600">{brand.tagline}</span>
+          </span>
+        </Link>
 
-            <nav className="hidden xl:flex items-center gap-7">
-              <Link
-                to="/"
-                className="text-sm font-medium text-slate-200 hover:text-white transition"
-              >
-                Home
-              </Link>
+        <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
+          {NAV_BEFORE_SERVICES.map(renderNavLink)}
 
-              <Link
-                to="/about-us/"
-                className="text-sm font-medium text-slate-200 hover:text-white transition"
-              >
-                About
-              </Link>
-
-              <div className="relative" onClick={(e) => e.stopPropagation()}>
-                <div className="flex items-center gap-2">
-                  <Link
-                    to="/services"
-                    className="text-sm font-medium text-slate-200 hover:text-white transition"
-                  >
-                    Services
-                  </Link>
-
-                  <button
-                    type="button"
-                    onClick={() => setServicesOpen((prev) => !prev)}
-                    className="text-slate-200 hover:text-white transition"
-                    aria-label="Open services menu"
-                  >
-                    <ChevronRight
-                      size={16}
-                      className={`transition ${servicesOpen ? 'rotate-90' : ''}`}
-                    />
-                  </button>
-                </div>
-
-                {servicesOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[960px] rounded-[2rem] border border-white/10 bg-slate-950/95 backdrop-blur-2xl p-8 shadow-2xl">
-                    <div className="grid grid-cols-5 gap-8">
-                      {serviceGroups.map((group) => (
-                        <div key={group.title}>
-                          <div className="text-xs uppercase tracking-[0.22em] text-amber-300 mb-4">
-                            {group.title}
-                          </div>
-                          <div className="flex flex-col gap-3">
-                            {group.items.map((item) => (
-                              <Link
-                                key={item.to}
-                                to={item.to}
-                                onClick={() => setServicesOpen(false)}
-                                className="text-sm text-slate-200 hover:text-white transition leading-6"
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <Link
-                to="/price-list"
-                className="text-sm font-medium text-slate-200 hover:text-white transition"
-              >
-                Prices
-              </Link>
-
-              <Link
-                to="/blog"
-                className="text-sm font-medium text-slate-200 hover:text-white transition"
-              >
-                Blog
-              </Link>
-
-              <Link
-                to="/contact-us/"
-                className="text-sm font-medium text-slate-200 hover:text-white transition"
-              >
-                Contact
-              </Link>
-
-              <a
-                href="/contact-us/#prepare"
-                className="text-sm font-medium text-amber-300 hover:text-amber-200 transition"
-              >
-                Prepare for your visit
-              </a>
-            </nav>
-
-            <div className="hidden xl:flex items-center gap-4">
-              <a
-                href={`tel:${brand.phone}`}
-                className="text-sm text-slate-200 hover:text-white transition"
-              >
-                {brand.phone}
-              </a>
-              <Button to="/appointment-booking" variant="gold">
-                Book Visit
-              </Button>
-            </div>
-
-            <button
-              onClick={() => setOpen(!open)}
-              className="xl:hidden text-white"
-              aria-label="Toggle menu"
+          <div className="relative flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+            <Link
+              to="/services"
+              onClick={closeAll}
+              aria-current={samePath(pathname, '/services') ? 'page' : undefined}
+              className={navLinkClass('/services')}
             >
-              {open ? <X size={24} /> : <Menu size={24} />}
+              Services
+            </Link>
+            <button
+              ref={servicesButtonRef}
+              type="button"
+              onClick={() => setServicesPath(servicesOpen ? null : pathname)}
+              aria-expanded={servicesOpen}
+              aria-controls="services-menu"
+              aria-label="Show all services"
+              className="rounded-full p-1 text-navy-900/75 hover:text-navy-900"
+            >
+              <ChevronDown
+                size={16}
+                aria-hidden="true"
+                className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`}
+              />
             </button>
-          </div>
-        </div>
 
-        {open && (
-          <div className="xl:hidden mt-3 rounded-3xl border border-white/10 bg-slate-950/95 backdrop-blur-2xl text-white p-5 shadow-2xl">
-            <div className="flex flex-col gap-4">
-              <Link
-                to="/"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
+            {servicesOpen && (
+              <div
+                id="services-menu"
+                className="absolute left-1/2 top-full mt-4 w-[min(60rem,calc(100vw-4rem))] -translate-x-1/2 rounded-2xl border border-navy-100 bg-white p-8 shadow-[0_24px_60px_-24px_rgba(15,33,64,0.35)]"
               >
-                Home
-              </Link>
-              <Link
-                to="/about-us/"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
-              >
-                About
-              </Link>
-
-              <Link
-                to="/services"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
-              >
-                Services
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="text-left text-slate-200 hover:text-white flex items-center justify-between"
-              >
-                <span>Browse Services</span>
-                <ChevronRight
-                  size={18}
-                  className={`transition ${mobileServicesOpen ? 'rotate-90' : ''}`}
-                />
-              </button>
-
-              {mobileServicesOpen && (
-                <div className="pl-4 flex flex-col gap-5 border-l border-white/10">
-                  {serviceGroups.map((group) => (
+                <div className="grid grid-cols-5 gap-8">
+                  {SERVICE_GROUPS.map((group) => (
                     <div key={group.title}>
-                      <div className="text-xs uppercase tracking-[0.22em] text-amber-300 mb-3">
+                      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold-700">
                         {group.title}
-                      </div>
-                      <div className="flex flex-col gap-2">
+                      </p>
+                      <ul className="flex flex-col gap-2.5">
                         {group.items.map((item) => (
-                          <Link
-                            key={item.to}
-                            to={item.to}
-                            onClick={() => {
-                              setOpen(false);
-                              setMobileServicesOpen(false);
-                            }}
-                            className="text-slate-300 hover:text-white text-sm"
-                          >
-                            {item.label}
-                          </Link>
+                          <li key={item.to}>
+                            <Link
+                              to={item.to}
+                              onClick={closeAll}
+                              className="text-sm leading-6 text-slate-700 hover:text-navy-900 hover:underline hover:decoration-gold-400 hover:underline-offset-4"
+                            >
+                              {item.label}
+                            </Link>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
                   ))}
                 </div>
-              )}
-
-              <Link
-                to="/price-list"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
-              >
-                Prices
-              </Link>
-              <Link
-                to="/blog"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
-              >
-                Blog
-              </Link>
-              <Link
-                to="/contact-us/"
-                onClick={() => setOpen(false)}
-                className="text-slate-200 hover:text-white"
-              >
-                Contact
-              </Link>
-
-              <a
-                href="/contact-us/#prepare"
-                onClick={() => setOpen(false)}
-                className="text-amber-300 hover:text-amber-200"
-              >
-                Prepare for your visit
-              </a>
-
-              <div className="pt-2 flex flex-col gap-3">
-                <a href={`tel:${brand.phone}`} className="text-slate-300">
-                  Call {brand.phone}
-                </a>
-                <Button to="/appointment-booking" variant="gold">
-                  Book Visit
-                </Button>
               </div>
+            )}
+          </div>
+
+          {NAV_AFTER_SERVICES.map(renderNavLink)}
+
+          <a href="/contact-us/#prepare" className="py-2 text-[15px] font-medium text-gold-700 hover:text-gold-800">
+            Prepare for your visit
+          </a>
+        </nav>
+
+        <div className="hidden items-center gap-5 xl:flex">
+          <a
+            href={`tel:${brand.phone}`}
+            className="inline-flex items-center gap-2 text-[15px] font-semibold text-navy-900 hover:text-navy-700"
+          >
+            <Phone size={16} aria-hidden="true" className="text-gold-700" />
+            {brand.phone}
+          </a>
+          <Button to="/appointment-booking/" variant="gold" className="px-5 py-3">
+            Request an appointment
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-1 xl:hidden">
+          <a
+            href={`tel:${brand.phone}`}
+            aria-label={`Call us on ${brand.phone}`}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-navy-900 hover:bg-ivory"
+          >
+            <Phone size={20} aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-navy-900 hover:bg-ivory"
+          >
+            {menuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+          </button>
+        </div>
+      </div>
+
+      {menuOpen && (
+        <div
+          aria-hidden="true"
+          onClick={closeAll}
+          className="fixed inset-x-0 bottom-0 top-[4.5rem] bg-navy-950/30 xl:hidden"
+        />
+      )}
+      {menuOpen && (
+        <nav
+          id="mobile-menu"
+          aria-label="Main"
+          className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-navy-100 bg-white shadow-[0_24px_40px_-24px_rgba(15,33,64,0.35)] xl:hidden"
+        >
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+            {NAV_BEFORE_SERVICES.map((link) => (
+              <Link key={link.to} to={link.to} onClick={closeAll} className={mobileLinkClass}>
+                {link.label}
+              </Link>
+            ))}
+            <Link to="/services" onClick={closeAll} className={mobileLinkClass}>
+              Services
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+              aria-expanded={mobileServicesOpen}
+              aria-controls="mobile-services"
+              className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-base font-medium text-navy-900 hover:bg-ivory"
+            >
+              <span>Browse services</span>
+              <ChevronDown
+                size={18}
+                aria-hidden="true"
+                className={`transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            {mobileServicesOpen && (
+              <div id="mobile-services" className="mb-2 ml-3 flex flex-col gap-5 border-l border-gold-200 py-2 pl-4">
+                {SERVICE_GROUPS.map((group) => (
+                  <div key={group.title}>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold-700">{group.title}</p>
+                    <ul className="flex flex-col">
+                      {group.items.map((item) => (
+                        <li key={item.to}>
+                          <Link to={item.to} onClick={closeAll} className="block py-2 text-[15px] text-slate-700 hover:text-navy-900">
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
+            {NAV_AFTER_SERVICES.map((link) => (
+              <Link key={link.to} to={link.to} onClick={closeAll} className={mobileLinkClass}>
+                {link.label}
+              </Link>
+            ))}
+            <a href="/contact-us/#prepare" onClick={closeAll} className={`${mobileLinkBase} text-gold-700`}>
+              Prepare for your visit
+            </a>
+            <div className="mt-3 flex flex-col gap-3 border-t border-navy-100 pt-4">
+              <Button to="/appointment-booking/" variant="gold" className="w-full py-4 text-base">
+                Request an appointment
+              </Button>
+              <a
+                href={`tel:${brand.phone}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-navy-200 px-6 py-3.5 text-base font-semibold text-navy-900"
+              >
+                <Phone size={18} aria-hidden="true" />
+                Call {brand.phone}
+              </a>
             </div>
           </div>
-        )}
-      </div>
+        </nav>
+      )}
     </header>
   );
 }
 
-function MobileStickyBar() {
+// Phones only: WhatsApp and Request appointment, always one thumb away. Steps aside while the
+// cookie banner is open, and while anything marked data-hide-booking-bar is on screen: the booking
+// and contact forms, and the homepage's own pair of these buttons (so they are never shown twice).
+// The page keeps bottom padding (App) so the bar never covers the last lines of content.
+function MobileStickyBar({ menuOpen }) {
+  const { pathname } = useLocation();
+  const [bannerOpen, setBannerOpen] = useState(() => !isCookieChoiceMade());
+  const [formInViewOn, setFormInViewOn] = useState(null);
+
+  useEffect(() => onCookieBannerChange(setBannerOpen), []);
+
+  useEffect(() => {
+    const targets = document.querySelectorAll('[data-hide-booking-bar]');
+    if (!targets.length || typeof window.IntersectionObserver !== 'function') return undefined;
+    const visible = new Set();
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      });
+      setFormInViewOn(visible.size ? pathname : null);
+    });
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  if (menuOpen || bannerOpen || formInViewOn === pathname) return null;
+
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 lg:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200 shadow-[0_-8px_30px_rgba(0,0,0,0.08)]">
-      <div className="grid grid-cols-3">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-navy-100 bg-white pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] shadow-[0_-8px_30px_-12px_rgba(15,33,64,0.25)] md:hidden">
+      <div className="grid grid-cols-2 gap-3">
         <a
-          href={`tel:${brand.phone}`}
-          className="flex flex-col items-center justify-center py-3 text-slate-900 font-semibold"
+          href={whatsappUrl}
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-navy-200 bg-white text-[15px] font-semibold text-navy-900"
         >
-          <Phone size={18} />
-          <span className="text-xs mt-1">Call</span>
+          <MessageCircle size={18} aria-hidden="true" />
+          WhatsApp
         </a>
-
-        <a
-          href={`https://wa.me/356${brand.whatsapp}`}
-          className="flex flex-col items-center justify-center py-3 text-slate-900 font-semibold border-l border-r border-slate-200"
-        >
-          <MessageCircle size={18} />
-          <span className="text-xs mt-1">WhatsApp</span>
-        </a>
-
         <Link
-          to="/contact-us/"
-          className="flex flex-col items-center justify-center py-3 text-slate-900 font-semibold"
+          to="/appointment-booking/"
+          className="inline-flex h-12 items-center justify-center rounded-full bg-gold-400 px-3 text-center text-[15px] font-semibold leading-tight text-navy-900"
         >
-          <ChevronRight size={18} />
-          <span className="text-xs mt-1">Book</span>
+          Request appointment
         </Link>
       </div>
     </div>
   );
 }
-
 
 function WhatsAppFloat() {
   const [showTooltip, setShowTooltip] = React.useState(true);
@@ -989,120 +1038,25 @@ function WhatsAppFloat() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <div className="hidden lg:block fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 hidden md:block">
       {showTooltip && (
-        <div className="absolute bottom-16 right-0 bg-slate-900 text-white text-sm px-4 py-2 rounded-2xl whitespace-nowrap shadow-lg mb-2">
+        <div className="absolute bottom-16 right-0 mb-2 whitespace-nowrap rounded-2xl bg-navy-900 px-4 py-2 text-sm text-white shadow-lg">
           Chat with us on WhatsApp
-          <div className="absolute bottom-[-6px] right-5 w-3 h-3 bg-slate-900 rotate-45" />
+          <div className="absolute bottom-[-6px] right-5 h-3 w-3 rotate-45 bg-navy-900" />
         </div>
       )}
       <a
-        href={`https://wa.me/356${brand.whatsapp}?text=Hi%20Apex%20Dental%2C%20I%20would%20like%20to%20book%20an%20appointment.`}
+        href={`${whatsappUrl}?text=Hi%20Apex%20Dental%2C%20I%20would%20like%20to%20book%20an%20appointment.`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-transform"
-        style={{ background: '#25D366' }}
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-navy-900 shadow-[0_12px_30px_-10px_rgba(15,33,64,0.6)] ring-1 ring-white/20 transition-colors hover:bg-navy-800"
         aria-label="Chat on WhatsApp"
       >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
       </a>
     </div>
-  );
-}
-
-
-function DarkHero({
-  image,
-  eyebrow,
-  title,
-  subtitle,
-  primaryCta = 'Book Appointment',
-  secondaryCta = 'WhatsApp Us',
-}) {
-  return (
-    <section className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
-      <img
-        src={image}
-        alt={typeof title === 'string' ? title : 'Apex Dental'}
-        fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover opacity-35"
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.14),transparent_30%)]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/50 to-slate-950" />
-
-      <div className="relative pt-32 pb-20 lg:pt-40 lg:pb-24">
-        <Section className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-slate-100 shadow-lg">
-              <ShieldCheck size={16} />
-              {eyebrow}
-            </div>
-
-            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-7xl font-semibold leading-[1.02] tracking-tight max-w-5xl">
-              {title}
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-lg md:text-xl text-slate-200 leading-8">
-              {subtitle}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button to="/contact-us/" variant="gold">
-                {primaryCta}
-              </Button>
-              <Button
-                to={`https://wa.me/356${brand.whatsapp}`}
-                variant="glass"
-                external
-              >
-                {secondaryCta}
-              </Button>
-            </div>
-
-            <div className="mt-10 grid sm:grid-cols-3 gap-4 max-w-3xl">
-              {[
-                ['Trident Park', 'Convenient Malta location'],
-                ['Modern Care', 'Digital dentistry approach'],
-                ['Patient First', 'Comfort, clarity, and quality'],
-              ].map(([head, text]) => (
-                <div
-                  key={head}
-                  className="rounded-3xl border border-white/10 bg-white/10 backdrop-blur-md p-5 shadow-xl"
-                >
-                  <div className="font-semibold text-white">{head}</div>
-                  <div className="text-sm text-slate-300 mt-2">{text}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-              <img
-                src={image}
-                alt={typeof title === 'string' ? title : 'Apex Dental'}
-                className="w-full h-[560px] object-cover"
-              />
-            </div>
-
-            <div className="absolute -bottom-6 -left-4 md:-left-6 rounded-[2rem] bg-white text-slate-900 p-6 shadow-2xl max-w-xs">
-              <div className="flex items-center gap-1 text-amber-500">
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-                <Star size={16} fill="currentColor" />
-              </div>
-              <p className="mt-3 text-sm leading-6 text-slate-600">
-                The staff were welcoming, the clinic is modern and clean. I felt comfortable and well cared for throughout. Highly recommended! — Sarah Jane
-              </p>
-            </div>
-          </div>
-        </Section>
-      </div>
-    </section>
   );
 }
 
@@ -1114,7 +1068,7 @@ function SplitEditorial({
   dark = false,
   reverse = false,
 }) {
-  const wrapper = dark ? 'bg-slate-950 text-white' : 'bg-[#f7f4ef] text-slate-900';
+  const wrapper = dark ? 'bg-navy-900 text-white' : 'bg-ivory text-navy-900';
   const textClass = dark ? 'text-slate-300' : 'text-slate-600';
   const pointClass = dark ? 'text-slate-200' : 'text-slate-700';
 
@@ -1156,8 +1110,8 @@ function SplitEditorial({
                     <BadgeCheck
                       className={
                         dark
-                          ? 'text-amber-300 mt-1 shrink-0'
-                          : 'text-sky-600 mt-1 shrink-0'
+                          ? 'text-gold-300 mt-1 shrink-0'
+                          : 'text-gold-700 mt-1 shrink-0'
                       }
                       size={20}
                     />
@@ -1173,313 +1127,13 @@ function SplitEditorial({
   );
 }
 
-function ServiceTiles() {
-  const services = [
-    {
-      title: 'Dental Implants',
-      text: 'Advanced tooth replacement planned for stability, function, and aesthetics.',
-      image: images.implants.I1,
-      to: '/dental-implants/',
-    },
-    {
-      title: 'Clear Aligners',
-      text: 'Discreet orthodontic treatment designed around modern lifestyles.',
-      image: images.aligners.A1,
-      to: '/invisalign-malta/',
-    },
-    {
-      title: 'Cosmetic Dentistry',
-      text: 'Veneers, smile design, and aesthetic treatments with refined results.',
-      image: images.cosmetic.C1,
-      to: '/cosmetic-dentistry-malta',
-    },
-  ];
-
-  return (
-    <section className="bg-white py-20">
-      <Section>
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
-              Signature Treatments
-            </div>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900">
-              Precision-led care with a stronger visual identity
-            </h2>
-          </div>
-
-          <Link
-            to="/contact-us/"
-            className="inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-slate-600 transition"
-          >
-            Book your consultation <ArrowUpRight size={18} />
-          </Link>
-        </div>
-
-        <div className="mt-12 grid lg:grid-cols-3 gap-8">
-          {services.map((service) => (
-            <Link
-              key={service.title}
-              to={service.to}
-              className="group rounded-[2rem] overflow-hidden bg-slate-950 text-white relative min-h-[520px] shadow-xl"
-            >
-              <LazyImg
-                src={service.image}
-                alt={service.title}
-                className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              <div className="relative p-8 h-full flex flex-col justify-end">
-                <div className="text-sm uppercase tracking-[0.25em] text-slate-300">
-                  Apex Dental
-                </div>
-                <h3 className="mt-3 text-3xl font-semibold">{service.title}</h3>
-                <p className="mt-4 text-slate-200 leading-7">{service.text}</p>
-                <div className="mt-6 inline-flex items-center gap-2 text-amber-300 font-medium">
-                  Explore treatment <ChevronRight size={18} />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </Section>
-    </section>
-  );
-}
-
-function HomeFeatureGrid() {
-  const features = [
-    {
-      title: 'Digital Workflows',
-      text: 'Modern diagnostics and planning designed for precision and predictability.',
-      icon: <ScanLine size={20} />,
-    },
-    {
-      title: 'Patient Comfort',
-      text: 'A calm, welcoming environment with careful attention to communication and reassurance.',
-      icon: <HeartHandshake size={20} />,
-    },
-    {
-      title: 'Premium Results',
-      text: 'Functional and aesthetic dentistry designed to look polished, natural, and refined.',
-      icon: <Sparkles size={20} />,
-    },
-  ];
-
-  return (
-    <section className="bg-[#f7f4ef]">
-      <Section className="py-20">
-        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
-          <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-            <LazyImg
-              src={images.home.H2}
-              alt="Apex Dental clinic interior"
-              className="w-full h-[560px] object-cover"
-            />
-          </div>
-
-          <div className="grid gap-8">
-            <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <LazyImg
-                src={images.home.H3}
-                alt="Apex Dental logo detail"
-                className="w-full h-[265px] object-cover"
-              />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <LazyImg
-                src={images.home.H4}
-                alt="Apex Dental reception or team desk"
-                className="w-full h-[265px] object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {features.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-[2rem] bg-white border border-slate-200 p-8 shadow-sm"
-            >
-              <div className="inline-flex items-center justify-center rounded-full bg-slate-950 text-white h-11 w-11">
-                {item.icon}
-              </div>
-              <h3 className="mt-5 text-xl font-semibold text-slate-900">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-slate-600 leading-7">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-    </section>
-  );
-}
-
-function HomeGallery() {
-  const gallery = [
-    images.home.H5,
-    images.home.H6,
-    images.home.H7,
-    images.home.H8,
-    images.home.H9,
-    images.home.H10,
-  ];
-
-  return (
-    <section className="bg-white py-20">
-      <Section>
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
-              Clinic Gallery
-            </div>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900">
-              A practice that looks as polished as the care it provides
-            </h2>
-          </div>
-          <p className="max-w-xl text-slate-600 leading-8 text-lg">
-            Use this section to showcase the clinic, treatment rooms, scanner,
-            reception, and key branded details.
-          </p>
-        </div>
-
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {gallery.map((img, index) => (
-            <div key={index} className="rounded-[2rem] overflow-hidden shadow-md group">
-              <LazyImg
-                src={img}
-                alt={`Apex Dental gallery ${index + 1}`}
-                className="w-full h-[300px] object-cover group-hover:scale-105 transition duration-700"
-              />
-            </div>
-          ))}
-        </div>
-      </Section>
-    </section>
-  );
-}
-
-function ReviewStrip() {
-  const fallbackReviews = [
-    {
-      name: 'Sarah Jane',
-      date: 'March 2025',
-      text: 'I had an excellent experience at Apex Dental Clinic. The staff were very welcoming from the moment I walked in, and the dentist explained everything clearly before starting the treatment. The clinic is clean, modern, and well-organized. I felt comfortable and well cared for throughout my visit. Highly recommended!',
-    },
-    {
-      name: 'Maime Eliot',
-      date: 'March 2025',
-      text: 'Apex Dental Clinic truly exceeded my expectations. I was quite nervous about my dental procedure, but the dentist and assistants were incredibly patient and reassuring. The treatment was painless and done very professionally. I am very happy with the results and will definitely come back for regular check-ups.',
-    },
-    {
-      name: 'Keith Pablo',
-      date: 'January 2025',
-      text: 'The team here is amazing! From the moment you walk in, the staff is incredibly friendly and welcoming, instantly making you feel at ease. I usually get very nervous about dental visits, but they are so patient and understanding. They take the time to ensure you feel calm and comfortable throughout. I highly recommend them!',
-    },
-  ];
-
-  const [live, setLive] = useState(null);
-  useEffect(() => {
-    let active = true;
-    fetch('/api/reviews')
-      .then((r) => r.json())
-      .then((d) => {
-        if (active && d && d.ok && Array.isArray(d.reviews) && d.reviews.length) setLive(d);
-      })
-      .catch(() => {});
-    return () => { active = false; };
-  }, []);
-
-  const displayReviews = live && live.reviews.length ? live.reviews : fallbackReviews;
-  // The rating and review count are shown only when /api/reviews has answered with Google's live
-  // figures - never a typed-in fallback number that can go stale.
-  const hasLiveRating = Boolean(live && typeof live.rating === 'number' && live.total);
-
-  return (
-    <section className="bg-slate-950 text-white py-20">
-      <Section>
-        <div className="rounded-[2.5rem] border border-white/10 bg-white/5 p-8 md:p-12">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
-            <div>
-              <div className="text-sm uppercase tracking-[0.25em] text-slate-400">Patient Reviews</div>
-              <h2 className="mt-4 text-3xl md:text-4xl font-semibold leading-tight">
-                What our patients say about Apex Dental
-              </h2>
-              <p className="mt-6 text-slate-300 leading-8">
-                Read more reviews on our Google Business Profile.
-              </p>
-              {hasLiveRating && (
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="flex items-center gap-1 text-amber-400" aria-hidden="true">
-                    {[1,2,3,4,5].map(i => (
-                      <Star key={i} size={18} fill={i <= Math.round(live.rating) ? 'currentColor' : 'none'} />
-                    ))}
-                  </div>
-                  <span className="text-white font-semibold text-lg">{live.rating.toFixed(1)}</span>
-                  <span className="text-slate-400 text-sm">{live.total} Google Reviews</span>
-                </div>
-              )}
-              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <a
-                  href={brand.googleMaps}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-semibold text-sm transition"
-                >
-                  Read all reviews on Google
-                  <ArrowUpRight size={16} />
-                </a>
-                <a
-                  href={brand.googleMaps}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-white/90 hover:text-white font-semibold text-sm transition"
-                >
-                  Leave us a review
-                  <ArrowUpRight size={16} />
-                </a>
-              </div>
-            </div>
-            <div className="grid gap-4">
-              {displayReviews.map((review) => (
-                <div key={review.name} className="rounded-[1.5rem] bg-white text-slate-900 p-6 shadow-xl">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">{review.name[0]}</span>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-slate-900 text-sm">{review.name}</div>
-                        <div className="text-slate-400 text-xs">{review.date}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-0.5 text-amber-500">
-                      {[1,2,3,4,5].map(i => (
-                        <Star key={i} size={13} fill={i <= (review.rating || 5) ? 'currentColor' : 'none'} />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-600">{review.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-    </section>
-  );
-}
-
-
 function CTASection({ dark = false, title, text }) {
   return (
     <section
       className={
         dark
-          ? 'bg-slate-950 text-white py-20'
-          : 'bg-[#f7f4ef] text-slate-900 py-20'
+          ? 'bg-navy-900 text-white py-20'
+          : 'bg-ivory text-navy-900 py-20'
       }
     >
       <Section>
@@ -1526,7 +1180,7 @@ function CTASection({ dark = false, title, text }) {
 
 function FAQSection({ faqs, dark = false }) {
   const [open, setOpen] = React.useState(null);
-  const bg = dark ? 'bg-slate-950 text-white' : 'bg-[#f7f4ef] text-slate-900';
+  const bg = dark ? 'bg-navy-900 text-white' : 'bg-ivory text-navy-900';
   const itemBg = dark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200';
   const textColor = dark ? 'text-slate-300' : 'text-slate-600';
   return (
@@ -1562,9 +1216,9 @@ function FAQSection({ faqs, dark = false }) {
 }
 
 function ProcessSteps({ steps, dark = false }) {
-  const bg = dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900';
-  const stepBg = dark ? 'bg-white/5 border-white/10' : 'bg-[#f7f4ef] border-slate-200';
-  const numColor = dark ? 'text-amber-300' : 'text-sky-600';
+  const bg = dark ? 'bg-navy-900 text-white' : 'bg-white text-navy-900';
+  const stepBg = dark ? 'bg-white/5 border-white/10' : 'bg-ivory border-slate-200';
+  const numColor = dark ? 'text-gold-300' : 'text-gold-700';
   return (
     <section className={bg}>
       <Section className="py-20">
@@ -1595,7 +1249,7 @@ function PricingHint({ items, note }) {
         <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Pricing Guide</div>
         <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
           <div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-semibold text-navy-900 leading-tight mb-6">
               Transparent pricing — no surprises
             </h2>
             <p className="text-slate-600 leading-8 mb-8">{note}</p>
@@ -1605,7 +1259,7 @@ function PricingHint({ items, note }) {
             {items.map((item, i) => (
               <div key={i} className="flex items-center justify-between py-4 border-b border-slate-100">
                 <span className="text-slate-700 font-medium">{item.label}</span>
-                <span className="text-slate-900 font-semibold">{item.price}</span>
+                <span className="text-navy-900 font-semibold">{item.price}</span>
               </div>
             ))}
           </div>
@@ -1615,18 +1269,152 @@ function PricingHint({ items, note }) {
   );
 }
 
+// Both clinics, as the contact page describes them. Read by the homepage and the footer.
+const CLINICS = [
+  {
+    key: 'trident',
+    name: 'Trident Park',
+    tag: 'Main clinic',
+    address: brand.address,
+    note: null,
+    hours: CLINIC_HOURS.trident,
+    sunday: 'For Sunday emergencies call or WhatsApp us directly.',
+    map: brand.googleMaps,
+  },
+  {
+    key: 'stannes',
+    name: brand.stAnnesName,
+    tag: 'Level 3',
+    address: brand.addressStAnnes,
+    note: 'An independent Apex Dental practice on Level 3.',
+    hours: CLINIC_HOURS.stannes,
+    sunday: 'For Sunday emergencies please contact Trident Park.',
+    map: brand.googleMapsStAnnes,
+  },
+];
+
+const FOOTER_TREATMENT_LINKS = [
+  { to: '/dental-implants/', label: 'Dental Implants' },
+  { to: '/invisalign-malta/', label: 'Clear Aligners' },
+  { to: '/cosmetic-dentistry-malta', label: 'Cosmetic Dentistry' },
+  { to: '/general-dentistry/', label: 'General Dentistry' },
+  { to: '/dental-hygiene/', label: 'Dental Hygiene' },
+  { to: '/veneers/', label: 'Veneers' },
+  { to: '/teeth-whitening/', label: 'Teeth Whitening' },
+  { to: '/crowns-and-bridgework/', label: 'Crowns & Bridgework' },
+  { to: '/periodontology/', label: 'Periodontology' },
+  { to: '/orthodontics/', label: 'Orthodontic Treatment' },
+  { to: '/dental-prosthetics/', label: 'Dental Prosthetics' },
+  { to: '/removable-prosthesis/', label: 'Removable Prosthesis' },
+  { to: '/root-canal-treatment/', label: 'Root Canal Treatment' },
+  { to: '/emergency-dental-service-malta/', label: 'Emergency Dentist' },
+];
+
+const FOOTER_PRACTICE_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/about-us/', label: 'About' },
+  { to: '/blog/', label: 'Blog' },
+  { to: '/appointment-booking/', label: 'Appointment Booking' },
+  { to: '/price-list/', label: 'Price List' },
+  { to: '/contact-us/', label: 'Contact' },
+];
+
 function Footer() {
+  const headingClass = 'font-sans text-xs font-semibold uppercase tracking-[0.18em] text-gold-300';
+  const linkClass = 'text-slate-300 hover:text-white hover:underline hover:underline-offset-4';
+
   return (
-    <footer className="bg-slate-950 text-white">
-      <Section className="py-16 grid md:grid-cols-3 gap-10">
-        <div>
-          <h3 className="text-2xl font-semibold">{brand.name}</h3>
-          <p className="mt-4 text-slate-300 leading-7">
-            Premium dental care in Malta with a focus on advanced restorative
-            treatment, clear aligners, cosmetic dentistry, and a modern patient
-            experience.
+    <footer className="on-dark bg-navy-950 text-slate-300">
+      <Section className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-10 lg:py-20">
+        <div className="lg:col-span-4">
+          <p className="font-display text-2xl text-white">{brand.name}</p>
+          <p className="mt-4 max-w-sm leading-7">
+            Premium dental care in Malta with a focus on advanced restorative treatment, clear
+            aligners, cosmetic dentistry, and a modern patient experience.
           </p>
-          <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-300">
+          <ul className="mt-6 space-y-2">
+            <li>
+              <a href={`tel:${brand.phone}`} className={linkClass}>
+                Tel: {brand.phone}
+              </a>
+            </li>
+            <li>
+              <a href={whatsappUrl} className={linkClass}>
+                WhatsApp: {brand.whatsapp}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${brand.email}`} className={linkClass}>
+                {brand.email}
+              </a>
+            </li>
+            <li>
+              <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                Find us on Google Maps &amp; read our reviews
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {CLINICS.map((clinic) => (
+          <div key={clinic.key} className="lg:col-span-4">
+            <h2 className={headingClass}>
+              {clinic.key === 'trident' ? 'Trident Park — main clinic' : clinic.name}
+            </h2>
+            <p className="mt-4 leading-7">{clinic.address}</p>
+            {clinic.note && <p className="mt-1 text-sm text-slate-400">{clinic.note}</p>}
+            <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+              {clinic.hours.map(([day, time]) => (
+                <React.Fragment key={day}>
+                  <dt className="text-slate-400">{day}</dt>
+                  <dd className="text-slate-200">{time}</dd>
+                </React.Fragment>
+              ))}
+            </dl>
+            <a
+              href={clinic.map}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 hover:text-gold-200"
+            >
+              Get directions
+              <ArrowUpRight size={15} aria-hidden="true" />
+              <span className="sr-only">to {clinic.key === 'trident' ? 'Trident Park' : clinic.name} (opens Google Maps)</span>
+            </a>
+          </div>
+        ))}
+
+        <nav aria-label="Practice" className="lg:col-span-4">
+          <h2 className={headingClass}>Practice</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
+            {FOOTER_PRACTICE_LINKS.map((link) => (
+              <li key={link.to}>
+                <Link to={link.to} className={linkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Treatments" className="md:col-span-2 lg:col-span-8">
+          <h2 className={headingClass}>Treatments</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 sm:grid-cols-3">
+            {FOOTER_TREATMENT_LINKS.map((link) => (
+              <li key={link.to}>
+                <Link to={link.to} className={linkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Section>
+
+      <div className="border-t border-white/10">
+        <Section className="flex flex-col gap-4 py-6 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Apex Dental Malta. All rights reserved.</p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link to="/privacy-policy" className="hover:text-white">
               Privacy Policy
             </Link>
@@ -1637,80 +1425,6 @@ function Footer() {
               Cookie settings
             </button>
           </div>
-        </div>
-
-        <div>
-          <h4 className="font-semibold text-lg">Quick Links</h4>
-          <div className="mt-4 flex flex-col gap-3 text-slate-300">
-            <Link to="/">Home</Link>
-            <Link to="/about-us/">About</Link>
-            <Link to="/dental-implants/">Dental Implants</Link>
-            <Link to="/invisalign-malta/">Clear Aligners</Link>
-            <Link to="/cosmetic-dentistry-malta">Cosmetic Dentistry</Link>
-            <Link to="/general-dentistry/">General Dentistry</Link>
-            <Link to="/dental-hygiene/">Dental Hygiene</Link>
-            <Link to="/veneers/">Veneers</Link>
-            <Link to="/teeth-whitening/">Teeth Whitening</Link>
-            <Link to="/crowns-and-bridgework/">Crowns & Bridgework</Link>
-            <Link to="/periodontology/">Periodontology</Link>
-            <Link to="/orthodontics/">Orthodontic Treatment</Link>
-            <Link to="/dental-prosthetics/">Dental Prosthetics</Link>
-            <Link to="/removable-prosthesis/">Removable Prosthesis</Link>
-            <Link to="/root-canal-treatment/">Root Canal Treatment</Link>
-            <Link to="/emergency-dental-service-malta/">Emergency Dentist</Link>
-            <Link to="/blog/">Blog</Link>
-            <Link to="/appointment-booking/">Appointment Booking</Link>
-            <Link to="/price-list/">Price List</Link>
-            <Link to="/contact-us/">Contact</Link>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="font-semibold text-lg">Contact</h4>
-          <div className="mt-4 space-y-3 text-slate-300">
-            <p>{brand.address}</p>
-            <p>
-              <a href={`tel:${brand.phone}`} className="hover:text-white">
-                Tel: {brand.phone}
-              </a>
-            </p>
-            <p>
-              <a
-                href={`https://wa.me/356${brand.whatsapp}`}
-                className="hover:text-white"
-              >
-                WhatsApp: {brand.whatsapp}
-              </a>
-            </p>
-            <p>
-              <a href={`mailto:${brand.email}`} className="hover:text-white">
-                {brand.email}
-              </a>
-            </p>
-            <p className="mt-4">
-              <a href={brand.googleMaps} target="_blank" rel="noopener noreferrer" className="hover:text-white inline-flex items-center gap-2">
-                Find us on Google Maps &amp; read our reviews
-              </a>
-            </p>
-                <p className="mt-4 pt-4 border-t border-slate-800">
-                  <span className="block text-slate-200 font-medium">{brand.stAnnesName}</span>
-                  <span className="block">{brand.addressStAnnes}</span>
-                  <a
-                    href={brand.googleMapsStAnnes}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white"
-                  >
-                    Get directions
-                  </a>
-                </p>
-          </div>
-        </div>
-      </Section>
-
-      <div className="border-t border-slate-800">
-        <Section className="py-5 text-sm text-slate-400">
-          © {new Date().getFullYear()} Apex Dental Malta. All rights reserved.
         </Section>
       </div>
     </footer>
@@ -1719,14 +1433,14 @@ function Footer() {
 
 function PageHero({ image, eyebrow, title, subtitle }) {
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white pt-32 pb-20">
+    <section className="relative overflow-hidden bg-navy-900 text-white pt-16 md:pt-20 pb-20">
       <img
         src={image}
         alt={title}
         fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover opacity-35"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950" />
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-900/30 via-navy-900/60 to-navy-900" />
       <Section className="relative">
         <div className="max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-slate-100">
@@ -1748,11 +1462,551 @@ function PageHero({ image, eyebrow, title, subtitle }) {
 function TextPanel({ title, text }) {
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl font-semibold text-slate-900 leading-tight">
+      <h2 className="text-2xl md:text-4xl font-semibold text-navy-900 leading-tight">
         {title}
       </h2>
       <p className="mt-5 text-slate-600 text-lg leading-8">{text}</p>
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Homepage ("Calm premium", 15 Oct 2026). Every word, fact, price and photo below is already on
+// the site; the sections only reorder and restyle them.
+// ---------------------------------------------------------------------------------------------
+
+const eyebrowClass = 'text-xs font-semibold uppercase tracking-[0.2em] text-gold-700';
+const sectionTitleClass = 'mt-4 font-display text-3xl leading-tight text-navy-900 sm:text-4xl lg:text-[2.75rem]';
+
+function SectionIntro({ eyebrow, title, children, className = '' }) {
+  return (
+    <div className={`max-w-2xl ${className}`}>
+      <p className={eyebrowClass}>{eyebrow}</p>
+      <h2 className={sectionTitleClass}>{title}</h2>
+      {children && <p className="mt-5 text-lg leading-8 text-slate-600">{children}</p>}
+    </div>
+  );
+}
+
+function HomeHero() {
+  const [width, height] = IMAGE_SIZES[images.home.H2];
+  return (
+    <section className="bg-white">
+      <Section className="pb-14 pt-10 sm:pt-14 lg:pb-20 lg:pt-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
+          <div>
+            <p className={eyebrowClass}>Premium dental care in Malta</p>
+            <h1 className="mt-5 font-display text-[2.375rem] leading-[1.1] text-navy-900 sm:text-5xl sm:leading-[1.08] xl:text-[3.5rem]">
+              <span className="block">Healthy teeth.</span>{' '}
+              <span className="block">Honest dentistry.</span>{' '}
+              <span className="block text-balance">A clinic you will go back to.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+              At Apex Dental you will find implant surgery, cosmetic and everyday dentistry, and clear
+              aligners under one roof at Trident Park, with digital scanning and planning rather than
+              the old putty impressions.
+            </p>
+            <div data-hide-booking-bar className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button to="/appointment-booking/" variant="gold" className="px-7 py-4 text-base">
+                Request an appointment
+              </Button>
+              <Button to={whatsappUrl} variant="outline" external className="px-7 py-4 text-base">
+                <MessageCircle size={18} aria-hidden="true" />
+                WhatsApp us
+              </Button>
+            </div>
+            <p className="mt-5 text-[15px] text-slate-600">
+              Or call{' '}
+              <a
+                href={`tel:${brand.phone}`}
+                className="font-semibold text-navy-900 underline decoration-gold-400 decoration-2 underline-offset-4 hover:decoration-navy-900"
+              >
+                {brand.phone}
+              </a>
+            </p>
+          </div>
+
+          <img
+            src={images.home.H2}
+            srcSet={`${images.home.H2_1280} 1280w, ${images.home.H2} 1920w`}
+            sizes="(min-width: 1024px) 52vw, 100vw"
+            width={width}
+            height={height}
+            fetchPriority="high"
+            alt="A dentist and dental assistant treating a patient at Apex Dental"
+            className="aspect-[4/3] w-full rounded-3xl object-cover object-[38%_50%] shadow-[0_30px_60px_-30px_rgba(15,33,64,0.45)] lg:aspect-[6/5]"
+          />
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+const TRUST_FACTS = [
+  {
+    icon: MapPin,
+    title: 'Two clinics in Birkirkara',
+    text: 'Trident Park, Mrieħel, and St Anne’s Clinic, Level 3',
+  },
+  {
+    icon: Stethoscope,
+    title: 'Six dentists',
+    text: 'Routine care, cosmetic work, gum treatment and implant surgery',
+  },
+  {
+    icon: Languages,
+    title: 'Four languages',
+    text: 'Consultations in English, Italian, Spanish or Polish',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Straumann implants',
+    text: 'Swiss-made, research-led implant system',
+  },
+];
+
+function TrustStrip() {
+  return (
+    <section aria-label="Apex Dental at a glance" className="border-y border-ivory-200 bg-ivory">
+      <Section className="py-10 lg:py-12">
+        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          {TRUST_FACTS.map((fact) => {
+            const Icon = fact.icon;
+            return (
+              <li key={fact.title} className="flex items-start gap-4">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-gold-700 ring-1 ring-ivory-200">
+                  <Icon size={20} aria-hidden="true" />
+                </span>
+                <span>
+                  <span className="block font-semibold text-navy-900">{fact.title}</span>
+                  <span className="mt-1 block text-[15px] leading-6 text-slate-600">{fact.text}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+    </section>
+  );
+}
+
+const HOME_TREATMENTS = [
+  {
+    title: 'Dental Implants',
+    to: '/dental-implants/',
+    text: 'From a single missing tooth to a full arch on implants, planned and placed in-house.',
+    image: images.implants.I3,
+    alt: 'A Straumann BLX implant shown with its abutment and crown',
+  },
+  {
+    title: 'All-on-4 Implants',
+    to: '/all-on-4-malta/',
+    text: 'A full set of fixed teeth on four implants, planned and placed by Dr Jonathan Mifsud.',
+    image: images.implants.I4,
+    alt: 'A Straumann BLX implant',
+  },
+  {
+    title: 'Clear Aligners',
+    to: '/invisalign-malta/',
+    text: 'Clear, removable trays that straighten teeth without the metal of fixed braces.',
+    image: images.aligners.A1,
+    alt: 'A smiling woman holding a clear aligner',
+  },
+  {
+    title: 'Cosmetic Dentistry',
+    to: '/cosmetic-dentistry-malta',
+    text: 'Whitening, veneers and bonding to improve a smile without making it look done.',
+    image: images.cosmetic.C3,
+    alt: 'A close-up of a smile',
+  },
+  {
+    title: 'General Dentistry',
+    to: '/general-dentistry/',
+    text: 'Check-ups, fillings and the everyday care most visits are about.',
+    image: images.home.H7,
+    alt: 'A treatment room at Apex Dental',
+  },
+];
+
+function TreatmentsOverview() {
+  return (
+    <section className="bg-white">
+      <Section className="py-20 lg:py-28">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <SectionIntro eyebrow="Treatments" title="Everything we treat, in one place">
+            From routine check-ups to implants, cosmetic work, aligners and emergencies.
+          </SectionIntro>
+          <Link
+            to="/services/"
+            className="inline-flex items-center gap-2 self-start font-semibold text-navy-900 underline decoration-gold-400 decoration-2 underline-offset-[6px] hover:decoration-navy-900 lg:self-auto"
+          >
+            See all services <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+
+        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {HOME_TREATMENTS.map((item) => (
+            <li key={item.to}>
+              <Link
+                to={item.to}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-[0_1px_2px_rgba(15,33,64,0.06)] transition-shadow duration-300 hover:shadow-[0_18px_40px_-18px_rgba(15,33,64,0.35)]"
+              >
+                <div className="aspect-[3/2] overflow-hidden bg-ivory-100">
+                  <LazyImg
+                    src={item.image}
+                    alt={item.alt}
+                    className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="font-display text-2xl text-navy-900">{item.title}</h3>
+                  <p className="mt-3 flex-1 leading-7 text-slate-600">{item.text}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-navy-900">
+                    Explore treatment
+                    <ArrowRight
+                      size={16}
+                      aria-hidden="true"
+                      className="text-gold-700 transition-transform motion-safe:group-hover:translate-x-1"
+                    />
+                  </span>
+                </div>
+              </Link>
+            </li>
+          ))}
+
+          <li>
+            <div className="on-dark flex h-full flex-col rounded-2xl bg-navy-900 p-6 text-white sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-300">Urgent care</p>
+              <h3 className="mt-3 font-display text-2xl">Emergency Dentist</h3>
+              <p className="mt-3 leading-7 text-slate-300">
+                Prompt help for toothache, swelling, broken teeth and knocks to the mouth.
+              </p>
+              <p className="mt-4 flex items-start gap-3 leading-7 text-slate-200">
+                <Clock3 size={18} aria-hidden="true" className="mt-1 shrink-0 text-gold-300" />
+                Open Sunday 9:00 to 12:00 for emergencies at Trident Park.
+              </p>
+              <div className="mt-auto flex flex-col gap-3 pt-6">
+                <Button to={`tel:${brand.phone}`} variant="gold" external>
+                  <Phone size={16} aria-hidden="true" />
+                  Call {brand.phone}
+                </Button>
+                <Link
+                  to="/emergency-dental-service-malta/"
+                  className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white hover:text-gold-200"
+                >
+                  About emergency care <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </Section>
+    </section>
+  );
+}
+
+const EXTRA_LANGUAGE = { PL: 'Polish', IT: 'Italian', ES: 'Spanish' };
+
+function initialsOf(name) {
+  const parts = name.replace(/^Dr\.?\s+/, '').split(/\s+/);
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
+function TeamSection() {
+  return (
+    <section className="bg-ivory">
+      <Section className="py-20 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div>
+            <SectionIntro eyebrow="Our dentists" title="Six dentists, four languages spoken">
+              Plenty of people put off the dentist because the last place they went felt rushed or cold.
+              We have tried to build the opposite — a calm space, modern equipment, and dentists who
+              explain things instead of talking over your head.
+            </SectionIntro>
+            <div className="mt-8 overflow-hidden rounded-2xl">
+              <LazyImg
+                src={images.home.H9}
+                alt="The reception area at Apex Dental"
+                className="aspect-[4/3] h-full w-full object-cover"
+              />
+            </div>
+            <Link
+              to="/about-us/"
+              className="mt-8 inline-flex items-center gap-2 font-semibold text-navy-900 underline decoration-gold-400 decoration-2 underline-offset-[6px] hover:decoration-navy-900"
+            >
+              Meet the team <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <ul className="grid content-start gap-4 sm:grid-cols-2">
+            {team.map((doctor) => (
+              <li key={doctor.name} className="rounded-2xl border border-ivory-200 bg-white p-6">
+                <div className="flex items-center gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy-900 font-display text-lg text-white"
+                  >
+                    {initialsOf(doctor.name)}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="font-semibold leading-snug text-navy-900">{doctor.name}</h3>
+                    <p className="mt-0.5 text-sm text-slate-600">{doctor.role}</p>
+                  </div>
+                </div>
+                {doctor.flag && EXTRA_LANGUAGE[doctor.flag] && (
+                  <p className="mt-4 inline-flex rounded-full bg-ivory-100 px-3 py-1 text-sm text-navy-900">
+                    Consultations also in {EXTRA_LANGUAGE[doctor.flag]}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+function ClinicsSection() {
+  return (
+    <section className="bg-white">
+      <Section className="py-20 lg:py-28">
+        <SectionIntro eyebrow="Our clinics" title="Two clinics in Birkirkara" />
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {CLINICS.map((clinic) => (
+            <article key={clinic.key} className="flex flex-col rounded-2xl border border-navy-100 bg-white p-6 sm:p-8">
+              <div className="flex flex-wrap items-center gap-3">
+                <h3 className="font-display text-2xl text-navy-900">{clinic.name}</h3>
+                <span className="rounded-full bg-ivory-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-gold-700">
+                  {clinic.tag}
+                </span>
+              </div>
+              <p className="mt-4 flex items-start gap-3 leading-7 text-slate-700">
+                <MapPin size={18} aria-hidden="true" className="mt-1 shrink-0 text-gold-700" />
+                <span>
+                  {clinic.address}
+                  {clinic.note && <span className="block text-[15px] text-slate-600">{clinic.note}</span>}
+                </span>
+              </p>
+              <div className="mt-5 flex items-start gap-3">
+                <Clock3 size={18} aria-hidden="true" className="mt-1 shrink-0 text-gold-700" />
+                <div className="min-w-0 flex-1">
+                  <h4 className="sr-only">Opening hours</h4>
+                  <dl className="grid grid-cols-1 gap-y-1 text-[15px] leading-7 sm:grid-cols-[10rem_1fr]">
+                    {clinic.hours.map(([day, time]) => (
+                      <React.Fragment key={day}>
+                        <dt className="font-medium text-navy-900">{day}</dt>
+                        <dd className="mb-1 text-slate-600 sm:mb-0">{time}</dd>
+                      </React.Fragment>
+                    ))}
+                  </dl>
+                  <p className="mt-2 text-[15px] text-slate-600">{clinic.sunday}</p>
+                </div>
+              </div>
+              <div className="mt-auto pt-6">
+                <a
+                  href={clinic.map}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-navy-200 px-5 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-navy-900 hover:bg-ivory"
+                >
+                  Open in Google Maps
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+// Live Google reviews only (api/reviews.js). Nothing is shown in their place while they load, and
+// if the API is not answering, the section simply links to Google - no typed-in testimonials.
+function GoogleReviews() {
+  const [reviews, setReviews] = useState({ status: 'loading' });
+
+  useEffect(() => {
+    let active = true;
+    fetch('/api/reviews')
+      .then((r) => r.json())
+      .then((d) => {
+        if (!active) return;
+        if (d && d.ok && Array.isArray(d.reviews) && d.reviews.length) setReviews({ status: 'live', data: d });
+        else setReviews({ status: 'none' });
+      })
+      .catch(() => {
+        if (active) setReviews({ status: 'none' });
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const live = reviews.status === 'live' ? reviews.data : null;
+  const hasLiveRating = Boolean(live && typeof live.rating === 'number' && live.total);
+
+  return (
+    <section className="bg-ivory">
+      <Section className="py-20 lg:py-28">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <SectionIntro eyebrow="Patient reviews" title="What our patients say about Apex Dental" />
+          {hasLiveRating && (
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-0.5 text-gold-600" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} size={18} fill={i <= Math.round(live.rating) ? 'currentColor' : 'none'} />
+                ))}
+              </span>
+              <span className="text-2xl font-semibold tabular-nums text-navy-900">{live.rating.toFixed(1)}</span>
+              <span className="text-[15px] text-slate-600">from {live.total} Google reviews</span>
+            </div>
+          )}
+        </div>
+
+        <div role="status" aria-live="polite" className="sr-only">
+          {reviews.status === 'loading' ? 'Loading reviews from Google' : ''}
+        </div>
+
+        {reviews.status === 'loading' && (
+          <ul aria-hidden="true" className="mt-12 grid gap-6 md:grid-cols-3">
+            {[0, 1, 2].map((i) => (
+              <li key={i} className="h-56 rounded-2xl border border-ivory-200 bg-white/70 motion-safe:animate-pulse" />
+            ))}
+          </ul>
+        )}
+
+        {live && (
+          <ul className="mt-12 grid gap-6 md:grid-cols-3">
+            {live.reviews.slice(0, 3).map((review, i) => (
+              <li key={`${review.name}-${i}`}>
+                <figure className="flex h-full flex-col rounded-2xl border border-ivory-200 bg-white p-6">
+                  <span className="flex items-center gap-0.5 text-gold-600" aria-hidden="true">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} size={15} fill={s <= (review.rating || 5) ? 'currentColor' : 'none'} />
+                    ))}
+                  </span>
+                  <span className="sr-only">Rated {review.rating || 5} out of 5</span>
+                  <blockquote className="mt-4 flex-1 leading-7 text-slate-700">
+                    <p className="line-clamp-6">{review.text}</p>
+                  </blockquote>
+                  <figcaption className="mt-5 border-t border-ivory-200 pt-4">
+                    <span className="block font-semibold text-navy-900">{review.name}</span>
+                    {review.date && <span className="block text-sm text-slate-600">{review.date} · Google review</span>}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {reviews.status !== 'loading' && (
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+            {!live && (
+              <p className="w-full text-lg leading-8 text-slate-600">
+                Read more reviews on our Google Business Profile.
+              </p>
+            )}
+            <a
+              href={brand.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-semibold text-navy-900 underline decoration-gold-400 decoration-2 underline-offset-[6px] hover:decoration-navy-900"
+            >
+              Read all reviews on Google <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+            <a
+              href={brand.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-semibold text-navy-900 hover:text-navy-700"
+            >
+              Leave us a review <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
+        )}
+      </Section>
+    </section>
+  );
+}
+
+// Fees shown on the homepage, picked by name from the price list itself (src/data/priceList.js),
+// so they can never disagree with /price-list/.
+const PRICE_TEASER_ITEMS = [
+  'Routine Checkup',
+  'Routine Hygiene Session',
+  'Implant Complete with Crown',
+  'Toronto Bridge All on 4',
+];
+
+function PriceTeaser() {
+  const all = priceSections.flatMap((section) => section.items);
+  const items = PRICE_TEASER_ITEMS.map((name) => all.find((item) => item.name === name)).filter(Boolean);
+
+  return (
+    <section className="bg-white">
+      <Section className="py-20 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div>
+            <SectionIntro eyebrow="Pricing guide" title="Transparent pricing — no surprises">
+              Use the price list as a guide, then book a consultation so Apex Dental can assess your case
+              properly and confirm the most suitable treatment plan.
+            </SectionIntro>
+            <Button to="/price-list/" variant="dark" className="mt-8">
+              View the full price list
+            </Button>
+          </div>
+
+          <dl className="divide-y divide-navy-100 border-y border-navy-100">
+            {items.map((item) => (
+              <div key={item.name} className="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                <dt className="min-w-0">
+                  <span className="block font-semibold text-navy-900">{item.name}</span>
+                  {item.note && <span className="mt-1 block text-[15px] leading-6 text-slate-600">{item.note}</span>}
+                </dt>
+                <dd className="shrink-0 text-xl font-semibold tabular-nums text-navy-900">{item.price}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </Section>
+    </section>
+  );
+}
+
+function FinalCallToAction() {
+  return (
+    <section className="bg-ivory">
+      <Section className="py-16 lg:py-24">
+        <div className="on-dark rounded-3xl bg-navy-900 px-6 py-12 text-white sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-16 lg:py-16">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-3xl leading-tight sm:text-4xl">Ready to visit Apex Dental?</h2>
+            <p className="mt-4 text-lg leading-8 text-slate-300">
+              Book a visit for implants, clear aligners, cosmetic or everyday dental care, or an
+              emergency. Tell us what you need and we will point you to the right starting point.
+            </p>
+          </div>
+          <div data-hide-booking-bar className="mt-8 flex shrink-0 flex-col gap-3 sm:flex-row lg:mt-0 lg:flex-col">
+            <Button to="/appointment-booking/" variant="gold" className="px-7 py-4 text-base">
+              Request an appointment
+            </Button>
+            <Button to={whatsappUrl} variant="glass" external className="px-7 py-4 text-base">
+              <MessageCircle size={18} aria-hidden="true" />
+              WhatsApp us
+            </Button>
+            <a
+              href={`tel:${brand.phone}`}
+              className="py-2 text-center text-[15px] font-semibold text-slate-200 hover:text-white"
+            >
+              Or call {brand.phone}
+            </a>
+          </div>
+        </div>
+      </Section>
+    </section>
   );
 }
 
@@ -1767,43 +2021,14 @@ function HomePage() {
         canonical={`${siteUrl}/`}
         schema={localBusinessSchema(`${siteUrl}/`)}
       />
-      <DarkHero
-        image={images.home.H1}
-        eyebrow="Premium dental care in Malta"
-        title={
-          <>
-            Healthy teeth.
-            <br />
-            Honest dentistry.
-            <br />
-            A clinic you will go back to.
-          </>
-        }
-        subtitle="At Apex Dental you will find implant surgery, cosmetic and everyday dentistry, and clear aligners under one roof at Trident Park, with digital scanning and planning rather than the old putty impressions."
-      />
-
-      <HomeFeatureGrid />
-      <ServiceTiles />
-
-      <SplitEditorial
-        imageLeft={images.home.H2}
-        title="A clinic that is easy to walk into"
-        text="Plenty of people put off the dentist because the last place they went felt rushed or cold. We have tried to build the opposite — a calm space, modern equipment, and dentists who explain things instead of talking over your head. You should leave knowing what was found, what your options are, and what happens next."
-        points={[
-          'Calm, unhurried appointments',
-          'Modern equipment and digital scanning',
-          'Plain explanations, not jargon',
-          'A clear plan before any treatment',
-        ]}
-      />
-
-      <HomeGallery />
-      <ReviewStrip />
-
-      <CTASection
-        title="Ready to visit Apex Dental?"
-        text="Book a visit for implants, clear aligners, cosmetic or everyday dental care, or an emergency. Tell us what you need and we will point you to the right starting point."
-      />
+      <HomeHero />
+      <TrustStrip />
+      <TreatmentsOverview />
+      <TeamSection />
+      <ClinicsSection />
+      <GoogleReviews />
+      <PriceTeaser />
+      <FinalCallToAction />
     </>
   );
 }
@@ -1871,13 +2096,13 @@ function ImplantsPage() {
         text="If you have lost most or all of your teeth, or you are worn down by a denture that slips, All-on-4 fixes a full set of teeth onto just four implants per jaw. The implants are angled to make the most of the bone you already have, which often avoids the need for grafting, and the new teeth are screwed firmly in place. Nothing comes out at night, and nothing covers the roof of your mouth, so taste and comfort come back too. In many cases a fixed temporary set can go on the same day as surgery."
         points={['A full fixed set of teeth on four implants', 'Angled placement often avoids bone grafting', 'Stays put — nothing to remove or soak overnight', 'Leaves the palate free, so taste and comfort improve']}
       />
-      <section className="bg-[#f7f4ef] py-12">
+      <section className="bg-ivory py-12">
         <Section>
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-slate-700 font-medium">Explore in detail:</span>
-            <Link to="/straumann-implants-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Straumann implants &rarr;</Link>
-            <Link to="/all-on-4-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">All-on-4 &rarr;</Link>
-            <Link to="/all-on-6-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">All-on-6 &rarr;</Link>
+            <Link to="/straumann-implants-malta/" className="text-sm font-medium text-gold-700 hover:text-gold-800">Straumann implants &rarr;</Link>
+            <Link to="/all-on-4-malta/" className="text-sm font-medium text-gold-700 hover:text-gold-800">All-on-4 &rarr;</Link>
+            <Link to="/all-on-6-malta/" className="text-sm font-medium text-gold-700 hover:text-gold-800">All-on-6 &rarr;</Link>
           </div>
         </Section>
       </section>
@@ -2022,14 +2247,6 @@ function CosmeticPage() {
 
 function AboutPage() {
   usePageTitle('About Apex Dental Malta | Our Dental Team');
-  const team = [
-    { name: 'Dr Jonathan Mifsud', role: 'Dental Implantologist', flag: null, bio: 'Dr Jonathan Mifsud founded Apex Dental and runs the implant side of the practice. He places everything from single implants to full-arch and All-on-4 cases, and takes on the more complex treatment planning — the cases that need to be thought through carefully before anyone picks up an instrument.' },
-    { name: 'Dr Aleksandra Syrico Mallia', role: 'Orthodontist', flag: 'PL', bio: 'Dr Aleksandra Syrico Mallia leads orthodontics at Apex Dental. She treats children, teenagers and adults with both fixed braces and clear aligners, and works with our in-house Orthix aligner system as well as Invisalign, ClearCorrect, Ordoline and Cristaline. She plans each case around how your teeth bite together, not just how they look from the front. Polish-speaking patients are welcome to consult with her in Polish.' },
-    { name: 'Dr Charlotte Axisa', role: 'General and Restorative Dentist', flag: null, bio: 'Dr Charlotte Axisa covers general and restorative dentistry — the check-ups, fillings, crowns and preventive care that make up most visits. Patients tend to mention how calm and unhurried she is, which helps if you are someone who has put off the dentist for a while.' },
-    { name: "Dr Massimo D'Alessandro", role: 'General Dentist', flag: 'IT', bio: "Dr Massimo D'Alessandro trained and worked in Italy before joining us. If Italian is your first language, you can see him and talk through your treatment in Italian rather than working it out in English." },
-    { name: 'Dr Adam Borg', role: 'General Dentist', flag: null, bio: 'Dr Adam Borg handles a broad range of general and restorative treatment. He is straightforward about explaining what he is doing and why, so you leave knowing what was done and what, if anything, needs keeping an eye on.' },
-    { name: 'Dr Martha Lopez', role: 'General and Cosmetic Dentist', flag: 'ES', bio: 'Dr Martha Lopez joined us from Spain and has a particular interest in cosmetic and aesthetic work. Spanish-speaking patients are welcome to consult with her in Spanish.' },
-  ];
   const milestones = [
     { year: '2023', label: 'Apex Dental opens its doors at Trident Park, Mrieħel, Birkirkara' },
     { year: '2024', label: 'Added full implant surgery, All-on-4 and clear aligner treatment' },
@@ -2067,7 +2284,7 @@ function AboutPage() {
           </div>
         </Section>
       </section>
-      <section className="bg-slate-950 py-20 text-white">
+      <section className="bg-navy-900 py-20 text-white">
         <Section>
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
             <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
@@ -2076,7 +2293,7 @@ function AboutPage() {
             <div>
               <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Meet the team</div>
               <h2 className="text-3xl md:text-4xl font-semibold leading-tight mb-2">{team[0].name}</h2>
-              <div className="text-amber-300 font-medium mb-6">{team[0].role}</div>
+              <div className="text-gold-300 font-medium mb-6">{team[0].role}</div>
               <p className="text-slate-300 leading-8 text-lg">{team[0].bio}</p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button to="/appointment-booking/" variant="gold">Book a consultation</Button>
@@ -2089,38 +2306,38 @@ function AboutPage() {
       <section className="bg-white py-20">
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our dentists</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-semibold text-navy-900 leading-tight mb-12 max-w-2xl">
             Six dentists, four languages spoken
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.slice(1).map((doctor) => (
-              <div key={doctor.name} className="rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-6 shadow-sm">
-                <div className="w-12 h-12 rounded-full bg-slate-950 flex items-center justify-center mb-4">
+              <div key={doctor.name} className="rounded-[2rem] bg-ivory border border-slate-200 p-6 shadow-sm">
+                <div className="w-12 h-12 rounded-full bg-navy-900 flex items-center justify-center mb-4">
                   <span className="text-white font-bold">{doctor.name.split(' ').slice(-1)[0][0]}</span>
                 </div>
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-slate-900">{doctor.name}</h3>
+                  <h3 className="font-semibold text-navy-900">{doctor.name}</h3>
                   {doctor.flag === 'IT' && <span className="text-sm font-bold text-green-700">IT</span>}
                   {doctor.flag === 'ES' && <span className="text-sm font-bold text-red-600">ES</span>}
                   {doctor.flag === 'PL' && <span className="text-sm font-bold text-rose-700">PL</span>}
                 </div>
-                <div className="text-sky-600 font-medium text-sm mb-3">{doctor.role}</div>
+                <div className="text-gold-700 font-medium text-sm mb-3">{doctor.role}</div>
                 <p className="text-slate-600 leading-7 text-sm">{doctor.bio}</p>
               </div>
             ))}
           </div>
         </Section>
       </section>
-      <section className="bg-[#f7f4ef] py-20">
+      <section className="bg-ivory py-20">
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Our journey</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-12 max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-semibold text-navy-900 leading-tight mb-12 max-w-2xl">
             How the clinic has grown
           </h2>
           <div className="space-y-0">
             {milestones.map((m, i) => (
               <div key={i} className="flex gap-8 items-start py-6 border-b border-slate-200">
-                <div className="text-sky-600 font-bold text-lg w-16 shrink-0">{m.year}</div>
+                <div className="text-gold-700 font-bold text-lg w-16 shrink-0">{m.year}</div>
                 <div className="text-slate-700 leading-7">{m.label}</div>
               </div>
             ))}
@@ -2537,19 +2754,19 @@ function OrthodonticPage() {
         dark
         reverse
       />
-      <section className="bg-[#f7f4ef] py-10">
+      <section className="bg-ivory py-10">
         <Section>
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-slate-700 font-medium">Read more:</span>
-            <Link to="/fixed-braces-malta/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Fixed braces &rarr;</Link>
-            <Link to="/orthix-aligners/" className="text-sm font-medium text-sky-700 hover:text-sky-900">Orthix in-house aligner &rarr;</Link>
+            <Link to="/fixed-braces-malta/" className="text-sm font-medium text-gold-700 hover:text-gold-800">Fixed braces &rarr;</Link>
+            <Link to="/orthix-aligners/" className="text-sm font-medium text-gold-700 hover:text-gold-800">Orthix in-house aligner &rarr;</Link>
           </div>
         </Section>
       </section>
       <section className="bg-white py-20">
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">Clear Aligner Options</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight mb-6 max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-semibold text-navy-900 leading-tight mb-6 max-w-3xl">
             Clear aligners, including our own in-house Orthix
           </h2>
           <p className="text-slate-600 leading-8 mb-12 max-w-3xl">
@@ -2557,11 +2774,11 @@ function OrthodonticPage() {
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {alignerSystems.map((sys, i) => (
-              <div key={i} className="rounded-3xl border border-slate-200 bg-[#f7f4ef] p-7 flex flex-col">
-                <div className="text-lg font-semibold text-slate-900 mb-2">{sys.name}</div>
+              <div key={i} className="rounded-3xl border border-slate-200 bg-ivory p-7 flex flex-col">
+                <div className="text-lg font-semibold text-navy-900 mb-2">{sys.name}</div>
                 <p className="text-slate-600 leading-7 text-sm">{sys.text}</p>
                 {sys.to && (
-                  <Link to={sys.to} className="mt-4 text-sm font-medium text-sky-700 hover:text-sky-900">
+                  <Link to={sys.to} className="mt-4 text-sm font-medium text-gold-700 hover:text-gold-800">
                     Learn more about {sys.name.replace(' (in-house)', '')} &rarr;
                   </Link>
                 )}
@@ -2879,8 +3096,8 @@ function CristalinePage() {
 }
 
 function StudiesSection({ eyebrow, heading, intro, studies, dark = false }) {
-  const wrap = dark ? 'bg-slate-950 text-white' : 'bg-white text-slate-900';
-  const card = dark ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-[#f7f4ef]';
+  const wrap = dark ? 'bg-navy-900 text-white' : 'bg-white text-navy-900';
+  const card = dark ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-ivory';
   const body = dark ? 'text-slate-300' : 'text-slate-600';
   return (
     <section className={`${wrap} py-20`}>
@@ -2894,12 +3111,12 @@ function StudiesSection({ eyebrow, heading, intro, studies, dark = false }) {
               <p className={`leading-7 mb-4 ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{st.finding}</p>
               <div className="flex items-center justify-between gap-4">
                 <span className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{st.source}</span>
-                <a href={st.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-sky-500 hover:text-sky-400 shrink-0">View study &rarr;</a>
+                <a href={st.url} target="_blank" rel="noopener noreferrer" className={`text-sm font-medium shrink-0 ${dark ? 'text-gold-300 hover:text-gold-200' : 'text-gold-700 hover:text-gold-800'}`}>View study &rarr;</a>
               </div>
             </div>
           ))}
         </div>
-        <p className={`text-xs mt-8 ${dark ? 'text-slate-500' : 'text-slate-400'}`}>Survival and success figures are drawn from published clinical studies and reflect averages across many patients; your own outcome depends on your case, bone, general health and aftercare.</p>
+        <p className={`text-xs mt-8 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>Survival and success figures are drawn from published clinical studies and reflect averages across many patients; your own outcome depends on your case, bone, general health and aftercare.</p>
       </Section>
     </section>
   );
@@ -3347,7 +3564,7 @@ function BlogPage() {
         subtitle="Practical guides on implants, cosmetic dentistry, emergencies, and preventive care — written to help you make informed decisions about your dental health."
       />
 
-      <section className="bg-[#f7f4ef] py-20">
+      <section className="bg-ivory py-20">
         <Section>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
             {blogPosts.map((post) => (
@@ -3357,11 +3574,11 @@ function BlogPage() {
                     <div className="text-xs uppercase tracking-[0.25em] text-slate-500">{post.category}</div>
                     <div className="text-xs text-slate-400">{post.readTime}</div>
                   </div>
-                  <h2 className="text-xl font-semibold text-slate-900 leading-tight mb-3">{post.title}</h2>
+                  <h2 className="text-xl font-semibold text-navy-900 leading-tight mb-3">{post.title}</h2>
                   <p className="text-slate-600 leading-7 text-sm">{post.excerpt}</p>
                   <Link
                     to={post.slug}
-                    className="inline-flex items-center gap-2 mt-5 text-slate-900 font-semibold hover:text-sky-700 transition text-sm"
+                    className="inline-flex items-center gap-2 mt-5 text-navy-900 font-semibold hover:text-gold-800 transition text-sm"
                   >
                     Read article <ChevronRight size={16} />
                   </Link>
@@ -3384,247 +3601,6 @@ function BlogPage() {
 function PriceListPage() {
   usePageTitle('Dental Services Price List Malta | Apex Dental');
 
-  const priceSections = [
-    {
-      title: 'Examination / Diagnosis',
-      items: [
-        {
-          name: 'Booking Fee (new patients, emergency & long appointments)',
-          price: '€20.00',
-          note: 'Secures your appointment and is deducted from your final bill. Non-refundable if the appointment is cancelled less than 5 hours beforehand.',
-        },
-        { name: 'Routine Checkup', price: '€30.00' },
-        { name: 'Panoramic X-Ray', price: '€70.00', note: '2D full mouth X-ray.' },
-        {
-          name: 'Periapical or one side Bitewing X-Ray',
-          price: '€20.00',
-          note: 'For a set of bitewings, 2 are required.',
-        },
-        {
-          name: 'Implant Consultation',
-          price: '€30.00',
-          note: 'Free if implant treatment is done, or deducted later from the implant bill if treatment proceeds.',
-        },
-        {
-          name: 'CBCT X-Ray',
-          price: '€120.00',
-          note: '3D X-ray of the mouth; copy available on request. Important for implant planning and free if implant surgery is done.',
-        },
-      ],
-    },
-    {
-      title: 'Hygiene / Cleaning and Teeth Whitening',
-      items: [
-        {
-          name: 'Routine Hygiene Session',
-          price: '€50.00',
-          note: 'Scaling and polishing; ideally every 6 months.',
-        },
-        {
-          name: 'Perio Laser',
-          price: '€220.00',
-          note: 'Usually done in 4 sessions; price is per session.',
-        },
-        {
-          name: 'Fissure Sealing',
-          price: '€30.00',
-          note: 'Preventive measure, mostly for molars; price per tooth.',
-        },
-        {
-          name: 'Home Whitening Kit (custom trays)',
-          price: '€250.00',
-          note: 'Custom trays included; worn at home, usually over one to two weeks.',
-        },
-        {
-          name: 'Removal of Fixed Prosthesis and Cleaning',
-          price: '€80.00',
-          note: 'Recommended every 6 months for full-arch / Toronto bridge cases.',
-        },
-        { name: 'Fluoride Application', price: '€40.00' },
-        {
-          name: 'In-Clinic Whitening (Beyond or Zoom)',
-          price: '€400.00',
-          note: 'Usually a 90-minute session using branded products such as Beyond or Zoom.',
-        },
-      ],
-    },
-    {
-      title: 'Crowns and Bridgework',
-      items: [
-        {
-          name: 'Crowns, Metal/Porcelain',
-          price: '€450.00',
-          note: 'Porcelain outer shell with metal inside.',
-        },
-        { name: 'Lab Made Temporary Crowns', price: '€50.00' },
-        {
-          name: 'Removal of Existing Bridgework',
-          price: '€30.00',
-          note: 'Depends on the state of the bridge and work involved.',
-        },
-        {
-          name: 'Full Porcelain Crowns / Zirconia',
-          price: '€450.00',
-          note: 'Variable full porcelain crowns available at the same price.',
-        },
-        { name: 'Post and Core Build Up', price: '€70.00' },
-      ],
-    },
-    {
-      title: 'Cosmetic Veneers',
-      items: [
-        {
-          name: 'Composite Veneers',
-          price: '€130.00',
-          note: 'Highly aesthetic composite. Price per tooth.',
-        },
-        {
-          name: '3D-Printed Ceramic Resin Veneers',
-          price: '€220.00',
-          note: 'Very stain resistant. Price per tooth.',
-        },
-        {
-          name: 'Porcelain / Zirconia Veneers',
-          price: '€450.00',
-          note: 'The premium, longest-lasting option. Price per tooth.',
-        },
-        {
-          name: 'Veneer Mockup / Try-In',
-          price: '€50.00',
-          note: 'See and try the final look before starting. Deducted from your bill if you proceed with resin or porcelain/zirconia veneers.',
-        },
-      ],
-    },
-    {
-      title: 'Fillings',
-      items: [
-        {
-          name: 'Removal of Amalgam Filling Under Rubberdam',
-          price: '€40.00',
-        },
-        {
-          name: 'Restoration of Deciduous Teeth',
-          price: '€40.00',
-          note: 'Material choice depends on cooperation and cavity size.',
-        },
-        {
-          name: 'Composite Filling',
-          price: 'From €70.00',
-          note: 'Does not include posts if required.',
-        },
-      ],
-    },
-    {
-      title: 'Implants',
-      items: [
-        {
-          name: 'Implant Complete with Crown',
-          price: '€1500.00',
-          note: 'Depends on implant type, abutment type, and crown type.',
-        },
-        {
-          name: 'Toronto Bridge All on 4',
-          price: '€10,000.00',
-          note: 'Full-arch fixed bridge on 4 implants, with zirconia teeth and Straumann BLX implants.',
-        },
-        {
-          name: 'Implant Retained Removable Denture with 3 Implants and Bar',
-          price: '€5500.00',
-          note: 'Best removable option for upper arch.',
-        },
-        { name: 'Crown / Pontic on Implant', price: '€400.00' },
-        {
-          name: 'Implant Retained Removable Denture',
-          price: '€3500.00',
-          note: 'Locator-based, with 2 implants included; suitable for lower arch only.',
-        },
-      ],
-    },
-    {
-      title: 'Extraction and Surgery',
-      items: [
-        {
-          name: 'Extraction',
-          price: 'From €60.00',
-          note: 'Does not include radiographs if required.',
-        },
-        {
-          name: 'Wisdom Tooth Surgical Extraction',
-          price: '€250.00',
-          note: 'Does not include radiographs if required.',
-        },
-        {
-          name: 'Surgical Extraction',
-          price: 'From €150.00',
-          note: 'Includes retained roots and heavily broken teeth; radiographs not included.',
-        },
-      ],
-    },
-    {
-      title: 'Root Canal Treatment',
-      items: [
-        {
-          name: 'Root Canal Anterior Teeth',
-          price: '€250.00',
-          note: 'Includes filling but not the post if required.',
-        },
-        {
-          name: 'Re Root Canal Treatment',
-          price: '€320.00',
-          note: 'For teeth that already had root canal treatment previously.',
-        },
-        {
-          name: 'Root Canal Treatment Posterior Teeth',
-          price: '€280.00',
-          note: 'Includes filling but not the post if required.',
-        },
-      ],
-    },
-    {
-      title: 'Dentures',
-      items: [
-        { name: 'Full Upper / Lower Acrylic Dentures', price: '€400.00' },
-        {
-          name: 'Flexible Dentures Partial',
-          price: '€350.00',
-          note: 'Meaning 3 teeth and less.',
-        },
-        { name: 'Chrome Cobalt Dentures', price: '€650.00' },
-        {
-          name: 'Partial Acrylic Dentures',
-          price: '€300.00',
-          note: 'More than 3 teeth is considered a full denture.',
-        },
-        {
-          name: 'Flexible Dentures More Than 3 Teeth',
-          price: '€650.00',
-        },
-      ],
-    },
-    {
-      title: 'Orthodontic Treatment & Miscellaneous',
-      items: [
-        { name: 'Soft Splint 2mm', price: '€100.00' },
-        { name: 'Michigan Splint', price: '€300.00' },
-        {
-          name: 'Clear Correct Treatment',
-          price: 'From €2900.00',
-          note: 'Invisible aligners.',
-        },
-        { name: 'Bionator', price: '€600.00' },
-        { name: 'Soft Splint 4mm', price: '€120.00' },
-        {
-          name: 'Invisalign Treatment',
-          price: 'From €3500.00',
-          note: 'Invisible aligners.',
-        },
-        {
-          name: 'Fixed Upper and Lower Orthodontic Appliance',
-          price: 'From €2800.00',
-        },
-      ],
-    },
-  ];
 
   return (
     <>
@@ -3645,7 +3621,7 @@ function PriceListPage() {
         subtitle="This restores the broader price structure from the live site in a cleaner premium layout. Final fees may still vary depending on complexity, materials, and case requirements."
       />
 
-      <section className="bg-[#f7f4ef] py-20">
+      <section className="bg-ivory py-20">
         <Section>
           <div className="space-y-10">
             {priceSections.map((section) => (
@@ -3653,7 +3629,7 @@ function PriceListPage() {
                 key={section.title}
                 className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl"
               >
-                <div className="bg-slate-950 text-white px-8 py-6">
+                <div className="bg-navy-900 text-white px-8 py-6">
                   <h2 className="text-2xl md:text-3xl font-semibold">
                     {section.title}
                   </h2>
@@ -3671,7 +3647,7 @@ function PriceListPage() {
                     >
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                         <div className="md:max-w-[75%]">
-                          <h3 className="text-lg font-semibold text-slate-900">
+                          <h3 className="text-lg font-semibold text-navy-900">
                             {item.name}
                           </h3>
                           {item.note && (
@@ -3680,7 +3656,7 @@ function PriceListPage() {
                             </p>
                           )}
                         </div>
-                        <div className="text-xl font-bold text-slate-900 md:text-right">
+                        <div className="text-xl font-bold text-navy-900 md:text-right">
                           {item.price}
                         </div>
                       </div>
@@ -3739,48 +3715,48 @@ function AppointmentBookingPage() {
       <section className="bg-white py-20">
         <Section>
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
-            <div className="rounded-[2.5rem] bg-[#f7f4ef] border border-slate-200 p-8">
-              <h2 className="text-2xl font-semibold text-slate-900">
+            <div className="rounded-[2.5rem] bg-ivory border border-slate-200 p-8">
+              <h2 className="text-2xl font-semibold text-navy-900">
                 Clinic Details
               </h2>
               <div className="mt-6 space-y-5 text-slate-700">
                 <div>
-                    <div className="font-semibold text-slate-900">Trident Park &mdash; main clinic</div>
+                    <div className="font-semibold text-navy-900">Trident Park &mdash; main clinic</div>
                   <div className="mt-1">{brand.address}</div>
                 </div>
                   <div>
-                    <div className="font-semibold text-slate-900">{brand.stAnnesName}</div>
+                    <div className="font-semibold text-navy-900">{brand.stAnnesName}</div>
                     <div className="mt-1">{brand.addressStAnnes}</div>
                     <div className="mt-1 text-sm text-slate-500">
                       An independent Apex Dental practice on Level 3. Closed Sundays.
                     </div>
                   </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Phone</div>
+                  <div className="font-semibold text-navy-900">Phone</div>
                   <a
                     href={`tel:${brand.phone}`}
-                    className="mt-1 block hover:text-sky-700"
+                    className="mt-1 block hover:text-gold-800"
                   >
                     {brand.phone}
                   </a>
                   <a
                     href={`tel:${brand.mobile}`}
-                    className="mt-1 block hover:text-sky-700"
+                    className="mt-1 block hover:text-gold-800"
                   >
                     {brand.mobile}
                   </a>
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Email</div>
+                  <div className="font-semibold text-navy-900">Email</div>
                   <a
                     href={`mailto:${brand.email}`}
-                    className="mt-1 block hover:text-sky-700"
+                    className="mt-1 block hover:text-gold-800"
                   >
                     {brand.email}
                   </a>
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Working Hours</div>
+                  <div className="font-semibold text-navy-900">Working Hours</div>
                   <div className="mt-1">Monday - Friday: 9 am - 7 pm</div>
                   <div>Saturday: 9 am - 12:30 pm</div>
                   <div>Sunday: 9 am - 12 pm (emergency only)</div>
@@ -3796,18 +3772,20 @@ function AppointmentBookingPage() {
               </div>
             </div>
 
-            <BookingFormCard serviceOptions={serviceOptions} />
+            <div data-hide-booking-bar>
+              <BookingFormCard serviceOptions={serviceOptions} />
+            </div>
           </div>
         </Section>
       </section>
 
-      <section className="bg-[#f7f4ef] py-16">
+      <section className="bg-ivory py-16">
         <Section>
           <div className="rounded-[2.5rem] bg-white border border-slate-200 p-8 md:p-10 shadow-sm max-w-3xl">
             <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-4">
               Booking Fee &amp; Cancellation Policy
             </div>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold text-navy-900 mb-4">
               A €20 booking fee secures your appointment
             </h2>
             <p className="text-slate-600 leading-8">
@@ -3851,22 +3829,22 @@ function ContactPage() {
         <Section>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
             <div>
-              <div className="rounded-[2rem] bg-[#f7f4ef] border border-slate-200 p-8 mb-6">
-                <h2 className="text-2xl font-semibold text-slate-900 mb-6">Contact details</h2>
+              <div className="rounded-[2rem] bg-ivory border border-slate-200 p-8 mb-6">
+                <h2 className="text-2xl font-semibold text-navy-900 mb-6">Contact details</h2>
                 <div className="space-y-5">
                   <div className="flex items-start gap-3">
-                    <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <MapPin className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">Trident Park &mdash; main clinic</div>
+                      <div className="font-medium text-navy-900">Trident Park &mdash; main clinic</div>
                       <div className="text-slate-600 mt-1 leading-7">{brand.address}</div>
-                      <a href="https://maps.google.com/?q=Apex+Dental+Trident+Park+Birkirkara+Malta" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:text-sky-700 text-sm font-medium mt-1 inline-block">Get directions</a>
+                      <a href="https://maps.google.com/?q=Apex+Dental+Trident+Park+Birkirkara+Malta" target="_blank" rel="noopener noreferrer" className="text-gold-700 hover:text-gold-800 text-sm font-medium mt-1 inline-block">Get directions</a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <MapPin className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <MapPin className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">{brand.stAnnesName}</div>
+                      <div className="font-medium text-navy-900">{brand.stAnnesName}</div>
                       <div className="text-slate-600 mt-1 leading-7">{brand.addressStAnnes}</div>
                       <div className="text-sm text-slate-500 mt-1">
                         An independent Apex Dental practice on Level 3.
@@ -3875,30 +3853,30 @@ function ContactPage() {
                         href={brand.googleMapsStAnnes}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sky-700 hover:text-sky-900 text-sm inline-block mt-1"
+                        className="text-gold-700 hover:text-gold-800 text-sm inline-block mt-1"
                       >
                         Get directions
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Phone className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <Phone className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">Phone</div>
-                      <a href={`tel:${brand.phone}`} className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium">{brand.phone}</a>
+                      <div className="font-medium text-navy-900">Phone</div>
+                      <a href={`tel:${brand.phone}`} className="text-slate-600 mt-1 block hover:text-gold-800 text-lg font-medium">{brand.phone}</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <MessageCircle className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <MessageCircle className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">WhatsApp</div>
-                      <a href={`https://wa.me/356${brand.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-slate-600 mt-1 block hover:text-sky-700 text-lg font-medium">{brand.whatsapp}</a>
+                      <div className="font-medium text-navy-900">WhatsApp</div>
+                      <a href={`https://wa.me/356${brand.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-slate-600 mt-1 block hover:text-gold-800 text-lg font-medium">{brand.whatsapp}</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <Clock3 className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">Trident Park opening hours</div>
+                      <div className="font-medium text-navy-900">Trident Park opening hours</div>
                       <div className="text-slate-600 mt-1 leading-7">
                         Monday to Friday: 9:00 to 19:00<br />
                         Saturday: 9:00 to 12:30<br />
@@ -3909,9 +3887,9 @@ function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Clock3 className="text-sky-600 mt-1 shrink-0" size={20} />
+                    <Clock3 className="text-gold-700 mt-1 shrink-0" size={20} />
                     <div>
-                      <div className="font-medium text-slate-900">
+                      <div className="font-medium text-navy-900">
                         St Anne&rsquo;s Clinic opening hours
                       </div>
                       <div className="text-slate-600 mt-1 leading-7">
@@ -3957,18 +3935,20 @@ function ContactPage() {
                     />
                   </div>
             </div>
-            <ContactFormCard />
+            <div data-hide-booking-bar>
+              <ContactFormCard />
+            </div>
           </div>
         </Section>
       </section>
-      <section className="bg-[#f7f4ef] py-16">
+      <section className="bg-ivory py-16">
         <Section>
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500 mb-8">Quick access</div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickLinks.map((link) => (
               <Link key={link.label} to={link.to} className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex items-center gap-3">
-                <ChevronRight className="text-sky-600 shrink-0" size={18} />
-                <span className="font-medium text-slate-900">{link.label}</span>
+                <ChevronRight className="text-gold-700 shrink-0" size={18} />
+                <span className="font-medium text-navy-900">{link.label}</span>
               </Link>
             ))}
           </div>
@@ -4129,7 +4109,7 @@ function ServicesPage() {
             <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
               Apex Dental Services
             </div>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-navy-900 leading-tight">
               Not sure which treatment you need? Start here
             </h2>
             <p className="mt-6 text-lg text-slate-600 leading-8">
@@ -4144,14 +4124,14 @@ function ServicesPage() {
       {serviceGroups.map((group, groupIndex) => (
         <section
           key={group.title}
-          className={groupIndex % 2 === 0 ? 'bg-[#f7f4ef] py-20' : 'bg-white py-20'}
+          className={groupIndex % 2 === 0 ? 'bg-ivory py-20' : 'bg-white py-20'}
         >
           <Section>
             <div className="max-w-4xl mb-12">
               <div className="text-sm uppercase tracking-[0.25em] text-slate-500">
                 Service Category
               </div>
-              <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+              <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-navy-900 leading-tight">
                 {group.title}
               </h2>
               <p className="mt-5 text-lg text-slate-600 leading-8">
@@ -4164,14 +4144,14 @@ function ServicesPage() {
                 <Link
                   key={item.title}
                   to={item.to}
-                  className="group rounded-[2rem] overflow-hidden bg-slate-950 text-white relative min-h-[460px] shadow-xl"
+                  className="group rounded-[2rem] overflow-hidden bg-navy-900 text-white relative min-h-[460px] shadow-xl"
                 >
                   <LazyImg
                     src={item.image}
                     alt={item.title}
                     className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/45 to-transparent" />
 
                   <div className="relative p-8 h-full flex flex-col justify-end">
                     <div className="text-sm uppercase tracking-[0.25em] text-slate-300">
@@ -4183,7 +4163,7 @@ function ServicesPage() {
                     <p className="mt-4 text-slate-200 leading-7">
                       {item.text}
                     </p>
-                    <div className="mt-6 inline-flex items-center gap-2 text-amber-300 font-medium">
+                    <div className="mt-6 inline-flex items-center gap-2 text-gold-300 font-medium">
                       Explore service <ChevronRight size={18} />
                     </div>
                   </div>
@@ -4220,7 +4200,7 @@ function ComplianceTrustSection() {
               Compliance & Standards
             </div>
 
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-slate-900 leading-tight">
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold text-navy-900 leading-tight">
               Recognition that supports patient trust
             </h2>
 
@@ -4239,7 +4219,7 @@ function ComplianceTrustSection() {
                 'Best presented as a dedicated credibility section',
               ].map((point) => (
                 <div key={point} className="flex items-start gap-3">
-                  <BadgeCheck className="text-sky-600 mt-1 shrink-0" size={20} />
+                  <BadgeCheck className="text-gold-700 mt-1 shrink-0" size={20} />
                   <p className="text-slate-700 leading-7">{point}</p>
                 </div>
               ))}
@@ -4369,15 +4349,15 @@ function BlogPostPage({ postId }) {
               <span>·</span>
               <span>{post.readTime}</span>
               <span>·</span>
-              <Link to="/blog/" className="hover:text-slate-900 transition">← Back to blog</Link>
+              <Link to="/blog/" className="hover:text-navy-900 transition">← Back to blog</Link>
             </div>
             <div className="space-y-6">
               {post.content.map((block, i) => {
                 if (block.type === 'p') return <p key={i} className="text-slate-600 leading-8 text-lg">{block.text}</p>;
-                if (block.type === 'h3') return <h2 key={i} className="text-2xl font-semibold text-slate-900 mt-10 mb-2">{block.text}</h2>;
+                if (block.type === 'h3') return <h2 key={i} className="text-2xl font-semibold text-navy-900 mt-10 mb-2">{block.text}</h2>;
                 if (block.type === 'cta') return (
                   <div key={i} className="pt-4">
-                    <Link to={block.to} className="inline-flex items-center gap-2 bg-slate-900 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-slate-700 transition">
+                    <Link to={block.to} className="inline-flex items-center gap-2 bg-navy-900 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-navy-800 transition">
                       {block.text} <ChevronRight size={16} />
                     </Link>
                   </div>
@@ -4428,16 +4408,16 @@ function NotFoundPage() {
   ];
 
   return (
-    <section className="bg-white pt-40 pb-24">
+    <section className="bg-white pt-20 pb-24">
       <Section>
         <div className="max-w-2xl">
           <div className="text-sm uppercase tracking-[0.25em] text-slate-500">Error 404</div>
-          <h1 className="mt-4 text-4xl md:text-5xl font-semibold text-slate-900 leading-tight">
+          <h1 className="mt-4 text-4xl md:text-5xl font-semibold text-navy-900 leading-tight">
             Sorry, we cannot find that page
           </h1>
           <p className="mt-6 text-lg text-slate-600 leading-8">
             The link may be old or mistyped. These pages should help, or call us on{' '}
-            <a href={`tel:${brand.phone}`} className="font-semibold text-slate-900 underline">
+            <a href={`tel:${brand.phone}`} className="font-semibold text-navy-900 underline">
               {brand.phone}
             </a>
             .
@@ -4447,9 +4427,9 @@ function NotFoundPage() {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-[#f7f4ef] px-5 py-4 font-medium text-slate-900 hover:bg-slate-100 transition"
+                  className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-ivory px-5 py-4 font-medium text-navy-900 hover:bg-slate-100 transition"
                 >
-                  <ChevronRight className="text-sky-600 shrink-0" size={18} />
+                  <ChevronRight className="text-gold-700 shrink-0" size={18} />
                   {link.label}
                 </Link>
               </li>
@@ -4462,13 +4442,27 @@ function NotFoundPage() {
 }
 
 export default function ApexDentalWebsitePremium() {
+  const { pathname } = useLocation();
+  // The phone menu is open only on the page it was opened on, so any navigation closes it.
+  const [menuPath, setMenuPath] = useState(null);
+  const menuOpen = menuPath === pathname;
+  const setMenuOpen = React.useCallback((open) => setMenuPath(open ? pathname : null), [pathname]);
+
   return (
-    <div className="min-h-screen bg-white text-slate-900 pb-16 lg:pb-0">
+    // Bottom padding on phones = the booking bar's height, so the bar never covers the page's end.
+    <div className="min-h-screen bg-white text-navy-900 pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
+      <a
+        href="#main-content"
+        className="on-dark sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-navy-900 focus:px-5 focus:py-3 focus:font-semibold focus:text-white"
+      >
+        Skip to content
+      </a>
       <ScrollToTop />
       <ConsentBanner />
       <GoogleAdsPageTracker />
-      <FloatingHeader />
+      <SiteHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
+      <div id="main-content" tabIndex={-1} className="outline-none">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us/" element={<AboutPage />} />
@@ -4530,10 +4524,11 @@ export default function ApexDentalWebsitePremium() {
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </div>
 
       <Footer />
       <WhatsAppFloat />
-      <MobileStickyBar />
+      <MobileStickyBar menuOpen={menuOpen} />
     </div>
   );
 }

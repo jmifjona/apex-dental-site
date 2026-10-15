@@ -2,11 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  min-height: 100%;
+@layer base {
+  html, body, #root {
+    min-height: 100%;
+  }
+
+  html {
+    /* the sticky header must not hide the target of an in-page link (e.g. /contact-us/#prepare) */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: theme('fontFamily.sans');
+    color: theme('colors.navy.900');
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* index.html uses viewport-fit=cover; keep content clear of a phone's notch in landscape */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  h1, h2 {
+    font-family: theme('fontFamily.display');
+    letter-spacing: -0.01em;
+  }
+
+  /* One visible focus style for every interactive element. Dark sections set --focus-ring to the
+     light accent (class "on-dark") so the ring stays visible on navy. */
+  :where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 3px solid var(--focus-ring, theme('colors.navy.900'));
+    outline-offset: 3px;
+  }
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+@layer utilities {
+  .on-dark {
+    --focus-ring: theme('colors.gold.300');
+  }
+}
+
+/* Motion is decoration only: with reduced motion asked for, nothing animates, scales or slides. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

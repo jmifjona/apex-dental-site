@@ -6,6 +6,7 @@ import {
   updateConsent,
   clearGoogleCookies,
   onOpenCookieSettings,
+  announceCookieBanner,
 } from './lib/consent.js';
 
 // Cookie banner for Google Consent Mode v2: analytics and ads stay denied (public/gtag-init.js)
@@ -18,6 +19,10 @@ export default function ConsentBanner() {
   });
 
   useEffect(() => onOpenCookieSettings(() => setOpen(true)), []);
+  // The phone booking bar steps aside while this banner is open (src/App.jsx MobileStickyBar).
+  useEffect(() => {
+    announceCookieBanner(open);
+  }, [open]);
 
   if (!open) return null;
 
@@ -29,14 +34,14 @@ export default function ConsentBanner() {
   };
 
   const buttonClass =
-    'flex-1 rounded-full px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950';
+    'flex-1 rounded-full px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900';
 
   return (
     <section
       aria-labelledby="cookie-banner-title"
-      className="fixed inset-x-0 bottom-20 lg:bottom-6 z-[60] px-4"
+      className="fixed inset-x-0 bottom-0 z-[60] px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:pb-6"
     >
-      <div className="mx-auto max-w-xl rounded-3xl border border-white/10 bg-slate-950 p-5 text-white shadow-2xl">
+      <div className="on-dark mx-auto max-w-xl rounded-3xl border border-white/10 bg-navy-900 p-5 text-white shadow-2xl">
         <h2 id="cookie-banner-title" className="font-semibold">
           Cookies
         </h2>
@@ -51,14 +56,14 @@ export default function ConsentBanner() {
           <button
             type="button"
             onClick={() => choose(true)}
-            className={`${buttonClass} bg-amber-400 text-slate-950 hover:bg-amber-300`}
+            className={`${buttonClass} bg-gold-400 text-navy-900 hover:bg-gold-300`}
           >
             Accept
           </button>
           <button
             type="button"
             onClick={() => choose(false)}
-            className={`${buttonClass} bg-white text-slate-950 hover:bg-slate-100`}
+            className={`${buttonClass} bg-white text-navy-900 hover:bg-navy-50`}
           >
             Reject
           </button>

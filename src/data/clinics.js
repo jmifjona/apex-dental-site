@@ -65,3 +65,18 @@ export const CLINIC_OPTIONS = [
 export const CLINIC_LABEL = Object.fromEntries(
   CLINIC_OPTIONS.map((o) => [o.v, o.label]),
 );
+
+// Opening hours of each clinic, exactly as the contact page states them. Read by the homepage's
+// clinics section and the footer.
+export const CLINIC_HOURS = {
+  trident: [
+    ['Monday to Friday', '9:00 to 19:00'],
+    ['Saturday', '9:00 to 12:30'],
+    ['Sunday', '9:00 to 12:00 (emergency only)'],
+  ],
+  stannes: [
+    ['Monday to Friday', '9:00 to 19:00'],
+    ['Saturday', '9:00 to 12:30'],
+    ['Sunday', 'Closed'],
+  ],
+};

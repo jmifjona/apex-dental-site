@@ -20,6 +20,9 @@ export const IMAGE_SIZES = {
   '/images/H1.jpg': [469, 892],
   '/images/H10.jpg': [1920, 1080],
   '/images/H2.jpg': [1920, 1080],
+  // H2.jpg resized for phones and 1x screens (same photo, 74 KB instead of 162 KB); the homepage hero
+  // offers both through srcset.
+  '/images/H2-1280.jpg': [1280, 720],
   '/images/H3.jpg': [1920, 1080],
   '/images/H4.jpg': [1920, 1080],
   '/images/H5.jpg': [1920, 1080],

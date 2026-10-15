@@ -53,3 +53,22 @@ export function onOpenCookieSettings(handler) {
   window.addEventListener(OPEN_EVENT, handler);
   return () => window.removeEventListener(OPEN_EVENT, handler);
 }
+
+// Whether the cookie banner is on screen. The banner announces it; the phone booking bar listens
+// and steps aside while the banner is open, so the two never cover each other.
+const BANNER_EVENT = 'apex:cookie-banner';
+
+export function isCookieChoiceMade() {
+  const choice = readChoice();
+  return choice === 'granted' || choice === 'denied';
+}
+
+export function announceCookieBanner(open) {
+  window.dispatchEvent(new CustomEvent(BANNER_EVENT, { detail: { open } }));
+}
+
+export function onCookieBannerChange(handler) {
+  const listener = (event) => handler(Boolean(event.detail && event.detail.open));
+  window.addEventListener(BANNER_EVENT, listener);
+  return () => window.removeEventListener(BANNER_EVENT, listener);
+}

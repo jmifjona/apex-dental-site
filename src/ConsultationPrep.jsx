@@ -281,7 +281,7 @@ export default function ConsultationPrep() {
         key={o.v}
         className={
           'flex items-start gap-3 rounded-xl border p-4 cursor-pointer transition ' +
-          (sel ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-white hover:border-slate-400')
+          (sel ? 'border-gold-500 bg-gold-100' : 'border-slate-200 bg-white hover:border-slate-400')
         }
       >
         <input
@@ -290,10 +290,10 @@ export default function ConsultationPrep() {
           value={o.v}
           checked={sel}
           onChange={() => (multi ? toggleMulti(step.key, o.v) : setAnswer(step.key, o.v))}
-          className="mt-1 accent-amber-500 shrink-0"
+          className="mt-1 accent-gold-600 shrink-0"
         />
         <span>
-          <span className="block font-semibold text-slate-900">{o.l}</span>
+          <span className="block font-semibold text-navy-900">{o.l}</span>
           {o.n && <span className="block text-sm text-slate-500">{o.n}</span>}
         </span>
       </label>
@@ -302,18 +302,18 @@ export default function ConsultationPrep() {
 
   const questionCard = (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm">
-      <p className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-2">
+      <p className="text-xs font-bold uppercase tracking-widest text-gold-700 mb-2">
         Step {current + 1} of {STEPS.length}
       </p>
-      <h3 className="text-xl md:text-2xl font-semibold text-slate-900">{step.title}</h3>
+      <h3 className="text-xl md:text-2xl font-semibold text-navy-900">{step.title}</h3>
       <p className="text-sm text-slate-500 mt-1 mb-6">{step.hint}</p>
 
       {step.type === 'fields' ? (
         <div className="grid gap-4 mb-6">
           {step.fields.map((f) => (
             <div key={f.k}>
-              <label htmlFor={f.k} className="block text-sm font-semibold text-slate-900 mb-1">
-                {f.l} {f.req && <span className="text-amber-600">*</span>}
+              <label htmlFor={f.k} className="block text-sm font-semibold text-navy-900 mb-1">
+                {f.l} {f.req && <span className="text-gold-700">*</span>}
               </label>
               <input
                 id={f.k}
@@ -321,7 +321,7 @@ export default function ConsultationPrep() {
                 placeholder={f.ph}
                 value={details[f.k] || ''}
                 onChange={(e) => setDetail(f.k, e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-navy-900 placeholder:text-slate-400 focus:border-gold-500 focus:outline-none"
               />
             </div>
           ))}
@@ -334,7 +334,7 @@ export default function ConsultationPrep() {
               value={answers[step.key + '_text'] || ''}
               onChange={(e) => setAnswer(step.key + '_text', e.target.value)}
               placeholder={step.freeText}
-              className="w-full min-h-[88px] rounded-xl border border-slate-200 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-amber-400 focus:outline-none mb-6"
+              className="w-full min-h-[88px] rounded-xl border border-slate-200 px-4 py-3 text-navy-900 placeholder:text-slate-400 focus:border-gold-500 focus:outline-none mb-6"
             />
           )}
         </>
@@ -345,7 +345,7 @@ export default function ConsultationPrep() {
           <button
             type="button"
             onClick={() => setCurrent(current - 1)}
-            className="rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 hover:text-slate-900"
+            className="rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 hover:text-navy-900"
           >
             Back
           </button>
@@ -356,7 +356,7 @@ export default function ConsultationPrep() {
           onClick={() => (isLast ? setDone(true) : setCurrent(current + 1))}
           className={
             'rounded-full px-7 py-3 text-sm font-bold transition ' +
-            (canAdvance() ? 'bg-amber-400 text-slate-900 hover:bg-amber-500' : 'bg-slate-200 text-slate-400 cursor-not-allowed')
+            (canAdvance() ? 'bg-gold-400 text-navy-900 hover:bg-gold-500' : 'bg-slate-200 text-slate-400 cursor-not-allowed')
           }
         >
           {isLast ? 'See my summary' : 'Next'}
@@ -366,7 +366,7 @@ export default function ConsultationPrep() {
   );
   const block = (title, children) => (
     <div className="py-5 border-b border-slate-200 last:border-b-0">
-      <h4 className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-3">{title}</h4>
+      <h4 className="text-xs font-bold uppercase tracking-widest text-gold-700 mb-3">{title}</h4>
       {children}
     </div>
   );
@@ -381,11 +381,11 @@ export default function ConsultationPrep() {
           </p>
           <a
             href={'tel:' + CONFIG.phoneHref}
-            className="inline-block rounded-full bg-amber-400 px-6 py-3 text-sm font-bold text-slate-900"
+            className="inline-block rounded-full bg-gold-400 px-6 py-3 text-sm font-bold text-navy-900"
           >
             Call {CONFIG.phone}
           </a>
-          <p className="text-sm font-bold text-slate-900 mt-5 mb-2">
+          <p className="text-sm font-bold text-navy-900 mt-5 mb-2">
             Go straight to {CONFIG.hospital} if any of these apply:
           </p>
           <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
@@ -400,8 +400,8 @@ export default function ConsultationPrep() {
       )}
 
       <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
-        <div className="bg-slate-950 px-6 md:px-8 py-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-amber-300">
+        <div className="bg-navy-900 px-6 md:px-8 py-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-gold-300">
             Bring this to your appointment
           </p>
           <h3 className="text-2xl font-semibold text-white mt-1">Consultation summary</h3>
@@ -413,7 +413,7 @@ export default function ConsultationPrep() {
               {detailRows.map((r) => (
                 <div key={r[0]} className="flex gap-3 mb-1">
                   <dt className="text-slate-500 min-w-[120px]">{r[0]}</dt>
-                  <dd className="font-semibold text-slate-900">{r[1].trim()}</dd>
+                  <dd className="font-semibold text-navy-900">{r[1].trim()}</dd>
                 </div>
               ))}
             </dl>
@@ -421,7 +421,7 @@ export default function ConsultationPrep() {
 
           {block('In your words', (
             <>
-              <p className="text-lg text-slate-900 leading-relaxed">{buildSummary()}</p>
+              <p className="text-lg text-navy-900 leading-relaxed">{buildSummary()}</p>
               {note && <p className="text-sm text-slate-600 mt-3">You also added: “{note}”</p>}
             </>
           ))}
@@ -482,7 +482,7 @@ export default function ConsultationPrep() {
         <button
           type="button"
           onClick={reset}
-          className="rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 hover:text-slate-900"
+          className="rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 hover:text-navy-900"
         >
           Start again
         </button>
@@ -496,12 +496,12 @@ export default function ConsultationPrep() {
     </div>
   );
   return (
-    <section id="prepare" className="bg-[#f7f4ef] py-16">
+    <section id="prepare" className="bg-ivory py-16">
       <div className="max-w-3xl mx-auto px-4">
-        <p className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-gold-700 mb-3">
           Before your appointment
         </p>
-        <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-3">
+        <h2 className="text-2xl md:text-3xl font-semibold text-navy-900 mb-3">
           Get more out of your first appointment
         </h2>
         <p className="text-slate-600 mb-4 max-w-[52ch]">
@@ -518,7 +518,7 @@ export default function ConsultationPrep() {
             {STEPS.map((s, i) => (
               <span
                 key={s.key}
-                className={'h-[3px] flex-1 rounded ' + (i <= current ? 'bg-amber-400' : 'bg-slate-300')}
+                className={'h-[3px] flex-1 rounded ' + (i <= current ? 'bg-gold-400' : 'bg-slate-300')}
               />
             ))}
           </div>
