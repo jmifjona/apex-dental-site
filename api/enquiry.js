@@ -108,22 +108,37 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).end();
   }
-  if (!originAllowed(requestOrigin(req))) return res.status(403).end();
+  // Every outcome leaves one log line (Vercel -> Logs), never a field of the enquiry: the first
+  // preview test (15 Oct 2026) left no trace at all, so nobody could tell where it stopped.
+  if (!originAllowed(requestOrigin(req))) {
+    console.warn('jarvis enquiry: refused - not from the website');
+    return res.status(403).end();
+  }
   const declared = Number(req.headers['content-length'] || 0);
   if (declared > MAX_BYTES) return res.status(413).end();
 
   const input = readBody(req);
-  if (!input) return res.status(400).end();
+  if (!input) {
+    console.warn('jarvis enquiry: refused - body is not a JSON object');
+    return res.status(400).end();
+  }
   // The hidden spam trap: a person never fills it. Say thank you, send nothing.
-  if (typeof input.company === 'string' && input.company.trim()) return res.status(200).json({ ok: true });
+  if (typeof input.company === 'string' && input.company.trim()) {
+    console.warn('jarvis enquiry: spam trap filled - not sent');
+    return res.status(200).json({ ok: true });
+  }
 
   const url = process.env.JARVIS_ENQUIRY_URL;
   const secret = process.env.JARVIS_ENQUIRY_SECRET;
-  if (!url || !secret) return res.status(200).json({ ok: true });
+  if (!url || !secret) {
+    console.error(`jarvis enquiry: NOT CONFIGURED - ${!url ? 'JARVIS_ENQUIRY_URL ' : ''}${!secret ? 'JARVIS_ENQUIRY_SECRET ' : ''}missing in this environment`);
+    return res.status(200).json({ ok: true });
+  }
 
   try {
     const status = await forward(cleanFields(input), { url, secret });
-    if (status !== 202) console.error(`jarvis enquiry: Jarvis answered ${status}`);
+    if (status === 202) console.log('jarvis enquiry: delivered to Jarvis (202)');
+    else console.error(`jarvis enquiry: Jarvis answered ${status}`);
   } catch (e) {
     console.error(`jarvis enquiry: not delivered (${e && e.name ? e.name : 'error'})`);
   }
