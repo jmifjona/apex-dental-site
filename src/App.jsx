@@ -109,17 +109,43 @@ function HoneypotField() {
   return <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" hidden />;
 }
 
+// Shared look for both forms' fields. Every field has a visible <label>; field NAMES are read by
+// Formspree and by Jarvis (api/enquiry.js), so they must not change.
+const fieldClass =
+  'w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-300/60';
+const labelClass = 'block text-sm text-slate-300 mb-1';
+const optionalMark = <span className="text-slate-500"> (optional)</span>;
+
+function FormSuccess({ title, children }) {
+  const headingRef = React.useRef(null);
+  useEffect(() => {
+    // The form (and the button that had focus) is gone: move focus to the confirmation.
+    if (headingRef.current) headingRef.current.focus();
+  }, []);
+  return (
+    <div
+      role="status"
+      className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]"
+    >
+      <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-amber-400 text-slate-950">
+        <BadgeCheck size={24} aria-hidden="true" />
+      </div>
+      <h2 ref={headingRef} tabIndex={-1} className="mt-6 text-3xl font-semibold leading-tight outline-none">
+        {title}
+      </h2>
+      <div className="mt-4 space-y-4 text-slate-300 leading-7">{children}</div>
+    </div>
+  );
+}
+
 function ContactFormCard() {
   const [contactState, handleContactSubmit] = useForm('myknrvqq');
 
   if (contactState.succeeded) {
     return (
-      <div className="rounded-[2.5rem] bg-slate-950 text-white p-8 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.25)]">
-        <h2 className="text-3xl font-semibold">Thank you</h2>
-        <p className="mt-4 text-slate-300 leading-7">
-          Your message has been sent successfully. We’ll get back to you shortly.
-        </p>
-      </div>
+      <FormSuccess title="Thank you">
+        <p>Your message has been sent successfully. We’ll get back to you shortly.</p>
+      </FormSuccess>
     );
   }
 
@@ -135,40 +161,48 @@ function ContactFormCard() {
         className="mt-8 space-y-4"
       >
         <HoneypotField />
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-        <ValidationError prefix="Email" field="email" errors={contactState.errors} />
+        <div>
+          <label htmlFor="contact-name" className={labelClass}>
+            Full name
+          </label>
+          <input id="contact-name" type="text" name="name" autoComplete="name" required className={fieldClass} />
+        </div>
 
         <div>
-          <label htmlFor="contact-clinic" className="block text-sm text-slate-300 mb-1">
+          <label htmlFor="contact-phone" className={labelClass}>
+            Phone number
+          </label>
+          <input
+            id="contact-phone"
+            type="tel"
+            name="phone"
+            autoComplete="tel"
+            required
+            aria-describedby="contact-phone-hint"
+            className={fieldClass}
+          />
+          <p id="contact-phone-hint" className="mt-1 text-xs text-slate-400">
+            A mobile number lets us reply on WhatsApp.
+          </p>
+        </div>
+
+        <div>
+          <label htmlFor="contact-email" className={labelClass}>
+            Email address
+          </label>
+          <input id="contact-email" type="email" name="email" autoComplete="email" required className={fieldClass} />
+          <ValidationError prefix="Email" field="email" errors={contactState.errors} />
+        </div>
+
+        <div>
+          <label htmlFor="contact-clinic" className={labelClass}>
             Preferred clinic
           </label>
           <select
             id="contact-clinic"
             name="Preferred clinic"
             defaultValue="Either — whichever gives me the sooner appointment"
-            className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
+            className={fieldClass}
           >
             {CLINIC_OPTIONS.map((o) => (
               <option key={o.v} value={o.l} className="text-slate-900">
@@ -178,18 +212,18 @@ function ContactFormCard() {
           </select>
         </div>
 
-        <textarea
-          rows="5"
-          name="message"
-          placeholder="Message"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white"
-        />
-        <ValidationError prefix="Message" field="message" errors={contactState.errors} />
+        <div>
+          <label htmlFor="contact-message" className={labelClass}>
+            Message{optionalMark}
+          </label>
+          <textarea id="contact-message" rows="5" name="message" className={fieldClass} />
+          <ValidationError prefix="Message" field="message" errors={contactState.errors} />
+        </div>
 
         <button
           type="submit"
           disabled={contactState.submitting}
-          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold"
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
           {contactState.submitting ? 'Sending...' : 'Send Request'}
         </button>
@@ -208,7 +242,27 @@ function BookingFormCard({ serviceOptions }) {
   }, [appointmentState.succeeded]);
 
   if (appointmentState.succeeded) {
-    return <div>Booking request sent</div>;
+    // Truthful to what happens: Jarvis messages the patient on WhatsApp when the form carried a
+    // usable mobile number; otherwise reception replies by phone or email.
+    return (
+      <FormSuccess title="Thank you — we will WhatsApp you shortly">
+        <p>
+          Your booking request has reached us. If you gave a mobile number, we will message you on
+          WhatsApp to arrange your appointment. If not, we will call or email you.
+        </p>
+        <p>
+          Need us sooner? Call{' '}
+          <a href={`tel:${brand.phone}`} className="font-semibold text-white underline">
+            {brand.phone}
+          </a>{' '}
+          or WhatsApp{' '}
+          <a href={`https://wa.me/356${brand.whatsapp}`} className="font-semibold text-white underline">
+            {brand.whatsapp}
+          </a>
+          .
+        </p>
+      </FormSuccess>
+    );
   }
 
   return (
@@ -223,68 +277,79 @@ function BookingFormCard({ serviceOptions }) {
         className="mt-8 space-y-4"
       >
         <HoneypotField />
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
+        <div>
+          <label htmlFor="booking-name" className={labelClass}>
+            Full name
+          </label>
+          <input id="booking-name" type="text" name="name" autoComplete="name" required className={fieldClass} />
+        </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
-        <ValidationError prefix="Email" field="email" errors={appointmentState.errors} />
+        <div>
+          <label htmlFor="booking-email" className={labelClass}>
+            Email address
+          </label>
+          <input id="booking-email" type="email" name="email" autoComplete="email" required className={fieldClass} />
+          <ValidationError prefix="Email" field="email" errors={appointmentState.errors} />
+        </div>
 
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
+        <div>
+          <label htmlFor="booking-phone" className={labelClass}>
+            Phone number
+          </label>
+          <input
+            id="booking-phone"
+            type="tel"
+            name="phone"
+            autoComplete="tel"
+            required
+            aria-describedby="booking-phone-hint"
+            className={fieldClass}
+          />
+          <p id="booking-phone-hint" className="mt-1 text-xs text-slate-400">
+            A mobile number lets us reply on WhatsApp.
+          </p>
+        </div>
 
-        <input
-          type="date"
-          name="preferredDate"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
-        />
+        <div>
+          <label htmlFor="booking-date" className={labelClass}>
+            Preferred date{optionalMark}
+          </label>
+          <input id="booking-date" type="date" name="preferredDate" className={fieldClass} />
+        </div>
 
-        <select
-          name="service"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white outline-none focus:border-amber-300"
-        >
-          <option className="text-slate-900">Select Service</option>
-          {serviceOptions.map((service) => (
-            <option key={service} className="text-slate-900">
-              {service}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label htmlFor="booking-service" className={labelClass}>
+            Service{optionalMark}
+          </label>
+          <select id="booking-service" name="service" className={fieldClass}>
+            <option className="text-slate-900">Select Service</option>
+            {serviceOptions.map((service) => (
+              <option key={service} className="text-slate-900">
+                {service}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <input
-          type="text"
-          name="subject"
-          placeholder="Subject"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
+        <div>
+          <label htmlFor="booking-subject" className={labelClass}>
+            Subject{optionalMark}
+          </label>
+          <input id="booking-subject" type="text" name="subject" className={fieldClass} />
+        </div>
 
-        <textarea
-          rows="5"
-          name="message"
-          placeholder="Message"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-400 outline-none focus:border-amber-300"
-        />
-        <ValidationError prefix="Message" field="message" errors={appointmentState.errors} />
+        <div>
+          <label htmlFor="booking-message" className={labelClass}>
+            Message{optionalMark}
+          </label>
+          <textarea id="booking-message" rows="5" name="message" className={fieldClass} />
+          <ValidationError prefix="Message" field="message" errors={appointmentState.errors} />
+        </div>
 
         <button
           type="submit"
           disabled={appointmentState.submitting}
-          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition"
+          className="rounded-full bg-amber-400 text-slate-950 px-6 py-3.5 font-semibold hover:bg-amber-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
           {appointmentState.submitting ? 'Sending...' : 'Send Booking Request'}
         </button>
