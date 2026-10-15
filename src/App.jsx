@@ -9,6 +9,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import { brand, CLINIC_OPTIONS } from './data/clinics.js';
 import { blogPosts, blogPostMeta } from './data/blogPosts.js';
+import { IMAGE_SIZES } from './data/imageSizes.js';
 import {
   Phone,
   MapPin,
@@ -575,6 +576,23 @@ const images = {
   },
 };
 
+// Below-the-fold image: loads lazily, decodes off the main thread, and carries its intrinsic
+// width/height so the browser knows its shape before it arrives. Not for hero (LCP) images.
+function LazyImg({ src, alt, className }) {
+  const size = IMAGE_SIZES[src];
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+      width={size ? size[0] : undefined}
+      height={size ? size[1] : undefined}
+    />
+  );
+}
+
 function Section({ children, className = '' }) {
   return (
     <section className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
@@ -695,6 +713,8 @@ function FloatingHeader() {
               <img
                 src={brand.logo}
                 alt="Apex Dental logo"
+                width={IMAGE_SIZES[brand.logo][0]}
+                height={IMAGE_SIZES[brand.logo][1]}
                 className="h-11 w-auto shrink-0"
               />
               <div className="hidden md:block min-w-0">
@@ -1006,6 +1026,7 @@ function DarkHero({
       <img
         src={image}
         alt={typeof title === 'string' ? title : 'Apex Dental'}
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover opacity-35"
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.14),transparent_30%)]" />
@@ -1111,7 +1132,7 @@ function SplitEditorial({
                 dark ? 'border border-white/10' : 'border border-slate-200'
               } shadow-xl`}
             >
-              <img src={imageLeft} alt={title} className="w-full h-[520px] object-cover" />
+              <LazyImg src={imageLeft} alt={title} className="w-full h-[520px] object-cover" />
             </div>
           </div>
 
@@ -1202,7 +1223,7 @@ function ServiceTiles() {
               to={service.to}
               className="group rounded-[2rem] overflow-hidden bg-slate-950 text-white relative min-h-[520px] shadow-xl"
             >
-              <img
+              <LazyImg
                 src={service.image}
                 alt={service.title}
                 className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
@@ -1250,7 +1271,7 @@ function HomeFeatureGrid() {
       <Section className="py-20">
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
           <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-            <img
+            <LazyImg
               src={images.home.H2}
               alt="Apex Dental clinic interior"
               className="w-full h-[560px] object-cover"
@@ -1259,14 +1280,14 @@ function HomeFeatureGrid() {
 
           <div className="grid gap-8">
             <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <img
+              <LazyImg
                 src={images.home.H3}
                 alt="Apex Dental logo detail"
                 className="w-full h-[265px] object-cover"
               />
             </div>
             <div className="rounded-[2rem] overflow-hidden shadow-lg">
-              <img
+              <LazyImg
                 src={images.home.H4}
                 alt="Apex Dental reception or team desk"
                 className="w-full h-[265px] object-cover"
@@ -1327,7 +1348,7 @@ function HomeGallery() {
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {gallery.map((img, index) => (
             <div key={index} className="rounded-[2rem] overflow-hidden shadow-md group">
-              <img
+              <LazyImg
                 src={img}
                 alt={`Apex Dental gallery ${index + 1}`}
                 className="w-full h-[300px] object-cover group-hover:scale-105 transition duration-700"
@@ -1702,6 +1723,7 @@ function PageHero({ image, eyebrow, title, subtitle }) {
       <img
         src={image}
         alt={title}
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover opacity-35"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-950" />
@@ -2032,14 +2054,14 @@ function AboutPage() {
         <Section>
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="rounded-[2.5rem] overflow-hidden shadow-xl lg:col-span-2">
-              <img src={images.about.AB1} alt="Apex Dental clinic interior" className="w-full h-[420px] object-cover" />
+              <LazyImg src={images.about.AB1} alt="Apex Dental clinic interior" className="w-full h-[420px] object-cover" />
             </div>
             <div className="grid gap-6">
               <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                <img src={images.about.AB2} alt="Apex Dental treatment room" className="w-full h-[196px] object-cover" />
+                <LazyImg src={images.about.AB2} alt="Apex Dental treatment room" className="w-full h-[196px] object-cover" />
               </div>
               <div className="rounded-[2.5rem] overflow-hidden shadow-xl">
-                <img src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[196px] object-cover" />
+                <LazyImg src={images.about.AB3} alt="Apex Dental clinic detail" className="w-full h-[196px] object-cover" />
               </div>
             </div>
           </div>
@@ -2049,7 +2071,7 @@ function AboutPage() {
         <Section>
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
             <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-xl">
-              <img src={images.about.AB2} alt="Dr Jonathan Mifsud, Apex Dental" className="w-full h-[520px] object-cover" />
+              <LazyImg src={images.about.AB2} alt="Dr Jonathan Mifsud, Apex Dental" className="w-full h-[520px] object-cover" />
             </div>
             <div>
               <div className="text-sm uppercase tracking-[0.25em] text-slate-400 mb-4">Meet the team</div>
@@ -3772,7 +3794,7 @@ function AppointmentBookingPage() {
               </div>
 
               <div className="mt-8 rounded-[2rem] overflow-hidden shadow-lg">
-                <img
+                <LazyImg
                   src={images.contact.CT3}
                   alt="Apex Dental clinic entrance"
                   className="w-full h-[260px] object-cover"
@@ -4150,7 +4172,7 @@ function ServicesPage() {
                   to={item.to}
                   className="group rounded-[2rem] overflow-hidden bg-slate-950 text-white relative min-h-[460px] shadow-xl"
                 >
-                  <img
+                  <LazyImg
                     src={item.image}
                     alt={item.title}
                     className="absolute inset-0 h-full w-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
@@ -4192,7 +4214,7 @@ function ComplianceTrustSection() {
       <Section>
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
           <div className="rounded-[2.5rem] overflow-hidden border border-slate-200 bg-white shadow-xl">
-            <img
+            <LazyImg
               src={images.trust.compliance}
               alt="Apex Dental compliance certificate"
               className="w-full h-[620px] object-cover object-top"
