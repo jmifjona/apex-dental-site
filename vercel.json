@@ -383,6 +383,14 @@
     {
       "source": "/terms/",
       "destination": "/terms/index.html"
+    },
+    {
+      "source": "/blog/how-a-dental-implant-is-placed",
+      "destination": "/blog/how-a-dental-implant-is-placed/index.html"
+    },
+    {
+      "source": "/blog/how-a-dental-implant-is-placed/",
+      "destination": "/blog/how-a-dental-implant-is-placed/index.html"
     }
   ]
 }

@@ -9,6 +9,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import Terms from './Terms';
 import { brand, CLINIC_OPTIONS, CLINIC_HOURS } from './data/clinics.js';
 import { blogPosts, blogPostMeta } from './data/blogPosts.js';
+import { implantStepsVideo, videos } from './data/videos.js';
 import { IMAGE_SIZES } from './data/imageSizes.js';
 import { team } from './data/team.js';
 import { priceSections } from './data/priceList.js';
@@ -523,6 +524,32 @@ function articleSchema({ title, description, url, datePublished, image }) {
   };
 }
 
+// A patient-education video (src/data/videos.js) on the page that plays it.
+function videoSchema(video) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: video.name,
+    description: video.description,
+    thumbnailUrl: [`${siteUrl}${video.thumbnail}`],
+    contentUrl: `${siteUrl}${video.src}`,
+    uploadDate: video.uploadDate,
+    duration: video.duration,
+    width: video.width,
+    height: video.height,
+    inLanguage: 'en',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Apex Dental Malta',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/orislogo.png`,
+      },
+    },
+  };
+}
+
 function breadcrumbSchema(items) {
   return {
     '@context': 'https://schema.org',
@@ -598,6 +625,117 @@ function LazyImg({ src, alt, className }) {
       width={size ? size[0] : undefined}
       height={size ? size[1] : undefined}
     />
+  );
+}
+
+// A silent patient-education video (src/data/videos.js). The prerendered HTML and the first browser
+// render are the same plain <video> (poster, controls, preload="none", nothing downloaded yet), so
+// hydration matches. After hydration it plays, muted and looping, only while at least half of it is
+// on screen, and pauses when scrolled away. Controls stay visible so it can always be paused, a
+// pause by the visitor is respected until they press play again, and visitors who ask for reduced
+// motion get no autoplay at all. `describedBy` names the element that lists the steps in words.
+function PatientVideo({ video, describedBy, className = '' }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof window.IntersectionObserver !== 'function') return undefined;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    el.muted = true;
+    let pausedByVisitor = false;
+    let pausingOurselves = false;
+    const onPause = () => {
+      if (!pausingOurselves) pausedByVisitor = true;
+      pausingOurselves = false;
+    };
+    const onPlay = () => {
+      pausedByVisitor = false;
+    };
+    el.addEventListener('pause', onPause);
+    el.addEventListener('play', onPlay);
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!pausedByVisitor && el.paused) el.play().catch(() => {});
+        } else if (!el.paused) {
+          pausingOurselves = true;
+          el.pause();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      el.removeEventListener('pause', onPause);
+      el.removeEventListener('play', onPlay);
+    };
+  }, []);
+
+  return (
+    <div className={`overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl ${className}`}>
+      <video
+        ref={ref}
+        className="block aspect-[4/5] h-auto w-full bg-white"
+        width={video.width}
+        height={video.height}
+        poster={video.poster}
+        aria-label={`${video.name} (animation, no sound)`}
+        aria-describedby={describedBy}
+        muted
+        loop
+        playsInline
+        controls
+        preload="none"
+      >
+        <source src={video.src} type="video/mp4" />
+        Your browser cannot play this video. The steps it shows are written out on this page.
+      </video>
+    </div>
+  );
+}
+
+// Dental implants page: the 7-step animation beside the same steps in words.
+function ImplantPlacementVideoSection() {
+  const video = implantStepsVideo;
+  return (
+    <section id="how-an-implant-is-placed" className="bg-white border-t border-slate-100 py-20">
+      <Section>
+        <div className="grid lg:grid-cols-[minmax(0,400px)_1fr] gap-12 lg:gap-16 items-start">
+          <figure className="mx-auto w-full max-w-[400px] lg:sticky lg:top-28">
+            <PatientVideo video={video} describedBy="implant-steps-list" />
+            <figcaption className="mt-4 text-center text-sm leading-6 text-slate-500">{video.disclaimer}</figcaption>
+          </figure>
+          <div>
+            <p className={eyebrowClass}>Patient education</p>
+            <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-navy-900 leading-tight">How an implant is placed</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">
+              This short animation shows what happens during implant treatment, from checking the bone to fitting the
+              final crown. It has no sound, so each of the seven steps is written out here too.
+            </p>
+            <ol id="implant-steps-list" className="mt-8 space-y-6">
+              {video.steps.map((step, i) => (
+                <li key={step.title} className="flex gap-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-ivory text-sm font-bold text-gold-700">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-lg text-navy-900">{step.title}</h3>
+                    <p className="mt-1 text-slate-600 leading-7">{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <Link
+              to="/blog/how-a-dental-implant-is-placed/"
+              className="inline-flex items-center gap-2 mt-8 font-semibold text-navy-900 hover:text-gold-800 transition"
+            >
+              Read each step explained in our guide <ChevronRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </Section>
+    </section>
   );
 }
 
@@ -2080,6 +2218,7 @@ function ImplantsPage() {
         schemas={[
           serviceSchema('Dental Implants', 'Dental implant treatment in Malta. Single implants, All-on-4, implant-retained dentures. Free consultation and 3D scan included with treatment.', `${siteUrl}/dental-implants/`),
           faqSchema(implantFaqs),
+          videoSchema(implantStepsVideo),
           breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Dental Implants', path: '/dental-implants/' }]),
         ]}
       />
@@ -2104,6 +2243,7 @@ function ImplantsPage() {
         reverse
       />
       <ProcessSteps steps={implantSteps} />
+      <ImplantPlacementVideoSection />
       <SplitEditorial
         imageLeft={images.implants.I4}
         title="Replacing a whole arch with All-on-4"
@@ -4266,8 +4406,9 @@ function BlogPostPage({ postId }) {
         image={meta.image}
         schemas={[
           articleSchema({ title: meta.title, description: meta.description, url: canonical, datePublished: meta.datePublished, image: meta.image }),
+          meta.video ? videoSchema(videos[meta.video]) : null,
           breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog/' }, { name: meta.breadcrumb, path: meta.slug }]),
-        ]}
+        ].filter(Boolean)}
       />
       <PageHero
         image={meta.image}
@@ -4289,11 +4430,39 @@ function BlogPostPage({ postId }) {
               {post.content.map((block, i) => {
                 if (block.type === 'p') return <p key={i} className="text-slate-600 leading-8 text-lg">{block.text}</p>;
                 if (block.type === 'h3') return <h2 key={i} className="text-2xl font-semibold text-navy-900 mt-10 mb-2">{block.text}</h2>;
+                if (block.type === 'cta' && block.whatsapp) return (
+                  <div key={i} className="pt-1">
+                    <a href={whatsappUrl} className="inline-flex items-center gap-2 border border-navy-200 bg-white text-navy-900 font-semibold px-6 py-3.5 rounded-full hover:border-navy-900 hover:bg-ivory transition">
+                      <MessageCircle size={16} /> {block.text}
+                    </a>
+                  </div>
+                );
                 if (block.type === 'cta') return (
                   <div key={i} className="pt-4">
                     <Link to={block.to} className="inline-flex items-center gap-2 bg-navy-900 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-navy-800 transition">
                       {block.text} <ChevronRight size={16} />
                     </Link>
+                  </div>
+                );
+                if (block.type === 'video') {
+                  const video = videos[block.video];
+                  return (
+                    <figure key={i} className="py-4">
+                      <PatientVideo video={video} className="mx-auto max-w-[380px]" />
+                      <figcaption className="mx-auto mt-4 max-w-md text-center text-sm leading-6 text-slate-500">
+                        {video.name}. The animation has no sound; every step is written out below. {video.disclaimer}
+                      </figcaption>
+                    </figure>
+                  );
+                }
+                if (block.type === 'links') return (
+                  <div key={i} className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                    <span className="text-slate-700 font-medium">{block.label}</span>
+                    {block.items.map((item) => (
+                      <Link key={item.to} to={item.to} className="font-medium text-gold-700 hover:text-gold-800">
+                        {item.text} &rarr;
+                      </Link>
+                    ))}
                   </div>
                 );
                 return null;

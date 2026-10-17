@@ -2,7 +2,10 @@
 // their prerendered pages (scripts/prerender.mjs renders every post in the sitemap). New posts are appended
 // by scripts/publish-next-blog.mjs from scripts/blog-queue.json.
 // Optional per post: seoTitle (default "<title> | Apex Dental Malta"), description (default
-// the excerpt) and breadcrumb (default the category).
+// the excerpt), breadcrumb (default the category) and video (a key in src/data/videos.js: adds the
+// video's VideoObject JSON-LD; content blocks { type: 'video', video: '<key>' } play it in the post).
+// Extra content block types besides p / h3 / cta: 'video', 'links' ({ label, items: [{ text, to }] })
+// and { type: 'cta', whatsapp: true, text } (a WhatsApp button).
 
 export const blogPosts = [
   {
@@ -263,6 +266,57 @@ export const blogPosts = [
       }
 ],
   },
+  {
+    id: 24,
+    slug: '/blog/how-a-dental-implant-is-placed/',
+    title: 'How a dental implant is placed: the 7 steps explained',
+    excerpt: 'Watch our short animation of how a dental implant is placed, then read each of the seven steps in plain words, from the first scan to the final crown.',
+    category: 'Implants',
+    readTime: '5 min read',
+    datePublished: '2026-10-18',
+    seoTitle: 'How a Dental Implant Is Placed: 7 Steps Explained | Apex Dental',
+    description: 'Watch our short animation and read each step of having a dental implant placed, in plain words: numbing, preparing the site, healing, abutment and crown.',
+    breadcrumb: 'How a Dental Implant Is Placed',
+    image: '/images/I2.jpg',
+    // Owner's patient-education animation (src/data/videos.js): VideoObject JSON-LD on this page.
+    video: 'implant-steps',
+    content: [
+      { type: 'p', text: "Being told you need a dental implant can bring up a lot of questions. What actually happens in the chair? Will it hurt? How long before I have a tooth again? To help, we made a short animation that walks through the whole process in seven simple steps. Watch it below, then read on for each step in plain words." },
+      { type: 'video', video: 'implant-steps' },
+      { type: 'p', text: "The animation is a simplified illustration and is not to scale. Every mouth is different, so the details of your own treatment may vary. Please ask your dentist about your own treatment." },
+      { type: 'h3', text: 'Step 1: The missing tooth' },
+      { type: 'p', text: "When a tooth is lost, the gap is the part you notice, but the important part is underneath. As long as the jawbone below is still healthy, it can hold an implant. Before any treatment is planned, your dentist checks the height and width of that bone with X-rays or a 3D scan. This tells them whether an implant is possible, where it should go and what size it should be." },
+      { type: 'h3', text: 'Step 2: Numbing and access' },
+      { type: 'p', text: "On the day, the area is numbed with a local anaesthetic, just as it would be for a filling. Once it is numb, the dentist opens a small flap of gum to reach the bone. You will feel pressure, but you should not feel pain. If you are nervous, mention it beforehand so the team can talk you through each stage as it happens." },
+      { type: 'h3', text: 'Step 3: Preparing the site' },
+      { type: 'p', text: "Next, a narrow pilot drill makes a small channel in the bone. Slightly wider drills then shape it, one step at a time, to the exact size of the implant. The drills turn slowly and a constant spray of water keeps the bone cool, so that it stays healthy and ready to heal around the implant." },
+      { type: 'h3', text: 'Step 4: Placing the implant' },
+      { type: 'p', text: "The implant itself is a small titanium screw. It is screwed gently into the prepared channel, where it takes the place of the missing tooth's root. Before closing, the dentist checks that it sits firmly in the bone." },
+      { type: 'h3', text: 'Step 5: Healing' },
+      { type: 'p', text: "A small cover screw is placed on top of the implant and the gum is closed over it. Then comes the part that cannot be rushed: over the following months, the bone grows tight against the titanium and holds the implant in place. This is called osseointegration. It usually takes three to six months, although the time varies from person to person. If the gap would show while you heal, ask your dentist about a temporary tooth." },
+      { type: 'h3', text: 'Step 6: The abutment' },
+      { type: 'p', text: "Once the implant has healed into the bone, a small connector called an abutment is fixed on top. It rises just above the gum line, and it is what your new tooth will sit on. The gum settles around it in about one to two weeks." },
+      { type: 'h3', text: 'Step 7: The crown' },
+      { type: 'p', text: "Finally, a custom crown is made for you, shaped and shaded to match your other teeth. It is fixed onto the abutment, either cemented or held with a small screw. The finished tooth looks and chews like a natural one, and you look after it like one too: brush it and floss around it like any other tooth." },
+      { type: 'h3', text: 'How long does the whole process take?' },
+      { type: 'p', text: "Your time in the chair is spread over a small number of appointments. Most of the overall timeline is healing, usually three to six months between placing the implant and fitting the final crown. Some cases take longer, for example when extra treatment is needed first, so your dentist will give you a timeline for your own situation." },
+      { type: 'h3', text: 'What does it feel like?' },
+      { type: 'p', text: "Because the area is numbed, placing the implant feels like pressure rather than pain. Once the anaesthetic wears off, it is normal to have some swelling and tenderness for a few days, much like after having a tooth taken out, and ordinary painkillers usually manage it well. If anything worries you while you heal, contact the clinic." },
+      { type: 'h3', text: 'Looking after your implant' },
+      { type: 'p', text: "In the first days, follow the aftercare instructions your dentist gives you. That usually means keeping the area clean in the way you are shown, choosing softer foods and not chewing directly on the site. Smoking can slow healing, so it is best avoided. Once the crown is fitted, care for it like your other teeth: brush twice a day, clean between your teeth and keep up your check-ups and hygiene visits. Healthy gums help keep an implant healthy for years to come." },
+      { type: 'h3', text: 'Is an implant right for me?' },
+      { type: 'p', text: "Implants suit many people who have lost a tooth, but not everyone, and the only way to know is a proper assessment. Your general health, the health of your gums and the amount of bone all matter. If there is not quite enough bone, a bone graft is sometimes needed; your dentist will check this on your X-rays or 3D scan and explain your options. An implant is one choice among several, and your consultation is the time to talk them all through." },
+      { type: 'p', text: "If you would like to know more about costs, our price list shows current implant prices, and our dental implants page explains how treatment is planned and carried out at Apex Dental." },
+      { type: 'links', label: 'Read more:', items: [
+        { text: 'Dental implants at Apex Dental', to: '/dental-implants/' },
+        { text: 'Price list', to: '/price-list/' },
+        { text: 'What affects implant costs', to: '/blog/dental-implants-cost-malta/' },
+      ] },
+      { type: 'cta', text: 'Book an implant consultation', to: '/appointment-booking/' },
+      { type: 'cta', whatsapp: true, text: 'Ask us a question on WhatsApp' },
+      { type: 'p', text: "This article and the animation are general information and not a substitute for a consultation. Ask your dentist about your own treatment." },
+    ],
+  },
 ];
 
 // Derived meta map for SEO + routing
@@ -277,5 +331,6 @@ export const blogPostMeta = Object.fromEntries(
     image: `${SITE_URL}${p.image}`,
     datePublished: p.datePublished,
     breadcrumb: p.breadcrumb || p.category,
+    video: p.video || null,
   }])
 );
